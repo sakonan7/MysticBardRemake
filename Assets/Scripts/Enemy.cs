@@ -11,6 +11,13 @@ using UnityEngine;
 
 //This game is a testament to what I learned during Beast Dominion
 //I didn't expect to be using exact code
+//I want to make this fast and playable right away
+
+//Remembering how complicated Beast Dominion Actually Was
+//The Data Fights In Kingdom Hearts III Are Definitely Hard. I think they put a stagger window between certain attacks. A Corout
+
+//TaskList
+//Make Foe Not Spazz Between Idle And Att
 public class Enemy : MonoBehaviour
 {
     private Animator animator;
@@ -20,6 +27,7 @@ public class Enemy : MonoBehaviour
     private Coroutine flinchCancel; //or flinchReset
     private Coroutine idleCancel;
     private Coroutine flinchOpportunityCancel;
+    private Coroutine attackLengthCancel;
 
     private bool idleStart = true;
     private bool idle = false;
@@ -79,7 +87,7 @@ public class Enemy : MonoBehaviour
                 {
                     //I'm thinking of making attack ==false here, but I wasn't expecting my code to become this complicate
                     Flinch();
-                    StopCoroutine(flinchOpportunityCancel);
+                    
                 }
             }
         }
@@ -101,12 +109,19 @@ public class Enemy : MonoBehaviour
         {
             attack = false;
             flinchInterrupt = false;
+
+            //I don't know why I don't think to put this allhere
+            //I think I'm just thinking in the moment
+            //Also, I have to cancel different Coroutines for different mo
+            StopCoroutine(flinchOpportunityCancel);
+            StopCoroutine(attackLengthCancel);
         }
 
         if (animatorTrue==true)
         {
             animator.SetBool("Idle",true);
             animator.SetTrigger("Flinch");
+            animator.ResetTrigger("Attack");
         }
         else if (animationTrue == true)
         {
@@ -136,6 +151,19 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(1);
         flinchInterrupt = false;
     }
+    public void StartAttackLength()
+    {
+        attackLengthCancel =StartCoroutine(AttackLength());
+    }
+    //I'm gonna need to put this in Enem
+    //I'm going to need to cancelthisif I stagger foe
+    IEnumerator AttackLength()
+    {
+        yield return new WaitForSeconds(4f);
+        //animator.ResetTrigger("Attack");
+        //StartCoroutine(IdleAnimation());
+        StartIdle();
+    }
     public void StartIdle()
     {
         idleCancel = StartCoroutine(IdleAnimation(idleTime));
@@ -147,11 +175,15 @@ public class Enemy : MonoBehaviour
         if (animatorTrue == true)
         {
             animator.SetBool("Idle",true);
-            animator.ResetTrigger("Attack");
+            //animator.ResetTrigger("Attack");
         }
         yield return new WaitForSeconds(idleTime);
         idle = false;
         attackReady = true;
+        if (animatorTrue == true)
+        {
+            animator.SetBool("Idle", true);
+        }
     }
 
     private void OnMouseOver()

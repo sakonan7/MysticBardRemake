@@ -38,15 +38,8 @@ public class Gob : MonoBehaviour
     {
         animator.SetBool("Idle",false);
         animator.SetTrigger("Attack");
-        StartCoroutine(AttackLength());
+        enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
     }
-    //I'm gonna need to put this in Enem
-    IEnumerator AttackLength()
-    {
-        yield return new WaitForSeconds(4f);
-        //animator.ResetTrigger("Attack");
-        //StartCoroutine(IdleAnimation());
-        enemyScript.StartIdle();
-    }
+
 }
