@@ -14,8 +14,8 @@ public class Gob : MonoBehaviour
         animator = GetComponent<Animator>();
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
-        enemyScript.SetIdleStart();
-        enemyScript.SetIdleTime(2);
+        enemyScript.SetIdleStart(); //This doesn't work. May need an awake
+        enemyScript.SetIdleTime(6);
     }
 
     // Update is called once per frame
@@ -24,7 +24,7 @@ public class Gob : MonoBehaviour
         if (enemyScript.attackReady==true)
         {
             Attack();
-            Debug.Log("Attack");
+            //Debug.Log("Attack");
         }
     }
     IEnumerator IdleAnimation()
@@ -39,11 +39,14 @@ public class Gob : MonoBehaviour
         animator.SetBool("Idle",false);
         animator.SetTrigger("Attack");
         StartCoroutine(AttackLength());
+        enemyScript.StartFlinchWindow();
     }
+    //I'm gonna need to put this in Enem
     IEnumerator AttackLength()
     {
-        yield return new WaitForSeconds(0.5f);
-        animator.ResetTrigger("Attack");
+        yield return new WaitForSeconds(4f);
+        //animator.ResetTrigger("Attack");
         //StartCoroutine(IdleAnimation());
+        enemyScript.StartIdle();
     }
 }
