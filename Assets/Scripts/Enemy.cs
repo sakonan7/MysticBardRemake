@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
     private Animation animation;
     private bool animatorTrue = false;
     private bool animationTrue = false;
+    private PlayerController playerScript;
+
     private Coroutine flinchCancel; //or flinchReset
     private Coroutine idleCancel;
     private Coroutine flinchOpportunityCancel;
@@ -37,6 +39,7 @@ public class Enemy : MonoBehaviour
     private bool flinchInterrupt = false; //I may want to changethis to flincOpportuni
     private bool attack = false; //Putting this here for now. I want this code to be assimple as possible //Need this for now, because may not want to use idle (check for it
     //While attacking a foe
+    private float attackLength = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +53,8 @@ public class Enemy : MonoBehaviour
         {
             animationTrue = true;
         }
+
+        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         if (idleStart==true)
         {
             idleCancel = StartCoroutine(IdleAnimation(idleTime));
@@ -101,10 +106,15 @@ public class Enemy : MonoBehaviour
     {
         idleTime = newTime;
     }
+    public void SetAttackLength(float newLength)
+    {
+        attackLength = newLength;
+    }
     //So far so good. The only problem is that I can't do Idle"", false. I need to keep snapping back to Idle
     //This'llonlybe a problem if I want a recover anima
     public void Flinch()
     {
+        attackReady = false;
         if (flinchInterrupt==true)
         {
             attack = false;
@@ -115,6 +125,7 @@ public class Enemy : MonoBehaviour
             //Also, I have to cancel different Coroutines for different mo
             StopCoroutine(flinchOpportunityCancel);
             StopCoroutine(attackLengthCancel);
+            playerScript.InterruptEffect(transform.position);
         }
 
         if (animatorTrue==true)
@@ -130,6 +141,8 @@ public class Enemy : MonoBehaviour
 
         //Don't know why I didn't put this here right away, because I successful flinch will always start a flinchdur
         flinchCancel = StartCoroutine(FlinchDuration());
+
+        
     }
     IEnumerator FlinchDuration()
     {
@@ -159,7 +172,7 @@ public class Enemy : MonoBehaviour
     //I'm going to need to cancelthisif I stagger foe
     IEnumerator AttackLength()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(attackLength);
         //animator.ResetTrigger("Attack");
         //StartCoroutine(IdleAnimation());
         StartIdle();
@@ -172,6 +185,8 @@ public class Enemy : MonoBehaviour
     IEnumerator IdleAnimation(float idleTime)
     {
         idle = true;
+        attack = false;
+        attackReady = false;
         if (animatorTrue == true)
         {
             animator.SetBool("Idle",true);
@@ -179,10 +194,11 @@ public class Enemy : MonoBehaviour
         }
         yield return new WaitForSeconds(idleTime);
         idle = false;
+        attack = true;
         attackReady = true;
         if (animatorTrue == true)
         {
-            animator.SetBool("Idle", true);
+            animator.SetBool("Idle", false);
         }
     }
 

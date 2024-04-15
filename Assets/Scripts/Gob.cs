@@ -15,7 +15,7 @@ public class Gob : MonoBehaviour
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
-        enemyScript.SetIdleTime(6);
+        enemyScript.SetIdleTime(5);
     }
 
     // Update is called once per frame
@@ -36,8 +36,9 @@ public class Gob : MonoBehaviour
     }
     public void Attack()
     {
-        animator.SetBool("Idle",false);
+        //animator.SetBool("Idle",false);
         animator.SetTrigger("Attack");
+        enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
     }
