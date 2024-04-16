@@ -41,6 +41,8 @@ public class Gob : MonoBehaviour
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
+        enemyScript.PlayAttackEffect(0);
+        enemyScript.AttackReadyOff();
     }
 
 }

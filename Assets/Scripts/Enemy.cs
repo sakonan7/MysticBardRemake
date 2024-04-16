@@ -40,6 +40,9 @@ public class Enemy : MonoBehaviour
     private bool attack = false; //Putting this here for now. I want this code to be assimple as possible //Need this for now, because may not want to use idle (check for it
     //While attacking a foe
     private float attackLength = 1;
+
+    public ParticleSystem[] attackEffects;
+    private int effectNumber = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -126,6 +129,7 @@ public class Enemy : MonoBehaviour
             StopCoroutine(flinchOpportunityCancel);
             StopCoroutine(attackLengthCancel);
             playerScript.InterruptEffect(transform.position);
+            StopAttackEffect();
         }
 
         if (animatorTrue==true)
@@ -161,8 +165,13 @@ public class Enemy : MonoBehaviour
     IEnumerator FlinchWindow()
     {
         flinchInterrupt = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         flinchInterrupt = false;
+    }
+    //I forgot to do AttackReadyOff() after an attack, to not repeat the attack. This lead to other problems 04/15/24
+    public void AttackReadyOff()
+    {
+        attackReady = false;
     }
     public void StartAttackLength()
     {
@@ -176,6 +185,16 @@ public class Enemy : MonoBehaviour
         //animator.ResetTrigger("Attack");
         //StartCoroutine(IdleAnimation());
         StartIdle();
+        playerScript.PlayHurtEffect();
+    }
+    public void PlayAttackEffect(int attackEffect)
+    {
+        effectNumber = attackEffect;
+        attackEffects[effectNumber].Play();
+    }
+    public void StopAttackEffect()
+    {
+        attackEffects[effectNumber].Stop();
     }
     public void StartIdle()
     {

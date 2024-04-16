@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     public ParticleSystem interruptEffect;
     public GameObject hurt;
+    public ParticleSystem hurtEffect;
+    public ParticleSystem violinHitEffect;
     public bool attack = false;
     public bool attackLagging = false;
     // Start is called before the first frame update
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
         {
             //enemies[i].GetComponent<Enemy>().TakeDamage();
             Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
+            ViolinHitEffect(enemies[i].transform.position);
         }
         StartCoroutine(AttackLag());
         Debug.Log("Player Attack");
@@ -49,6 +52,14 @@ public class PlayerController : MonoBehaviour
     }
     public void InterruptEffect(Vector3 position)
     {
-        Instantiate(interruptEffect, position, interruptEffect.transform.rotation);
+        Instantiate(interruptEffect, new Vector3(position.x, interruptEffect.transform.position.y, interruptEffect.transform.position.z), interruptEffect.transform.rotation);
+    }
+    public void PlayHurtEffect()
+    {
+        hurtEffect.Play();
+    }
+    public void ViolinHitEffect(Vector3 position)
+    {
+        Instantiate(violinHitEffect, new Vector3(position.x, violinHitEffect.transform.position.y,violinHitEffect.transform.position.z), violinHitEffect.transform.rotation);
     }
 }
