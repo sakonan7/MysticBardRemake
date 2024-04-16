@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem violinHitEffect;
     public bool attack = false;
     public bool attackLagging = false;
+    public int hitCount = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +22,20 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (attackLagging==false) {
-            if (Input.GetMouseButtonDown(0))
-            {
-                AllAttack();
-            }
+            //if (Input.GetMouseButtonDown(0))
+            //{
+                //AllAttack();
+            //}
         }
+    }
+    public void ViolinAttack(Vector3 newPosition)
+    {
+        ViolinHitEffect(newPosition);
+        StartCoroutine(AttackLag());
+}
+    public void HitCountUp()
+    {
+        hitCount++;
     }
     public void AllAttack()
     {
@@ -33,12 +43,13 @@ public class PlayerController : MonoBehaviour
         GameObject [] enemies =GameObject.FindGameObjectsWithTag("Enemy");
         for (int i= 0; i < enemies.Length; i++)
         {
-            //enemies[i].GetComponent<Enemy>().TakeDamage();
-            Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
+            enemies[i].GetComponent<Enemy>().TakeDamage(20);
+            //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             ViolinHitEffect(enemies[i].transform.position);
         }
         StartCoroutine(AttackLag());
-        Debug.Log("Player Attack");
+        //Debug.Log("Player Attack");
+        hitCount = 0;
     }
     IEnumerator AttackDuration()
     {
@@ -47,7 +58,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator AttackLag()
     {
         attackLagging = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         attackLagging = false;
     }
     public void InterruptEffect(Vector3 position)

@@ -43,6 +43,8 @@ public class Enemy : MonoBehaviour
 
     public ParticleSystem[] attackEffects;
     private int effectNumber = 0;
+
+    private int HP = 10;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,44 +65,32 @@ public class Enemy : MonoBehaviour
             idleCancel = StartCoroutine(IdleAnimation(idleTime));
             Debug.Log("Id");
         }
+        Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position -transform.position);
+        transform.rotation = Quaternion.Slerp(new Quaternion(0,transform.rotation.y,transform.rotation.z,0), lookRotation,3);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        //Quaternion lookRotation = Quaternion.LookRotation(transform.position, GameObject.Find("Main Camera").transform.position);
+        //transform.rotation = Quaternion.Slerp(lookRotation, transform.rotation, 3);
+        if (Input.GetMouseButtonDown(2))
         {
-            //Debug.Log("Attack!");
-            if (attack==false)
+            if (playerScript.hitCount>=10)
             {
-                Flinch();
-
-                if (idleCancel != null)
-                {
-                    StopCoroutine(idleCancel);
-                }
-
-                if (flinchCancel != null)
-                {
-                    StopCoroutine(flinchCancel);
-                }
-                
+                playerScript.AllAttack();
             }
-
-            //Atm, I need Attack to go to flinch and for flinch to go to id
-
-            if (attack==true)
-            {
-                if (flinchInterrupt==true)
-                {
-                    //I'm thinking of making attack ==false here, but I wasn't expecting my code to become this complicate
-                    Flinch();
-                    
-                }
-            }
+        }
+        if (HP<=0)
+        {
+            Destroy(gameObject);
         }
     }
     //Setters
+    public void SetHP(int newHP)
+    {
+        HP = newHP;
+    }
     public void SetIdleStart()
     {
         idleStart = true;     
@@ -220,12 +210,50 @@ public class Enemy : MonoBehaviour
             animator.SetBool("Idle", false);
         }
     }
+    public void TakeDamage(int damage)
+    {
+        HP -= damage;
+    }
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (playerScript.attackLagging == false)
         {
-            Debug.Log("Attacked!");
+            if (Input.GetMouseButtonDown(0))
+            {
+                //Debug.Log("Attacked!");
+                playerScript.ViolinAttack(transform.position);
+                HP--; 
+                playerScript.HitCountUp();
+                //Debug.Log("Attack!");
+                if (attack == false)
+                {
+                    Flinch();
+
+                    if (idleCancel != null)
+                    {
+                        StopCoroutine(idleCancel);
+                    }
+
+                    if (flinchCancel != null)
+                    {
+                        StopCoroutine(flinchCancel);
+                    }
+
+                }
+
+                //Atm, I need Attack to go to flinch and for flinch to go to id
+
+                if (attack == true)
+                {
+                    if (flinchInterrupt == true)
+                    {
+                        //I'm thinking of making attack ==false here, but I wasn't expecting my code to become this complicate
+                        Flinch();
+
+                    }
+                }
+            }
         }
     }
 }
