@@ -74,9 +74,9 @@ public class Enemy : MonoBehaviour
     {
         //Quaternion lookRotation = Quaternion.LookRotation(transform.position, GameObject.Find("Main Camera").transform.position);
         //transform.rotation = Quaternion.Slerp(lookRotation, transform.rotation, 3);
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            if (playerScript.hitCount>=10)
+            if (playerScript.hitCount>=30)
             {
                 playerScript.AllAttack();
             }
@@ -219,7 +219,7 @@ public class Enemy : MonoBehaviour
     {
         if (playerScript.attackLagging == false)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) &&playerScript.violinDrained==false)
             {
                 //Debug.Log("Attacked!");
                 playerScript.ViolinAttack(transform.position);
@@ -253,6 +253,20 @@ public class Enemy : MonoBehaviour
 
                     }
                 }
+            }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Trumpet"))
+        {
+            bool damaged = false;
+            if (damaged ==false)
+            {
+                damaged = true;
+                TakeDamage(2);
+                Destroy(other.gameObject);
+                Flinch();
             }
         }
     }
