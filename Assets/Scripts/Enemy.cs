@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //I want to do some things I didn't do right in Beast Dominion
@@ -175,7 +176,7 @@ public class Enemy : MonoBehaviour
         //animator.ResetTrigger("Attack");
         //StartCoroutine(IdleAnimation());
         StartIdle();
-        playerScript.PlayHurtEffect();
+        DealDamage();
     }
     public void PlayAttackEffect(int attackEffect)
     {
@@ -185,6 +186,19 @@ public class Enemy : MonoBehaviour
     public void StopAttackEffect()
     {
         attackEffects[effectNumber].Stop();
+    }
+    public void DealDamage()
+    {
+        if (playerScript.shieldOn==false)
+        {
+            playerScript.GeneralDamageCode(1, 1);
+            playerScript.PlayHurtEffect();
+            playerScript.DamageFlashOn();
+        }
+        else
+        {
+            playerScript.GenerateShield(transform.position);
+        }
     }
     public void StartIdle()
     {
