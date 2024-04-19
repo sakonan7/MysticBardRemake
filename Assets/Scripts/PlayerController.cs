@@ -7,6 +7,7 @@ using UnityEngine.UI;
 //Will instantiate the hit effects, such as Interrupt
 public class PlayerController : MonoBehaviour
 {
+    //I made these with the idea of sticking stuff together. Shield stuff with shield stuff, violin stuff with violin stuff, IE
     private GameObject camera;
     private float originalCameraY;
     private Image HPBar;
@@ -16,19 +17,22 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem hurtEffect;
     public ParticleSystem violinHitEffect;
     public bool attack = false;
-    public bool attackLagging = false;
+    public bool lag = false;
     public int hitCount = 0;
     private Image violinGauge;
     private Image allAttackGauge;
 
     //public objects?
     public GameObject shield;
+    private GameObject toolIcon;
+    public GameObject trumpetRange;
 
     public bool violinDrained = false;
     private float HP = 20;
 
     public bool shieldOn = false;
     public bool shieldDrained = false;
+    public bool trumpetOn = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,17 +41,12 @@ public class PlayerController : MonoBehaviour
         damageFlash = GameObject.Find("Damage Object").transform.Find("Damage").gameObject;
         violinGauge = GameObject.Find("Violin Gauge").GetComponent<Image>();
         allAttackGauge = GameObject.Find("All Attack Gauge").GetComponent<Image>();
+        toolIcon = GameObject.Find("Tool Icons");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (attackLagging==false) {
-            //if (Input.GetMouseButtonDown(0))
-            //{
-                //AllAttack();
-            //}
-        }
         if (violinDrained==true)
         {
             violinGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
@@ -62,12 +61,24 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(ShieldOn());
             }
         }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            trumpetOn = true;
+            trumpetRange.SetActive(true);
+        }
+    }
+    private void FixedUpdate()
+    {
+        if (trumpetOn==true)
+        {
+            trumpetRange.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z-8.264f));
+        }
     }
     public void ViolinAttack(Vector3 newPosition)
     {
         //if (violinDrained ==false) {
             ViolinHitEffect(newPosition);
-            StartCoroutine(AttackLag());
+            StartCoroutine(Lag());
             violinGauge.fillAmount -= (float)1 / 15;
             if (violinGauge.fillAmount <= 0)
             {
@@ -90,7 +101,7 @@ public class PlayerController : MonoBehaviour
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             ViolinHitEffect(enemies[i].transform.position);
         }
-        StartCoroutine(AttackLag());
+        StartCoroutine(Lag());
         //Debug.Log("Player Attack");
         hitCount = 0;
         allAttackGauge.fillAmount=0;
@@ -99,11 +110,13 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
     }
-    IEnumerator AttackLag()
+    IEnumerator Lag()
     {
-        attackLagging = true;
+        lag = true;
+        toolIcon.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        attackLagging = false;
+        lag = false;
+        toolIcon.SetActive(false);
     }
     public void InterruptEffect(Vector3 position)
     {
@@ -127,6 +140,12 @@ public class PlayerController : MonoBehaviour
     {
         GameObject newShield = shield;
         Instantiate(newShield, GameObject.Find("Canvas General").transform);
+        Vector3 pos = camera.GetComponent<Camera>().WorldToScreenPoint(position + new Vector3(0, 1f, 0.5f));
+        //DisplayHP();
+        //if (transform.position != pos)
+        //{
+            newShield.transform.position = pos;
+        //}
         //Instantiate(shield,position,shield.transform.rotation);
     }
     public void GeneralDamageCode(float damage, float shakeAmount)

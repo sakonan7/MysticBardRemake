@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
     //While attacking a foe
     private float attackLength = 1;
 
+    public GameObject effectAppear;
     public ParticleSystem[] attackEffects;
     private int effectNumber = 0;
 
@@ -134,6 +135,17 @@ public class Enemy : MonoBehaviour
             //animator.SetTrigger("Flinch");
         }
 
+        //Moved this from mouseOver 
+        if (idleCancel != null)
+        {
+            StopCoroutine(idleCancel);
+        }
+
+        if (flinchCancel != null)
+        {
+            StopCoroutine(flinchCancel);
+        }
+
         //Don't know why I didn't put this here right away, because I successful flinch will always start a flinchdur
         flinchCancel = StartCoroutine(FlinchDuration());
 
@@ -141,7 +153,7 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator FlinchDuration()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         if (animatorTrue==true)
         {
             animator.ResetTrigger("Flinch");
@@ -192,7 +204,7 @@ public class Enemy : MonoBehaviour
         if (playerScript.shieldOn==false)
         {
             playerScript.GeneralDamageCode(1, 1);
-            playerScript.PlayHurtEffect();
+            //playerScript.PlayHurtEffect(effectAppear.transform.position);
             playerScript.DamageFlashOn();
         }
         else
@@ -231,7 +243,7 @@ public class Enemy : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (playerScript.attackLagging == false)
+        if (playerScript.lag == false)
         {
             if (Input.GetMouseButtonDown(0) &&playerScript.violinDrained==false)
             {
@@ -244,15 +256,7 @@ public class Enemy : MonoBehaviour
                 {
                     Flinch();
 
-                    if (idleCancel != null)
-                    {
-                        StopCoroutine(idleCancel);
-                    }
 
-                    if (flinchCancel != null)
-                    {
-                        StopCoroutine(flinchCancel);
-                    }
 
                 }
 
