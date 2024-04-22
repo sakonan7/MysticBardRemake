@@ -252,6 +252,8 @@ public class Enemy : MonoBehaviour
                 HP--; 
                 playerScript.HitCountUp();
                 //Debug.Log("Attack!");
+
+                //I think I will always call Flinch(), but the method will determine if the foe will stagger or
                 if (attack == false)
                 {
                     Flinch();
@@ -283,7 +285,7 @@ public class Enemy : MonoBehaviour
             {
                 damaged = true;
                 TakeDamage(2);
-                Destroy(other.gameObject);
+                //Destroy(other.gameObject);
                 Flinch();
             }
         }

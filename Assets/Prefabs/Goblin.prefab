@@ -505,6 +505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  effectAppear: {fileID: 0}
   attackEffects:
   - {fileID: 4711685881414956193}
 --- !u!54 &1317767034055439913
@@ -1660,7 +1661,7 @@ Transform:
   m_GameObject: {fileID: 8620868771136287465}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.61, z: 0.41}
+  m_LocalPosition: {x: 0, y: 0.61, z: 0.76}
   m_LocalScale: {x: 0.093225, y: 0.125, z: 0.1474375}
   m_ConstrainProportionsScale: 0
   m_Children: []

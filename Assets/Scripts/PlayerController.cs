@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public GameObject shield;
     private GameObject toolIcon;
     public GameObject trumpetRange;
+    public GameObject trumpetHitbox;
 
     public bool violinDrained = false;
     private float HP = 20;
@@ -33,6 +34,11 @@ public class PlayerController : MonoBehaviour
     public bool shieldOn = false;
     public bool shieldDrained = false;
     public bool trumpetOn = false;
+
+    //Private bools
+    private bool violin = true;
+    private bool trumpet = false;
+    private bool flute = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -61,15 +67,39 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(ShieldOn());
             }
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+            //trumpetOn = true;
+            //trumpetRange.SetActive(true);
+        //}
+        if (Input.GetMouseButtonDown(1))
         {
-            trumpetOn = true;
-            trumpetRange.SetActive(true);
+            if (violin==true)
+            {
+                violin = false;
+                trumpet = true;
+                trumpetRange.SetActive(true);
+            }
+            else
+            {
+                violin = true;
+                trumpet = false;
+                trumpetRange.SetActive(false);
+            }
+        }
+        if (lag==false) {
+            if (trumpet == true)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                }
+            }
         }
     }
     private void FixedUpdate()
     {
-        if (trumpetOn==true)
+        if (trumpet==true)
         {
             trumpetRange.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z-8.264f));
         }
@@ -86,6 +116,19 @@ public class PlayerController : MonoBehaviour
             }
         //}
 }
+    public void TrumpetAttack(Vector3 newPosition)
+    {
+        //if (violinDrained ==false) {
+        //ViolinHitEffect(newPosition);
+        Instantiate(trumpetHitbox, newPosition, trumpetHitbox.transform.rotation);
+        StartCoroutine(Lag());
+        //violinGauge.fillAmount -= (float)1 / 15;
+        //if (violinGauge.fillAmount <= 0)
+        //{
+            //violinDrained = true;
+        //}
+        //}
+    }
     public void HitCountUp()
     {
         hitCount++;
@@ -113,10 +156,10 @@ public class PlayerController : MonoBehaviour
     IEnumerator Lag()
     {
         lag = true;
-        toolIcon.SetActive(true);
+        //toolIcon.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         lag = false;
-        toolIcon.SetActive(false);
+        //toolIcon.SetActive(false);
     }
     public void InterruptEffect(Vector3 position)
     {
