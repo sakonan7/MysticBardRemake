@@ -46,7 +46,12 @@ public class Enemy : MonoBehaviour
     public ParticleSystem[] attackEffects;
     private int effectNumber = 0;
 
+    //public gameOb
+    public GameObject teamAttackAura;
+
     private int HP = 10;
+    //Individual enemy abilit
+    private bool teamAttack = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -65,7 +70,7 @@ public class Enemy : MonoBehaviour
         if (idleStart==true)
         {
             idleCancel = StartCoroutine(IdleAnimation(idleTime));
-            Debug.Log("Id");
+            //Debug.Log("Id");
         }
         Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position -transform.position);
         transform.rotation = Quaternion.Slerp(new Quaternion(0,transform.rotation.y,transform.rotation.z,0), lookRotation,3);
@@ -104,6 +109,10 @@ public class Enemy : MonoBehaviour
     public void SetAttackLength(float newLength)
     {
         attackLength = newLength;
+    }
+    public void SetTeamAttack()
+    {
+        teamAttack = true;
     }
     //So far so good. The only problem is that I can't do Idle"", false. I need to keep snapping back to Idle
     //This'llonlybe a problem if I want a recover anima
@@ -240,6 +249,14 @@ public class Enemy : MonoBehaviour
     {
         HP -= damage;
     }
+    public void TeamAttackPositives()
+    {
+        teamAttackAura.SetActive(true);
+    }
+    public void TeamAttackOff()
+    {
+        teamAttackAura.SetActive(false);
+    }
 
     private void OnMouseOver()
     {
@@ -273,6 +290,55 @@ public class Enemy : MonoBehaviour
 
                     }
                 }
+            }
+        }
+    }
+    private void OnMouseDrag()
+    {
+        //Debug.Log("Dragged");
+        if (playerScript.wind==true)
+        {
+            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 7.59f));
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (playerScript.wind==true)
+        {
+            //Wind off. Need wind variable for enemy
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                bool damaged = false;
+                if (damaged == false)
+                {
+                    damaged = true;
+                    TakeDamage(2);
+                    //Destroy(other.gameObject);
+                    Flinch();
+                }
+                gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                playerScript.WindEnd();
+            }
+        }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (teamAttack==true)
+            {
+                TeamAttackPositives();
+            }
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (teamAttack == true)
+            {
+                TeamAttackOff();
             }
         }
     }

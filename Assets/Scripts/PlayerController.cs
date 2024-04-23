@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public bool lag = false;
     public int hitCount = 0;
     private Image violinGauge;
+    private Image trumpetGauge;
     private Image allAttackGauge;
 
     //public objects?
@@ -34,11 +35,13 @@ public class PlayerController : MonoBehaviour
     public bool shieldOn = false;
     public bool shieldDrained = false;
     public bool trumpetOn = false;
+    private bool trumpetDrained = false;
 
     //Private bools
     private bool violin = true;
     private bool trumpet = false;
-    private bool flute = false;
+    public bool flute = false;
+    public bool wind = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +49,7 @@ public class PlayerController : MonoBehaviour
         HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
         damageFlash = GameObject.Find("Damage Object").transform.Find("Damage").gameObject;
         violinGauge = GameObject.Find("Violin Gauge").GetComponent<Image>();
+        trumpetGauge = GameObject.Find("Trumpet Gauge").GetComponent<Image>();
         allAttackGauge = GameObject.Find("All Attack Gauge").GetComponent<Image>();
         toolIcon = GameObject.Find("Tool Icons");
     }
@@ -87,12 +91,30 @@ public class PlayerController : MonoBehaviour
                 trumpetRange.SetActive(false);
             }
         }
+        if (Input.GetMouseButtonDown(2))
+        {
+            if (violin == true)
+            {
+                violin = false;
+                flute = true;
+                //trumpetRange.SetActive(true);
+            }
+            else
+            {
+                violin = true;
+                flute = false;
+                //trumpetRange.SetActive(false);
+            }
+            wind = true;
+        }
         if (lag==false) {
             if (trumpet == true)
             {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                if (trumpetDrained ==false) {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                    }
                 }
             }
         }
@@ -122,12 +144,16 @@ public class PlayerController : MonoBehaviour
         //ViolinHitEffect(newPosition);
         Instantiate(trumpetHitbox, newPosition, trumpetHitbox.transform.rotation);
         StartCoroutine(Lag());
-        //violinGauge.fillAmount -= (float)1 / 15;
-        //if (violinGauge.fillAmount <= 0)
-        //{
-            //violinDrained = true;
+        trumpetGauge.fillAmount -= (float)1 / 10;
+        if (trumpetGauge.fillAmount <= 0)
+        {
+            trumpetDrained = true;
+        }
         //}
-        //}
+    }
+    public void WindEnd()
+    {
+        wind = false;
     }
     public void HitCountUp()
     {
