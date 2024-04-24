@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine.UI;
 
 //Will instantiate the hit effects, such as Interrupt
+//04/23/24
+//I eyeballed a lot of flute
 public class PlayerController : MonoBehaviour
 {
     //I made these with the idea of sticking stuff together. Shield stuff with shield stuff, violin stuff with violin stuff, IE
@@ -105,7 +107,7 @@ public class PlayerController : MonoBehaviour
                 flute = false;
                 //trumpetRange.SetActive(false);
             }
-            wind = true;
+            //wind = true;
         }
         if (lag==false) {
             if (trumpet == true)
@@ -116,6 +118,20 @@ public class PlayerController : MonoBehaviour
                         TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
                     }
                 }
+            }
+        }
+        if (wind==false)
+        {
+            if (flute == true)
+            {
+                //if (trumpetDrained == false)
+                //{
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                    //TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                    WindOn();
+                    }
+                //}
             }
         }
     }
@@ -151,9 +167,18 @@ public class PlayerController : MonoBehaviour
         }
         //}
     }
+    public void WindOn()
+    {
+        wind = true;
+    }
     public void WindEnd()
     {
         wind = false;
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); 
+        for (int i =0; i < enemies.Length; i++)
+        {
+            enemies[i].GetComponent<Enemy>().AnalyzeTeamAttackCapability();
+        }
     }
     public void HitCountUp()
     {

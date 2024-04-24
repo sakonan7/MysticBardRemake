@@ -40,10 +40,17 @@ public class Gob : MonoBehaviour
     {
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Attack");
+        enemyScript.SetDamage(1);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
-        enemyScript.PlayAttackEffect(0);
+        if (enemyScript.teamAttackOn==true) {
+            enemyScript.PlayAttackEffect(1);
+        }
+        else
+        {
+            enemyScript.PlayAttackEffect(0);
+        }
         enemyScript.AttackReadyOff();
     }
 
