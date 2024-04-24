@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 7499010334505139923}
   - component: {fileID: 6881491635095159888}
   m_Layer: 0
-  m_Name: Trumpet Hitbox
-  m_TagString: Trumpet
+  m_Name: Violin Hitbox
+  m_TagString: Violin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,10 +29,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8551800652245622886}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.602, y: 0.73, z: -8.264}
-  m_LocalScale: {x: 2.25, y: 2.25, z: 2.25}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.2377476, y: 1.2377476, z: 1.2377476}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -105,8 +105,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.6060809
-  m_Center: {x: 0, y: 0, z: 0.106080905}
+  m_Radius: 0.634439
+  m_Center: {x: 0, y: 0, z: 0.13443898}
 --- !u!114 &7499010334505139923
 MonoBehaviour:
   m_ObjectHideFlags: 0

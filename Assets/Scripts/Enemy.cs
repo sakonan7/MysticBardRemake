@@ -148,6 +148,7 @@ public class Enemy : MonoBehaviour
     //This will only be an issue if enemies can teleport
     public void AnalyzeTeamAttackCapability()
     {
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
         float distance;
         bool enemyNextToAnother = false;
         int i = 0;
@@ -327,31 +328,31 @@ public class Enemy : MonoBehaviour
             if (Input.GetMouseButtonDown(0) &&playerScript.violinDrained==false)
             {
                 //Debug.Log("Attacked!");
-                playerScript.ViolinAttack(transform.position);
-                HP--; 
-                playerScript.HitCountUp();
+                //playerScript.ViolinAttack(transform.position);
+                //HP--; 
+                //playerScript.HitCountUp();
                 //Debug.Log("Attack!");
 
                 //I think I will always call Flinch(), but the method will determine if the foe will stagger or
-                if (attack == false)
-                {
-                    Flinch();
+                //if (attack == false)
+                //{
+                    //Flinch();
 
 
 
-                }
+                //}
 
                 //Atm, I need Attack to go to flinch and for flinch to go to id
 
-                if (attack == true)
-                {
-                    if (flinchInterrupt == true)
-                    {
+                //if (attack == true)
+                //{
+                    //if (flinchInterrupt == true)
+                    //{
                         //I'm thinking of making attack ==false here, but I wasn't expecting my code to become this complicate
-                        Flinch();
+                        //Flinch();
 
-                    }
-                }
+                    //}
+                //}
             }
         }
     }
@@ -410,6 +411,17 @@ public class Enemy : MonoBehaviour
             {
                 damaged = true;
                 TakeDamage(2);
+                //Destroy(other.gameObject);
+                Flinch();
+            }
+        }
+        if (other.CompareTag("Violin"))
+        {
+            bool damaged = false;
+            if (damaged == false)
+            {
+                damaged = true;
+                TakeDamage(1);
                 //Destroy(other.gameObject);
                 Flinch();
             }

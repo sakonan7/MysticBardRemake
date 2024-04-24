@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Trumpet
+  - Fire
+  - Violin
   layers:
   - Default
   - TransparentFX
