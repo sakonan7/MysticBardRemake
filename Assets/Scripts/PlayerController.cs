@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public GameObject violinHitbox;
     public GameObject trumpetSoundwave;
     public GameObject violinSoundwave;
+    public GameObject fluteWind;
 
     public bool violinDrained = false;
     private float HP = 20;
@@ -174,6 +175,10 @@ public class PlayerController : MonoBehaviour
         {
             trumpetRange.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z-8.264f));
         }
+        if (wind ==true)
+        {
+            fluteWind.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f));
+        }
     }
     public void ViolinAttack(Vector3 newPosition)
     {
@@ -214,6 +219,7 @@ public class PlayerController : MonoBehaviour
     public void WindOn()
     {
         wind = true;
+        fluteWind.SetActive(true);
     }
     public void WindEnd()
     {
@@ -223,6 +229,7 @@ public class PlayerController : MonoBehaviour
         {
             enemies[i].GetComponent<Enemy>().AnalyzeTeamAttackCapability();
         }
+        fluteWind.SetActive(false);
     }
     public void HitCountUp()
     {

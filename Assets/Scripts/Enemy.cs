@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -159,6 +160,10 @@ public class Enemy : MonoBehaviour
     public void SetTeamAttack()
     {
         teamAttack = true;
+    }
+    public void DamageText(int damage)
+    {
+        gameObject.transform.Find("Damage Received").GetComponent<TextMesh>().text= ""+damage;
     }
     //I think I'm going to need every enemy to call this. This is so I don't need to keep running this check
     //This will only be an issue if enemies can teleport
@@ -332,6 +337,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         HP -= damage;
+        DamageText(damage);
     }
     public void TeamAttackPositives()
     {
@@ -390,8 +396,8 @@ public class Enemy : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (playerScript.wind==true)
-        {
+        //if (playerScript.wind==true)
+        //{
             //Wind off. Need wind variable for enemy
             if (collision.gameObject.CompareTag("Enemy"))
             {
@@ -406,9 +412,12 @@ public class Enemy : MonoBehaviour
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 playerScript.WindEnd();
-                //I need to cancel out a bunch of coroutines
-            }
+            //I need to cancel out a bunch of coroutines
+            windCaptured = false;
+            Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position - transform.position);
+            transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
         }
+        //}
     }
     private void OnCollisionStay(Collision collision)
     {
@@ -447,6 +456,7 @@ public class Enemy : MonoBehaviour
             {
                 damaged = true;
                 TakeDamage(1);
+                //Damage(1);
                 //Destroy(other.gameObject);
                 Flinch();
             }
