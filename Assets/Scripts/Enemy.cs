@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 //I want to do some things I didn't do right in Beast Dominion
 //Flinch
@@ -43,6 +44,9 @@ public class Enemy : MonoBehaviour
     private bool attack = false; //Putting this here for now. I want this code to be assimple as possible //Need this for now, because may not want to use idle (check for it
     //While attacking a foe
     private float attackLength = 1;
+    private bool windCaptured = false;
+    private bool repeat = true;
+    private bool flinching = false;
 
     public GameObject effectAppear;
     public ParticleSystem[] attackEffects;
@@ -85,8 +89,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Quaternion lookRotation = Quaternion.LookRotation(transform.position, GameObject.Find("Look At").transform.position);
-        //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
+        if (windCaptured==false) {
+            //Quaternion lookRotation = Quaternion.LookRotation(transform.position, GameObject.Find("Look At").transform.position);
+            //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
+        }
         if (Input.GetKeyDown(KeyCode.D))
         {
             if (playerScript.hitCount>=30)
@@ -117,6 +123,16 @@ public class Enemy : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 3f, transform.position.z);
             playerScript.WindEnd();
+        }
+        if (windCaptured==true && repeat==true)
+        {
+            Flinch();
+            repeat = false;
+            StartCoroutine(WindFlinch());
+        }
+        if (windCaptured==true && flinching==true)
+        {
+            transform.Rotate(Vector3.up*180*Time.deltaTime);
         }
     }
     //Setters
@@ -223,12 +239,19 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator FlinchDuration()
     {
+        flinching = true;
         yield return new WaitForSeconds(2);
         if (animatorTrue==true)
         {
             animator.ResetTrigger("Flinch");
         }
+        flinching = false;
         idleCancel = StartCoroutine(IdleAnimation(3));
+    }
+    IEnumerator WindFlinch()
+    {
+        yield return new WaitForSeconds(1);
+        repeat = true;
     }
     public void StartFlinchWindow()
     {
@@ -361,6 +384,7 @@ public class Enemy : MonoBehaviour
         //Debug.Log("Dragged");
         if (playerScript.wind==true)
         {
+            windCaptured = true;
             transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 7.59f));
         }
     }
@@ -382,6 +406,7 @@ public class Enemy : MonoBehaviour
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 playerScript.WindEnd();
+                //I need to cancel out a bunch of coroutines
             }
         }
     }
