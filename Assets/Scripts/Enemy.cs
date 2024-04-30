@@ -394,6 +394,14 @@ public class Enemy : MonoBehaviour
             transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 7.59f));
         }
     }
+    private void OnMouseUp()
+    {
+        if (playerScript.wind == true)
+        {
+            playerScript.WindEnd();
+            Debug.Log("End");
+        }
+    }
     private void OnCollisionEnter(Collision collision)
     {
         //if (playerScript.wind==true)
@@ -416,6 +424,11 @@ public class Enemy : MonoBehaviour
             windCaptured = false;
             Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position - transform.position);
             transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
+            if (teamAttack == true && teamAttackOn == false)
+            {
+                teamAttackOn = true;
+                TeamAttackPositives();
+            }
         }
         //}
     }

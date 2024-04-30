@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private Image trumpetGauge;
     private Image fluteGauge;
     private Image allAttackGauge;
+    private GameObject weaponImages;
 
     //public objects?
     public GameObject shield;
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
         fluteGauge = GameObject.Find("Flute Gauge").GetComponent<Image>();
         allAttackGauge = GameObject.Find("All Attack Gauge").GetComponent<Image>();
         toolIcon = GameObject.Find("Tool Icons");
+        weaponImages = GameObject.Find("Weapon Images");
     }
 
     // Update is called once per frame
@@ -220,6 +222,7 @@ public class PlayerController : MonoBehaviour
     {
         wind = true;
         fluteWind.SetActive(true);
+        weaponImages.transform.Find("Flute Image").gameObject.SetActive(true);
     }
     public void WindEnd()
     {
@@ -227,9 +230,10 @@ public class PlayerController : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); 
         for (int i =0; i < enemies.Length; i++)
         {
-            enemies[i].GetComponent<Enemy>().AnalyzeTeamAttackCapability();
+            //enemies[i].GetComponent<Enemy>().AnalyzeTeamAttackCapability();
         }
         fluteWind.SetActive(false);
+        weaponImages.transform.Find("Flute Image").gameObject.SetActive(false);
     }
     public void HitCountUp()
     {
@@ -259,9 +263,20 @@ public class PlayerController : MonoBehaviour
     {
         lag = true;
         //toolIcon.SetActive(true);
+        if (violin ==true) {
+            weaponImages.transform.Find("Violin Image").gameObject.SetActive(true);
+        }
+        else if (trumpet == true)
+        {
+            weaponImages.transform.Find("Trumpet Image").gameObject.SetActive(true);
+        }
         yield return new WaitForSeconds(0.5f);
         lag = false;
         //toolIcon.SetActive(false);
+        if (violin == true)
+        {
+            weaponImages.transform.Find("Violin Image").gameObject.SetActive(false);
+        }
     }
     public void InterruptEffect(Vector3 position)
     {
@@ -315,4 +330,5 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1);
         damageFlash.SetActive(false);
     }
+
 }
