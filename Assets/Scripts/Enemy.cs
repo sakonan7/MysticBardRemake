@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     private bool animatorTrue = false;
     private bool animationTrue = false;
     private PlayerController playerScript;
+    private Vector3 effectPosition;
 
     private Coroutine flinchCancel; //or flinchReset
     private Coroutine idleCancel;
@@ -85,6 +86,8 @@ public class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Slerp(new Quaternion(0,transform.rotation.y,transform.rotation.z,0), lookRotation,3);
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        effectPosition=transform.Find("Effect Position").transform.position;
     }
 
     // Update is called once per frame
@@ -307,7 +310,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            playerScript.GenerateShield(transform.position);
+            playerScript.GenerateShield(effectPosition);
         }
     }
     public void StartIdle()
@@ -460,6 +463,8 @@ public class Enemy : MonoBehaviour
                 TakeDamage(2);
                 //Destroy(other.gameObject);
                 Flinch();
+                playerScript.HitCountUp();
+                playerScript.TrumpetHitEffect(effectPosition);
             }
         }
         if (other.CompareTag("Violin"))
@@ -472,6 +477,8 @@ public class Enemy : MonoBehaviour
                 //Damage(1);
                 //Destroy(other.gameObject);
                 Flinch();
+                playerScript.HitCountUp();
+                playerScript.ViolinHitEffect(effectPosition);
             }
         }
     }

@@ -138,7 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3300873520608393527}
   m_Layer: 0
-  m_Name: Effect Appear
+  m_Name: Effect Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1257,7 +1257,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b6d4010cbb1c141d884c47751a44704c, type: 3}
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1297,10 +1297,10 @@ TextMesh:
   m_FontSize: 30
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: b6d4010cbb1c141d884c47751a44704c, type: 3}
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4294902015
 --- !u!1 &5813038190564549400
 GameObject:
   m_ObjectHideFlags: 0
