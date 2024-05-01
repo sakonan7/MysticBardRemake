@@ -112,21 +112,25 @@ public class Enemy : MonoBehaviour
         {
             transform.position = new Vector3(-4.31f, transform.position.y, transform.position.z);
             playerScript.WindEnd();
+            WindCaptureEnd();
         }
         if (transform.position.x >= 4.32f)
         {
             transform.position = new Vector3(4.31f, transform.position.y, transform.position.z);
             playerScript.WindEnd();
+            WindCaptureEnd();
         }
         if (transform.position.y <= -3f)
         {
             transform.position = new Vector3(transform.position.x, -3f, transform.position.z);
             playerScript.WindEnd();
+            WindCaptureEnd();
         }
         if (transform.position.y >= 3f)
         {
             transform.position = new Vector3(transform.position.x, 3f, transform.position.z);
             playerScript.WindEnd();
+            WindCaptureEnd();
         }
         if (windCaptured==true && repeat==true)
         {
@@ -144,9 +148,15 @@ public class Enemy : MonoBehaviour
     {
         HP = newHP;
     }
+    //05/01/24
+    //I can either set the damage at the start(), or check for team att
     public void SetDamage(float newDamage)
     {
         damage = newDamage;
+        if (teamAttackOn ==true)
+        {
+            damage++;
+        }
     }
     public void SetIdleStart()
     {
@@ -289,7 +299,7 @@ public class Enemy : MonoBehaviour
         //animator.ResetTrigger("Attack");
         //StartCoroutine(IdleAnimation());
         StartIdle();
-        DealDamage();
+        DealDamage(damage);
     }
     public void PlayAttackEffect(int attackEffect)
     {
@@ -300,17 +310,21 @@ public class Enemy : MonoBehaviour
     {
         attackEffects[effectNumber].Stop();
     }
-    public void DealDamage()
+    public void DealDamage(float newDamage)
     {
-        if (playerScript.shieldOn==false)
+        if (playerScript.shieldOn==false && playerScript.specialInvincibility == false)
         {
-            playerScript.GeneralDamageCode(1, 1);
+            playerScript.GeneralDamageCode(newDamage, newDamage);
             //playerScript.PlayHurtEffect(effectAppear.transform.position);
             playerScript.DamageFlashOn();
         }
-        else
+        else if(playerScript.shieldOn==true || playerScript.specialInvincibility ==true)
         {
             playerScript.GenerateShield(effectPosition);
+            if(playerScript.shieldOn==true)
+            {
+                playerScript.ShieldGaugeDown(newDamage);
+            }
         }
     }
     public void StartIdle()
@@ -341,6 +355,12 @@ public class Enemy : MonoBehaviour
     {
         HP -= damage;
         DamageText(damage);
+    }
+    public void WindCaptureEnd()
+    {
+        windCaptured = false;
+        Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position - transform.position);
+        transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
     }
     public void TeamAttackPositives()
     {
@@ -402,13 +422,14 @@ public class Enemy : MonoBehaviour
         if (playerScript.wind == true)
         {
             playerScript.WindEnd();
+            WindCaptureEnd();
             Debug.Log("End");
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        //if (playerScript.wind==true)
-        //{
+        if (playerScript.wind==true)
+        {
             //Wind off. Need wind variable for enemy
             if (collision.gameObject.CompareTag("Enemy"))
             {
@@ -424,22 +445,21 @@ public class Enemy : MonoBehaviour
                 collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 playerScript.WindEnd();
             //I need to cancel out a bunch of coroutines
-            windCaptured = false;
-            Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position - transform.position);
-            transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
-            if (teamAttack == true && teamAttackOn == false)
-            {
-                teamAttackOn = true;
-                TeamAttackPositives();
-            }
+            WindCaptureEnd();
+
         }
-        //}
+        }
     }
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-
+            if (teamAttack == true && teamAttackOn == false)
+            {
+                teamAttackOn = true;
+                TeamAttackPositives();
+                Debug.Log("Team Attack On");
+            }
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -464,6 +484,7 @@ public class Enemy : MonoBehaviour
                 //Destroy(other.gameObject);
                 Flinch();
                 playerScript.HitCountUp();
+                playerScript.TrumpetHitEffect(effectPosition);
                 playerScript.TrumpetHitEffect(effectPosition);
             }
         }

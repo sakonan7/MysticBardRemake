@@ -33,6 +33,13 @@ public class PlayerController : MonoBehaviour
     private Image allAttackGauge;
     private GameObject weaponImages;
     private AudioSource audio;
+    private GameObject damageFilter;
+    private GameObject specialFilter;
+    private GameObject shieldFilter;
+    private GameObject weaponSelected;
+    private TextMeshProUGUI numPotions;
+    private int numPotionsInt = 4;
+    private GameObject potionUsedIcon;
 
     //public objects?
     public GameObject shield;
@@ -60,6 +67,7 @@ public class PlayerController : MonoBehaviour
     private bool trumpet = false;
     public bool flute = false;
     public bool wind = false;
+    private bool potionUsed = false;
     private bool paused = false;
     // Start is called before the first frame update
     void Start()
@@ -70,10 +78,17 @@ public class PlayerController : MonoBehaviour
         violinGauge = GameObject.Find("Violin Gauge").GetComponent<Image>();
         trumpetGauge = GameObject.Find("Trumpet Gauge").GetComponent<Image>();
         fluteGauge = GameObject.Find("Flute Gauge").GetComponent<Image>();
+        shieldGauge = GameObject.Find("Shield Gauge").GetComponent<Image>();
         allAttackGauge = GameObject.Find("All Attack Gauge").GetComponent<Image>();
         toolIcon = GameObject.Find("Tool Icons");
         weaponImages = GameObject.Find("Weapon Images");
         audio = GetComponent<AudioSource>();
+        specialFilter = GameObject.Find("Filter").transform.Find("Special Filter").gameObject;
+        shieldFilter = GameObject.Find("Filter").transform.Find("Shield Filter").gameObject;
+        weaponSelected = GameObject.Find("Weapons");
+        numPotions = GameObject.Find("Number of Potions").GetComponent<TextMeshProUGUI>();
+        numPotions.text = "X " + numPotionsInt;
+        potionUsedIcon = GameObject.Find("Potions").transform.Find("Use Potion").gameObject;
     }
 
     // Update is called once per frame
@@ -104,11 +119,23 @@ public class PlayerController : MonoBehaviour
                     fluteDrained = false;
                 }
             }
+            if (shieldDrained == true)
+            {
+                shieldGauge.fillAmount += (float)1 / 10 * Time.deltaTime;
+                if (shieldGauge.fillAmount >= 1)
+                {
+                    shieldDrained = false;
+                }
+            }
+
+            //It's really interesting that I did shieldOn first
             if (shieldOn == false)
             {
-                if (Input.GetKeyDown(KeyCode.A)) {
-                    StartCoroutine(ShieldOn());
-                    audio.PlayOneShot(shieldTune, 1);
+                if (shieldDrained== false) {
+                    if (Input.GetKeyDown(KeyCode.A)) {
+                        StartCoroutine(ShieldOn());
+                        audio.PlayOneShot(shieldTune, 1);
+                    }
                 }
             }
             //if (Input.GetKeyDown(KeyCode.S))
@@ -130,6 +157,7 @@ public class PlayerController : MonoBehaviour
                     trumpet = false;
                     trumpetRange.SetActive(false);
                 }
+                WeaponSelect();
             }
             if (Input.GetMouseButtonDown(2))
             {
@@ -146,6 +174,7 @@ public class PlayerController : MonoBehaviour
                     //trumpetRange.SetActive(false);
                 }
                 //wind = true;
+                WeaponSelect();
             }
             if (lag == false) {
                 if (trumpet == true)
@@ -190,6 +219,10 @@ public class PlayerController : MonoBehaviour
                     AllAttack();
                 }
             }
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                Potion();
+            }
         }
     }
     private void FixedUpdate()
@@ -214,6 +247,27 @@ public class PlayerController : MonoBehaviour
                 Time.timeScale = 1;
                 Debug.Log("Pause Undone");
             }
+        }
+    }
+    public void WeaponSelect()
+    {
+        if (violin == true)
+        {
+            weaponSelected.transform.Find("Violin Selected").gameObject.SetActive(true);
+            weaponSelected.transform.Find("Trumpet Selected").gameObject.SetActive(false);
+            weaponSelected.transform.Find("Flute Selected").gameObject.SetActive(false);
+        }
+        if (trumpet == true)
+        {
+            weaponSelected.transform.Find("Violin Selected").gameObject.SetActive(false);
+            weaponSelected.transform.Find("Trumpet Selected").gameObject.SetActive(true);
+            weaponSelected.transform.Find("Flute Selected").gameObject.SetActive(false);
+        }
+        if (flute == true)
+        {
+            weaponSelected.transform.Find("Violin Selected").gameObject.SetActive(false);
+            weaponSelected.transform.Find("Trumpet Selected").gameObject.SetActive(false);
+            weaponSelected.transform.Find("Flute Selected").gameObject.SetActive(true);
         }
     }
     public void ViolinAttack(Vector3 newPosition)
@@ -290,6 +344,32 @@ public class PlayerController : MonoBehaviour
         allAttackGauge.fillAmount=0;
         StartCoroutine(SpecialInvincibility());
     }
+    public void Potion()
+    {
+        if (HP < 20) {
+            HP += 4;
+            HPBar.fillAmount += (float)4 / HP;
+            numPotionsInt--;
+            numPotions.text = "X " + numPotionsInt;
+            if (potionUsed == false) {
+                StartCoroutine(PotionUse());
+            }
+        }
+        if (numPotionsInt <= 0)
+        {
+            numPotions.text = "";
+        }
+    }
+    IEnumerator PotionUse()
+    {
+        potionUsed = true;
+        potionUsedIcon.SetActive(true);
+        //HPBar.transform.localScale = new Vector3(HPBar.transform.localScale.x*8/7, HPBar.transform.localScale.y * 8 / 7, HPBar.transform.localScale.z);
+        yield return new WaitForSeconds(1.5f);
+        potionUsed = false;
+        potionUsedIcon.SetActive(false);
+        //HPBar.transform.localScale = new Vector3(HPBar.transform.localScale.x * 7 / 8, HPBar.transform.localScale.y * 7 / 8, HPBar.transform.localScale.z);
+    }
     IEnumerator AttackDuration()
     {
         yield return new WaitForSeconds(0.5f);
@@ -339,17 +419,21 @@ public class PlayerController : MonoBehaviour
     {
         shieldOn = true;
         weaponImages.transform.Find("Shield Image").gameObject.SetActive(true);
+        shieldFilter.SetActive(true);
         yield return new WaitForSeconds(2);
         shieldOn = false;
         weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
+        shieldFilter.SetActive(false);
     }
     IEnumerator SpecialInvincibility()
     {
         specialInvincibility = true;
         //weaponImages.transform.Find("Shield Image").gameObject.SetActive(true);
+        specialFilter.SetActive(true);
         yield return new WaitForSeconds(2);
         specialInvincibility = false;
         //weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
+        specialFilter.SetActive(false);
     }
     public void GenerateShield(Vector3 position)
     {
@@ -369,6 +453,14 @@ public class PlayerController : MonoBehaviour
             //newShield.transform.position = pos;
         //}
         //Instantiate(shield,position,shield.transform.rotation);
+    }
+    public void ShieldGaugeDown(float damage)
+    {
+        shieldGauge.fillAmount -= (float)damage / 10;
+        if (shieldGauge.fillAmount <= 0)
+        {
+            shieldDrained = true;
+        }
     }
     public void GeneralDamageCode(float damage, float shakeAmount)
     {
