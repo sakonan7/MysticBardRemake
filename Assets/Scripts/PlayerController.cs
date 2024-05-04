@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
-                if (hitCount >= 10)
+                if (hitCount >= 25)
                 {
                     AllAttack();
                 }

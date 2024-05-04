@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -49,6 +50,7 @@ public class Enemy : MonoBehaviour
     private bool windCaptured = false;
     private bool repeat = true;
     private bool flinching = false;
+    private bool barrier = false;
 
     public GameObject effectAppear;
     public ParticleSystem[] attackEffects;
@@ -57,7 +59,7 @@ public class Enemy : MonoBehaviour
     //public gameOb
     public GameObject teamAttackAura;
 
-    private int HP = 10;
+    private float HP = 10;
     private float damage = 0;
     //Individual enemy abilit
     private bool teamAttack = false;
@@ -174,7 +176,7 @@ public class Enemy : MonoBehaviour
     {
         teamAttack = true;
     }
-    public void DamageText(int damage)
+    public void DamageText(float damage)
     {
         gameObject.transform.Find("Damage Received").GetComponent<TextMesh>().text= ""+damage;
     }
@@ -351,8 +353,12 @@ public class Enemy : MonoBehaviour
             animator.SetBool("Idle", false);
         }
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
+        if (barrier ==true)
+        {
+            damage /= 2;
+        }
         HP -= damage;
         DamageText(damage);
     }
@@ -501,6 +507,20 @@ public class Enemy : MonoBehaviour
                 playerScript.HitCountUp();
                 playerScript.ViolinHitEffect(effectPosition);
             }
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Barrier"))
+        {
+            barrier = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Barrier"))
+        {
+            barrier = false;
         }
     }
 }
