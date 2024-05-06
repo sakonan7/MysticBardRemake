@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
     private bool animatorTrue = false;
     private bool animationTrue = false;
     private PlayerController playerScript;
-    private Vector3 effectPosition;
+    private GameObject effectPosition;
 
     private Coroutine flinchCancel; //or flinchReset
     private Coroutine idleCancel;
@@ -64,6 +64,7 @@ public class Enemy : MonoBehaviour
     //Individual enemy abilit
     private bool teamAttack = false;
     public bool teamAttackOn = false;
+    private bool red = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -89,7 +90,7 @@ public class Enemy : MonoBehaviour
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        effectPosition=transform.Find("Effect Position").transform.position;
+        effectPosition=transform.Find("Effect Position").gameObject;
     }
 
     // Update is called once per frame
@@ -175,6 +176,10 @@ public class Enemy : MonoBehaviour
     public void SetTeamAttack()
     {
         teamAttack = true;
+    }
+    public void SetRed()
+    {
+        red = true;
     }
     public void DamageText(float damage)
     {
@@ -310,7 +315,7 @@ public class Enemy : MonoBehaviour
     }
     public void StopAttackEffect()
     {
-        attackEffects[effectNumber].Stop();
+        //attackEffects[effectNumber].Stop();
     }
     public void DealDamage(float newDamage)
     {
@@ -322,7 +327,7 @@ public class Enemy : MonoBehaviour
         }
         else if(playerScript.shieldOn==true || playerScript.specialInvincibility ==true)
         {
-            playerScript.GenerateShield(effectPosition);
+            playerScript.GenerateShield(effectPosition.transform.position);
             if(playerScript.shieldOn==true)
             {
                 playerScript.ShieldGaugeDown(newDamage);
@@ -490,8 +495,8 @@ public class Enemy : MonoBehaviour
                 //Destroy(other.gameObject);
                 Flinch();
                 playerScript.HitCountUp();
-                playerScript.TrumpetHitEffect(effectPosition);
-                playerScript.TrumpetHitEffect(effectPosition);
+                playerScript.TrumpetHitEffect(effectPosition.transform.position);
+                playerScript.TrumpetHitEffect(effectPosition.transform.position);
             }
         }
         if (other.CompareTag("Violin"))
@@ -503,9 +508,11 @@ public class Enemy : MonoBehaviour
                 TakeDamage(1);
                 //Damage(1);
                 //Destroy(other.gameObject);
-                Flinch();
+                if (red==false) {
+                    Flinch();
+                }
                 playerScript.HitCountUp();
-                playerScript.ViolinHitEffect(effectPosition);
+                playerScript.ViolinHitEffect(effectPosition.transform.position);
             }
         }
     }

@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
             //trumpetOn = true;
             //trumpetRange.SetActive(true);
             //}
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1) &&wind==false)
             {
                 if (violin == true)
                 {
@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
                 }
                 WeaponSelect();
             }
-            if (Input.GetMouseButtonDown(2))
+            if (Input.GetMouseButtonDown(2)&&wind==false)
             {
                 if (violin == true)
                 {
@@ -483,6 +483,13 @@ public class PlayerController : MonoBehaviour
         damageFlash.SetActive(true);
         yield return new WaitForSeconds(1);
         damageFlash.SetActive(false);
+    }
+    public void OnMouseUp()
+    {
+        if(wind==true)
+        {
+            WindEnd();
+        }
     }
 
 }

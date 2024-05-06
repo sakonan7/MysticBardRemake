@@ -16,7 +16,7 @@ public class Giant : MonoBehaviour
         enemyScript.SetHP(30);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(5);
-        //enemyScript.SetTeamAttack();
+        enemyScript.SetRed();
     }
 
     // Update is called once per frame
