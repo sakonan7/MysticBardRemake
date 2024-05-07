@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Cinemachine;
 
 //Will instantiate the hit effects, such as Interrupt
 //04/23/24
@@ -13,8 +14,10 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     //I made these with the idea of sticking stuff together. Shield stuff with shield stuff, violin stuff with violin stuff, IE
+    public GameObject damageText;
     public AudioClip shieldTune;
     private GameObject camera;
+    private CinemachineBasicMultiChannelPerlin camShake;
     private float originalCameraY;
     private Image HPBar;
     private GameObject damageFlash;
@@ -69,10 +72,14 @@ public class PlayerController : MonoBehaviour
     public bool wind = false;
     private bool potionUsed = false;
     private bool paused = false;
+    
+    private Coroutine cancelDamageText;
+    private Coroutine cancelDamageShake;
     // Start is called before the first frame update
     void Start()
     {
         camera = GameObject.Find("Main Camera");
+        camShake = GameObject.Find("FreeLook Camera").GetComponent<CinemachineFreeLook>().GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
         HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
         damageFlash = GameObject.Find("Damage Object").transform.Find("Damage").gameObject;
         violinGauge = GameObject.Find("Violin Gauge").GetComponent<Image>();
@@ -343,6 +350,7 @@ public class PlayerController : MonoBehaviour
         hitCount = 0;
         allAttackGauge.fillAmount=0;
         StartCoroutine(SpecialInvincibility());
+        StartCoroutine(CameraShake(0));
     }
     public void Potion()
     {
@@ -467,12 +475,32 @@ public class PlayerController : MonoBehaviour
         //StartCoroutine(CameraShake(1/10));
         HP -= damage;
         HPBar.fillAmount -= (float)damage / HP;
+        PlayHurtEffect();
+
+        //I'm thinking about not cancelling the Coroutine and just changing the value of damage
+        //Camera shake for giant should be double
+        cancelDamageShake = StartCoroutine(CameraShake(0));
+        cancelDamageText =StartCoroutine(DamageText(damage));
     }
-    IEnumerator CameraShake(float power)
+    IEnumerator DamageText(float damage)
+    {
+        damageText.GetComponent<TextMesh>().text = "" + damage;
+        yield return new WaitForSeconds(1);
+        damageText.GetComponent<TextMesh>().text = "";
+    }
+    IEnumerator OldCameraShake(float power)
     {
         camera.transform.Translate(0, -power,0);
         yield return new WaitForSeconds(1);
         camera.transform.position = new Vector3(camera.transform.position.x, originalCameraY, camera.transform.position.z);
+    }
+    IEnumerator CameraShake(float shakeAmount)
+    {
+        camShake.m_AmplitudeGain = 5f;
+        camShake.m_FrequencyGain = 0.5f;
+        yield return new WaitForSeconds(1);
+        camShake.m_AmplitudeGain = 0;
+        camShake.m_FrequencyGain = 0.5f;
     }
     public void DamageFlashOn()
     {
