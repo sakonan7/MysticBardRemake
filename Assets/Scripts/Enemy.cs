@@ -102,15 +102,9 @@ public class Enemy : MonoBehaviour
             //Quaternion lookRotation = Quaternion.LookRotation(transform.position, GameObject.Find("Look At").transform.position);
             //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
         }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (playerScript.hitCount>=10)
-            {
-                playerScript.AllAttack();
-            }
-        }
         if (HP<=0)
         {
+            WindCaptureEnd();
             Destroy(gameObject);
         }
         if (transform.position.x <= -4.32f)
@@ -195,7 +189,7 @@ public class Enemy : MonoBehaviour
     IEnumerator DamageDisplayDuration(float damage)
     {
         DamageText(damage);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         gameObject.transform.Find("Damage Received").GetComponent<TextMesh>().text = "";
     }
     //I think I'm going to need every enemy to call this. This is so I don't need to keep running this check
@@ -441,6 +435,27 @@ public class Enemy : MonoBehaviour
                 //}
             }
         }
+        if (normal == false)
+        {
+            if (playerScript.flute ==true &&playerScript.wind==false)
+            {
+                GameObject.Find("Capture Impossible").transform.Find("Cursor").gameObject.SetActive(true);
+            }
+            else
+            {
+                GameObject.Find("Capture Impossible").transform.Find("Cursor").gameObject.SetActive(false);
+            }
+        }
+    }
+    private void OnMouseExit()
+    {
+        if (normal == false)
+        {
+            if (playerScript.flute == true)
+            {
+                GameObject.Find("Capture Impossible").transform.Find("Cursor").gameObject.SetActive(false);
+            }
+        }
     }
     private void OnMouseDown()
     {
@@ -499,10 +514,13 @@ public class Enemy : MonoBehaviour
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 playerScript.WindEnd();
-            //I need to cancel out a bunch of coroutines
-            WindCaptureEnd();
+                //I need to cancel out a bunch of coroutines
+                if (windCaptured==true) {
+                    WindCaptureEnd();
+                }
+                    playerScript.WindHitEffect(collision.GetContact(0).point);
 
-        }
+            }
         }
     }
     private void OnCollisionStay(Collision collision)

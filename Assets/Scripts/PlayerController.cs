@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem hurtEffect;
     public ParticleSystem violinHitEffect;
     public ParticleSystem trumpetHitEffect;
+    public ParticleSystem windCrash;
     public bool attack = false;
     public bool lag = false;
     public int hitCount = 0;
@@ -123,6 +124,7 @@ public class PlayerController : MonoBehaviour
                 if (violinGauge.fillAmount >= 1)
                 {
                     violinDrained = false;
+                    violinGauge.color = new Color(0.9503901f, 1, 0, 1);
                 }
             }
             if (trumpetDrained == true)
@@ -131,6 +133,7 @@ public class PlayerController : MonoBehaviour
                 if (trumpetGauge.fillAmount >= 1)
                 {
                     trumpetDrained = false;
+                    trumpetGauge.color = new Color(0.9503901f, 1, 0, 1);
                 }
             }
             if (fluteDrained == true)
@@ -139,6 +142,7 @@ public class PlayerController : MonoBehaviour
                 if (fluteGauge.fillAmount >= 1)
                 {
                     fluteDrained = false;
+                    fluteGauge.color = new Color(0.9503901f, 1, 0, 1);
                 }
             }
             if (shieldDrained == true)
@@ -147,6 +151,7 @@ public class PlayerController : MonoBehaviour
                 if (shieldGauge.fillAmount >= 1)
                 {
                     shieldDrained = false;
+                    shieldGauge.color = new Color(0.9503901f, 1, 0, 1);
                 }
             }
 
@@ -277,6 +282,8 @@ public class PlayerController : MonoBehaviour
             if (violinGauge.fillAmount <= 0)
             {
                 violinDrained = true;
+            violinGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
+            
             }
         //}
 }
@@ -291,6 +298,7 @@ public class PlayerController : MonoBehaviour
         if (trumpetGauge.fillAmount <= 0)
         {
             trumpetDrained = true;
+            trumpetGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
         }
         //}
     }
@@ -300,6 +308,7 @@ public class PlayerController : MonoBehaviour
         if (fluteGauge.fillAmount <= 0)
         {
             fluteDrained = true;
+            fluteGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
         }
     }
     public void WindOn()
@@ -434,6 +443,10 @@ public class PlayerController : MonoBehaviour
     {
         Instantiate(trumpetHitEffect, position, trumpetHitEffect.transform.rotation);
     }
+    public void WindHitEffect(Vector3 position)
+    {
+        Instantiate(windCrash, new Vector3(position.x, position.y, -7.59f), windCrash.transform.rotation);
+    }
     IEnumerator ShieldOn()
     {
         shieldOn = true;
@@ -479,6 +492,7 @@ public class PlayerController : MonoBehaviour
         if (shieldGauge.fillAmount <= 0)
         {
             shieldDrained = true;
+            shieldGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
         }
     }
     public void GeneralDamageCode(float damage, float shakeAmount)
