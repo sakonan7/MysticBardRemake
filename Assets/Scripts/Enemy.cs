@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
     private PlayerController playerScript;
     private GameObject effectPosition;
 
+    private Coroutine cancelDamageDisplay;
     private Coroutine flinchCancel; //or flinchReset
     private Coroutine idleCancel;
     private Coroutine flinchOpportunityCancel;
@@ -63,6 +64,7 @@ public class Enemy : MonoBehaviour
     private float damage = 0;
     //Individual enemy abilit
     private bool teamAttack = false;
+    private bool normal = false;
     public bool teamAttackOn = false;
     private bool red = false;
     // Start is called before the first frame update
@@ -102,7 +104,7 @@ public class Enemy : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            if (playerScript.hitCount>=30)
+            if (playerScript.hitCount>=10)
             {
                 playerScript.AllAttack();
             }
@@ -140,6 +142,7 @@ public class Enemy : MonoBehaviour
             Flinch();
             repeat = false;
             StartCoroutine(WindFlinch());
+            StartCoroutine(WindDamage());
         }
         if (windCaptured==true && flinching==true)
         {
@@ -173,6 +176,10 @@ public class Enemy : MonoBehaviour
     {
         attackLength = newLength;
     }
+    public void SetNormal()
+    {
+        normal = true;
+    }
     public void SetTeamAttack()
     {
         teamAttack = true;
@@ -184,6 +191,12 @@ public class Enemy : MonoBehaviour
     public void DamageText(float damage)
     {
         gameObject.transform.Find("Damage Received").GetComponent<TextMesh>().text= ""+damage;
+    }
+    IEnumerator DamageDisplayDuration(float damage)
+    {
+        DamageText(damage);
+        yield return new WaitForSeconds(1);
+        gameObject.transform.Find("Damage Received").GetComponent<TextMesh>().text = "";
     }
     //I think I'm going to need every enemy to call this. This is so I don't need to keep running this check
     //This will only be an issue if enemies can teleport
@@ -278,6 +291,11 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(1);
         repeat = true;
     }
+    IEnumerator WindDamage()
+    {
+        yield return new WaitForSeconds(1.25f);
+        TakeDamage(1);
+    }
     public void StartFlinchWindow()
     {
         flinchOpportunityCancel =StartCoroutine(FlinchWindow());
@@ -360,12 +378,17 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
-        if (barrier ==true)
+        if (barrier ==true&&windCaptured==false)
         {
             damage /= 2;
         }
         HP -= damage;
-        DamageText(damage);
+        //DamageText(damage);
+        if (cancelDamageDisplay !=null)
+        {
+            StopCoroutine(cancelDamageDisplay);
+        }
+        cancelDamageDisplay = StartCoroutine(DamageDisplayDuration(damage));
     }
     public void WindCaptureEnd()
     {
@@ -419,12 +442,33 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    private void OnMouseDown()
+    {
+        if (playerScript.wind == false)
+        {
+            if (playerScript.flute == true)
+            {
+                if (playerScript.fluteDrained == false)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        //TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                        if (normal == true) {
+                            playerScript.FluteAttack();
+                            playerScript.WindOn();
+                            windCaptured = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
     private void OnMouseDrag()
     {
         //Debug.Log("Dragged");
         if (playerScript.wind==true)
         {
-            windCaptured = true;
+            
             transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 7.59f));
         }
     }

@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public bool attack = false;
     public bool lag = false;
     public int hitCount = 0;
+    public GameObject allAttackEffect;
     private Image violinGauge;
     private Image trumpetGauge;
     private Image fluteGauge;
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
     public bool specialInvincibility = false;
     public bool trumpetOn = false;
     private bool trumpetDrained = false;
-    private bool fluteDrained = false;
+    public bool fluteDrained = false;
 
     //Private bools
     private bool violin = true;
@@ -101,6 +102,20 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (paused == false)
+            {
+                paused = true;
+                Time.timeScale = 0;
+            }
+            else
+            {
+                paused = false;
+                Time.timeScale = 1;
+                Debug.Log("Pause Undone");
+            }
+        }
         if (paused ==false) {
             if (violinDrained == true)
             {
@@ -204,21 +219,7 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-            if (wind == false)
-            {
-                if (flute == true)
-                {
-                    if (fluteDrained == false)
-                    {
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            //TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
-                            FluteAttack();
-                            WindOn();
-                        }
-                    }
-                }
-            }
+
             if (Input.GetKeyDown(KeyCode.D))
             {
                 if (hitCount >= 25)
@@ -242,19 +243,7 @@ public class PlayerController : MonoBehaviour
         {
             fluteWind.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f));
         }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (paused == false) {
-                paused = true;
-                Time.timeScale = 0;
-            }
-            else
-            {
-                paused = false;
-                Time.timeScale = 1;
-                Debug.Log("Pause Undone");
-            }
-        }
+
     }
     public void WeaponSelect()
     {
@@ -350,7 +339,29 @@ public class PlayerController : MonoBehaviour
         hitCount = 0;
         allAttackGauge.fillAmount=0;
         StartCoroutine(SpecialInvincibility());
-        StartCoroutine(CameraShake(0));
+        StartCoroutine(CameraShakeSpec(0));
+        //allAttackEffect.SetActive(true);
+        StartCoroutine(AllAttackDisappear1());
+    }
+    IEnumerator AllAttackDisappear1()
+    {
+        allAttackEffect.SetActive(true);
+        yield return new WaitForSeconds(0.25f*2);
+        allAttackEffect.SetActive(false);
+        StartCoroutine(AllAttackAgain());
+    }
+    IEnumerator AllAttackAgain()
+    {
+        //allAttackEffect.SetActive(true);
+        yield return new WaitForSeconds(0.25f *2);
+        allAttackEffect.SetActive(true);
+        StartCoroutine(AllAttackDisappear2());
+    }
+    IEnumerator AllAttackDisappear2()
+    {
+        allAttackEffect.SetActive(true);
+        yield return new WaitForSeconds(1);
+        allAttackEffect.SetActive(false);
     }
     public void Potion()
     {
@@ -496,9 +507,17 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator CameraShake(float shakeAmount)
     {
-        camShake.m_AmplitudeGain = 5f;
+        camShake.m_AmplitudeGain = 3f;
         camShake.m_FrequencyGain = 0.5f;
         yield return new WaitForSeconds(1);
+        camShake.m_AmplitudeGain = 0;
+        camShake.m_FrequencyGain = 0.5f;
+    }
+    IEnumerator CameraShakeSpec(float shakeAmount)
+    {
+        camShake.m_AmplitudeGain = 3f;
+        camShake.m_FrequencyGain = 0.5f;
+        yield return new WaitForSeconds(0.5f);
         camShake.m_AmplitudeGain = 0;
         camShake.m_FrequencyGain = 0.5f;
     }

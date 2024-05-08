@@ -17,6 +17,7 @@ public class Gob : MonoBehaviour
         enemyScript.SetHP(30);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(5);
+        enemyScript.SetNormal();
         enemyScript.SetTeamAttack();
     }
 

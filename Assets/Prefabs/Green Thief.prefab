@@ -1899,8 +1899,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 3.42, y: -0.009, z: -3.47}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.375, y: 0.375, z: 0.375}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2007333980454710960}
   - {fileID: 4865795469383478835}
@@ -1920,7 +1920,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 83107c796bf2ec348afb5e040bea51c8, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1989,8 +1989,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.39, y: 4.649689, z: 1.85}
+  m_Center: {x: 0, y: 2.3989289, z: -0}
 --- !u!54 &4195186646424055331
 Rigidbody:
   m_ObjectHideFlags: 0
