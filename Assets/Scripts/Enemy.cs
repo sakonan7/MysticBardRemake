@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         if (idleStart==true)
         {
-            idleCancel = StartCoroutine(IdleAnimation(idleTime));
+            idleCancel = StartCoroutine(IdleAnimation(Random.Range(4, 10)));
             //Debug.Log("Id");
         }
         Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position -transform.position);
@@ -131,16 +131,16 @@ public class Enemy : MonoBehaviour
             playerScript.WindEnd();
             WindCaptureEnd();
         }
-        if (windCaptured==true && repeat==true)
+
+        if (windCaptured ==true && playerScript.wind==true)
         {
-            Flinch();
-            repeat = false;
-            StartCoroutine(WindFlinch());
-            StartCoroutine(WindDamage());
-        }
-        if (windCaptured==true && flinching==true)
-        {
-            transform.Rotate(Vector3.up*180*Time.deltaTime);
+            if (repeat ==true) {
+                Flinch();
+                repeat = false;
+                StartCoroutine(WindFlinch());
+                StartCoroutine(WindDamage());
+            }
+            transform.Rotate(Vector3.up * 180 * Time.deltaTime);
         }
     }
     //Setters
@@ -238,7 +238,7 @@ public class Enemy : MonoBehaviour
             //Also, I have to cancel different Coroutines for different mo
             StopCoroutine(flinchOpportunityCancel);
             StopCoroutine(attackLengthCancel);
-            playerScript.InterruptEffect(transform.position);
+            playerScript.InterruptEffect(effectAppear.transform.position);
             StopAttackEffect();
         }
 
@@ -389,6 +389,7 @@ public class Enemy : MonoBehaviour
         windCaptured = false;
         Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position - transform.position);
         transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
+        Debug.Log("Wind " + windCaptured);
     }
     public void TeamAttackPositives()
     {
@@ -515,9 +516,9 @@ public class Enemy : MonoBehaviour
                 collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 playerScript.WindEnd();
                 //I need to cancel out a bunch of coroutines
-                if (windCaptured==true) {
+                //if (windCaptured==true) {
                     WindCaptureEnd();
-                }
+                //}
                     playerScript.WindHitEffect(collision.GetContact(0).point);
 
             }

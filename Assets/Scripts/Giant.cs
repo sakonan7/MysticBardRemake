@@ -13,7 +13,7 @@ public class Giant : MonoBehaviour
         animator = GetComponent<Animator>();
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
-        enemyScript.SetHP(30);
+        enemyScript.SetHP(100);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(5);
         enemyScript.SetRed();
@@ -39,7 +39,7 @@ public class Giant : MonoBehaviour
     {
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Attack");
-        enemyScript.SetDamage(1);
+        enemyScript.SetDamage(3);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
@@ -49,7 +49,7 @@ public class Giant : MonoBehaviour
         }
         else
         {
-            //enemyScript.PlayAttackEffect(0);
+            enemyScript.PlayAttackEffect(0);
         }
         enemyScript.AttackReadyOff();
     }
