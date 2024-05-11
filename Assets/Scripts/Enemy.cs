@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
     private Coroutine idleCancel;
     private Coroutine flinchOpportunityCancel;
     private Coroutine attackLengthCancel;
+    private Coroutine counterAttackCancel;
 
     private GameObject[] enemies;
 
@@ -53,7 +54,7 @@ public class Enemy : MonoBehaviour
     private bool flinching = false;
     private bool barrier = false;
 
-    public GameObject effectAppear;
+    
     public ParticleSystem[] attackEffects;
     private int effectNumber = 0;
 
@@ -67,6 +68,7 @@ public class Enemy : MonoBehaviour
     private bool normal = false;
     public bool teamAttackOn = false;
     private bool red = false;
+    private bool green = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -182,6 +184,10 @@ public class Enemy : MonoBehaviour
     {
         red = true;
     }
+    public void SetGreen()
+    {
+        green = true;
+    }
     public void DamageText(float damage)
     {
         gameObject.transform.Find("Damage Received").GetComponent<TextMesh>().text= ""+damage;
@@ -238,7 +244,7 @@ public class Enemy : MonoBehaviour
             //Also, I have to cancel different Coroutines for different mo
             StopCoroutine(flinchOpportunityCancel);
             StopCoroutine(attackLengthCancel);
-            playerScript.InterruptEffect(effectAppear.transform.position);
+            playerScript.InterruptEffect(effectPosition.transform.position);
             StopAttackEffect();
         }
 
@@ -288,7 +294,7 @@ public class Enemy : MonoBehaviour
     IEnumerator WindDamage()
     {
         yield return new WaitForSeconds(1.25f);
-        TakeDamage(1);
+        TakeDamage(1, true);
     }
     public void StartFlinchWindow()
     {
@@ -363,16 +369,31 @@ public class Enemy : MonoBehaviour
         }
         yield return new WaitForSeconds(idleTime);
         idle = false;
-        attack = true;
-        attackReady = true;
-        if (animatorTrue == true)
+        if (green== false) {
+            attack = true;
+            attackReady = true;
+            if (animatorTrue == true)
+            {
+                animator.SetBool("Idle", false);
+            }
+        }
+        else
         {
-            animator.SetBool("Idle", false);
+            counterAttackCancel = StartCoroutine(CounterAttack());
         }
     }
-    public void TakeDamage(float damage)
+    IEnumerator CounterAttack()
     {
-        if (barrier ==true&&windCaptured==false)
+        yield return new WaitForSeconds(5);
+    }
+    IEnumerator FollowUpAttack()
+    {
+        yield return new WaitForSeconds(4);
+
+    }
+    public void TakeDamage(float damage, bool armorBreak)
+    {
+        if (barrier ==true &&armorBreak ==false)
         {
             damage /= 2;
         }
@@ -508,7 +529,7 @@ public class Enemy : MonoBehaviour
                 if (damaged == false)
                 {
                     damaged = true;
-                    TakeDamage(3);
+                    TakeDamage(3, true);
                     //Destroy(other.gameObject);
                     Flinch();
                 }
@@ -548,13 +569,14 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        bool armorBreak = false;
         if (other.CompareTag("Trumpet"))
         {
             bool damaged = false;
             if (damaged ==false)
             {
                 damaged = true;
-                TakeDamage(2);
+                TakeDamage(2, true);
                 //Destroy(other.gameObject);
                 Flinch();
                 playerScript.HitCountUp();
@@ -567,7 +589,7 @@ public class Enemy : MonoBehaviour
             if (damaged == false)
             {
                 damaged = true;
-                TakeDamage(1);
+                TakeDamage(1, false);
                 //Damage(1);
                 //Destroy(other.gameObject);
                 if (red==false) {
@@ -583,7 +605,7 @@ public class Enemy : MonoBehaviour
             if (damaged == false)
             {
                 damaged = true;
-                TakeDamage(3);
+                TakeDamage(3, true);
                 Flinch();
             }
         }

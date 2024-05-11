@@ -16,7 +16,7 @@ public class GreenThief : MonoBehaviour
         enemyScript.SetHP(100);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(5);
-        enemyScript.SetNormal();
+        enemyScript.SetGreen();
     }
 
     // Update is called once per frame
@@ -46,5 +46,9 @@ public class GreenThief : MonoBehaviour
             enemyScript.PlayAttackEffect(0);
         }
         enemyScript.AttackReadyOff();
+    }
+    public void RegularAttack()
+    {
+
     }
 }

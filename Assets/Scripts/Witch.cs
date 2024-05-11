@@ -44,10 +44,10 @@ public class Witch : MonoBehaviour
     }
     public void BombCube()
     {
-        Instantiate(bomb, new Vector3(transform.position.x + 1, transform.position.y + 1, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x - 1, transform.position.y +1, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x + 1, transform.position.y - 1, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x - 1, transform.position.y - 1, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x - 1.5f, transform.position.y +1.5f, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x + 1.5f, transform.position.y - 1.5f, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x - 1.5f, transform.position.y - 1.5f, -7.59f), bomb.transform.rotation);
         enemyScript.AttackReadyOff();
     }
     public void Attack()

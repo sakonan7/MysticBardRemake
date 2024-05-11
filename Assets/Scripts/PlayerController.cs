@@ -339,7 +339,7 @@ public class PlayerController : MonoBehaviour
         GameObject [] enemies =GameObject.FindGameObjectsWithTag("Enemy");
         for (int i= 0; i < enemies.Length; i++)
         {
-            enemies[i].GetComponent<Enemy>().TakeDamage(20);
+            enemies[i].GetComponent<Enemy>().TakeDamage(20, true);
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             //ViolinHitEffect(enemies[i].transform.position);
         }
