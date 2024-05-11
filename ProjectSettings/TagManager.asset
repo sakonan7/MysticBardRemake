@@ -9,6 +9,8 @@ TagManager:
   - Fire
   - Violin
   - Barrier
+  - Bomb
+  - Hitbox
   layers:
   - Default
   - TransparentFX

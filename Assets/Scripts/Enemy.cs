@@ -559,7 +559,6 @@ public class Enemy : MonoBehaviour
                 Flinch();
                 playerScript.HitCountUp();
                 playerScript.TrumpetHitEffect(effectPosition.transform.position);
-                playerScript.TrumpetHitEffect(effectPosition.transform.position);
             }
         }
         if (other.CompareTag("Violin"))
@@ -576,6 +575,16 @@ public class Enemy : MonoBehaviour
                 }
                 playerScript.HitCountUp();
                 playerScript.ViolinHitEffect(effectPosition.transform.position);
+            }
+        }
+        if (other.CompareTag("Hitbox"))
+        {
+            bool damaged = false;
+            if (damaged == false)
+            {
+                damaged = true;
+                TakeDamage(3);
+                Flinch();
             }
         }
     }
