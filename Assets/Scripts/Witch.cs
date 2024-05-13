@@ -19,6 +19,7 @@ public class Witch : MonoBehaviour
         enemyScript.SetIdleTime(5);
         enemyScript.SetNormal();
         Barrier();
+        enemyScript.SetArmor();
     }
 
     // Update is called once per frame
@@ -28,7 +29,14 @@ public class Witch : MonoBehaviour
         {
             BombCube();
             //Debug.Log("Attack");
+            //Only doing this because I need to
+            //I intend for the foe to not be able to be staggered while using a barrier
+            Attack();
         }
+        //if (enemyScript.armor=)
+        //{
+
+        //}
     }
     public void Barrier()
     {
@@ -36,36 +44,36 @@ public class Witch : MonoBehaviour
     }
     public void BombCross()
     {
-        Instantiate(bomb, new Vector3(transform.position.x + 2, transform.position.y, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x - 2, transform.position.y, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x, transform.position.y + 2, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x, transform.position.y - 2, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x + 2+1, transform.position.y, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x - 2-1, transform.position.y, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x, transform.position.y + 2+1, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x, transform.position.y - 2 - 1, -7.59f), bomb.transform.rotation);
         enemyScript.AttackReadyOff();
     }
     public void BombCube()
     {
-        Instantiate(bomb, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x - 1.5f, transform.position.y +1.5f, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x + 1.5f, transform.position.y - 1.5f, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x - 1.5f, transform.position.y - 1.5f, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x + 1.5f +1, transform.position.y + 1.5f + 1, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x - 1.5f - 1, transform.position.y + 1.5f + 1, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x + 1.5f + 1, transform.position.y - 1.5f - 1, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(transform.position.x - 1.5f - 1, transform.position.y - 1.5f - 1, -7.59f), bomb.transform.rotation);
         enemyScript.AttackReadyOff();
     }
     public void Attack()
     {
         //animator.SetBool("Idle",false);
-        animator.SetTrigger("Attack");
-        enemyScript.SetDamage(1);
+        //animator.SetTrigger("Attack");
+        //enemyScript.SetDamage(1);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
-        if (enemyScript.teamAttackOn == true)
-        {
-            enemyScript.PlayAttackEffect(1);
-        }
-        else
-        {
-            enemyScript.PlayAttackEffect(0);
-        }
-        enemyScript.AttackReadyOff();
+        //if (enemyScript.teamAttackOn == true)
+        //{
+            //enemyScript.PlayAttackEffect(1);
+        //}
+        //else
+        //{
+            //enemyScript.PlayAttackEffect(0);
+        //}
+        //enemyScript.AttackReadyOff();
     }
 }

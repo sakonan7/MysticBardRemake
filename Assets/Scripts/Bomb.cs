@@ -8,13 +8,17 @@ public class Bomb : MonoBehaviour
 {
     private PlayerController playerScript;
     private Coroutine explodeCancel;
+    private Coroutine explodeEffectCancel;
     private GameObject effectPosition;
+    private GameObject aboutToExplode;
     // Start is called before the first frame update
     void Start()
     {
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         effectPosition = transform.Find("Effect Position").gameObject;
         explodeCancel = StartCoroutine(TimedExplosion());
+        aboutToExplode = transform.Find("About To Explode").gameObject;
+        explodeEffectCancel = StartCoroutine(AboutToExplode());
     }
 
     // Update is called once per frame
@@ -64,8 +68,17 @@ public class Bomb : MonoBehaviour
             }
         }
     }
+    IEnumerator AboutToExplode()
+    {
+        yield return new WaitForSeconds(6-2);
+        aboutToExplode.SetActive(true);
+    }
     public void EnemyExplode()
     {
+        if (explodeEffectCancel != null)
+        {
+            StopCoroutine(explodeEffectCancel);
+        }
         transform.Find("Appearance").gameObject.SetActive(false);
         transform.Find("Hitbox").gameObject.SetActive(true);
         Destroy(gameObject, 2);
@@ -83,6 +96,8 @@ public class Bomb : MonoBehaviour
                             playerScript.FluteAttack();
                             playerScript.WindOn();
                         StopCoroutine(explodeCancel);
+                        StopCoroutine(explodeEffectCancel);
+                        aboutToExplode.SetActive(false);
                     }
                 }
             }
@@ -126,10 +141,12 @@ public class Bomb : MonoBehaviour
         if (other.CompareTag("Trumpet"))
         {
             EnemyExplode();
+            //StopCoroutine(explodeEffectCancel);
         }
         if (other.CompareTag("Violin"))
         {
             EnemyExplode();
+            //StopCoroutine(explodeEffectCancel);
         }
     }
 }

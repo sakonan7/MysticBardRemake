@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
     
     private Coroutine cancelDamageText;
     private Coroutine cancelDamageShake;
+    private Coroutine cancelShield;
     // Start is called before the first frame update
     void Start()
     {
@@ -103,138 +104,140 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (paused == false)
+        if (HP > 0) {
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                paused = true;
-                Time.timeScale = 0;
-            }
-            else
-            {
-                paused = false;
-                Time.timeScale = 1;
-                Debug.Log("Pause Undone");
-            }
-        }
-        if (paused ==false) {
-            if (violinDrained == true)
-            {
-                violinGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
-                if (violinGauge.fillAmount >= 1)
+                if (paused == false)
                 {
-                    violinDrained = false;
-                    violinGauge.color = new Color(0.9503901f, 1, 0, 1);
-                }
-            }
-            if (trumpetDrained == true)
-            {
-                trumpetGauge.fillAmount += (float)1 / 15 * Time.deltaTime;
-                if (trumpetGauge.fillAmount >= 1)
-                {
-                    trumpetDrained = false;
-                    trumpetGauge.color = new Color(0.9503901f, 1, 0, 1);
-                }
-            }
-            if (fluteDrained == true)
-            {
-                fluteGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
-                if (fluteGauge.fillAmount >= 1)
-                {
-                    fluteDrained = false;
-                    fluteGauge.color = new Color(0.9503901f, 1, 0, 1);
-                }
-            }
-            if (shieldDrained == true)
-            {
-                shieldGauge.fillAmount += (float)1 / 10 * Time.deltaTime;
-                if (shieldGauge.fillAmount >= 1)
-                {
-                    shieldDrained = false;
-                    shieldGauge.color = new Color(0.9503901f, 1, 0, 1);
-                }
-            }
-
-            //It's really interesting that I did shieldOn first
-            if (shieldOn == false)
-            {
-                if (shieldDrained== false) {
-                    if (Input.GetKeyDown(KeyCode.A)) {
-                        StartCoroutine(ShieldOn());
-                        audio.PlayOneShot(shieldTune, 1);
-                    }
-                }
-            }
-            //if (Input.GetKeyDown(KeyCode.S))
-            //{
-            //trumpetOn = true;
-            //trumpetRange.SetActive(true);
-            //}
-            if (Input.GetMouseButtonDown(1) &&wind==false)
-            {
-                if (violin == true)
-                {
-                    violin = false;
-                    trumpet = true;
-                    trumpetRange.SetActive(true);
+                    paused = true;
+                    Time.timeScale = 0;
                 }
                 else
                 {
-                    violin = true;
-                    trumpet = false;
-                    trumpetRange.SetActive(false);
+                    paused = false;
+                    Time.timeScale = 1;
+                    Debug.Log("Pause Undone");
                 }
-                WeaponSelect();
             }
-            if (Input.GetMouseButtonDown(2)&&wind==false)
-            {
-                if (violin == true)
+            if (paused == false) {
+                if (violinDrained == true)
                 {
-                    violin = false;
-                    flute = true;
-                    //trumpetRange.SetActive(true);
-                }
-                else
-                {
-                    violin = true;
-                    flute = false;
-                    //trumpetRange.SetActive(false);
-                }
-                //wind = true;
-                WeaponSelect();
-            }
-            if (lag == false) {
-                if (trumpet == true)
-                {
-                    if (trumpetDrained == false) {
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
-                        }
-                    }
-                }
-                if (violin == true)
-                {
-                    if (violinDrained == false)
+                    violinGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
+                    if (violinGauge.fillAmount >= 1)
                     {
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            ViolinAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                        violinDrained = false;
+                        violinGauge.color = new Color(0.9503901f, 1, 0, 1);
+                    }
+                }
+                if (trumpetDrained == true)
+                {
+                    trumpetGauge.fillAmount += (float)1 / 15 * Time.deltaTime;
+                    if (trumpetGauge.fillAmount >= 1)
+                    {
+                        trumpetDrained = false;
+                        trumpetGauge.color = new Color(0.9503901f, 1, 0, 1);
+                    }
+                }
+                if (fluteDrained == true)
+                {
+                    fluteGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
+                    if (fluteGauge.fillAmount >= 1)
+                    {
+                        fluteDrained = false;
+                        fluteGauge.color = new Color(0.9503901f, 1, 0, 1);
+                    }
+                }
+                if (shieldDrained == true)
+                {
+                    shieldGauge.fillAmount += (float)1 / 10 * Time.deltaTime;
+                    if (shieldGauge.fillAmount >= 1)
+                    {
+                        shieldDrained = false;
+                        shieldGauge.color = new Color(0.9503901f, 1, 0, 1);
+                    }
+                }
+
+                //It's really interesting that I did shieldOn first
+                if (shieldOn == false)
+                {
+                    if (shieldDrained == false) {
+                        if (Input.GetKeyDown(KeyCode.A)) {
+                            cancelShield = StartCoroutine(ShieldOn());
+                            audio.PlayOneShot(shieldTune, 1);
                         }
                     }
                 }
-            }
-
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                if (hitCount >= 25)
+                //if (Input.GetKeyDown(KeyCode.S))
+                //{
+                //trumpetOn = true;
+                //trumpetRange.SetActive(true);
+                //}
+                if (Input.GetMouseButtonDown(1) && wind == false)
                 {
-                    AllAttack();
+                    if (violin == true)
+                    {
+                        violin = false;
+                        trumpet = true;
+                        trumpetRange.SetActive(true);
+                    }
+                    else
+                    {
+                        violin = true;
+                        trumpet = false;
+                        trumpetRange.SetActive(false);
+                    }
+                    WeaponSelect();
                 }
-            }
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                Potion();
+                if (Input.GetMouseButtonDown(2) && wind == false)
+                {
+                    if (violin == true)
+                    {
+                        violin = false;
+                        flute = true;
+                        //trumpetRange.SetActive(true);
+                    }
+                    else
+                    {
+                        violin = true;
+                        flute = false;
+                        //trumpetRange.SetActive(false);
+                    }
+                    //wind = true;
+                    WeaponSelect();
+                }
+                if (lag == false) {
+                    if (trumpet == true)
+                    {
+                        if (trumpetDrained == false) {
+                            if (Input.GetMouseButtonDown(0))
+                            {
+                                TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                            }
+                        }
+                    }
+                    if (violin == true)
+                    {
+                        if (violinDrained == false)
+                        {
+                            if (Input.GetMouseButtonDown(0))
+                            {
+                                ViolinAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                            }
+                        }
+                    }
+                }
+
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    if (hitCount >= 25)
+                    {
+                        AllAttack();
+                    }
+                }
+                if (Input.GetKeyDown(KeyCode.W))
+                {
+                    Potion();
+                }
             }
         }
     }
@@ -320,11 +323,11 @@ public class PlayerController : MonoBehaviour
     public void WindEnd()
     {
         wind = false;
-        //GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); 
-        //for (int i =0; i < enemies.Length; i++)
-        //{
-            //enemies[i].GetComponent<Enemy>().AnalyzeTeamAttackCapability();
-        //}
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); 
+        for (int i =0; i < enemies.Length; i++)
+        {
+            enemies[i].GetComponent<Enemy>().AnalyzeTeamAttackCapability();
+        }
         fluteWind.SetActive(false);
         weaponImages.transform.Find("Flute Image").gameObject.SetActive(false);
     }
@@ -493,6 +496,13 @@ public class PlayerController : MonoBehaviour
         {
             shieldDrained = true;
             shieldGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
+            if (cancelShield!=null)
+            {
+                StopCoroutine(cancelShield);
+                shieldOn = false;
+                weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
+                shieldFilter.SetActive(false);
+            }
         }
     }
     public void GeneralDamageCode(float damage, float shakeAmount)

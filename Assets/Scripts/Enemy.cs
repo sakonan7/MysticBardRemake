@@ -4,7 +4,9 @@ using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
+using UnityEngine.UI;
+using Cinemachine;
 
 //I want to do some things I didn't do right in Beast Dominion
 //Flinch
@@ -69,6 +71,10 @@ public class Enemy : MonoBehaviour
     public bool teamAttackOn = false;
     private bool red = false;
     private bool green = false;
+    private bool armor = false;
+    private float armorGauge = 20;
+    private GameObject armorObj;
+    private Image armorFill;
     // Start is called before the first frame update
     void Start()
     {
@@ -188,6 +194,22 @@ public class Enemy : MonoBehaviour
     {
         green = true;
     }
+    //This is less of an enemy type and more of a mode
+    public void SetArmor()
+    {
+        armor = true;
+        armorObj = GameObject.Find("Armor Bar Object").transform.Find("Armor Bar").gameObject;
+        armorObj.SetActive(true);
+        armorFill = armorObj.transform.Find("Actual").GetComponent<Image>();
+        armorFill.fillAmount = 1;
+        transform.Find("root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(true);
+    }
+    public void ArmorOff()
+    {
+        armor = true;
+        armorObj.SetActive(false);
+        transform.Find("root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(false);
+    }
     public void DamageText(float damage)
     {
         gameObject.transform.Find("Damage Received").GetComponent<TextMesh>().text= ""+damage;
@@ -210,8 +232,9 @@ public class Enemy : MonoBehaviour
         //{
             while (i < enemies.Length &&enemyNextToAnother ==false) {
                 distance = Vector3.Distance(gameObject.transform.position, enemies[i].transform.position);
+            Debug.Log("Distanceequal to "+distance);
                 i++;
-                if (distance <= 0.5f)
+                if (distance <= 0.2f)
                 {
                     enemyNextToAnother = true;
                     if (teamAttack == true && teamAttackOn == false)
@@ -393,11 +416,25 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(float damage, bool armorBreak)
     {
-        if (barrier ==true &&armorBreak ==false)
+        if ((barrier ==true || armor==true) &&armorBreak ==false)
         {
             damage /= 2;
         }
-        HP -= damage;
+        
+
+        if (armor ==true)
+        {
+            armorGauge -= damage;
+            armorFill.fillAmount -= (float)damage / 20;
+            if (armorFill.fillAmount <=0)
+            {
+                ArmorOff();
+            }
+        }
+        else
+        {
+            HP -= damage;
+        }
         //DamageText(damage);
         if (cancelDamageDisplay !=null)
         {
@@ -549,12 +586,12 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (teamAttack == true && teamAttackOn == false)
-            {
-                teamAttackOn = true;
-                TeamAttackPositives();
-                Debug.Log("Team Attack On");
-            }
+            //if (teamAttack == true && teamAttackOn == false)
+            //{
+                //teamAttackOn = true;
+                //TeamAttackPositives();
+                //Debug.Log("Team Attack On");
+            //}
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -576,9 +613,13 @@ public class Enemy : MonoBehaviour
             if (damaged ==false)
             {
                 damaged = true;
+                if(armor ==false)
+                {
+                    Flinch();
+                }
                 TakeDamage(2, true);
                 //Destroy(other.gameObject);
-                Flinch();
+                
                 playerScript.HitCountUp();
                 playerScript.TrumpetHitEffect(effectPosition.transform.position);
             }
@@ -592,7 +633,7 @@ public class Enemy : MonoBehaviour
                 TakeDamage(1, false);
                 //Damage(1);
                 //Destroy(other.gameObject);
-                if (red==false) {
+                if (red==false && armor==false) {
                     Flinch();
                 }
                 playerScript.HitCountUp();
@@ -606,20 +647,22 @@ public class Enemy : MonoBehaviour
             {
                 damaged = true;
                 TakeDamage(3, true);
-                Flinch();
+                if (armor ==false) {
+                    Flinch();
+                }
             }
         }
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Barrier"))
+        if (other.CompareTag("Barrier") && armor==false)
         {
             barrier = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Barrier"))
+        if (other.CompareTag("Barrier") &&armor==false)
         {
             barrier = false;
         }
