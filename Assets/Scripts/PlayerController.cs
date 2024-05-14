@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip shieldTune;
     private GameObject camera;
     private CinemachineBasicMultiChannelPerlin camShake;
+    private GameManager gameScript;
     private float originalCameraY;
     private Image HPBar;
     private GameObject damageFlash;
@@ -74,6 +75,8 @@ public class PlayerController : MonoBehaviour
     public bool wind = false;
     private bool potionUsed = false;
     private bool paused = false;
+
+    public static int EXP = 0;
     
     private Coroutine cancelDamageText;
     private Coroutine cancelDamageShake;
@@ -83,6 +86,7 @@ public class PlayerController : MonoBehaviour
     {
         camera = GameObject.Find("Main Camera");
         camShake = GameObject.Find("FreeLook Camera").GetComponent<CinemachineFreeLook>().GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
+        gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
         damageFlash = GameObject.Find("Damage Object").transform.Find("Damage").gameObject;
         violinGauge = GameObject.Find("Violin Gauge").GetComponent<Image>();
@@ -99,6 +103,13 @@ public class PlayerController : MonoBehaviour
         numPotions = GameObject.Find("Number of Potions").GetComponent<TextMeshProUGUI>();
         numPotions.text = "X " + numPotionsInt;
         potionUsedIcon = GameObject.Find("Potions").transform.Find("Use Potion").gameObject;
+
+        //I think I should use numeric values for the bar length and HP num
+        if (gameScript.levelUp==true)
+        {
+            LevelUp();
+            gameScript.LevelUpOff();
+        }
     }
 
     // Update is called once per frame
@@ -516,6 +527,10 @@ public class PlayerController : MonoBehaviour
         //Camera shake for giant should be double
         cancelDamageShake = StartCoroutine(CameraShake(0));
         cancelDamageText =StartCoroutine(DamageText(damage));
+        if (HP <= 0)
+        {
+            gameScript.GameOver();
+        }
     }
     IEnumerator DamageText(float damage)
     {
@@ -554,6 +569,10 @@ public class PlayerController : MonoBehaviour
         damageFlash.SetActive(true);
         yield return new WaitForSeconds(1);
         damageFlash.SetActive(false);
+    }
+    public void LevelUp()
+    {
+        GameObject.Find("HP Bar Background").transform.localScale += new Vector3(20, 0, 0);
     }
     public void OnMouseUp()
     {

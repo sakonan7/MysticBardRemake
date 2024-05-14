@@ -24,29 +24,31 @@ public class Bomb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x <= -4.32f)
-        {
-            transform.position = new Vector3(-4.31f, transform.position.y, transform.position.z);
-            playerScript.WindEnd();
-            EnemyExplode();
-        }
-        if (transform.position.x >= 4.32f)
-        {
-            transform.position = new Vector3(4.31f, transform.position.y, transform.position.z);
-            playerScript.WindEnd();
-            EnemyExplode();
-        }
-        if (transform.position.y <= -3f)
-        {
-            transform.position = new Vector3(transform.position.x, -3f, transform.position.z);
-            playerScript.WindEnd();
-            EnemyExplode();
-        }
-        if (transform.position.y >= 3f)
-        {
-            transform.position = new Vector3(transform.position.x, 3f, transform.position.z);
-            playerScript.WindEnd();
-            EnemyExplode();
+        if (playerScript.wind==true) {
+            if (transform.position.x <= -4.32f)
+            {
+                transform.position = new Vector3(-4.31f, transform.position.y, transform.position.z);
+                playerScript.WindEnd();
+                EnemyExplode();
+            }
+            if (transform.position.x >= 4.32f)
+            {
+                transform.position = new Vector3(4.31f, transform.position.y, transform.position.z);
+                playerScript.WindEnd();
+                EnemyExplode();
+            }
+            if (transform.position.y <= -3f)
+            {
+                transform.position = new Vector3(transform.position.x, -3f, transform.position.z);
+                playerScript.WindEnd();
+                EnemyExplode();
+            }
+            if (transform.position.y >= 3f)
+            {
+                transform.position = new Vector3(transform.position.x, 3f, transform.position.z);
+                playerScript.WindEnd();
+                EnemyExplode();
+            }
         }
     }
     IEnumerator TimedExplosion()

@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
     private bool animationTrue = false;
     private PlayerController playerScript;
     private GameObject effectPosition;
+    private GameManager gameScript;
 
     private Coroutine cancelDamageDisplay;
     private Coroutine flinchCancel; //or flinchReset
@@ -90,6 +91,7 @@ public class Enemy : MonoBehaviour
         }
 
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         if (idleStart==true)
         {
             idleCancel = StartCoroutine(IdleAnimation(Random.Range(4, 10)));
@@ -114,6 +116,7 @@ public class Enemy : MonoBehaviour
         {
             WindCaptureEnd();
             Destroy(gameObject);
+            gameScript.ReduceNumEnemies();
         }
         if (transform.position.x <= -4.32f)
         {
@@ -267,7 +270,7 @@ public class Enemy : MonoBehaviour
             //Also, I have to cancel different Coroutines for different mo
             StopCoroutine(flinchOpportunityCancel);
             StopCoroutine(attackLengthCancel);
-            playerScript.InterruptEffect(effectPosition.transform.position);
+            //playerScript.InterruptEffect(effectPosition.transform.position);
             StopAttackEffect();
         }
 
@@ -621,7 +624,7 @@ public class Enemy : MonoBehaviour
                 //Destroy(other.gameObject);
                 
                 playerScript.HitCountUp();
-                playerScript.TrumpetHitEffect(effectPosition.transform.position);
+                //playerScript.TrumpetHitEffect(effectPosition.transform.position);
             }
         }
         if (other.CompareTag("Violin"))
@@ -637,7 +640,7 @@ public class Enemy : MonoBehaviour
                     Flinch();
                 }
                 playerScript.HitCountUp();
-                playerScript.ViolinHitEffect(effectPosition.transform.position);
+                //playerScript.ViolinHitEffect(effectPosition.transform.position);
             }
         }
         if (other.CompareTag("Hitbox"))

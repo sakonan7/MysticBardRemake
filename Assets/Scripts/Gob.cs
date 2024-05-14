@@ -46,11 +46,11 @@ public class Gob : MonoBehaviour
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
         if (enemyScript.teamAttackOn==true) {
-            enemyScript.PlayAttackEffect(1);
+            //enemyScript.PlayAttackEffect(1);
         }
         else
         {
-            enemyScript.PlayAttackEffect(0);
+            //enemyScript.PlayAttackEffect(0);
         }
         enemyScript.AttackReadyOff();
     }
