@@ -14,7 +14,7 @@ public class Gob : MonoBehaviour
         animator = GetComponent<Animator>();
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
-        enemyScript.SetHP(60);
+        enemyScript.SetHP(20);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(5);
         enemyScript.SetNormal();

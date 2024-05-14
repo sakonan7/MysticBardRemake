@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private GameManager gameScript;
     private float originalCameraY;
     private Image HPBar;
+    private TextMeshProUGUI levelText;
     private GameObject damageFlash;
     public ParticleSystem interruptEffect;
     public GameObject hurt;
@@ -58,8 +59,16 @@ public class PlayerController : MonoBehaviour
     public GameObject violinSoundwave;
     public GameObject fluteWind;
 
-    public bool violinDrained = false;
-    private float HP = 20;
+    public bool violinDrained = false; //I don't think I have to make this public anymore
+    private float originalHP = 20;
+    private float originalViolin = 15;
+    private float originalTrumpet = 10;
+    private float originalFlute = 3;
+    public static float HP = 20;
+    private static float currentViolin = 15;
+    private static float currentTrumpet = 10;
+    private static float currentFlute = 3;
+    public static int level = 6;
 
     public bool shieldOn = false;
     public bool shieldDrained = false;
@@ -88,6 +97,7 @@ public class PlayerController : MonoBehaviour
         camShake = GameObject.Find("FreeLook Camera").GetComponent<CinemachineFreeLook>().GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
+        levelText = GameObject.Find("Mugshot").transform.Find("Level Text").GetComponent<TextMeshProUGUI>();
         damageFlash = GameObject.Find("Damage Object").transform.Find("Damage").gameObject;
         violinGauge = GameObject.Find("Violin Gauge").GetComponent<Image>();
         trumpetGauge = GameObject.Find("Trumpet Gauge").GetComponent<Image>();
@@ -110,6 +120,7 @@ public class PlayerController : MonoBehaviour
             LevelUp();
             gameScript.LevelUpOff();
         }
+        levelText.text = "Lv. " + level;
     }
 
     // Update is called once per frame
@@ -525,6 +536,14 @@ public class PlayerController : MonoBehaviour
 
         //I'm thinking about not cancelling the Coroutine and just changing the value of damage
         //Camera shake for giant should be double
+        if(cancelDamageShake!= null)
+        {
+            StopCoroutine(cancelDamageShake);
+        }
+        if (cancelDamageText != null)
+        {
+            StopCoroutine(cancelDamageText);
+        }
         cancelDamageShake = StartCoroutine(CameraShake(0));
         cancelDamageText =StartCoroutine(DamageText(damage));
         if (HP <= 0)
@@ -573,6 +592,9 @@ public class PlayerController : MonoBehaviour
     public void LevelUp()
     {
         GameObject.Find("HP Bar Background").transform.localScale += new Vector3(20, 0, 0);
+        HP += 3;
+        level += 1;
+        Debug.Log(HP);
     }
     public void OnMouseUp()
     {

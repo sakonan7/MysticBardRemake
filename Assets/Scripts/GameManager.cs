@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     public static bool levelUpStatic = false;
     public bool levelUp = false;
+
+    public static int currentLevel = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +42,7 @@ public class GameManager : MonoBehaviour
         numEnemies--;
         if (numEnemies <= 0)
         {
-            ProgressLevel();
+            StartCoroutine(AfterBattle());
         }
     }
     public void GameOver()
@@ -48,11 +50,18 @@ public class GameManager : MonoBehaviour
         gameOverText.SetActive(true);
         gameOverFilter.SetActive(true);
     }
+    IEnumerator AfterBattle()
+    {
+        GameObject.Find("Level Done Object").transform.Find("Level Done").gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        ProgressLevel();
+    }
     public void ProgressLevel()
     {
         //player.LevelUp();
         levelUpStatic = true;
-        SceneManager.LoadScene(1);
+        currentLevel++;
+        SceneManager.LoadScene(currentLevel);
     }
     public void LevelUpOff()
     {
