@@ -61,6 +61,15 @@ public class GameManager : MonoBehaviour
         //ProgressLevel();
     }
     //I'm going to ask players if they want to progress or to go back to the menu
+    public void ContinueOrQuit()
+    {
+        GameObject.Find("Level Done Object").transform.Find("Level Done").gameObject.SetActive(false);
+        GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
+    }
+    public void Continue()
+    {
+        ProgressLevel();
+    }
     public void ProgressLevel()
     {
         //player.LevelUp();

@@ -111,6 +111,7 @@ public class Enemy : MonoBehaviour
         if (windCaptured==false) {
             //Quaternion lookRotation = Quaternion.LookRotation(transform.position, GameObject.Find("Look At").transform.position);
             //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
+            //AnalyzeTeamAttackCapability();
         }
         if (HP<=0)
         {
@@ -235,16 +236,16 @@ public class Enemy : MonoBehaviour
         //{
             while (i < enemies.Length &&enemyNextToAnother ==false) {
                 distance = Vector3.Distance(gameObject.transform.position, enemies[i].transform.position);
-            Debug.Log("Distanceequal to "+distance);
+            //Debug.Log("Distanceequal to "+distance);
                 i++;
-                if (distance <= 0.2f)
+                if (distance <= 1f)
                 {
                     enemyNextToAnother = true;
-                    if (teamAttack == true && teamAttackOn == false)
-                    {
-                        teamAttackOn = true;
-                        TeamAttackPositives();
-                    }
+                    //if (teamAttack == true && teamAttackOn == false)
+                    //{
+                        //teamAttackOn = true;
+                        //TeamAttackPositives();
+                    //}
                 }
             }
         //}
@@ -450,7 +451,10 @@ public class Enemy : MonoBehaviour
         windCaptured = false;
         Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position - transform.position);
         transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
-        Debug.Log("Wind " + windCaptured);
+        //Debug.Log("Wind " + windCaptured);
+        if (teamAttack==true) {
+            AnalyzeTeamAttackCapability();
+        }
     }
     public void TeamAttackPositives()
     {
@@ -560,8 +564,8 @@ public class Enemy : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (playerScript.wind==true)
-        {
+        //if (playerScript.wind==true)
+        //{
             //Wind off. Need wind variable for enemy
             if (collision.gameObject.CompareTag("Enemy"))
             {
@@ -573,17 +577,22 @@ public class Enemy : MonoBehaviour
                     //Destroy(other.gameObject);
                     Flinch();
                 }
-                gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                //collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 playerScript.WindEnd();
                 //I need to cancel out a bunch of coroutines
                 //if (windCaptured==true) {
                     WindCaptureEnd();
                 //}
                     playerScript.WindHitEffect(collision.GetContact(0).point);
-
+            if (teamAttack == true && teamAttackOn == false)
+            {
+            teamAttackOn = true;
+            TeamAttackPositives();
+            //Debug.Log("Team Attack On");
             }
         }
+        //}
     }
     private void OnCollisionStay(Collision collision)
     {

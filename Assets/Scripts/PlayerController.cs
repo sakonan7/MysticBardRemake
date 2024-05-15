@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public bool attack = false;
     public bool lag = false;
     public int hitCount = 0;
+    private bool hitCountReached = false;
     public GameObject allAttackEffect;
     private Image violinGauge;
     private Image trumpetGauge;
@@ -52,6 +53,10 @@ public class PlayerController : MonoBehaviour
     //It's very hard to be organized. Either you put all the HP stuff together and the private and statics are mixed up,
     //or you put all the privates together, but the HP stuff is all disorganized
     private TextMeshProUGUI HPText;
+    private TextMeshProUGUI violinText;
+    private TextMeshProUGUI trumpetText;
+    private TextMeshProUGUI fluteText;
+    private TextMeshProUGUI shieldText;
 
     //public objects?
     public GameObject shield;
@@ -72,8 +77,13 @@ public class PlayerController : MonoBehaviour
     public static float currentHP = 20;
     public static float HPTotal = 20;
     private static float currentViolin = 15;
+    public static float violinTotal = 15;
     private static float currentTrumpet = 10;
+    public static float trumpetTotal = 10;
     private static float currentFlute = 3;
+    public static float fluteTotal = 3;
+    private static float currentShield = 10;
+    public static float shieldTotal = 10;
     public static int level = 6;
 
     public bool shieldOn = false;
@@ -94,9 +104,11 @@ public class PlayerController : MonoBehaviour
 
     //Statics for the most part
     public static int EXP = 0;
+    private static bool noEXP = false;
     
     private Coroutine cancelDamageText;
     private Coroutine cancelDamageShake;
+    private Coroutine cancelDamageFlash;
     private Coroutine cancelShield;
     // Start is called before the first frame update
     void Start()
@@ -130,9 +142,22 @@ public class PlayerController : MonoBehaviour
         }
         levelText.text = "Lv. " + level;
 
+        //This is necessary in case I didn't increase any of these values
         currentHP = HPTotal;
+        currentViolin = violinTotal;
+        currentTrumpet = trumpetTotal;
+        currentFlute = fluteTotal;
+        currentShield = shieldTotal;
         HPText = GameObject.Find("HP Bar Object").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
         HPText.text = HPTotal + "/" + HPTotal;
+        violinText = GameObject.Find("Violin").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
+        violinText.text = violinTotal + "/" + violinTotal;
+        trumpetText = GameObject.Find("Trumpet").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
+        trumpetText.text = trumpetTotal + "/" + trumpetTotal;
+        fluteText = GameObject.Find("Flute").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
+        fluteText.text = fluteTotal + "/" + fluteTotal;
+        shieldText = GameObject.Find("Shield").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
+        shieldText.text = shieldTotal + "/" + shieldTotal;
     }
 
     // Update is called once per frame
@@ -154,6 +179,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
             if (paused == false) {
+                //I decided not to increase the time it needs to reload when drained.
                 if (violinDrained == true)
                 {
                     violinGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
@@ -161,6 +187,8 @@ public class PlayerController : MonoBehaviour
                     {
                         violinDrained = false;
                         violinGauge.color = new Color(0.9503901f, 1, 0, 1);
+                        currentViolin = violinTotal;
+                        violinText.text = currentViolin + "/" + violinTotal;
                     }
                 }
                 if (trumpetDrained == true)
@@ -170,6 +198,8 @@ public class PlayerController : MonoBehaviour
                     {
                         trumpetDrained = false;
                         trumpetGauge.color = new Color(0.9503901f, 1, 0, 1);
+                        currentTrumpet = trumpetTotal;
+                        trumpetText.text = currentTrumpet + "/" + trumpetTotal;
                     }
                 }
                 if (fluteDrained == true)
@@ -179,6 +209,8 @@ public class PlayerController : MonoBehaviour
                     {
                         fluteDrained = false;
                         fluteGauge.color = new Color(0.9503901f, 1, 0, 1);
+                        currentFlute = fluteTotal;
+                        fluteText.text = currentFlute + "/" + fluteTotal;
                     }
                 }
                 if (shieldDrained == true)
@@ -188,6 +220,8 @@ public class PlayerController : MonoBehaviour
                     {
                         shieldDrained = false;
                         shieldGauge.color = new Color(0.9503901f, 1, 0, 1);
+                        currentShield = shieldTotal;
+                        shieldText.text = currentShield + "/" + shieldTotal;
                     }
                 }
 
@@ -197,7 +231,7 @@ public class PlayerController : MonoBehaviour
                     if (shieldDrained == false) {
                         if (Input.GetKeyDown(KeyCode.A)) {
                             cancelShield = StartCoroutine(ShieldOn());
-                            audio.PlayOneShot(shieldTune, 1);
+                            audio.PlayOneShot(shieldTune, 1.5f);
                         }
                     }
                 }
@@ -208,35 +242,39 @@ public class PlayerController : MonoBehaviour
                 //}
                 if (Input.GetMouseButtonDown(1) && wind == false)
                 {
-                    if (violin == true)
+                    if (trumpet == false)
                     {
                         violin = false;
                         trumpet = true;
+                        flute = false;
                         trumpetRange.SetActive(true);
                     }
                     else
                     {
                         violin = true;
                         trumpet = false;
+                        flute = false;
                         trumpetRange.SetActive(false);
                     }
                     WeaponSelect();
                 }
                 if (Input.GetMouseButtonDown(2) && wind == false)
                 {
-                    if (violin == true)
+
+                    if (flute == false)
                     {
                         violin = false;
+                        trumpet = false;
                         flute = true;
-                        //trumpetRange.SetActive(true);
+                        trumpetRange.SetActive(false);
                     }
                     else
                     {
                         violin = true;
+                        trumpet = false;
                         flute = false;
-                        //trumpetRange.SetActive(false);
+                        trumpetRange.SetActive(false);
                     }
-                    //wind = true;
                     WeaponSelect();
                 }
                 if (lag == false) {
@@ -261,7 +299,7 @@ public class PlayerController : MonoBehaviour
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.D))
+                if (Input.GetKeyDown(KeyCode.S))
                 {
                     if (hitCount >= 25)
                     {
@@ -271,6 +309,14 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.W))
                 {
                     Potion();
+                }
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    violin = true;
+                    trumpet = false;
+                    flute = false;
+                    trumpetRange.SetActive(false);
+                    WeaponSelect();
                 }
             }
         }
@@ -315,8 +361,10 @@ public class PlayerController : MonoBehaviour
         //Instantiate(violinSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), violinSoundwave.transform.rotation);
         //ViolinHitEffect(newPosition);
         StartCoroutine(Lag());
-            violinGauge.fillAmount -= (float)1 / 15;
-            if (violinGauge.fillAmount <= 0)
+            violinGauge.fillAmount -= (float)1 / violinTotal;
+        currentViolin--;
+        violinText.text = currentViolin + "/" + violinTotal;
+        if (currentViolin <= 0)
             {
                 violinDrained = true;
             violinGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
@@ -331,8 +379,10 @@ public class PlayerController : MonoBehaviour
         Instantiate(trumpetHitbox, newPosition, trumpetHitbox.transform.rotation);
         //Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
         StartCoroutine(Lag());
-        trumpetGauge.fillAmount -= (float)1 / 10;
-        if (trumpetGauge.fillAmount <= 0)
+        trumpetGauge.fillAmount -= (float)1 / trumpetTotal;
+        currentTrumpet--;
+        trumpetText.text = currentTrumpet + "/" + trumpetTotal;
+        if (currentTrumpet <= 0)
         {
             trumpetDrained = true;
             trumpetGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
@@ -341,9 +391,11 @@ public class PlayerController : MonoBehaviour
     }
     public void FluteAttack()
     {
-        fluteGauge.fillAmount -= (float)1 / 3;
-        if (fluteGauge.fillAmount <= 0)
-        {
+        fluteGauge.fillAmount -= (float)1 / fluteTotal;
+        currentFlute--;
+        fluteText.text = currentFlute + "/" + fluteTotal;
+        if (currentFlute <= 0) 
+        { 
             fluteDrained = true;
             fluteGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
         }
@@ -358,10 +410,10 @@ public class PlayerController : MonoBehaviour
     {
         wind = false;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); 
-        for (int i =0; i < enemies.Length; i++)
-        {
-            enemies[i].GetComponent<Enemy>().AnalyzeTeamAttackCapability();
-        }
+        //for (int i =0; i < enemies.Length; i++)
+        //{
+            //enemies[i].GetComponent<Enemy>().AnalyzeTeamAttackCapability();
+        //}
         fluteWind.SetActive(false);
         weaponImages.transform.Find("Flute Image").gameObject.SetActive(false);
     }
@@ -369,6 +421,17 @@ public class PlayerController : MonoBehaviour
     {
         hitCount++;
         allAttackGauge.fillAmount += (float)1 / 30;
+        if(hitCount >=30)
+        {
+            hitCountReached = true;
+            StartCoroutine(AllAttackBarFlash());
+        }
+    }
+    IEnumerator AllAttackBarFlash()
+    {
+        allAttackGauge.transform.localScale += new Vector3(0, allAttackGauge.transform.localScale.y*0.1f, 0);
+        yield return new WaitForSeconds(1);
+        allAttackGauge.transform.localScale -= new Vector3(0, allAttackGauge.transform.localScale.y * 0.1f, 0);
     }
     public void AllAttack()
     {
@@ -388,6 +451,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(CameraShakeSpec(0));
         //allAttackEffect.SetActive(true);
         StartCoroutine(AllAttackDisappear1());
+        hitCountReached = false;
     }
     IEnumerator AllAttackDisappear1()
     {
@@ -525,8 +589,10 @@ public class PlayerController : MonoBehaviour
     }
     public void ShieldGaugeDown(float damage)
     {
-        shieldGauge.fillAmount -= (float)damage / 10;
-        if (shieldGauge.fillAmount <= 0)
+        shieldGauge.fillAmount -= (float)1 / shieldTotal;
+        currentShield--;
+        shieldText.text = currentShield + "/" + shieldTotal;
+        if (currentTrumpet <= 0)
         {
             shieldDrained = true;
             shieldGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
@@ -557,8 +623,13 @@ public class PlayerController : MonoBehaviour
         {
             StopCoroutine(cancelDamageText);
         }
+        if (cancelDamageFlash != null)
+        {
+            StopCoroutine(cancelDamageFlash);
+        }
         cancelDamageShake = StartCoroutine(CameraShake(0));
         cancelDamageText =StartCoroutine(DamageText(damage));
+        cancelDamageShake = StartCoroutine(DamageFlash());
         if (currentHP <= 0)
         {
             gameScript.GameOver();
@@ -616,7 +687,8 @@ public class PlayerController : MonoBehaviour
         //currentHP += 3;
         HPTotal += 3;
         currentHP = HPTotal;
-        gameScript.ProgressLevel();
+        //gameScript.ProgressLevel();
+        gameScript.ContinueOrQuit();
     }
     public void OnMouseUp()
     {
