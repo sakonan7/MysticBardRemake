@@ -18,6 +18,13 @@ public class GameManager : MonoBehaviour
 
     public static int currentLevel = 0;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        if (levelUpStatic == true)
+        {
+            levelUp = true;
+        }
+    }
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -26,10 +33,7 @@ public class GameManager : MonoBehaviour
         gameOverFilter = gameOverObject.transform.Find("Red Filter").gameObject;
         numEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
-        if (levelUpStatic ==true)
-        {
-            levelUp = true;
-        }
+
     }
 
     // Update is called once per frame
@@ -42,7 +46,7 @@ public class GameManager : MonoBehaviour
         numEnemies--;
         if (numEnemies <= 0)
         {
-            StartCoroutine(AfterBattle());
+            AfterBattle();
         }
     }
     public void GameOver()
@@ -50,12 +54,13 @@ public class GameManager : MonoBehaviour
         gameOverText.SetActive(true);
         gameOverFilter.SetActive(true);
     }
-    IEnumerator AfterBattle()
+    public void AfterBattle()
     {
         GameObject.Find("Level Done Object").transform.Find("Level Done").gameObject.SetActive(true);
-        yield return new WaitForSeconds(2);
-        ProgressLevel();
+        //yield return new WaitForSeconds(2);
+        //ProgressLevel();
     }
+    //I'm going to ask players if they want to progress or to go back to the menu
     public void ProgressLevel()
     {
         //player.LevelUp();

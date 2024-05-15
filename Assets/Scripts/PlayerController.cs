@@ -48,6 +48,11 @@ public class PlayerController : MonoBehaviour
     private int numPotionsInt = 4;
     private GameObject potionUsedIcon;
 
+    //Private Numerics
+    //It's very hard to be organized. Either you put all the HP stuff together and the private and statics are mixed up,
+    //or you put all the privates together, but the HP stuff is all disorganized
+    private TextMeshProUGUI HPText;
+
     //public objects?
     public GameObject shield;
     public GameObject shieldSpecial;
@@ -64,7 +69,8 @@ public class PlayerController : MonoBehaviour
     private float originalViolin = 15;
     private float originalTrumpet = 10;
     private float originalFlute = 3;
-    public static float HP = 20;
+    public static float currentHP = 20;
+    public static float HPTotal = 20;
     private static float currentViolin = 15;
     private static float currentTrumpet = 10;
     private static float currentFlute = 3;
@@ -85,6 +91,8 @@ public class PlayerController : MonoBehaviour
     private bool potionUsed = false;
     private bool paused = false;
 
+
+    //Statics for the most part
     public static int EXP = 0;
     
     private Coroutine cancelDamageText;
@@ -121,12 +129,16 @@ public class PlayerController : MonoBehaviour
             gameScript.LevelUpOff();
         }
         levelText.text = "Lv. " + level;
+
+        currentHP = HPTotal;
+        HPText = GameObject.Find("HP Bar Object").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
+        HPText.text = HPTotal + "/" + HPTotal;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (HP > 0) {
+        if (currentHP > 0) {
             if (Input.GetKeyDown(KeyCode.F))
             {
                 if (paused == false)
@@ -399,9 +411,9 @@ public class PlayerController : MonoBehaviour
     }
     public void Potion()
     {
-        if (HP < 20) {
-            HP += 4;
-            HPBar.fillAmount += (float)4 / HP;
+        if (currentHP < 20) {
+            currentHP += 4;
+            HPBar.fillAmount += (float)4 / HPTotal;
             numPotionsInt--;
             numPotions.text = "X " + numPotionsInt;
             if (potionUsed == false) {
@@ -530,9 +542,10 @@ public class PlayerController : MonoBehaviour
     public void GeneralDamageCode(float damage, float shakeAmount)
     {
         //StartCoroutine(CameraShake(1/10));
-        HP -= damage;
-        HPBar.fillAmount -= (float)damage / HP;
+        currentHP -= damage;
+        HPBar.fillAmount -= (float)damage / HPTotal;
         PlayHurtEffect();
+        HPText.text = currentHP + "/" + HPTotal;
 
         //I'm thinking about not cancelling the Coroutine and just changing the value of damage
         //Camera shake for giant should be double
@@ -546,7 +559,7 @@ public class PlayerController : MonoBehaviour
         }
         cancelDamageShake = StartCoroutine(CameraShake(0));
         cancelDamageText =StartCoroutine(DamageText(damage));
-        if (HP <= 0)
+        if (currentHP <= 0)
         {
             gameScript.GameOver();
         }
@@ -591,10 +604,19 @@ public class PlayerController : MonoBehaviour
     }
     public void LevelUp()
     {
-        GameObject.Find("HP Bar Background").transform.localScale += new Vector3(20, 0, 0);
-        HP += 3;
+        //GameObject.Find("HP Bar Background").transform.localScale += new Vector3(20, 0, 0);
+        currentHP = originalHP;
+        currentHP += 3;
         level += 1;
-        Debug.Log(HP);
+        Debug.Log(currentHP);
+    }
+    public void HPUp()
+    {
+        //currentHP = originalHP;
+        //currentHP += 3;
+        HPTotal += 3;
+        currentHP = HPTotal;
+        gameScript.ProgressLevel();
     }
     public void OnMouseUp()
     {

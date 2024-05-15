@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(WindFlinch());
                 StartCoroutine(WindDamage());
             }
-            transform.Rotate(Vector3.up * 180 * Time.deltaTime);
+            //transform.Rotate(Vector3.up * 180 * Time.deltaTime);
         }
     }
     //Setters
