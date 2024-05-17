@@ -22,33 +22,52 @@ public class GreenThief : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (enemyScript.counterAttackTriggered ==true)
+        {
+            CounterAttack();
+        }
         if (enemyScript.attackReady == true)
         {
-            Attack();
+            RegularAttack();
             //Debug.Log("Attack");
         }
     }
     //I need a revenge value
-    public void Attack()
+    public void CounterAttack()
     {
         //animator.SetBool("Idle",false);
-        animator.SetTrigger("Attack");
-        enemyScript.SetDamage(1);
+        animator.SetTrigger("Counterattack");
+        enemyScript.SetDamage(2);
         enemyScript.SetAttackLength(1.5f);
-        enemyScript.StartAttackLength();
-        enemyScript.StartFlinchWindow();
-        if (enemyScript.teamAttackOn == true)
-        {
-            enemyScript.PlayAttackEffect(1);
-        }
-        else
-        {
+        enemyScript.StartCounterAttackLength();
+        //enemyScript.StartFlinchWindow();
+        //if (enemyScript.teamAttackOn == true)
+        //{
+            //enemyScript.PlayAttackEffect(1);
+        //}
+        //else
+        //{
             enemyScript.PlayAttackEffect(0);
-        }
-        enemyScript.AttackReadyOff();
+        //}
+        enemyScript.CounterAttackReadyOff();
     }
     public void RegularAttack()
     {
-
+        //animator.SetBool("Idle",false);
+        animator.SetTrigger("Attack");
+        animator.SetTrigger("Attack2");
+        enemyScript.SetDamage(2);
+        enemyScript.SetAttackLength(1.5f);
+        enemyScript.StartAttackLength();
+        enemyScript.StartFlinchWindow();
+        //if (enemyScript.teamAttackOn == true)
+        //{
+        //enemyScript.PlayAttackEffect(1);
+        //}
+        //else
+        //{
+        //enemyScript.PlayAttackEffect(1);
+        //}
+        enemyScript.AttackReadyOff();
     }
 }

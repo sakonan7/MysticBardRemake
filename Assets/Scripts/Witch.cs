@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//After breaking barrier, you can interrupt his attacks
+//After a time limit, he will recreate a barrier
 public class Witch : MonoBehaviour
 {
     public GameObject barrier;
     public GameObject bomb;
+    private GameObject bombFlare;
     private Animator animator;
     private Enemy enemyScript;
     // Start is called before the first frame update
@@ -20,6 +23,7 @@ public class Witch : MonoBehaviour
         enemyScript.SetNormal();
         Barrier();
         enemyScript.SetArmor();
+        bombFlare = transform.Find("Bomb Light").transform.Find("Lens").gameObject;
     }
 
     // Update is called once per frame
@@ -27,7 +31,15 @@ public class Witch : MonoBehaviour
     {
         if (enemyScript.attackReady == true)
         {
-            BombCube();
+            int random = Random.Range(0, 2);
+            if (random == 0)
+            {
+                BombCross();
+            }
+            else
+            {
+                BombCube();
+            }
             //Debug.Log("Attack");
             //Only doing this because I need to
             //I intend for the foe to not be able to be staggered while using a barrier
@@ -37,6 +49,10 @@ public class Witch : MonoBehaviour
         //{
 
         //}
+    }
+    IEnumerator BarrierAnimation()
+    {
+        yield return new WaitForSeconds(1);
     }
     public void Barrier()
     {

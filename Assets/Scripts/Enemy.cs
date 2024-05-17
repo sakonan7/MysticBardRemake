@@ -33,6 +33,8 @@ public class Enemy : MonoBehaviour
     private PlayerController playerScript;
     private GameObject effectPosition;
     private GameManager gameScript;
+    private GameObject counterAttackStart;
+    private GameObject counterAttackOn;
 
     private Coroutine cancelDamageDisplay;
     private Coroutine flinchCancel; //or flinchReset
@@ -56,8 +58,9 @@ public class Enemy : MonoBehaviour
     private bool repeat = true;
     private bool flinching = false;
     private bool barrier = false;
+    private bool counterAttackActive = false;
+    public bool counterAttackTriggered = false;
 
-    
     public ParticleSystem[] attackEffects;
     private int effectNumber = 0;
 
@@ -81,7 +84,7 @@ public class Enemy : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         animation = GetComponent<Animation>();
-        if (animator!=null)
+        if (animator != null)
         {
             animatorTrue = true;
         }
@@ -92,28 +95,34 @@ public class Enemy : MonoBehaviour
 
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        if (idleStart==true)
+        if (idleStart == true)
         {
             idleCancel = StartCoroutine(IdleAnimation(Random.Range(4, 10)));
             //Debug.Log("Id");
         }
-        Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position -transform.position);
-        transform.rotation = Quaternion.Slerp(new Quaternion(0,transform.rotation.y,transform.rotation.z,0), lookRotation,3);
+        //Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position - transform.position);
+        //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        effectPosition=transform.Find("Effect Position").gameObject;
+        effectPosition = transform.Find("Effect Position").gameObject;
+
+        //May need to do this in awake, either in this or in Green Thief
+        if (green ==true) {
+            counterAttackStart = transform.Find("Counterattack Objects").transform.Find("Counterattack Start").gameObject;
+            counterAttackOn = transform.Find("Counterattack Objects").transform.Find("Counterattack On").gameObject;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (windCaptured==false) {
+        if (windCaptured == false) {
             //Quaternion lookRotation = Quaternion.LookRotation(transform.position, GameObject.Find("Look At").transform.position);
             //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
             //AnalyzeTeamAttackCapability();
         }
-        if (HP<=0)
+        if (HP <= 0)
         {
             WindCaptureEnd();
             Destroy(gameObject);
@@ -144,15 +153,15 @@ public class Enemy : MonoBehaviour
             WindCaptureEnd();
         }
 
-        if (windCaptured ==true && playerScript.wind==true)
+        if (windCaptured == true && playerScript.wind == true)
         {
-            if (repeat ==true) {
+            if (repeat == true) {
                 Flinch();
                 repeat = false;
                 StartCoroutine(WindFlinch());
                 StartCoroutine(WindDamage());
             }
-            //transform.Rotate(Vector3.up * 180 * Time.deltaTime);
+            transform.Rotate(Vector3.up * 180 * Time.deltaTime);
         }
     }
     //Setters
@@ -165,14 +174,14 @@ public class Enemy : MonoBehaviour
     public void SetDamage(float newDamage)
     {
         damage = newDamage;
-        if (teamAttackOn ==true)
+        if (teamAttackOn == true)
         {
             damage++;
         }
     }
     public void SetIdleStart()
     {
-        idleStart = true;     
+        idleStart = true;
     }
     public void SetIdleTime(float newTime)
     {
@@ -216,7 +225,7 @@ public class Enemy : MonoBehaviour
     }
     public void DamageText(float damage)
     {
-        gameObject.transform.Find("Damage Received").GetComponent<TextMesh>().text= ""+damage;
+        gameObject.transform.Find("Damage Received").GetComponent<TextMesh>().text = "" + damage;
     }
     IEnumerator DamageDisplayDuration(float damage)
     {
@@ -234,22 +243,22 @@ public class Enemy : MonoBehaviour
         int i = 0;
         //for (int i =0; i < enemies.Length; i++)
         //{
-            while (i < enemies.Length &&enemyNextToAnother ==false) {
-                distance = Vector3.Distance(gameObject.transform.position, enemies[i].transform.position);
+        while (i < enemies.Length && enemyNextToAnother == false) {
+            distance = Vector3.Distance(gameObject.transform.position, enemies[i].transform.position);
             //Debug.Log("Distanceequal to "+distance);
-                i++;
-                if (distance <= 1f)
-                {
-                    enemyNextToAnother = true;
-                    //if (teamAttack == true && teamAttackOn == false)
-                    //{
-                        //teamAttackOn = true;
-                        //TeamAttackPositives();
-                    //}
-                }
+            i++;
+            if (distance <= 1f)
+            {
+                enemyNextToAnother = true;
+                //if (teamAttack == true && teamAttackOn == false)
+                //{
+                //teamAttackOn = true;
+                //TeamAttackPositives();
+                //}
             }
+        }
         //}
-        if (enemyNextToAnother==false)
+        if (enemyNextToAnother == false)
         {
             teamAttackOn = false;
             TeamAttackOff();
@@ -261,7 +270,7 @@ public class Enemy : MonoBehaviour
     public void Flinch()
     {
         attackReady = false;
-        if (flinchInterrupt==true)
+        if (flinchInterrupt == true)
         {
             attack = false;
             flinchInterrupt = false;
@@ -275,11 +284,12 @@ public class Enemy : MonoBehaviour
             StopAttackEffect();
         }
 
-        if (animatorTrue==true)
+        if (animatorTrue == true)
         {
-            animator.SetBool("Idle",true);
+            animator.SetBool("Idle", true);
             animator.SetTrigger("Flinch");
             animator.ResetTrigger("Attack");
+            animator.ResetTrigger("Attack2");
         }
         else if (animationTrue == true)
         {
@@ -300,13 +310,13 @@ public class Enemy : MonoBehaviour
         //Don't know why I didn't put this here right away, because I successful flinch will always start a flinchdur
         flinchCancel = StartCoroutine(FlinchDuration());
 
-        
+
     }
     IEnumerator FlinchDuration()
     {
         flinching = true;
         yield return new WaitForSeconds(2);
-        if (animatorTrue==true)
+        if (animatorTrue == true)
         {
             animator.ResetTrigger("Flinch");
         }
@@ -325,7 +335,7 @@ public class Enemy : MonoBehaviour
     }
     public void StartFlinchWindow()
     {
-        flinchOpportunityCancel =StartCoroutine(FlinchWindow());
+        flinchOpportunityCancel = StartCoroutine(FlinchWindow());
     }
     //If you hit the foe with the right attack during this window, their attack will be interr
     IEnumerator FlinchWindow()
@@ -339,9 +349,13 @@ public class Enemy : MonoBehaviour
     {
         attackReady = false;
     }
+    public void CounterAttackReadyOff()
+    {
+        counterAttackTriggered = false;
+    }
     public void StartAttackLength()
     {
-        attackLengthCancel =StartCoroutine(AttackLength());
+        attackLengthCancel = StartCoroutine(AttackLength());
     }
     //I'm gonna need to put this in Enem
     //I'm going to need to cancelthisif I stagger foe
@@ -351,6 +365,22 @@ public class Enemy : MonoBehaviour
         //animator.ResetTrigger("Attack");
         //StartCoroutine(IdleAnimation());
         StartIdle();
+        DealDamage(damage);
+    }
+    public void StartCounterAttackLength()
+    {
+        attackLengthCancel = StartCoroutine(CounterAttackLength());
+    }
+    //I'm gonna need to put this in Enem
+    //I'm going to need to cancelthisif I stagger foe
+    IEnumerator CounterAttackLength()
+    {
+        yield return new WaitForSeconds(attackLength);
+        animator.ResetTrigger("Counterattack");
+        animator.SetBool("Idle",true);
+        //StartCoroutine(IdleAnimation());
+        //StartIdle();
+        StartCoroutine(FollowUpAttack(1));
         DealDamage(damage);
     }
     public void PlayAttackEffect(int attackEffect)
@@ -364,16 +394,16 @@ public class Enemy : MonoBehaviour
     }
     public void DealDamage(float newDamage)
     {
-        if (playerScript.shieldOn==false && playerScript.specialInvincibility == false)
+        if (playerScript.shieldOn == false && playerScript.specialInvincibility == false)
         {
             playerScript.GeneralDamageCode(newDamage, newDamage);
             //playerScript.PlayHurtEffect(effectAppear.transform.position);
             playerScript.DamageFlashOn();
         }
-        else if(playerScript.shieldOn==true || playerScript.specialInvincibility ==true)
+        else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
         {
             playerScript.GenerateShield(effectPosition.transform.position);
-            if(playerScript.shieldOn==true)
+            if (playerScript.shieldOn == true)
             {
                 playerScript.ShieldGaugeDown(newDamage);
             }
@@ -391,12 +421,12 @@ public class Enemy : MonoBehaviour
         attackReady = false;
         if (animatorTrue == true)
         {
-            animator.SetBool("Idle",true);
+            animator.SetBool("Idle", true);
             //animator.ResetTrigger("Attack");
         }
         yield return new WaitForSeconds(idleTime);
         idle = false;
-        if (green== false) {
+        if (green == false) {
             attack = true;
             attackReady = true;
             if (animatorTrue == true)
@@ -406,51 +436,82 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            counterAttackCancel = StartCoroutine(CounterAttack());
+            StartCoroutine(CounterAttackStart());
+            
         }
+    }
+    IEnumerator CounterAttackStart()
+    {
+        counterAttackStart.SetActive(true);
+        yield return new WaitForSeconds(1);
+        counterAttackCancel = StartCoroutine(CounterAttack());
+        counterAttackStart.SetActive(false);
+        counterAttackOn.SetActive(true);
+        counterAttackActive = true;
     }
     IEnumerator CounterAttack()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
+        counterAttackActive = false;
+        StartCoroutine(FollowUpAttack(4));
+        animator.SetBool("Idle", true);
+        counterAttackOn.SetActive(false);
     }
-    IEnumerator FollowUpAttack()
+    IEnumerator FollowUpAttack(int waitTime)
     {
-        yield return new WaitForSeconds(4);
-
+        yield return new WaitForSeconds(waitTime);
+        attack = true;
+        attackReady = true;
+        if (animatorTrue == true)
+        {
+            animator.SetBool("Idle", false);
+        }
     }
     public void TakeDamage(float damage, bool armorBreak)
     {
-        if ((barrier ==true || armor==true) &&armorBreak ==false)
-        {
-            damage /= 2;
-        }
-        
-
-        if (armor ==true)
-        {
-            armorGauge -= damage;
-            armorFill.fillAmount -= (float)damage / 20;
-            if (armorFill.fillAmount <=0)
+        if (counterAttackActive==false) {
+            if ((barrier == true || armor == true) && armorBreak == false)
             {
-                ArmorOff();
+                damage /= 2;
             }
+
+
+            if (armor == true)
+            {
+                armorGauge -= damage;
+                armorFill.fillAmount -= (float)damage / 20;
+                if (armorFill.fillAmount <= 0)
+                {
+                    ArmorOff();
+                }
+            }
+            else
+            {
+                HP -= damage;
+            }
+            //DamageText(damage);
+            if (cancelDamageDisplay != null)
+            {
+                StopCoroutine(cancelDamageDisplay);
+            }
+            cancelDamageDisplay = StartCoroutine(DamageDisplayDuration(damage));
         }
         else
         {
-            HP -= damage;
+            StopCoroutine(counterAttackCancel);
+            counterAttackTriggered = true;
+            counterAttackActive = false;
+            //StartCoroutine(FollowUpAttack(4));
+            animator.SetBool("Idle", true);
+            counterAttackOn.SetActive(false);
         }
-        //DamageText(damage);
-        if (cancelDamageDisplay !=null)
-        {
-            StopCoroutine(cancelDamageDisplay);
-        }
-        cancelDamageDisplay = StartCoroutine(DamageDisplayDuration(damage));
     }
     public void WindCaptureEnd()
     {
         windCaptured = false;
-        Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position - transform.position);
-        transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
+        //Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position - transform.position);
+        //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
+        transform.rotation = new Quaternion(0, 180, 0,0);
         //Debug.Log("Wind " + windCaptured);
         if (teamAttack==true) {
             AnalyzeTeamAttackCapability();
@@ -591,6 +652,7 @@ public class Enemy : MonoBehaviour
             TeamAttackPositives();
             //Debug.Log("Team Attack On");
             }
+            Debug.Log("Crash!");
         }
         //}
     }

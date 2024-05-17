@@ -592,7 +592,7 @@ public class PlayerController : MonoBehaviour
         shieldGauge.fillAmount -= (float)1 / shieldTotal;
         currentShield--;
         shieldText.text = currentShield + "/" + shieldTotal;
-        if (currentTrumpet <= 0)
+        if (currentShield <= 0)
         {
             shieldDrained = true;
             shieldGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
