@@ -608,31 +608,33 @@ public class PlayerController : MonoBehaviour
     public void GeneralDamageCode(float damage, float shakeAmount)
     {
         //StartCoroutine(CameraShake(1/10));
-        currentHP -= damage;
-        HPBar.fillAmount -= (float)damage / HPTotal;
-        PlayHurtEffect();
-        HPText.text = currentHP + "/" + HPTotal;
+        if (currentHP >0) {
+            currentHP -= damage;
+            HPBar.fillAmount -= (float)damage / HPTotal;
+            PlayHurtEffect();
+            HPText.text = currentHP + "/" + HPTotal;
 
-        //I'm thinking about not cancelling the Coroutine and just changing the value of damage
-        //Camera shake for giant should be double
-        if(cancelDamageShake!= null)
-        {
-            StopCoroutine(cancelDamageShake);
-        }
-        if (cancelDamageText != null)
-        {
-            StopCoroutine(cancelDamageText);
-        }
-        if (cancelDamageFlash != null)
-        {
-            StopCoroutine(cancelDamageFlash);
-        }
-        cancelDamageShake = StartCoroutine(CameraShake(0));
-        cancelDamageText =StartCoroutine(DamageText(damage));
-        cancelDamageShake = StartCoroutine(DamageFlash());
-        if (currentHP <= 0)
-        {
-            gameScript.GameOver();
+            //I'm thinking about not cancelling the Coroutine and just changing the value of damage
+            //Camera shake for giant should be double
+            if (cancelDamageShake != null)
+            {
+                StopCoroutine(cancelDamageShake);
+            }
+            if (cancelDamageText != null)
+            {
+                StopCoroutine(cancelDamageText);
+            }
+            if (cancelDamageFlash != null)
+            {
+                StopCoroutine(cancelDamageFlash);
+            }
+            cancelDamageShake = StartCoroutine(CameraShake(0));
+            cancelDamageText = StartCoroutine(DamageText(damage));
+            cancelDamageFlash = StartCoroutine(DamageFlash());
+            if (currentHP <= 0)
+            {
+                gameScript.GameOver();
+            }
         }
     }
     IEnumerator DamageText(float damage)

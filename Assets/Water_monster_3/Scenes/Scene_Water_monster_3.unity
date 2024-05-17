@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17431419, g: 0.20985922, b: 0.25384244, a: 1}
+  m_IndirectSpecularColor: {r: 0.43920186, g: 0.47930783, b: 0.52354604, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -128,6 +128,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4216859302048453862, guid: ec4374b5b841d7b4c98f8f3a436300a1, type: 3}
@@ -179,6 +180,9 @@ PrefabInstance:
       value: Stand
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec4374b5b841d7b4c98f8f3a436300a1, type: 3}
 --- !u!1 &705507993
 GameObject:
@@ -266,12 +270,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.68146944, y: -0.6693824, z: -0.12678967, w: 0.26730332}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 11.22, y: -147.248, z: -87.719}
 --- !u!1 &963194225
 GameObject:
@@ -313,9 +318,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -349,20 +362,26 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 1.38, y: 1, z: 3.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &316510900907761119
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3559056642222959938, guid: e248d905a2787db46a5b71d0052d1170, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6278303136567165294, guid: e248d905a2787db46a5b71d0052d1170, type: 3}
       propertyPath: m_Name
       value: SK_Water_monster_3
@@ -412,6 +431,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e248d905a2787db46a5b71d0052d1170, type: 3}
 --- !u!33 &744061153073961407
 MeshFilter:
@@ -426,6 +448,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8422798957595137735, guid: 4087af387acf35048b994977c90a44b6, type: 3}
@@ -477,6 +500,9 @@ PrefabInstance:
       value: SK_Water_monster_3 (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4087af387acf35048b994977c90a44b6, type: 3}
 --- !u!23 &3294269761125674357
 MeshRenderer:
@@ -489,6 +515,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -524,6 +551,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7059106433653779081, guid: 3dcd005a56ab9e347b10ed3f8594c17f, type: 3}
@@ -575,6 +603,9 @@ PrefabInstance:
       value: SK_Water_monster_3 (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dcd005a56ab9e347b10ed3f8594c17f, type: 3}
 --- !u!1 &3942730589573696672
 GameObject:
@@ -601,18 +632,20 @@ Transform:
   m_PrefabInstance: {fileID: 7410682254027466148}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3942730589573696672}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.8898616, y: -0.4168363, z: -0.1570516, w: 0.09863452}
   m_LocalPosition: {x: -1.842, y: 0.522, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -17.847, y: -191.961, z: 131.685}
 --- !u!1001 &6316291656953269165
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8284524724412373772, guid: c933eeec0167a07439857a577c47128a, type: 3}
@@ -664,12 +697,16 @@ PrefabInstance:
       value: 19.853
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c933eeec0167a07439857a577c47128a, type: 3}
 --- !u!1001 &7410682254027466148
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5795970731204569348, guid: 8e74390321168d54a816eb1a7bcffe20, type: 3}
@@ -721,12 +758,16 @@ PrefabInstance:
       value: 131.685
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e74390321168d54a816eb1a7bcffe20, type: 3}
 --- !u!1001 &8012493541788189073
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5092374391304135467, guid: 1f847e6979894734d8ba3a41d735ad05, type: 3}
@@ -778,4 +819,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f847e6979894734d8ba3a41d735ad05, type: 3}
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 963194228}
+  - {fileID: 705507995}
+  - {fileID: 125290361}
+  - {fileID: 6316291656953269165}
+  - {fileID: 7410682254027466148}
+  - {fileID: 316510900907761119}
+  - {fileID: 3771011992544608076}
+  - {fileID: 1159652692185773084}
+  - {fileID: 8012493541788189073}

@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
     //public gameOb
     public GameObject teamAttackAura;
 
-    private float HP = 10;
+    public float HP = 10;
     private float damage = 0;
     //Individual enemy abilit
     private bool teamAttack = false;
@@ -76,7 +76,9 @@ public class Enemy : MonoBehaviour
     private bool red = false;
     private bool green = false;
     private bool armor = false;
-    private float armorGauge = 20;
+    private bool noAttack = false;
+    private float armorGauge = 30;
+    private float fullArmorGauge = 30;
     private GameObject armorObj;
     private Image armorFill;
     // Start is called before the first frame update
@@ -161,7 +163,9 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(WindFlinch());
                 StartCoroutine(WindDamage());
             }
-            transform.Rotate(Vector3.up * 180 * Time.deltaTime);
+            if (armor ==false) {
+                transform.Rotate(Vector3.up * 180 * Time.deltaTime);
+            }
         }
     }
     //Setters
@@ -206,6 +210,10 @@ public class Enemy : MonoBehaviour
     public void SetGreen()
     {
         green = true;
+    }
+    public void SetNoAttack()
+    {
+        noAttack = !noAttack;
     }
     //This is less of an enemy type and more of a mode
     public void SetArmor()
@@ -365,7 +373,9 @@ public class Enemy : MonoBehaviour
         //animator.ResetTrigger("Attack");
         //StartCoroutine(IdleAnimation());
         StartIdle();
-        DealDamage(damage);
+        if (noAttack==false) {
+            DealDamage(damage);
+        }
     }
     public void StartCounterAttackLength()
     {
@@ -398,7 +408,7 @@ public class Enemy : MonoBehaviour
         {
             playerScript.GeneralDamageCode(newDamage, newDamage);
             //playerScript.PlayHurtEffect(effectAppear.transform.position);
-            playerScript.DamageFlashOn();
+            //playerScript.DamageFlashOn();
         }
         else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
         {
@@ -479,10 +489,11 @@ public class Enemy : MonoBehaviour
             if (armor == true)
             {
                 armorGauge -= damage;
-                armorFill.fillAmount -= (float)damage / 20;
-                if (armorFill.fillAmount <= 0)
+                armorFill.fillAmount -= (float)damage / fullArmorGauge;
+                if (armorGauge <= 0)
                 {
                     ArmorOff();
+                    Destroy(GameObject.Find("Barrier(Clone)"));
                 }
             }
             else
@@ -625,10 +636,12 @@ public class Enemy : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         //if (playerScript.wind==true)
         //{
-            //Wind off. Need wind variable for enemy
-            if (collision.gameObject.CompareTag("Enemy"))
+        //Wind off. Need wind variable for enemy
+        if (collision.gameObject.CompareTag("Enemy"))
             {
                 bool damaged = false;
                 if (damaged == false)

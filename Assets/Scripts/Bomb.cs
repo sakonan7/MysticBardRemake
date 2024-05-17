@@ -59,7 +59,7 @@ public class Bomb : MonoBehaviour
         {
             playerScript.GeneralDamageCode(2, 0);
             //playerScript.PlayHurtEffect(effectAppear.transform.position);
-            playerScript.DamageFlashOn();
+            //playerScript.DamageFlashOn();
         }
         else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
         {

@@ -4,10 +4,12 @@ using UnityEngine;
 
 //After breaking barrier, you can interrupt his attacks
 //After a time limit, he will recreate a barrier
+//05/16/24 After this, put this in Enemy because multiplenemies use this
 public class Witch : MonoBehaviour
 {
     public GameObject barrier;
     public GameObject bomb;
+    private GameObject barrierAnimation;
     private GameObject bombFlare;
     private Animator animator;
     private Enemy enemyScript;
@@ -18,12 +20,15 @@ public class Witch : MonoBehaviour
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
         enemyScript.SetHP(60);
-        enemyScript.SetIdleStart(); //This doesn't work. May need an awake
-        enemyScript.SetIdleTime(5);
+
         enemyScript.SetNormal();
-        Barrier();
-        enemyScript.SetArmor();
+        enemyScript.SetNoAttack();
+        //Barrier();
+        
         bombFlare = transform.Find("Bomb Light").transform.Find("Lens").gameObject;
+        barrierAnimation= transform.Find("root").transform.Find("Personal Barrier Object").transform.Find("Barrier Animation").gameObject;
+
+        StartCoroutine(BarrierAnimation());
     }
 
     // Update is called once per frame
@@ -52,7 +57,16 @@ public class Witch : MonoBehaviour
     }
     IEnumerator BarrierAnimation()
     {
+        barrierAnimation.SetActive(true);
+        animator.SetTrigger("Barrier");
         yield return new WaitForSeconds(1);
+        animator.ResetTrigger("Barrier");
+        enemyScript.SetArmor();
+        barrierAnimation.SetActive(false);
+        
+        enemyScript.SetIdleTime(9);
+        enemyScript.SetIdleStart();
+        Barrier();
     }
     public void Barrier()
     {
@@ -77,7 +91,7 @@ public class Witch : MonoBehaviour
     public void Attack()
     {
         //animator.SetBool("Idle",false);
-        //animator.SetTrigger("Attack");
+        animator.SetTrigger("Attack");
         //enemyScript.SetDamage(1);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
