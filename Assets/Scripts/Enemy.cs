@@ -7,6 +7,7 @@ using UnityEngine;
 //using UnityEngine.UIElements;
 using UnityEngine.UI;
 using Cinemachine;
+using System.Linq.Expressions;
 
 //I want to do some things I didn't do right in Beast Dominion
 //Flinch
@@ -45,7 +46,7 @@ public class Enemy : MonoBehaviour
 
     private GameObject[] enemies;
 
-    private bool idleStart = true;
+    private bool idleStart = false;
     private bool idle = false;
     private float idleTime = 1;
     public bool attackReady = false;
@@ -69,6 +70,7 @@ public class Enemy : MonoBehaviour
 
     public float HP = 10;
     private float damage = 0;
+    public float EXP = 0;
     //Individual enemy abilit
     private bool teamAttack = false;
     private bool normal = false;
@@ -129,6 +131,7 @@ public class Enemy : MonoBehaviour
             WindCaptureEnd();
             Destroy(gameObject);
             gameScript.ReduceNumEnemies();
+            playerScript.GainEXP(EXP);
         }
         if (transform.position.x <= -4.32f)
         {
@@ -173,6 +176,10 @@ public class Enemy : MonoBehaviour
     {
         HP = newHP;
     }
+    public void SetEXP(float newEXP)
+    {
+        EXP = newEXP;
+    }
     //05/01/24
     //I can either set the damage at the start(), or check for team att
     public void SetDamage(float newDamage)
@@ -190,6 +197,10 @@ public class Enemy : MonoBehaviour
     public void SetIdleTime(float newTime)
     {
         idleTime = newTime;
+    }
+   public void NonStandardIdleStart()
+    {
+        idleCancel = StartCoroutine(IdleAnimation(Random.Range(4, 10)));
     }
     public void SetAttackLength(float newLength)
     {
@@ -227,7 +238,7 @@ public class Enemy : MonoBehaviour
     }
     public void ArmorOff()
     {
-        armor = true;
+        armor = false;
         armorObj.SetActive(false);
         transform.Find("root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(false);
     }
@@ -379,7 +390,9 @@ public class Enemy : MonoBehaviour
     }
     public void StartCounterAttackLength()
     {
-        attackLengthCancel = StartCoroutine(CounterAttackLength());
+        //Took this out because this can't get cancelled
+        //Maybe this is causing the glitch after a counterattack
+        StartCoroutine(CounterAttackLength());
     }
     //I'm gonna need to put this in Enem
     //I'm going to need to cancelthisif I stagger foe

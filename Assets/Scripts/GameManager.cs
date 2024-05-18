@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private GameObject gameOverObject;
     private GameObject gameOverText;
     private GameObject gameOverFilter;
+    private GameObject gameOverButtons;
     public bool gameOver = false;
 
     private int numEnemies = 0;
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
         gameOverObject = GameObject.Find("Game Over Object");
         gameOverText = gameOverObject.transform.Find("Game Over Text").gameObject;
         gameOverFilter = gameOverObject.transform.Find("Red Filter").gameObject;
+        gameOverButtons = gameOverObject.transform.Find("Buttons").gameObject;
         numEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
 
@@ -46,24 +48,31 @@ public class GameManager : MonoBehaviour
         numEnemies--;
         if (numEnemies <= 0)
         {
-            AfterBattle();
+            EXP();
         }
     }
     public void GameOver()
     {
         gameOverText.SetActive(true);
         gameOverFilter.SetActive(true);
+        gameOverButtons.SetActive(true);
     }
-    public void AfterBattle()
+    public void EXP()
     {
-        GameObject.Find("Level Done Object").transform.Find("Level Done").gameObject.SetActive(true);
+        GameObject.Find("Level Done Object").transform.Find("EXP").gameObject.SetActive(true);
+        //yield return new WaitForSeconds(2);
+        //ProgressLevel();
+    }
+    public void StatIncrease()
+    {
+        GameObject.Find("Level Done Object").transform.Find("Increase Stat").gameObject.SetActive(true);
         //yield return new WaitForSeconds(2);
         //ProgressLevel();
     }
     //I'm going to ask players if they want to progress or to go back to the menu
     public void ContinueOrQuit()
     {
-        GameObject.Find("Level Done Object").transform.Find("Level Done").gameObject.SetActive(false);
+        GameObject.Find("Level Done Object").transform.Find("Increase Stat").gameObject.SetActive(false);
         GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
     }
     public void Continue()
@@ -80,5 +89,10 @@ public class GameManager : MonoBehaviour
     public void LevelUpOff()
     {
         levelUpStatic = false;
+    }
+    public void RestartLevel()
+    {
+        player.FullRestore();
+        SceneManager.LoadScene(currentLevel);
     }
 }

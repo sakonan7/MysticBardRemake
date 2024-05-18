@@ -15,7 +15,7 @@ public class GreenThief : MonoBehaviour
         enemyScript = GetComponent<Enemy>();
         enemyScript.SetHP(100);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
-        enemyScript.SetIdleTime(5);
+        enemyScript.SetIdleTime(7);
         enemyScript.SetGreen();
     }
 

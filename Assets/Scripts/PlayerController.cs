@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Cinemachine;
+using Unity.VisualScripting;
 
 //Will instantiate the hit effects, such as Interrupt
 //04/23/24
@@ -85,6 +86,9 @@ public class PlayerController : MonoBehaviour
     private static float currentShield = 10;
     public static float shieldTotal = 10;
     public static int level = 6;
+    private static float currentEXP = 0;
+    private static float EXPToLevel = 200;
+    private float EXPGained = 0;
 
     public bool shieldOn = false;
     public bool shieldDrained = false;
@@ -443,6 +447,13 @@ public class PlayerController : MonoBehaviour
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             //ViolinHitEffect(enemies[i].transform.position);
         }
+        GameObject[] bombs = GameObject.FindGameObjectsWithTag("Bombs");
+        for (int i = 0; i < bombs.Length; i++)
+        {
+            bombs[i].GetComponent<Bomb>().EnemyExplode();
+            //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
+            //ViolinHitEffect(enemies[i].transform.position);
+        }
         StartCoroutine(Lag());
         //Debug.Log("Player Attack");
         hitCount = 0;
@@ -674,6 +685,36 @@ public class PlayerController : MonoBehaviour
         damageFlash.SetActive(true);
         yield return new WaitForSeconds(1);
         damageFlash.SetActive(false);
+    }
+    public void FullRestore()
+    {
+        currentHP = HPTotal;
+        currentViolin = violinTotal;
+        currentTrumpet = trumpetTotal;
+        currentFlute = fluteTotal;
+        currentShield = shieldTotal;
+    }
+    public void GainEXP(float newEXP)
+    {
+        EXPGained += newEXP;
+    }
+    public void StartEXPUp()
+    {
+        StartCoroutine(EXPUp(EXPGained));
+    }
+    IEnumerator EXPUp(float exp)
+    {
+        while (exp >0)
+        {
+            exp--;
+            currentEXP++;
+            GameObject.Find("EXP").transform.Find("EXP Gained").GetComponent<TextMeshProUGUI>().text = "EXP Gained: " +exp;
+            yield return new WaitForSeconds(0.5f);
+            if (currentEXP > EXPToLevel)
+            {
+                level++;
+            }
+        }
     }
     public void LevelUp()
     {

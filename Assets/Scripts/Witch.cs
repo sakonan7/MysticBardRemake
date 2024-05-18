@@ -41,7 +41,7 @@ public class Witch : MonoBehaviour
             {
                 BombCross();
             }
-            else
+            else if(random == 1)
             {
                 BombCube();
             }
@@ -64,8 +64,9 @@ public class Witch : MonoBehaviour
         enemyScript.SetArmor();
         barrierAnimation.SetActive(false);
         
-        enemyScript.SetIdleTime(9);
-        enemyScript.SetIdleStart();
+        enemyScript.SetIdleTime(12);
+        //enemyScript.SetIdleStart();
+        enemyScript.NonStandardIdleStart();
         Barrier();
     }
     public void Barrier()
@@ -98,12 +99,19 @@ public class Witch : MonoBehaviour
         enemyScript.StartFlinchWindow();
         //if (enemyScript.teamAttackOn == true)
         //{
-            //enemyScript.PlayAttackEffect(1);
+        //enemyScript.PlayAttackEffect(1);
         //}
         //else
         //{
-            //enemyScript.PlayAttackEffect(0);
+        //enemyScript.PlayAttackEffect(0);
         //}
         //enemyScript.AttackReadyOff();
+        StartCoroutine(BombFlare());
+    }
+    IEnumerator BombFlare()
+    {
+        bombFlare.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        bombFlare.SetActive(false);
     }
 }
