@@ -31,6 +31,7 @@ public class GrandDragon : MonoBehaviour
                 //Debug.Log("Attack");
             }
         }
+        //Last phase
     }
     IEnumerator IdleAnimation()
     {
@@ -42,19 +43,14 @@ public class GrandDragon : MonoBehaviour
     public void RedAttack()
     {
         //animator.SetBool("Idle",false);
-        animator.SetTrigger("Attack");
+        animator.SetTrigger("StrongAttack");
         enemyScript.SetDamage(3);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
-        if (enemyScript.teamAttackOn == true)
-        {
-            //enemyScript.PlayAttackEffect(1);
-        }
-        else
-        {
             enemyScript.PlayAttackEffect(0);
-        }
         enemyScript.AttackReadyOff();
     }
+    //Green Attack. 2.65 damage
+    //Last Phase. 4 damage. For now, Green Attack Animations
 }

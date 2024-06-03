@@ -23,6 +23,10 @@ using System.Linq.Expressions;
 //Remembering how complicated Beast Dominion Actually Was
 //The Data Fights In Kingdom Hearts III Are Definitely Hard. I think they put a stagger window between certain attacks. A Corout
 
+//06/03/24
+//This game is a lesson that I can either put a lot of things in an individual script and be disorganized, or put most of things in a single script, but
+//be limited to having to follow it (something strict). You always have to follow these rules and you can't break these rules.
+
 //TaskList
 //Make Foe Not Spazz Between Idle And Att
 public class Enemy : MonoBehaviour
@@ -79,6 +83,7 @@ public class Enemy : MonoBehaviour
     private bool green = false;
     private bool armor = false;
     private bool noAttack = false;
+    private bool bombUser = false;
     private float armorGauge = 30;
     private float fullArmorGauge = 30;
     private GameObject armorObj;
@@ -307,8 +312,20 @@ public class Enemy : MonoBehaviour
         {
             animator.SetBool("Idle", true);
             animator.SetTrigger("Flinch");
-            animator.ResetTrigger("Attack");
-            animator.ResetTrigger("Attack2");
+            //I can see this being a problem for the Red Dragon's last phase
+            //I will make an if case where green == true and red==true
+            if (red==true)
+            {
+                animator.ResetTrigger("StrongAttack");
+            }
+            else if (green == true) {
+                animator.ResetTrigger("Attack");
+                animator.ResetTrigger("Attack2");
+            }
+            else
+            {
+                animator.ResetTrigger("Attack");
+            }
         }
         else if (animationTrue == true)
         {
@@ -446,6 +463,22 @@ public class Enemy : MonoBehaviour
         {
             animator.SetBool("Idle", true);
             //animator.ResetTrigger("Attack");
+
+            //06/03/24
+            //I just realized I don't even reset the triggers after an attack if I don't interrupt them
+            if (red == true)
+            {
+                animator.ResetTrigger("StrongAttack");
+            }
+            else if (green == true)
+            {
+                animator.ResetTrigger("Attack");
+                animator.ResetTrigger("Attack2");
+            }
+            else
+            {
+                animator.ResetTrigger("Attack");
+            }
         }
         yield return new WaitForSeconds(idleTime);
         idle = false;
