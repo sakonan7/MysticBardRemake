@@ -26,6 +26,7 @@ using System.Linq.Expressions;
 //06/03/24
 //This game is a lesson that I can either put a lot of things in an individual script and be disorganized, or put most of things in a single script, but
 //be limited to having to follow it (something strict). You always have to follow these rules and you can't break these rules.
+//Maybe use white filter for enemy if their attack can't be interrupted
 
 //TaskList
 //Make Foe Not Spazz Between Idle And Att
@@ -436,16 +437,30 @@ public class Enemy : MonoBehaviour
     {
         if (playerScript.shieldOn == false && playerScript.specialInvincibility == false)
         {
-            playerScript.GeneralDamageCode(newDamage, newDamage);
+            //playerScript.GeneralDamageCode(newDamage, newDamage);
             //playerScript.PlayHurtEffect(effectAppear.transform.position);
             //playerScript.DamageFlashOn();
+            if(red ==false)
+            {
+                playerScript.GeneralDamageCode(newDamage, 3);
+            }
+            else
+            {
+                playerScript.GeneralDamageCode(newDamage, 5);
+            }
         }
         else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
         {
             playerScript.GenerateShield(effectPosition.transform.position);
             if (playerScript.shieldOn == true)
             {
-                playerScript.ShieldGaugeDown(newDamage);
+                if (red ==false) {
+                    playerScript.ShieldGaugeDown(newDamage,false);
+                }
+                else
+                {
+                    playerScript.ShieldGaugeDown(newDamage, true);
+                }
             }
         }
     }

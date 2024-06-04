@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using Cinemachine;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 //Will instantiate the hit effects, such as Interrupt
 //04/23/24
@@ -598,10 +599,10 @@ public class PlayerController : MonoBehaviour
         //}
         //Instantiate(shield,position,shield.transform.rotation);
     }
-    public void ShieldGaugeDown(float damage)
+    public void ShieldGaugeDown(float damage, bool red)
     {
-        shieldGauge.fillAmount -= (float)1 / shieldTotal;
-        currentShield--;
+        shieldGauge.fillAmount -= (float)damage / shieldTotal;
+        currentShield-=damage;
         shieldText.text = currentShield + "/" + shieldTotal;
         if (currentShield <= 0)
         {
@@ -614,6 +615,10 @@ public class PlayerController : MonoBehaviour
                 weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
                 shieldFilter.SetActive(false);
             }
+        }
+        if (red == true)
+        {
+            cancelDamageShake = StartCoroutine(CameraShake(3));
         }
     }
     public void GeneralDamageCode(float damage, float shakeAmount)
@@ -639,7 +644,7 @@ public class PlayerController : MonoBehaviour
             {
                 StopCoroutine(cancelDamageFlash);
             }
-            cancelDamageShake = StartCoroutine(CameraShake(0));
+            cancelDamageShake = StartCoroutine(CameraShake(shakeAmount));
             cancelDamageText = StartCoroutine(DamageText(damage));
             cancelDamageFlash = StartCoroutine(DamageFlash());
             if (currentHP <= 0)
@@ -670,7 +675,8 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator CameraShakeSpec(float shakeAmount)
     {
-        camShake.m_AmplitudeGain = 3f;
+        //3, for regular attack, 5 for Red Giant, 3 for Red Giant block
+        camShake.m_AmplitudeGain = shakeAmount;
         camShake.m_FrequencyGain = 0.5f;
         yield return new WaitForSeconds(0.5f);
         camShake.m_AmplitudeGain = 0;

@@ -23,15 +23,16 @@ public class GrandDragon : MonoBehaviour
     void Update()
     {
 
-        if(enemyScript.HP < 1000-40 && enemyScript.HP > 1000-80)
-        {
+        //if(enemyScript.HP < 1000-40 && enemyScript.HP > 1000-80)
+        //{
             if (enemyScript.attackReady == true)
-            {
+           {
                 RedAttack();
                 //Debug.Log("Attack");
             }
-        }
+        //}
         //Last phase
+        //< 500, secondPhase ==true
     }
     IEnumerator IdleAnimation()
     {
@@ -44,7 +45,7 @@ public class GrandDragon : MonoBehaviour
     {
         //animator.SetBool("Idle",false);
         animator.SetTrigger("StrongAttack");
-        enemyScript.SetDamage(3);
+        enemyScript.SetDamage(4);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();

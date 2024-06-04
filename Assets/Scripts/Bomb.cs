@@ -57,7 +57,7 @@ public class Bomb : MonoBehaviour
         Destroy(gameObject);
         if (playerScript.shieldOn == false && playerScript.specialInvincibility == false)
         {
-            playerScript.GeneralDamageCode(2, 0);
+            playerScript.GeneralDamageCode(2, 3);
             //playerScript.PlayHurtEffect(effectAppear.transform.position);
             //playerScript.DamageFlashOn();
         }
@@ -66,7 +66,7 @@ public class Bomb : MonoBehaviour
             playerScript.GenerateShield(effectPosition.transform.position);
             if (playerScript.shieldOn == true)
             {
-                playerScript.ShieldGaugeDown(2);
+                playerScript.ShieldGaugeDown(2,false);
             }
         }
     }
