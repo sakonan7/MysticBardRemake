@@ -8,15 +8,20 @@ public class Gob : MonoBehaviour
     private bool idle = true;
     private Animator animator;
     private Enemy enemyScript;
+    private void Awake()
+    {
+        enemyScript = GetComponent<Enemy>();
+        enemyScript.SetIdleStart(); //This doesn't work. May need an awake
+    }
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         //StartCoroutine(IdleAnimation());
-        enemyScript = GetComponent<Enemy>();
-        enemyScript.SetHP(60);
+        
+        enemyScript.SetHP(5);
         enemyScript.SetEXP(70);
-        enemyScript.SetIdleStart(); //This doesn't work. May need an awake
+        
         enemyScript.SetIdleTime(5);
         enemyScript.SetNormal();
         enemyScript.SetTeamAttack();

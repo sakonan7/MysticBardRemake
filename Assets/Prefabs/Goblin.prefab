@@ -478,10 +478,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  counterAttackTriggered: 0
   attackEffects:
   - {fileID: 4711685881414956193}
   - {fileID: 8197458791908280611}
   teamAttackAura: {fileID: 5524596731341565533}
+  HP: 10
+  EXP: 0
   teamAttackOn: 0
 --- !u!54 &1317767034055439913
 Rigidbody:

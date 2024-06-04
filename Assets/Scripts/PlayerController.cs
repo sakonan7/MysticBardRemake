@@ -87,8 +87,13 @@ public class PlayerController : MonoBehaviour
     private static float currentShield = 10;
     public static float shieldTotal = 10;
     public static int level = 6;
+    //EXPCounter will be the number that goes down
+    //currentEXP is for holding the amount
+    //subtract if you levelled up
     private static float currentEXP = 0;
-    private static float EXPToLevel = 200;
+    private static float EXPCounter = 0;
+    private static float EXPToLevel = 0;
+    private static float EXPToLevelMax = 200;
     private float EXPGained = 0;
 
     public bool shieldOn = false;
@@ -359,6 +364,15 @@ public class PlayerController : MonoBehaviour
             weaponSelected.transform.Find("Flute Selected").gameObject.SetActive(true);
         }
     }
+    public void WeaponReset ()
+    {
+        violin = true;
+        trumpet = false;
+        flute = false;
+        trumpetRange.SetActive(false);
+        WeaponSelect();
+        WindEnd();
+    }
     public void ViolinAttack(Vector3 newPosition)
     {
         //if (violinDrained ==false) {
@@ -448,7 +462,7 @@ public class PlayerController : MonoBehaviour
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             //ViolinHitEffect(enemies[i].transform.position);
         }
-        GameObject[] bombs = GameObject.FindGameObjectsWithTag("Bombs");
+        GameObject[] bombs = GameObject.FindGameObjectsWithTag("Bomb");
         for (int i = 0; i < bombs.Length; i++)
         {
             bombs[i].GetComponent<Bomb>().EnemyExplode();
@@ -703,32 +717,84 @@ public class PlayerController : MonoBehaviour
     public void GainEXP(float newEXP)
     {
         EXPGained += newEXP;
+        //Debug.Log(EXPGained + " equals to");
     }
     public void StartEXPUp()
     {
+        //I need to find some way to know how much EXP is left to level
+        //That's the amount I need to decrease besides EXPgained
+        EXPCounter = EXPGained;
+        //06/04/24
+        //For now, I have to use this. I know it won't work because currentEXP isn't always equal to EXPToLevel. But I need something for the start of the
+        //game
+        //I could use EXPToLevelUp;
+        //Maybe I should use EXPToLevel itself. The only problem is increasing it by 3/2 when I level 
+        //I don't likw this
+        //I tried it. I do need a "max" value for EXPToLevel
+        //I really do need something besides EXPToLevel. Now I will just use EXPToLevel
+        //I'm lierally stuck in a fucking infinite loop with currentEXP and EXPToLevel
+        //The main issue is that I need to account for the start of the game. That is the only time EXPToLevel will equal its max
+        //At the moment, I will use currentEXP =EXPToLevelMax, because there is no start right now
+        //Or EXPToLevel = EXPToLevelMax and then,currentEXP = EXPToLevel;
+        //I need some way to not have to use a startGame bool because it feels cheap. And I need to prepare for more statics. startGame is too gimmicky
+        //Also, the player can start at any level (Actually, they'll still have to go to the start screen)
+        currentEXP = EXPToLevelMax; 
         StartCoroutine(EXPUp(EXPGained));
     }
+    //The parameter is EXPGained
     IEnumerator EXPUp(float exp)
     {
+        bool levelUp = false;
         while (exp >0)
         {
             exp--;
-            currentEXP++;
-            GameObject.Find("EXP").transform.Find("EXP Gained").GetComponent<TextMeshProUGUI>().text = "EXP Gained: " +exp;
-            yield return new WaitForSeconds(0.5f);
-            if (currentEXP > EXPToLevel)
+            //EXPCounter--;
+            currentEXP--;
+            //EXPToLevel--;
+            GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP Gained").GetComponent<TextMeshProUGUI>().text = "EXP Gained: " +exp;
+            GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP To Level").GetComponent<TextMeshProUGUI>().text = "EXP To Level: " + currentEXP;
+            yield return new WaitForSeconds(0.05f);
+            //if (currentEXP <=0)
+            //{
+            //level++;
+            //}
+            if (exp > 0 && currentEXP <= 0)
             {
-                level++;
+                //EXPToLevel = EXPToLevelMax 3 / 2;
+                //currentEXP = EXPToLevel;
+                LevelUp();
+                levelUp = true;
+            }
+            if (exp <= 0)
+            {
+                if (levelUp ==true)
+                {
+                    StartCoroutine(PauseBeforeLevelUp());
+                }
+                StartCoroutine(ContinueButton());
             }
         }
+    }
+    IEnumerator ContinueButton()
+    {
+        yield return new WaitForSeconds(1);
+        GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("Buttons").transform.Find("Continue").gameObject.SetActive(true);
+    }
+    IEnumerator PauseBeforeLevelUp()
+    {
+        yield return new WaitForSeconds(1);
+        GameObject.Find("EXP").transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Lv. " + level;
+        //Continue Button
     }
     public void LevelUp()
     {
         //GameObject.Find("HP Bar Background").transform.localScale += new Vector3(20, 0, 0);
-        currentHP = originalHP;
-        currentHP += 3;
+        //currentHP = originalHP;
+        //currentHP += 3;
         level += 1;
-        Debug.Log(currentHP);
+        EXPToLevelMax *= 3 / 2;
+        currentEXP = EXPToLevelMax;
+        //Debug.Log(EXPToLevel);
     }
     public void HPUp()
     {

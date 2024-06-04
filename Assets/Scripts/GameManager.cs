@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
         if (numEnemies <= 0)
         {
             EXP();
+            player.WeaponReset();
         }
     }
     public void GameOver()
@@ -62,6 +64,7 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Level Done Object").transform.Find("EXP").gameObject.SetActive(true);
         //yield return new WaitForSeconds(2);
         //ProgressLevel();
+        player.StartEXPUp();
     }
     public void StatIncrease()
     {
