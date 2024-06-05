@@ -136,8 +136,9 @@ public class Enemy : MonoBehaviour
         {
             WindCaptureEnd();
             Destroy(gameObject);
+            playerScript.GainEXP(EXP); //Putting this after ReduceNumEnemies is making it so that the last 70 doesn't add 
             gameScript.ReduceNumEnemies();
-            playerScript.GainEXP(EXP);
+            
         }
         if (transform.position.x <= -4.32f)
         {
@@ -697,8 +698,11 @@ public class Enemy : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        //Need this for boundary
+        if (collision.gameObject.CompareTag("Enemy") ||collision.gameObject.CompareTag("Bomb")) {
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
         //if (playerScript.wind==true)
         //{
         //Wind off. Need wind variable for enemy

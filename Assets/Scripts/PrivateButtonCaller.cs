@@ -11,6 +11,7 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool quit = false;
     public bool statIncrease = false;
     public bool nextLevel = false;
+    public bool continueQuit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +43,10 @@ public class PrivateButtonCaller : MonoBehaviour
         if (nextLevel == true)
         {
             gameScript.Continue();
+        }
+        if (continueQuit == true)
+        {
+            gameScript.ContinueOrQuit();
         }
     }
 }

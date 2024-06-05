@@ -12,19 +12,20 @@ public class Gob : MonoBehaviour
     {
         enemyScript = GetComponent<Enemy>();
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
+        animator = GetComponent<Animator>();
+        //StartCoroutine(IdleAnimation());
+
+        enemyScript.SetHP(5);
+        enemyScript.SetEXP(60);
+
+        enemyScript.SetIdleTime(5);
+        enemyScript.SetNormal();
+        enemyScript.SetTeamAttack();
     }
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
-        //StartCoroutine(IdleAnimation());
-        
-        enemyScript.SetHP(5);
-        enemyScript.SetEXP(70);
-        
-        enemyScript.SetIdleTime(5);
-        enemyScript.SetNormal();
-        enemyScript.SetTeamAttack();
+
     }
 
     // Update is called once per frame

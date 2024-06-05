@@ -8,7 +8,7 @@ public class GrandDragon : MonoBehaviour
     private Animator animator;
     private Enemy enemyScript;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         animator = GetComponent<Animator>();
         //StartCoroutine(IdleAnimation());

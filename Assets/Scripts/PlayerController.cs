@@ -740,6 +740,7 @@ public class PlayerController : MonoBehaviour
         //Also, the player can start at any level (Actually, they'll still have to go to the start screen)
         currentEXP = EXPToLevelMax; 
         StartCoroutine(EXPUp(EXPGained));
+        //Debug.Log("EXP Gained equal to " +EXPGained);
     }
     //The parameter is EXPGained
     IEnumerator EXPUp(float exp)
@@ -767,11 +768,15 @@ public class PlayerController : MonoBehaviour
             }
             if (exp <= 0)
             {
-                if (levelUp ==true)
+                if (levelUp == true)
                 {
                     StartCoroutine(PauseBeforeLevelUp());
+                    StartCoroutine(StatUpMenuButton());
                 }
-                StartCoroutine(ContinueButton());
+                else
+                {
+                    StartCoroutine(ContinueButton());
+                }
             }
         }
     }
@@ -780,10 +785,15 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1);
         GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("Buttons").transform.Find("Continue").gameObject.SetActive(true);
     }
+    IEnumerator StatUpMenuButton()
+    {
+        yield return new WaitForSeconds(1);
+        GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("Buttons").transform.Find("Continue With Level Up").gameObject.SetActive(true);
+    }
     IEnumerator PauseBeforeLevelUp()
     {
         yield return new WaitForSeconds(1);
-        GameObject.Find("EXP").transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Lv. " + level;
+        GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Lv. " + level;
         //Continue Button
     }
     public void LevelUp()
