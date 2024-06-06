@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PrivateButtonCaller : MonoBehaviour
@@ -21,6 +22,10 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool increaseTrumpet = false;
     public bool increaseFlute = false;
     public bool increaseShield = false;
+
+    [Header("Level Select")]
+    public bool level1 = false;
+    public bool level2 = false;
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +72,13 @@ public class PrivateButtonCaller : MonoBehaviour
             gameScript.ContinueOrQuit();
         }
 
-
+        if(level1==true)
+        {
+            gameScript.StartGame();
+        }
+        if (level2 == true)
+        {
+            SceneManager.LoadScene(3);
+        }
     }
 }

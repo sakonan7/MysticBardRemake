@@ -2742,8 +2742,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  counterAttackTriggered: 0
   attackEffects: []
   teamAttackAura: {fileID: 0}
+  HP: 10
+  EXP: 0
   teamAttackOn: 0
 --- !u!114 &1135701891
 MonoBehaviour:
@@ -3031,7 +3034,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.32
+      value: 1.112
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5067,6 +5070,8 @@ SceneRoots:
   - {fileID: 5903260411966377768}
   - {fileID: 681677053}
   - {fileID: 1748816116}
+  - {fileID: 612763030}
+  - {fileID: 1591250257}
   - {fileID: 3070088143507982095}
   - {fileID: 5314909491804558929}
   - {fileID: 2295511706476674097}
@@ -5074,8 +5079,6 @@ SceneRoots:
   - {fileID: 179945740}
   - {fileID: 1349033175}
   - {fileID: 2068670229}
-  - {fileID: 612763030}
-  - {fileID: 1591250257}
   - {fileID: 1717388120}
   - {fileID: 298476643}
   - {fileID: 226873570}

@@ -174,7 +174,7 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(WindDamage());
             }
             if (armor ==false) {
-                transform.Rotate(Vector3.up * 180 * Time.deltaTime);
+                //transform.Rotate(Vector3.up * 180 * Time.deltaTime);
             }
         }
     }
@@ -584,7 +584,7 @@ public class Enemy : MonoBehaviour
         windCaptured = false;
         //Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position - transform.position);
         //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
-        transform.rotation = new Quaternion(0, 180, 0,0);
+        //transform.rotation = new Quaternion(0, 180, 0,0);
         //Debug.Log("Wind " + windCaptured);
         if (teamAttack==true) {
             AnalyzeTeamAttackCapability();
@@ -703,8 +703,8 @@ public class Enemy : MonoBehaviour
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
-        //if (playerScript.wind==true)
-        //{
+        if (playerScript.wind==true)
+        {
         //Wind off. Need wind variable for enemy
         if (collision.gameObject.CompareTag("Enemy"))
             {
@@ -730,20 +730,20 @@ public class Enemy : MonoBehaviour
             TeamAttackPositives();
             //Debug.Log("Team Attack On");
             }
-            Debug.Log("Crash!");
+            //Debug.Log("Crash!");
         }
-        //}
+        }
     }
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            //if (teamAttack == true && teamAttackOn == false)
-            //{
-                //teamAttackOn = true;
-                //TeamAttackPositives();
+            if (teamAttack == true && teamAttackOn == false)
+            {
+                teamAttackOn = true;
+                TeamAttackPositives();
                 //Debug.Log("Team Attack On");
-            //}
+            }
         }
     }
     private void OnCollisionExit(Collision collision)

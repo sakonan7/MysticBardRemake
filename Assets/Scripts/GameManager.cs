@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public static int level1 = 2;
     public static int currentLevel = 2;
 
+    public bool victory = false;
+
     //06/05/24
     //This should be okay
     //Also, because I am not using bools, but using scene names
@@ -58,12 +60,15 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        player = GameObject.Find("Player").GetComponent<PlayerController>();
-        gameOverObject = GameObject.Find("Game Over Object");
-        gameOverText = gameOverObject.transform.Find("Game Over Text").gameObject;
-        gameOverFilter = gameOverObject.transform.Find("Red Filter").gameObject;
-        gameOverButtons = gameOverObject.transform.Find("Buttons").gameObject;
-        numEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        
+        if (title ==false) {
+            player = GameObject.Find("Player").GetComponent<PlayerController>();
+            gameOverObject = GameObject.Find("Game Over Object");
+            gameOverText = gameOverObject.transform.Find("Game Over Text").gameObject;
+            gameOverFilter = gameOverObject.transform.Find("Red Filter").gameObject;
+            gameOverButtons = gameOverObject.transform.Find("Buttons").gameObject;
+            numEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        }
 
 
     }
@@ -89,6 +94,7 @@ public class GameManager : MonoBehaviour
         {
             EXP();
             player.WeaponReset();
+            victory = true;
         }
     }
     public void GameOver()
