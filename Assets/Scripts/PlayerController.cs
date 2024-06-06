@@ -126,23 +126,39 @@ public class PlayerController : MonoBehaviour
         camera = GameObject.Find("Main Camera");
         camShake = GameObject.Find("FreeLook Camera").GetComponent<CinemachineFreeLook>().GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
-        levelText = GameObject.Find("Mugshot").transform.Find("Level Text").GetComponent<TextMeshProUGUI>();
-        damageFlash = GameObject.Find("Damage Object").transform.Find("Damage").gameObject;
-        violinGauge = GameObject.Find("Violin Gauge").GetComponent<Image>();
-        trumpetGauge = GameObject.Find("Trumpet Gauge").GetComponent<Image>();
-        fluteGauge = GameObject.Find("Flute Gauge").GetComponent<Image>();
-        shieldGauge = GameObject.Find("Shield Gauge").GetComponent<Image>();
-        allAttackGauge = GameObject.Find("All Attack Gauge").GetComponent<Image>();
-        toolIcon = GameObject.Find("Tool Icons");
-        weaponImages = GameObject.Find("Weapon Images");
+        //Load different things based on levelSelectNonStatic
+        if (gameScript.levelSelectNonStatic == true)
+        {
+            HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
+            levelText = GameObject.Find("Mugshot").transform.Find("Level Text").GetComponent<TextMeshProUGUI>();
+            violinGauge = GameObject.Find("Violin Gauge").GetComponent<Image>();
+            trumpetGauge = GameObject.Find("Trumpet Gauge").GetComponent<Image>();
+            fluteGauge = GameObject.Find("Flute Gauge").GetComponent<Image>();
+            shieldGauge = GameObject.Find("Shield Gauge").GetComponent<Image>();
+            toolIcon = GameObject.Find("Tool Icons");
+            weaponImages = GameObject.Find("Weapon Images");
+        }
+        else
+        {
+            HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
+            levelText = GameObject.Find("Mugshot").transform.Find("Level Text").GetComponent<TextMeshProUGUI>();
+            damageFlash = GameObject.Find("Damage Object").transform.Find("Damage").gameObject;
+            violinGauge = GameObject.Find("Violin Gauge").GetComponent<Image>();
+            trumpetGauge = GameObject.Find("Trumpet Gauge").GetComponent<Image>();
+            fluteGauge = GameObject.Find("Flute Gauge").GetComponent<Image>();
+            shieldGauge = GameObject.Find("Shield Gauge").GetComponent<Image>();
+            allAttackGauge = GameObject.Find("All Attack Gauge").GetComponent<Image>();
+            toolIcon = GameObject.Find("Tool Icons");
+            weaponImages = GameObject.Find("Weapon Images");
+            
+            specialFilter = GameObject.Find("Filter").transform.Find("Special Filter").gameObject;
+            shieldFilter = GameObject.Find("Filter").transform.Find("Shield Filter").gameObject;
+            weaponSelected = GameObject.Find("Weapons");
+            numPotions = GameObject.Find("Number of Potions").GetComponent<TextMeshProUGUI>();
+            numPotions.text = "X " + numPotionsInt;
+            potionUsedIcon = GameObject.Find("Potions").transform.Find("Use Potion").gameObject;
+        }
         audio = GetComponent<AudioSource>();
-        specialFilter = GameObject.Find("Filter").transform.Find("Special Filter").gameObject;
-        shieldFilter = GameObject.Find("Filter").transform.Find("Shield Filter").gameObject;
-        weaponSelected = GameObject.Find("Weapons");
-        numPotions = GameObject.Find("Number of Potions").GetComponent<TextMeshProUGUI>();
-        numPotions.text = "X " + numPotionsInt;
-        potionUsedIcon = GameObject.Find("Potions").transform.Find("Use Potion").gameObject;
 
         //I think I should use numeric values for the bar length and HP num
         if (gameScript.levelUp==true)
@@ -173,160 +189,169 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentHP > 0) {
-            if (Input.GetKeyDown(KeyCode.F))
+        if (gameScript.levelSelectNonStatic == false || gameScript.titleNonStatic == false)
+        {
+            if (currentHP > 0)
             {
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    if (paused == false)
+                    {
+                        paused = true;
+                        Time.timeScale = 0;
+                    }
+                    else
+                    {
+                        paused = false;
+                        Time.timeScale = 1;
+                        Debug.Log("Pause Undone");
+                    }
+                }
                 if (paused == false)
                 {
-                    paused = true;
-                    Time.timeScale = 0;
-                }
-                else
-                {
-                    paused = false;
-                    Time.timeScale = 1;
-                    Debug.Log("Pause Undone");
-                }
-            }
-            if (paused == false) {
-                //I decided not to increase the time it needs to reload when drained.
-                if (violinDrained == true)
-                {
-                    violinGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
-                    if (violinGauge.fillAmount >= 1)
+                    //I decided not to increase the time it needs to reload when drained.
+                    if (violinDrained == true)
                     {
-                        violinDrained = false;
-                        violinGauge.color = new Color(0.9503901f, 1, 0, 1);
-                        currentViolin = violinTotal;
-                        violinText.text = currentViolin + "/" + violinTotal;
-                    }
-                }
-                if (trumpetDrained == true)
-                {
-                    trumpetGauge.fillAmount += (float)1 / 15 * Time.deltaTime;
-                    if (trumpetGauge.fillAmount >= 1)
-                    {
-                        trumpetDrained = false;
-                        trumpetGauge.color = new Color(0.9503901f, 1, 0, 1);
-                        currentTrumpet = trumpetTotal;
-                        trumpetText.text = currentTrumpet + "/" + trumpetTotal;
-                    }
-                }
-                if (fluteDrained == true)
-                {
-                    fluteGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
-                    if (fluteGauge.fillAmount >= 1)
-                    {
-                        fluteDrained = false;
-                        fluteGauge.color = new Color(0.9503901f, 1, 0, 1);
-                        currentFlute = fluteTotal;
-                        fluteText.text = currentFlute + "/" + fluteTotal;
-                    }
-                }
-                if (shieldDrained == true)
-                {
-                    shieldGauge.fillAmount += (float)1 / 10 * Time.deltaTime;
-                    if (shieldGauge.fillAmount >= 1)
-                    {
-                        shieldDrained = false;
-                        shieldGauge.color = new Color(0.9503901f, 1, 0, 1);
-                        currentShield = shieldTotal;
-                        shieldText.text = currentShield + "/" + shieldTotal;
-                    }
-                }
-
-                //It's really interesting that I did shieldOn first
-                if (shieldOn == false)
-                {
-                    if (shieldDrained == false) {
-                        if (Input.GetKeyDown(KeyCode.A)) {
-                            cancelShield = StartCoroutine(ShieldOn());
-                            audio.PlayOneShot(shieldTune, 1.5f);
-                        }
-                    }
-                }
-                //if (Input.GetKeyDown(KeyCode.S))
-                //{
-                //trumpetOn = true;
-                //trumpetRange.SetActive(true);
-                //}
-                if (Input.GetMouseButtonDown(1) && wind == false)
-                {
-                    if (trumpet == false)
-                    {
-                        violin = false;
-                        trumpet = true;
-                        flute = false;
-                        trumpetRange.SetActive(true);
-                    }
-                    else
-                    {
-                        violin = true;
-                        trumpet = false;
-                        flute = false;
-                        trumpetRange.SetActive(false);
-                    }
-                    WeaponSelect();
-                }
-                if (Input.GetMouseButtonDown(2) && wind == false)
-                {
-
-                    if (flute == false)
-                    {
-                        violin = false;
-                        trumpet = false;
-                        flute = true;
-                        trumpetRange.SetActive(false);
-                    }
-                    else
-                    {
-                        violin = true;
-                        trumpet = false;
-                        flute = false;
-                        trumpetRange.SetActive(false);
-                    }
-                    WeaponSelect();
-                }
-                if (lag == false) {
-                    if (trumpet == true)
-                    {
-                        if (trumpetDrained == false) {
-                            if (Input.GetMouseButtonDown(0))
-                            {
-                                TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
-                            }
-                        }
-                    }
-                    if (violin == true)
-                    {
-                        if (violinDrained == false)
+                        violinGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
+                        if (violinGauge.fillAmount >= 1)
                         {
-                            if (Input.GetMouseButtonDown(0))
+                            violinDrained = false;
+                            violinGauge.color = new Color(0.9503901f, 1, 0, 1);
+                            currentViolin = violinTotal;
+                            violinText.text = currentViolin + "/" + violinTotal;
+                        }
+                    }
+                    if (trumpetDrained == true)
+                    {
+                        trumpetGauge.fillAmount += (float)1 / 15 * Time.deltaTime;
+                        if (trumpetGauge.fillAmount >= 1)
+                        {
+                            trumpetDrained = false;
+                            trumpetGauge.color = new Color(0.9503901f, 1, 0, 1);
+                            currentTrumpet = trumpetTotal;
+                            trumpetText.text = currentTrumpet + "/" + trumpetTotal;
+                        }
+                    }
+                    if (fluteDrained == true)
+                    {
+                        fluteGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
+                        if (fluteGauge.fillAmount >= 1)
+                        {
+                            fluteDrained = false;
+                            fluteGauge.color = new Color(0.9503901f, 1, 0, 1);
+                            currentFlute = fluteTotal;
+                            fluteText.text = currentFlute + "/" + fluteTotal;
+                        }
+                    }
+                    if (shieldDrained == true)
+                    {
+                        shieldGauge.fillAmount += (float)1 / 10 * Time.deltaTime;
+                        if (shieldGauge.fillAmount >= 1)
+                        {
+                            shieldDrained = false;
+                            shieldGauge.color = new Color(0.9503901f, 1, 0, 1);
+                            currentShield = shieldTotal;
+                            shieldText.text = currentShield + "/" + shieldTotal;
+                        }
+                    }
+
+                    //It's really interesting that I did shieldOn first
+                    if (shieldOn == false)
+                    {
+                        if (shieldDrained == false)
+                        {
+                            if (Input.GetKeyDown(KeyCode.A))
                             {
-                                ViolinAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                                cancelShield = StartCoroutine(ShieldOn());
+                                audio.PlayOneShot(shieldTune, 1.5f);
                             }
                         }
                     }
-                }
-
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    if (hitCount >= 25)
+                    //if (Input.GetKeyDown(KeyCode.S))
+                    //{
+                    //trumpetOn = true;
+                    //trumpetRange.SetActive(true);
+                    //}
+                    if (Input.GetMouseButtonDown(1) && wind == false)
                     {
-                        AllAttack();
+                        if (trumpet == false)
+                        {
+                            violin = false;
+                            trumpet = true;
+                            flute = false;
+                            trumpetRange.SetActive(true);
+                        }
+                        else
+                        {
+                            violin = true;
+                            trumpet = false;
+                            flute = false;
+                            trumpetRange.SetActive(false);
+                        }
+                        WeaponSelect();
                     }
-                }
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    Potion();
-                }
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    violin = true;
-                    trumpet = false;
-                    flute = false;
-                    trumpetRange.SetActive(false);
-                    WeaponSelect();
+                    if (Input.GetMouseButtonDown(2) && wind == false)
+                    {
+
+                        if (flute == false)
+                        {
+                            violin = false;
+                            trumpet = false;
+                            flute = true;
+                            trumpetRange.SetActive(false);
+                        }
+                        else
+                        {
+                            violin = true;
+                            trumpet = false;
+                            flute = false;
+                            trumpetRange.SetActive(false);
+                        }
+                        WeaponSelect();
+                    }
+                    if (lag == false)
+                    {
+                        if (trumpet == true)
+                        {
+                            if (trumpetDrained == false)
+                            {
+                                if (Input.GetMouseButtonDown(0))
+                                {
+                                    TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                                }
+                            }
+                        }
+                        if (violin == true)
+                        {
+                            if (violinDrained == false)
+                            {
+                                if (Input.GetMouseButtonDown(0))
+                                {
+                                    ViolinAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                                }
+                            }
+                        }
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.S))
+                    {
+                        if (hitCount >= 25)
+                        {
+                            AllAttack();
+                        }
+                    }
+                    if (Input.GetKeyDown(KeyCode.W))
+                    {
+                        Potion();
+                    }
+                    if (Input.GetKeyDown(KeyCode.D))
+                    {
+                        violin = true;
+                        trumpet = false;
+                        flute = false;
+                        trumpetRange.SetActive(false);
+                        WeaponSelect();
+                    }
                 }
             }
         }

@@ -18,10 +18,39 @@ public class GameManager : MonoBehaviour
     public static bool levelUpStatic = false;
     public bool levelUp = false;
 
-    public static int currentLevel = 0;
+    public static int level1 = 2;
+    public static int currentLevel = 2;
+
+    //06/05/24
+    //This should be okay
+    //Also, because I am not using bools, but using scene names
+    public static bool title = false;
+    public bool titleNonStatic = false;
+    public static bool levelSelect = false;
+    public bool levelSelectNonStatic = false;
     // Start is called before the first frame update
     private void Awake()
     {
+        if (SceneManager.GetActiveScene().name == "Cover")
+        {
+            title = true;
+            titleNonStatic = true;
+        }
+        else
+        {
+            title = false;
+            titleNonStatic = false;
+        }
+        if (SceneManager.GetActiveScene().name=="Level Select")
+        {
+            levelSelect = true;
+            levelSelectNonStatic = true;
+        }
+        else
+        {
+            levelSelect = false;
+            levelSelectNonStatic = false;
+        }
         if (levelUpStatic == true)
         {
             levelUp = true;
@@ -43,6 +72,15 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(level1);
+    }
+    public void LevelSelect()
+    {
+        SceneManager.LoadScene("Level Select");
     }
     public void ReduceNumEnemies()
     {

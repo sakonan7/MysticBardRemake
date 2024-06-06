@@ -7,11 +7,20 @@ public class PrivateButtonCaller : MonoBehaviour
 {
     private GameManager gameScript;
     private Button button;
+    public bool startGame = false;
+    public bool levelSelect = false;
     public bool retry = false;
     public bool quit = false;
     public bool statIncrease = false;
     public bool nextLevel = false;
     public bool continueQuit = false;
+
+    [Header("Increase")]
+    public bool increaseHP = false;
+    public bool increaseViolin = false;
+    public bool increaseTrumpet = false;
+    public bool increaseFlute = false;
+    public bool increaseShield = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +37,15 @@ public class PrivateButtonCaller : MonoBehaviour
     }
     public void EvokeButton()
     {
+        if (startGame == true)
+        {
+            gameScript.StartGame();
+        }
+        if (levelSelect == true)
+        {
+            gameScript.LevelSelect();
+        }
+
         if (retry ==true)
         {
             gameScript.RestartLevel();
@@ -48,5 +66,7 @@ public class PrivateButtonCaller : MonoBehaviour
         {
             gameScript.ContinueOrQuit();
         }
+
+
     }
 }
