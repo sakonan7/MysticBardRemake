@@ -8,6 +8,7 @@ public class PrivateButtonCaller : MonoBehaviour
 {
     private GameManager gameScript;
     private Button button;
+    private PlayerController player;
     public bool startGame = false;
     public bool levelSelect = false;
     public bool retry = false;
@@ -33,6 +34,11 @@ public class PrivateButtonCaller : MonoBehaviour
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         button = GetComponent<Button>();
         button.onClick.AddListener(EvokeButton);
+
+        if(GameObject.Find("Player") !=null)
+        {
+            player = GameObject.Find("Player").GetComponent<PlayerController>();
+        }
     }
 
     // Update is called once per frame
@@ -79,6 +85,27 @@ public class PrivateButtonCaller : MonoBehaviour
         if (level2 == true)
         {
             SceneManager.LoadScene(3);
+        }
+
+        if (increaseHP == true)
+        {
+            player.HPUp();
+        }
+        if (increaseViolin == true)
+        {
+            player.ViolinUp();
+        }
+        if (increaseTrumpet == true)
+        {
+            player.TrumpetUp();
+        }
+        if (increaseFlute == true)
+        {
+            player.FluteUp();
+        }
+        if (increaseShield == true)
+        {
+            player.ShieldUp();
         }
     }
 }

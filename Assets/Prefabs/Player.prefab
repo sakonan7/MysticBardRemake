@@ -149,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageText: {fileID: 684061841406032331}
   shieldTune: {fileID: 8300000, guid: 7845393ad1c5af148973a5bbec6f74dc, type: 3}
+  shieldBreak: {fileID: 8300000, guid: 30aec24afb885724bb71f720b3a5f4f9, type: 3}
   interruptEffect: {fileID: 3974351313356374250, guid: 97e8a325e349fd348be4658e1f4201bd, type: 3}
   hurt: {fileID: 1612960297063342916, guid: c85ccdb892e5b1144adcde82e92f4c72, type: 3}
   hurtEffect: {fileID: 8578284643070386047}

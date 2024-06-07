@@ -983,11 +983,13 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
-  increaseHP: 0
+  increaseHP: 1
   increaseViolin: 0
   increaseTrumpet: 0
   increaseFlute: 0
   increaseShield: 0
+  level1: 0
+  level2: 0
 --- !u!1 &762877892742757819
 GameObject:
   m_ObjectHideFlags: 0
@@ -2506,6 +2508,8 @@ MonoBehaviour:
   increaseTrumpet: 0
   increaseFlute: 0
   increaseShield: 0
+  level1: 0
+  level2: 0
 --- !u!1 &1480312796575172270
 GameObject:
   m_ObjectHideFlags: 0
@@ -4395,6 +4399,8 @@ MonoBehaviour:
   increaseTrumpet: 0
   increaseFlute: 0
   increaseShield: 0
+  level1: 0
+  level2: 0
 --- !u!1 &2161744671831268497
 GameObject:
   m_ObjectHideFlags: 0
@@ -6461,6 +6467,78 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3331447374535814338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8201251114001750837}
+  - component: {fileID: 5835773137071884574}
+  - component: {fileID: 5501243315866381675}
+  m_Layer: 5
+  m_Name: Shield Shatter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &8201251114001750837
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3331447374535814338}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 446863301042011164}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 400, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5835773137071884574
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3331447374535814338}
+  m_CullTransparentMesh: 1
+--- !u!114 &5501243315866381675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3331447374535814338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.6375031, g: 1, b: 0.2980392, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 4c4ac393c9a4e9b4695a7dae4e2424bc, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &3355642409813616492
 GameObject:
   m_ObjectHideFlags: 0
@@ -8261,10 +8339,12 @@ MonoBehaviour:
   nextLevel: 0
   continueQuit: 0
   increaseHP: 0
-  increaseViolin: 0
+  increaseViolin: 1
   increaseTrumpet: 0
   increaseFlute: 0
   increaseShield: 0
+  level1: 0
+  level2: 0
 --- !u!1 &4113068453145260289
 GameObject:
   m_ObjectHideFlags: 0
@@ -11127,6 +11207,8 @@ MonoBehaviour:
   increaseTrumpet: 0
   increaseFlute: 0
   increaseShield: 0
+  level1: 0
+  level2: 0
 --- !u!1 &5660889620591681735
 GameObject:
   m_ObjectHideFlags: 0
@@ -11543,6 +11625,8 @@ MonoBehaviour:
   increaseTrumpet: 0
   increaseFlute: 0
   increaseShield: 0
+  level1: 0
+  level2: 0
 --- !u!1 &5973166092526899196
 GameObject:
   m_ObjectHideFlags: 0
@@ -12402,6 +12486,8 @@ MonoBehaviour:
   increaseTrumpet: 0
   increaseFlute: 0
   increaseShield: 0
+  level1: 0
+  level2: 0
 --- !u!1 &6435613135226299931
 GameObject:
   m_ObjectHideFlags: 0
@@ -13766,6 +13852,7 @@ RectTransform:
   m_Children:
   - {fileID: 4282532386851791721}
   - {fileID: 3589886077333381320}
+  - {fileID: 8201251114001750837}
   m_Father: {fileID: 4069388352127207279}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -15036,6 +15123,8 @@ MonoBehaviour:
   increaseTrumpet: 0
   increaseFlute: 0
   increaseShield: 0
+  level1: 0
+  level2: 0
 --- !u!1 &8047584973847857945
 GameObject:
   m_ObjectHideFlags: 0
@@ -15487,6 +15576,8 @@ MonoBehaviour:
   increaseTrumpet: 0
   increaseFlute: 0
   increaseShield: 0
+  level1: 0
+  level2: 0
 --- !u!1 &8158307125912441179
 GameObject:
   m_ObjectHideFlags: 0
@@ -18060,6 +18151,8 @@ MonoBehaviour:
   increaseTrumpet: 0
   increaseFlute: 0
   increaseShield: 0
+  level1: 0
+  level2: 0
 --- !u!1 &9088497968868878833
 GameObject:
   m_ObjectHideFlags: 0
@@ -18281,6 +18374,8 @@ MonoBehaviour:
   increaseTrumpet: 0
   increaseFlute: 0
   increaseShield: 0
+  level1: 0
+  level2: 0
 --- !u!1 &9147844405567412336
 GameObject:
   m_ObjectHideFlags: 0

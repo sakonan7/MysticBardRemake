@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     //I made these with the idea of sticking stuff together. Shield stuff with shield stuff, violin stuff with violin stuff, IE
     public GameObject damageText;
     public AudioClip shieldTune;
+    public AudioClip shieldBreak;
     private GameObject camera;
     private CinemachineBasicMultiChannelPerlin camShake;
     private GameManager gameScript;
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
     private GameObject damageFilter;
     private GameObject specialFilter;
     private GameObject shieldFilter;
+    private GameObject shieldShatter;
     private GameObject weaponSelected;
     private TextMeshProUGUI numPotions;
     private int numPotionsInt = 4;
@@ -94,7 +96,7 @@ public class PlayerController : MonoBehaviour
     private static float EXPCounter = 0;
     private static float EXPToLevel = 0;
     private static float EXPToLevelMax = 200;
-    private float EXPGained = 0;
+    private static float EXPGained = 0;
 
     public bool shieldOn = false;
     public bool shieldDrained = false;
@@ -154,6 +156,7 @@ public class PlayerController : MonoBehaviour
 
                 specialFilter = GameObject.Find("Filter").transform.Find("Special Filter").gameObject;
                 shieldFilter = GameObject.Find("Filter").transform.Find("Shield Filter").gameObject;
+                shieldShatter = GameObject.Find("Filter").transform.Find("Shield Shatter").gameObject;
                 weaponSelected = GameObject.Find("Weapons");
                 numPotions = GameObject.Find("Number of Potions").GetComponent<TextMeshProUGUI>();
                 numPotions.text = "X " + numPotionsInt;
@@ -614,6 +617,14 @@ public class PlayerController : MonoBehaviour
         weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
         shieldFilter.SetActive(false);
     }
+    IEnumerator ShieldBreakAnimation()
+    {
+        shieldFilter.SetActive(true);
+        shieldShatter.SetActive(true);
+        yield return new WaitForSeconds(1);
+        shieldFilter.SetActive(false);
+        shieldShatter.SetActive(false);
+    }
     IEnumerator SpecialInvincibility()
     {
         specialInvincibility = true;
@@ -645,13 +656,22 @@ public class PlayerController : MonoBehaviour
     }
     public void ShieldGaugeDown(float damage, bool red)
     {
+        //Want a deep pianonote to play when this happens
         shieldGauge.fillAmount -= (float)damage / shieldTotal;
         currentShield-=damage;
         shieldText.text = currentShield + "/" + shieldTotal;
+        if (damage > currentShield)
+        {
+            GeneralDamageCode(damage - currentShield, 3);
+            audio.PlayOneShot(shieldBreak, 2f);
+        }
         if (currentShield <= 0)
         {
+            currentShield = 0; //For Some Reason This Solved A Problem Where ShieldGauge Would Say 1/10
+            //This isn't run by an animation so this isn't an excuse
             shieldDrained = true;
             shieldGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
+            shieldText.text = currentShield + "/" + shieldTotal;
             if (cancelShield!=null)
             {
                 StopCoroutine(cancelShield);
@@ -711,7 +731,7 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator CameraShake(float shakeAmount)
     {
-        camShake.m_AmplitudeGain = 3f;
+        camShake.m_AmplitudeGain = shakeAmount; //06/07/24, forgotto make parameter factor
         camShake.m_FrequencyGain = 0.5f;
         yield return new WaitForSeconds(1);
         camShake.m_AmplitudeGain = 0;
@@ -843,6 +863,30 @@ public class PlayerController : MonoBehaviour
         HPTotal += 3;
         currentHP = HPTotal;
         //gameScript.ProgressLevel();
+        gameScript.ContinueOrQuit();
+    }
+    public void ViolinUp()
+    {
+        violinTotal += 3;
+        currentViolin = violinTotal;
+        gameScript.ContinueOrQuit();
+    }
+    public void TrumpetUp()
+    {
+        trumpetTotal += 2;
+        currentTrumpet = trumpetTotal;
+        gameScript.ContinueOrQuit();
+    }
+    public void FluteUp()
+    {
+        fluteTotal += 3;
+        currentFlute = fluteTotal;
+        gameScript.ContinueOrQuit();
+    }
+    public void ShieldUp()
+    {
+        shieldTotal += 3;
+        currentShield = shieldTotal;
         gameScript.ContinueOrQuit();
     }
     public void OnMouseUp()
