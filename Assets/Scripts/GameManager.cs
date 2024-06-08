@@ -130,6 +130,9 @@ public class GameManager : MonoBehaviour
     {
         //player.LevelUp();
         levelUpStatic = true;
+        //This is going to need to be reset if I go back to level select
+        //!Just look at the scene number and add on 
+        //Now it's less gimmicky
         currentLevel++;
         SceneManager.LoadScene(currentLevel);
     }

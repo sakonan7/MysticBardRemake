@@ -92,10 +92,15 @@ public class PlayerController : MonoBehaviour
     //EXPCounter will be the number that goes down
     //currentEXP is for holding the amount
     //subtract if you levelled up
+    //06/07/24
+    //Each time you start the game, EXPToLevel will equal EXPToLevelMax
+    //I can do this now that I have title and level select
+    //Now I can rewrite based on this
+    //I only have to worry about this if there is a save function
     private static float currentEXP = 0;
     private static float EXPCounter = 0;
-    private static float EXPToLevel = 0;
     private static float EXPToLevelMax = 200;
+    private static float EXPToLevel = EXPToLevelMax;
     private static float EXPGained = 0;
 
     public bool shieldOn = false;
@@ -412,7 +417,7 @@ public class PlayerController : MonoBehaviour
         Instantiate(violinHitbox, newPosition, violinHitbox.transform.rotation);
         //Instantiate(violinSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), violinSoundwave.transform.rotation);
         //ViolinHitEffect(newPosition);
-        StartCoroutine(Lag());
+        StartCoroutine(Lag(0.5f));
             violinGauge.fillAmount -= (float)1 / violinTotal;
         currentViolin--;
         violinText.text = currentViolin + "/" + violinTotal;
@@ -430,7 +435,7 @@ public class PlayerController : MonoBehaviour
         //ViolinHitEffect(newPosition);
         Instantiate(trumpetHitbox, newPosition, trumpetHitbox.transform.rotation);
         //Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
-        StartCoroutine(Lag());
+        StartCoroutine(Lag(1));
         trumpetGauge.fillAmount -= (float)1 / trumpetTotal;
         currentTrumpet--;
         trumpetText.text = currentTrumpet + "/" + trumpetTotal;
@@ -502,7 +507,7 @@ public class PlayerController : MonoBehaviour
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             //ViolinHitEffect(enemies[i].transform.position);
         }
-        StartCoroutine(Lag());
+        StartCoroutine(Lag(0.5f));
         //Debug.Log("Player Attack");
         hitCount = 0;
         allAttackGauge.fillAmount=0;
@@ -562,7 +567,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
     }
-    IEnumerator Lag()
+    IEnumerator Lag(float time)
     {
         lag = true;
         //toolIcon.SetActive(true);
@@ -574,7 +579,7 @@ public class PlayerController : MonoBehaviour
             weaponImages.transform.Find("Trumpet Image").gameObject.SetActive(true);
             trumpetRange.SetActive(false);
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(time);
         lag = false;
         //toolIcon.SetActive(false);
         if (violin == true)
@@ -788,7 +793,9 @@ public class PlayerController : MonoBehaviour
         //Or EXPToLevel = EXPToLevelMax and then,currentEXP = EXPToLevel;
         //I need some way to not have to use a startGame bool because it feels cheap. And I need to prepare for more statics. startGame is too gimmicky
         //Also, the player can start at any level (Actually, they'll still have to go to the start screen)
-        currentEXP = EXPToLevelMax; 
+        //currentEXP = EXPToLevelMax; 
+
+        currentEXP = EXPToLevel;
         StartCoroutine(EXPUp(EXPGained));
         //Debug.Log("EXP Gained equal to " +EXPGained);
     }
@@ -799,6 +806,7 @@ public class PlayerController : MonoBehaviour
         while (exp >0)
         {
             exp--;
+            EXPGained--;
             //EXPCounter--;
             currentEXP--;
             //EXPToLevel--;
@@ -879,14 +887,20 @@ public class PlayerController : MonoBehaviour
     }
     public void FluteUp()
     {
-        fluteTotal += 3;
+        fluteTotal += 1;
         currentFlute = fluteTotal;
         gameScript.ContinueOrQuit();
     }
     public void ShieldUp()
     {
-        shieldTotal += 3;
+        shieldTotal += 2;
         currentShield = shieldTotal;
+        gameScript.ContinueOrQuit();
+    }
+    public void PotionUp()
+    {
+        //potionTotal += 2;
+        //currentPotion = potionTotal;
         gameScript.ContinueOrQuit();
     }
     public void OnMouseUp()

@@ -9842,6 +9842,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3420322747363698454, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
+      propertyPath: increaseFlute
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4069388352127207279, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -9922,9 +9926,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5055621980579567493, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7771661027699388748, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
+      propertyPath: increaseTrumpet
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8273995824858037637, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
       propertyPath: m_Name
       value: Canvas General
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064415007536874760, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
+      propertyPath: increaseShield
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -27,6 +27,7 @@ public class PrivateButtonCaller : MonoBehaviour
     [Header("Level Select")]
     public bool level1 = false;
     public bool level2 = false;
+    public bool level3 = false;
 
     // Start is called before the first frame update
     void Start()
@@ -85,6 +86,10 @@ public class PrivateButtonCaller : MonoBehaviour
         if (level2 == true)
         {
             SceneManager.LoadScene(3);
+        }
+        if (level3 == true)
+        {
+            SceneManager.LoadScene(4);
         }
 
         if (increaseHP == true)
