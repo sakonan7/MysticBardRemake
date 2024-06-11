@@ -12,6 +12,7 @@ TagManager:
   - Bomb
   - Hitbox
   - Harp
+  - Debris
   layers:
   - Default
   - TransparentFX

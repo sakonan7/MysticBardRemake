@@ -699,7 +699,7 @@ public class Enemy : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Need this for boundary
-        if (collision.gameObject.CompareTag("Enemy") ||collision.gameObject.CompareTag("Bomb")) {
+        if (collision.gameObject.CompareTag("Enemy") ||collision.gameObject.CompareTag("Bomb")|| collision.gameObject.CompareTag("Debris")) {
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
@@ -732,6 +732,26 @@ public class Enemy : MonoBehaviour
             }
             //Debug.Log("Crash!");
         }
+            if (collision.gameObject.CompareTag("Debris"))
+            {
+                bool damaged = false;
+                if (damaged == false)
+                {
+                    damaged = true;
+                    TakeDamage(2, true);
+                    //Destroy(other.gameObject);
+                    Flinch();
+                }
+                //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                //collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                playerScript.WindEnd();
+                //I need to cancel out a bunch of coroutines
+                //if (windCaptured==true) {
+                WindCaptureEnd();
+                //}
+                playerScript.WindHitEffect(collision.GetContact(0).point);
+                Destroy(collision.gameObject, 1);
+            }
         }
     }
     private void OnCollisionStay(Collision collision)
