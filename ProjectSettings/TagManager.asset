@@ -11,6 +11,7 @@ TagManager:
   - Barrier
   - Bomb
   - Hitbox
+  - Harp
   layers:
   - Default
   - TransparentFX

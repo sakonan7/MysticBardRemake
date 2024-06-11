@@ -145,4 +145,12 @@ public class GameManager : MonoBehaviour
         player.FullRestore();
         SceneManager.LoadScene(currentLevel);
     }
+    IEnumerator StartGenerateDebris()
+    {
+        yield return new WaitForSeconds(5);
+    }
+    public void GenerateDebris ()
+    {
+        //Randomize them
+    }
 }

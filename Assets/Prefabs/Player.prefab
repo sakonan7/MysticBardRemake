@@ -148,12 +148,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageText: {fileID: 684061841406032331}
+  harpSound: {fileID: 8300000, guid: 3c3512af19dfe6e4c9eed8eef48932fa, type: 3}
+  trumpet1: {fileID: 8300000, guid: b186ed061928f264ba164bbd49e2b275, type: 3}
+  trumpet2: {fileID: 8300000, guid: f641e02dd48e0414aad093823cf3b884, type: 3}
   shieldTune: {fileID: 8300000, guid: 7845393ad1c5af148973a5bbec6f74dc, type: 3}
   shieldBreak: {fileID: 8300000, guid: 30aec24afb885724bb71f720b3a5f4f9, type: 3}
   interruptEffect: {fileID: 3974351313356374250, guid: 97e8a325e349fd348be4658e1f4201bd, type: 3}
   hurt: {fileID: 1612960297063342916, guid: c85ccdb892e5b1144adcde82e92f4c72, type: 3}
   hurtEffect: {fileID: 8578284643070386047}
-  violinHitEffect: {fileID: 6843410145098263074, guid: d48628bf259e4e44eb3dfd86fb51aefb, type: 3}
+  harpHitEffect: {fileID: 6843410145098263074, guid: d48628bf259e4e44eb3dfd86fb51aefb, type: 3}
   trumpetHitEffect: {fileID: 4367563126961059898, guid: f0795b6372a48fd43ad034b9e85299b2, type: 3}
   windCrash: {fileID: 2331168256701063683, guid: b69a9999426df334f8b291c460e51a87, type: 3}
   attack: 0
@@ -164,11 +167,11 @@ MonoBehaviour:
   shieldSpecial: {fileID: 7429514466067678404, guid: b376eaa115a6004478700495ab1b8975, type: 3}
   trumpetRange: {fileID: 4839453126204381578}
   trumpetHitbox: {fileID: 8551800652245622886, guid: a394cde47e771bd4eb96a63384491a94, type: 3}
-  violinHitbox: {fileID: 8551800652245622886, guid: d8746771bb66d2d42be9802ac9b3c9a8, type: 3}
+  harpHitbox: {fileID: 8551800652245622886, guid: d8746771bb66d2d42be9802ac9b3c9a8, type: 3}
   trumpetSoundwave: {fileID: 3965839119870658576, guid: d37b3a63bb84433469da39a1c3e2c2ad, type: 3}
-  violinSoundwave: {fileID: 485518619082792125, guid: 2083fc50530717a4eb580d21782d1ff6, type: 3}
+  harpSoundwave: {fileID: 5970322957875076396, guid: f52d426c3014737409179cea54ee4e00, type: 3}
   fluteWind: {fileID: 8255220899082025878}
-  violinDrained: 0
+  harpDrained: 0
   shieldOn: 0
   shieldDrained: 0
   specialInvincibility: 0

@@ -605,7 +605,7 @@ public class Enemy : MonoBehaviour
     {
         if (playerScript.lag == false)
         {
-            if (Input.GetMouseButtonDown(0) &&playerScript.violinDrained==false)
+            if (Input.GetMouseButtonDown(0) &&playerScript.harpDrained==false)
             {
                 //Debug.Log("Attacked!");
                 //playerScript.ViolinAttack(transform.position);
@@ -776,7 +776,7 @@ public class Enemy : MonoBehaviour
                 //playerScript.TrumpetHitEffect(effectPosition.transform.position);
             }
         }
-        if (other.CompareTag("Violin"))
+        if (other.CompareTag("Harp"))
         {
             bool damaged = false;
             if (damaged == false)

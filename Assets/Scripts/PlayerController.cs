@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
 {
     //I made these with the idea of sticking stuff together. Shield stuff with shield stuff, violin stuff with violin stuff, IE
     public GameObject damageText;
+    public AudioClip harpSound;
+    public AudioClip trumpet1;
+    public AudioClip trumpet2;
     public AudioClip shieldTune;
     public AudioClip shieldBreak;
     private GameObject camera;
@@ -25,11 +28,12 @@ public class PlayerController : MonoBehaviour
     private float originalCameraY;
     private Image HPBar;
     private TextMeshProUGUI levelText;
+    private TextMeshProUGUI EXPText;
     private GameObject damageFlash;
     public ParticleSystem interruptEffect;
     public GameObject hurt;
     public ParticleSystem hurtEffect;
-    public ParticleSystem violinHitEffect;
+    public ParticleSystem harpHitEffect;
     public ParticleSystem trumpetHitEffect;
     public ParticleSystem windCrash;
     public bool attack = false;
@@ -37,7 +41,7 @@ public class PlayerController : MonoBehaviour
     public int hitCount = 0;
     private bool hitCountReached = false;
     public GameObject allAttackEffect;
-    private Image violinGauge;
+    private Image harpGauge;
     private Image trumpetGauge;
     private Image fluteGauge;
     private Image shieldGauge;
@@ -57,7 +61,7 @@ public class PlayerController : MonoBehaviour
     //It's very hard to be organized. Either you put all the HP stuff together and the private and statics are mixed up,
     //or you put all the privates together, but the HP stuff is all disorganized
     private TextMeshProUGUI HPText;
-    private TextMeshProUGUI violinText;
+    private TextMeshProUGUI harpText;
     private TextMeshProUGUI trumpetText;
     private TextMeshProUGUI fluteText;
     private TextMeshProUGUI shieldText;
@@ -68,20 +72,20 @@ public class PlayerController : MonoBehaviour
     private GameObject toolIcon;
     public GameObject trumpetRange;
     public GameObject trumpetHitbox;
-    public GameObject violinHitbox;
+    public GameObject harpHitbox;
     public GameObject trumpetSoundwave;
-    public GameObject violinSoundwave;
+    public GameObject harpSoundwave;
     public GameObject fluteWind;
 
-    public bool violinDrained = false; //I don't think I have to make this public anymore
+    public bool harpDrained = false; //I don't think I have to make this public anymore
     private float originalHP = 20;
-    private float originalViolin = 15;
+    private float originalHarp = 15;
     private float originalTrumpet = 10;
     private float originalFlute = 3;
     public static float currentHP = 20;
     public static float HPTotal = 20;
-    private static float currentViolin = 15;
-    public static float violinTotal = 15;
+    private static float currentHarp = 15;
+    public static float harpTotal = 15;
     private static float currentTrumpet = 10;
     public static float trumpetTotal = 10;
     private static float currentFlute = 3;
@@ -97,10 +101,8 @@ public class PlayerController : MonoBehaviour
     //I can do this now that I have title and level select
     //Now I can rewrite based on this
     //I only have to worry about this if there is a save function
-    private static float currentEXP = 0;
-    private static float EXPCounter = 0;
-    private static float EXPToLevelMax = 200;
-    private static float EXPToLevel = EXPToLevelMax;
+    private static float EXPToLevelLimit = 200;
+    private static float EXPToLevel = EXPToLevelLimit;
     private static float EXPGained = 0;
 
     public bool shieldOn = false;
@@ -111,7 +113,7 @@ public class PlayerController : MonoBehaviour
     public bool fluteDrained = false;
 
     //Private bools
-    private bool violin = true;
+    private bool harp = true;
     private bool trumpet = false;
     public bool flute = false;
     public bool wind = false;
@@ -139,7 +141,9 @@ public class PlayerController : MonoBehaviour
             {
                 HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
                 levelText = GameObject.Find("Mugshot").transform.Find("Level Text").GetComponent<TextMeshProUGUI>();
-                violinGauge = GameObject.Find("Violin Gauge").GetComponent<Image>();
+                EXPText = GameObject.Find("Mugshot").transform.Find("EXP To Level").GetComponent<TextMeshProUGUI>();
+                EXPText.text = "EXP: " + EXPToLevel;
+                harpGauge = GameObject.Find("Harp Gauge").GetComponent<Image>();
                 trumpetGauge = GameObject.Find("Trumpet Gauge").GetComponent<Image>();
                 fluteGauge = GameObject.Find("Flute Gauge").GetComponent<Image>();
                 shieldGauge = GameObject.Find("Shield Gauge").GetComponent<Image>();
@@ -151,7 +155,7 @@ public class PlayerController : MonoBehaviour
                 HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
                 levelText = GameObject.Find("Mugshot").transform.Find("Level Text").GetComponent<TextMeshProUGUI>();
                 damageFlash = GameObject.Find("Damage Object").transform.Find("Damage").gameObject;
-                violinGauge = GameObject.Find("Violin Gauge").GetComponent<Image>();
+                harpGauge = GameObject.Find("Harp Gauge").GetComponent<Image>();
                 trumpetGauge = GameObject.Find("Trumpet Gauge").GetComponent<Image>();
                 fluteGauge = GameObject.Find("Flute Gauge").GetComponent<Image>();
                 shieldGauge = GameObject.Find("Shield Gauge").GetComponent<Image>();
@@ -180,14 +184,14 @@ public class PlayerController : MonoBehaviour
 
         //This is necessary in case I didn't increase any of these values
         currentHP = HPTotal;
-        currentViolin = violinTotal;
+        currentHarp = harpTotal;
         currentTrumpet = trumpetTotal;
         currentFlute = fluteTotal;
         currentShield = shieldTotal;
         HPText = GameObject.Find("HP Bar Object").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
         HPText.text = HPTotal + "/" + HPTotal;
-        violinText = GameObject.Find("Violin").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
-        violinText.text = violinTotal + "/" + violinTotal;
+        harpText = GameObject.Find("Harp").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
+        harpText.text = harpTotal + "/" + harpTotal;
         trumpetText = GameObject.Find("Trumpet").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
         trumpetText.text = trumpetTotal + "/" + trumpetTotal;
         fluteText = GameObject.Find("Flute").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
@@ -222,15 +226,15 @@ public class PlayerController : MonoBehaviour
                     if (paused == false)
                     {
                         //I decided not to increase the time it needs to reload when drained.
-                        if (violinDrained == true)
+                        if (harpDrained == true)
                         {
-                            violinGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
-                            if (violinGauge.fillAmount >= 1)
+                            harpGauge.fillAmount += (float)2 / 15 * Time.deltaTime;
+                            if (harpGauge.fillAmount >= 1)
                             {
-                                violinDrained = false;
-                                violinGauge.color = new Color(0.9503901f, 1, 0, 1);
-                                currentViolin = violinTotal;
-                                violinText.text = currentViolin + "/" + violinTotal;
+                                harpDrained = false;
+                                harpGauge.color = new Color(0.9503901f, 1, 0, 1);
+                                currentHarp = harpTotal;
+                                harpText.text = harpTotal + "/" + harpTotal;
                             }
                         }
                         if (trumpetDrained == true)
@@ -288,14 +292,14 @@ public class PlayerController : MonoBehaviour
                         {
                             if (trumpet == false)
                             {
-                                violin = false;
+                                harp = false;
                                 trumpet = true;
                                 flute = false;
                                 trumpetRange.SetActive(true);
                             }
                             else
                             {
-                                violin = true;
+                                harp = true;
                                 trumpet = false;
                                 flute = false;
                                 trumpetRange.SetActive(false);
@@ -307,14 +311,14 @@ public class PlayerController : MonoBehaviour
 
                             if (flute == false)
                             {
-                                violin = false;
+                                harp = false;
                                 trumpet = false;
                                 flute = true;
                                 trumpetRange.SetActive(false);
                             }
                             else
                             {
-                                violin = true;
+                                harp = true;
                                 trumpet = false;
                                 flute = false;
                                 trumpetRange.SetActive(false);
@@ -333,13 +337,13 @@ public class PlayerController : MonoBehaviour
                                     }
                                 }
                             }
-                            if (violin == true)
+                            if (harp == true)
                             {
-                                if (violinDrained == false)
+                                if (harpDrained == false)
                                 {
                                     if (Input.GetMouseButtonDown(0))
                                     {
-                                        ViolinAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                                        HarpAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
                                     }
                                 }
                             }
@@ -358,7 +362,7 @@ public class PlayerController : MonoBehaviour
                         }
                         if (Input.GetKeyDown(KeyCode.D))
                         {
-                            violin = true;
+                            harp = true;
                             trumpet = false;
                             flute = false;
                             trumpetRange.SetActive(false);
@@ -383,59 +387,61 @@ public class PlayerController : MonoBehaviour
     }
     public void WeaponSelect()
     {
-        if (violin == true)
+        if (harp == true)
         {
-            weaponSelected.transform.Find("Violin Selected").gameObject.SetActive(true);
+            weaponSelected.transform.Find("Harp Selected").gameObject.SetActive(true);
             weaponSelected.transform.Find("Trumpet Selected").gameObject.SetActive(false);
             weaponSelected.transform.Find("Flute Selected").gameObject.SetActive(false);
         }
         if (trumpet == true)
         {
-            weaponSelected.transform.Find("Violin Selected").gameObject.SetActive(false);
+            weaponSelected.transform.Find("Harp Selected").gameObject.SetActive(false);
             weaponSelected.transform.Find("Trumpet Selected").gameObject.SetActive(true);
             weaponSelected.transform.Find("Flute Selected").gameObject.SetActive(false);
         }
         if (flute == true)
         {
-            weaponSelected.transform.Find("Violin Selected").gameObject.SetActive(false);
+            weaponSelected.transform.Find("Harp Selected").gameObject.SetActive(false);
             weaponSelected.transform.Find("Trumpet Selected").gameObject.SetActive(false);
             weaponSelected.transform.Find("Flute Selected").gameObject.SetActive(true);
         }
     }
     public void WeaponReset ()
     {
-        violin = true;
+        harp = true;
         trumpet = false;
         flute = false;
         trumpetRange.SetActive(false);
         WeaponSelect();
         WindEnd();
     }
-    public void ViolinAttack(Vector3 newPosition)
+    public void HarpAttack(Vector3 newPosition)
     {
         //if (violinDrained ==false) {
-        Instantiate(violinHitbox, newPosition, violinHitbox.transform.rotation);
+        Instantiate(harpHitbox, newPosition, harpHitbox.transform.rotation);
         //Instantiate(violinSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), violinSoundwave.transform.rotation);
         //ViolinHitEffect(newPosition);
         StartCoroutine(Lag(0.5f));
-            violinGauge.fillAmount -= (float)1 / violinTotal;
-        currentViolin--;
-        violinText.text = currentViolin + "/" + violinTotal;
-        if (currentViolin <= 0)
+            harpGauge.fillAmount -= (float)1 / harpTotal;
+        currentHarp--;
+        harpText.text = currentHarp + "/" + harpTotal;
+        if (currentHarp <= 0)
             {
-                violinDrained = true;
-            violinGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
+                harpDrained = true;
+            harpGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
             
             }
         //}
-}
+        audio.Stop();
+        audio.PlayOneShot(harpSound, 1);
+    }
     public void TrumpetAttack(Vector3 newPosition)
     {
         //if (violinDrained ==false) {
         //ViolinHitEffect(newPosition);
         Instantiate(trumpetHitbox, newPosition, trumpetHitbox.transform.rotation);
         //Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
-        StartCoroutine(Lag(1));
+        StartCoroutine(Lag(0.75f));
         trumpetGauge.fillAmount -= (float)1 / trumpetTotal;
         currentTrumpet--;
         trumpetText.text = currentTrumpet + "/" + trumpetTotal;
@@ -445,6 +451,15 @@ public class PlayerController : MonoBehaviour
             trumpetGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
         }
         //}
+        int random = Random.Range(0, 2);
+        if(random == 0)
+        {
+            audio.PlayOneShot(trumpet1, 1);
+        }
+        else
+        {
+            audio.PlayOneShot(trumpet2, 1);
+        }
     }
     public void FluteAttack()
     {
@@ -571,8 +586,8 @@ public class PlayerController : MonoBehaviour
     {
         lag = true;
         //toolIcon.SetActive(true);
-        if (violin ==true) {
-            weaponImages.transform.Find("Violin Image").gameObject.SetActive(true);
+        if (harp ==true) {
+            weaponImages.transform.Find("Harp Image").gameObject.SetActive(true);
         }
         else if (trumpet == true)
         {
@@ -582,9 +597,9 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(time);
         lag = false;
         //toolIcon.SetActive(false);
-        if (violin == true)
+        if (harp == true)
         {
-            weaponImages.transform.Find("Violin Image").gameObject.SetActive(false);
+            weaponImages.transform.Find("Harp Image").gameObject.SetActive(false);
         }
         else if (trumpet == true)
         {
@@ -600,9 +615,9 @@ public class PlayerController : MonoBehaviour
     {
         hurtEffect.Play();
     }
-    public void ViolinHitEffect(Vector3 position)
+    public void HarpHitEffect(Vector3 position)
     {
-        Instantiate(violinHitEffect, position, violinHitEffect.transform.rotation);
+        Instantiate(harpHitbox, position, harpHitbox.transform.rotation);
     }
     public void TrumpetHitEffect(Vector3 position)
     {
@@ -764,7 +779,7 @@ public class PlayerController : MonoBehaviour
     public void FullRestore()
     {
         currentHP = HPTotal;
-        currentViolin = violinTotal;
+        currentHarp = harpTotal;
         currentTrumpet = trumpetTotal;
         currentFlute = fluteTotal;
         currentShield = shieldTotal;
@@ -778,7 +793,6 @@ public class PlayerController : MonoBehaviour
     {
         //I need to find some way to know how much EXP is left to level
         //That's the amount I need to decrease besides EXPgained
-        EXPCounter = EXPGained;
         //06/04/24
         //For now, I have to use this. I know it won't work because currentEXP isn't always equal to EXPToLevel. But I need something for the start of the
         //game
@@ -795,9 +809,9 @@ public class PlayerController : MonoBehaviour
         //Also, the player can start at any level (Actually, they'll still have to go to the start screen)
         //currentEXP = EXPToLevelMax; 
 
-        currentEXP = EXPToLevel;
-        StartCoroutine(EXPUp(EXPGained));
         //Debug.Log("EXP Gained equal to " +EXPGained);
+        //06/10/24
+        StartCoroutine(EXPUp(EXPGained));
     }
     //The parameter is EXPGained
     IEnumerator EXPUp(float exp)
@@ -807,17 +821,17 @@ public class PlayerController : MonoBehaviour
         {
             exp--;
             EXPGained--;
+            EXPToLevel--;
             //EXPCounter--;
-            currentEXP--;
             //EXPToLevel--;
-            GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP Gained").GetComponent<TextMeshProUGUI>().text = "EXP Gained: " +exp;
-            GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP To Level").GetComponent<TextMeshProUGUI>().text = "EXP To Level: " + currentEXP;
-            yield return new WaitForSeconds(0.05f);
+            GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP Gained").GetComponent<TextMeshProUGUI>().text = "EXP Gained: " +EXPGained;
+            GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP To Level").GetComponent<TextMeshProUGUI>().text = "EXP To Level: " + EXPToLevel;
+            yield return new WaitForSeconds(0.025f);
             //if (currentEXP <=0)
             //{
             //level++;
             //}
-            if (exp > 0 && currentEXP <= 0)
+            if (exp > 0 && EXPToLevel <= 0)
             {
                 //EXPToLevel = EXPToLevelMax 3 / 2;
                 //currentEXP = EXPToLevel;
@@ -860,8 +874,8 @@ public class PlayerController : MonoBehaviour
         //currentHP = originalHP;
         //currentHP += 3;
         level += 1;
-        EXPToLevelMax *= 3 / 2;
-        currentEXP = EXPToLevelMax;
+        EXPToLevelLimit *= 3 / 2;
+        EXPToLevel = EXPToLevelLimit;
         //Debug.Log(EXPToLevel);
     }
     public void HPUp()
@@ -875,8 +889,8 @@ public class PlayerController : MonoBehaviour
     }
     public void ViolinUp()
     {
-        violinTotal += 3;
-        currentViolin = violinTotal;
+        harpTotal += 3;
+        currentHarp = harpTotal;
         gameScript.ContinueOrQuit();
     }
     public void TrumpetUp()

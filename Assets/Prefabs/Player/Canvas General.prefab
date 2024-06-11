@@ -4304,7 +4304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2729780801034886435}
   m_Layer: 5
-  m_Name: Violin Selected
+  m_Name: Harp Selected
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5060,7 +5060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 436945860247497709}
   m_Layer: 5
-  m_Name: Violin
+  m_Name: Harp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8854,7 +8854,7 @@ GameObject:
   - component: {fileID: 1540590149627318962}
   - component: {fileID: 3157789485461243140}
   m_Layer: 5
-  m_Name: Violin Image
+  m_Name: Harp Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12194,7 +12194,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Violin
+  m_text: Harp
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -18585,7 +18585,7 @@ GameObject:
   - component: {fileID: 3560376402220712391}
   - component: {fileID: 2710684644851244150}
   m_Layer: 5
-  m_Name: Violin Gauge
+  m_Name: Harp Gauge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
