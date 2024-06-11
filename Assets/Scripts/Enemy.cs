@@ -84,11 +84,14 @@ public class Enemy : MonoBehaviour
     private bool green = false;
     private bool armor = false;
     private bool noAttack = false;
-    private bool bombUser = false;
+    private bool bomb = false;
     private float armorGauge = 30;
     private float fullArmorGauge = 30;
     private GameObject armorObj;
+    //private Image armorBackground;
     private Image armorFill;
+
+    private bool cantFlinch = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -127,6 +130,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.rotation = new Quaternion(0, 180, 0, 0);
         if (windCaptured == false) {
             //Quaternion lookRotation = Quaternion.LookRotation(transform.position, GameObject.Find("Look At").transform.position);
             //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
@@ -143,26 +147,26 @@ public class Enemy : MonoBehaviour
         if (transform.position.x <= -4.32f)
         {
             transform.position = new Vector3(-4.31f, transform.position.y, transform.position.z);
-            playerScript.WindEnd();
-            WindCaptureEnd();
+            //playerScript.WindEnd();
+            //WindCaptureEnd();
         }
         if (transform.position.x >= 4.32f)
         {
             transform.position = new Vector3(4.31f, transform.position.y, transform.position.z);
-            playerScript.WindEnd();
-            WindCaptureEnd();
+            //playerScript.WindEnd();
+            //WindCaptureEnd();
         }
         if (transform.position.y <= -3f)
         {
             transform.position = new Vector3(transform.position.x, -3f, transform.position.z);
-            playerScript.WindEnd();
-            WindCaptureEnd();
+            //playerScript.WindEnd();
+            //WindCaptureEnd();
         }
         if (transform.position.y >= 3f)
         {
             transform.position = new Vector3(transform.position.x, 3f, transform.position.z);
-            playerScript.WindEnd();
-            WindCaptureEnd();
+            //playerScript.WindEnd();
+            //WindCaptureEnd();
         }
 
         if (windCaptured == true && playerScript.wind == true)
@@ -176,6 +180,10 @@ public class Enemy : MonoBehaviour
             if (armor ==false) {
                 //transform.Rotate(Vector3.up * 180 * Time.deltaTime);
             }
+        }
+        if (armor == true)
+        {
+            armorObj.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0));
         }
     }
     //Setters
@@ -229,6 +237,14 @@ public class Enemy : MonoBehaviour
     {
         green = true;
     }
+    public void SetBomb()
+    {
+        bomb = true;
+    }
+    public void UnsetBomb()
+    {
+        bomb = false;
+    }
     public void SetNoAttack()
     {
         noAttack = !noAttack;
@@ -246,8 +262,27 @@ public class Enemy : MonoBehaviour
     public void ArmorOff()
     {
         armor = false;
+        BarrierOff();
         armorObj.SetActive(false);
         transform.Find("root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(false);
+        GameObject []enemies=GameObject.FindGameObjectsWithTag("Enemy");
+        for(int i =0; i < enemies.Length; i++)
+        {
+            enemies[i].GetComponent<Enemy>().BarrierOff();
+        }
+    }
+    //Fun fact, triggerExit doesn't count if the object is destroyed
+    public void BarrierOff()
+    {
+        barrier = false;
+    }
+    public void SetCantFlinch()
+    {
+        cantFlinch = true;
+    }
+    public void UnsetCantFlinch()
+    {
+        cantFlinch = false;
     }
     public void DamageText(float damage)
     {
@@ -295,60 +330,67 @@ public class Enemy : MonoBehaviour
     //This'llonlybe a problem if I want a recover anima
     public void Flinch()
     {
-        attackReady = false;
-        if (flinchInterrupt == true)
-        {
-            attack = false;
-            flinchInterrupt = false;
-
-            //I don't know why I don't think to put this allhere
-            //I think I'm just thinking in the moment
-            //Also, I have to cancel different Coroutines for different mo
-            StopCoroutine(flinchOpportunityCancel);
-            StopCoroutine(attackLengthCancel);
-            //playerScript.InterruptEffect(effectPosition.transform.position);
-            StopAttackEffect();
-        }
-
-        if (animatorTrue == true)
-        {
-            animator.SetBool("Idle", true);
-            animator.SetTrigger("Flinch");
-            //I can see this being a problem for the Red Dragon's last phase
-            //I will make an if case where green == true and red==true
-            if (red==true)
+        //Putting this here instead of using cantFlinch code everywhere
+        if (cantFlinch ==false) {
+            attackReady = false;
+            if (flinchInterrupt == true)
             {
-                animator.ResetTrigger("StrongAttack");
+                attack = false;
+                flinchInterrupt = false;
+
+                //I don't know why I don't think to put this allhere
+                //I think I'm just thinking in the moment
+                //Also, I have to cancel different Coroutines for different mo
+                StopCoroutine(flinchOpportunityCancel);
+                StopCoroutine(attackLengthCancel);
+                //playerScript.InterruptEffect(effectPosition.transform.position);
+                StopAttackEffect();
             }
-            else if (green == true) {
-                animator.ResetTrigger("Attack");
-                animator.ResetTrigger("Attack2");
-            }
-            else
+
+            if (animatorTrue == true)
             {
-                animator.ResetTrigger("Attack");
+                animator.SetBool("Idle", true);
+                animator.SetTrigger("Flinch");
+                //I can see this being a problem for the Red Dragon's last phase
+                //I will make an if case where green == true and red==true
+                if (red == true)
+                {
+                    animator.ResetTrigger("StrongAttack");
+                }
+                else if (green == true) {
+                    animator.ResetTrigger("Attack");
+                    animator.ResetTrigger("Attack2");
+                }
+                else if (bomb == true)
+                {
+                    animator.ResetTrigger("Bomb");
+                    UnsetBomb();
+                }
+                else
+                {
+                    animator.ResetTrigger("Attack");
+                }
             }
+            else if (animationTrue == true)
+            {
+                //animator.SetTrigger("Flinch");
+            }
+
+            //Moved this from mouseOver 
+            if (idleCancel != null)
+            {
+                StopCoroutine(idleCancel);
+            }
+
+            if (flinchCancel != null)
+            {
+                StopCoroutine(flinchCancel);
+            }
+
+            //Don't know why I didn't put this here right away, because I successful flinch will always start a flinchdur
+            flinchCancel = StartCoroutine(FlinchDuration());
+
         }
-        else if (animationTrue == true)
-        {
-            //animator.SetTrigger("Flinch");
-        }
-
-        //Moved this from mouseOver 
-        if (idleCancel != null)
-        {
-            StopCoroutine(idleCancel);
-        }
-
-        if (flinchCancel != null)
-        {
-            StopCoroutine(flinchCancel);
-        }
-
-        //Don't know why I didn't put this here right away, because I successful flinch will always start a flinchdur
-        flinchCancel = StartCoroutine(FlinchDuration());
-
-
     }
     IEnumerator FlinchDuration()
     {
@@ -542,14 +584,19 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage, bool armorBreak)
     {
         if (counterAttackActive==false) {
-            if ((barrier == true || armor == true) && armorBreak == false)
+            if ((barrier == true || armor == true))
             {
-                damage /= 2;
+                //Debug.Log("Reduced Damage");
+                if (armorBreak ==false) {
+                    damage /= 2;
+                    //Debug.Log("Not armorBreak");
+                }
             }
 
 
             if (armor == true)
             {
+                Debug.Log("Armor damaged ");
                 armorGauge -= damage;
                 armorFill.fillAmount -= (float)damage / fullArmorGauge;
                 if (armorGauge <= 0)
@@ -603,39 +650,8 @@ public class Enemy : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (playerScript.lag == false)
-        {
-            if (Input.GetMouseButtonDown(0) &&playerScript.harpDrained==false)
-            {
-                //Debug.Log("Attacked!");
-                //playerScript.ViolinAttack(transform.position);
-                //HP--; 
-                //playerScript.HitCountUp();
-                //Debug.Log("Attack!");
 
-                //I think I will always call Flinch(), but the method will determine if the foe will stagger or
-                //if (attack == false)
-                //{
-                    //Flinch();
-
-
-
-                //}
-
-                //Atm, I need Attack to go to flinch and for flinch to go to id
-
-                //if (attack == true)
-                //{
-                    //if (flinchInterrupt == true)
-                    //{
-                        //I'm thinking of making attack ==false here, but I wasn't expecting my code to become this complicate
-                        //Flinch();
-
-                    //}
-                //}
-            }
-        }
-        if (normal == false)
+        if (normal == false || cantFlinch ==false)
         {
             if (playerScript.flute ==true &&playerScript.wind==false)
             {
@@ -649,7 +665,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnMouseExit()
     {
-        if (normal == false)
+        if (normal == false || cantFlinch == false)
         {
             if (playerScript.flute == true)
             {
@@ -798,6 +814,7 @@ public class Enemy : MonoBehaviour
         }
         if (other.CompareTag("Harp"))
         {
+            //Debug.Log("Hit twice?");
             bool damaged = false;
             if (damaged == false)
             {

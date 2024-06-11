@@ -368,6 +368,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 2168631824770729869, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.19
@@ -691,6 +695,10 @@ PrefabInstance:
     - target: {fileID: 2168631824770729869, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_Name
       value: Goblin (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2168631824770729869, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1529,7 +1537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2168631824770729869, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1645,14 +1653,8 @@ Transform:
   - {fileID: 1024596707}
   - {fileID: 4984980826621010520}
   - {fileID: 7427777811491427757}
-  - {fileID: 1727341681}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1727341681 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 824080819681382659, guid: 35d78adfca552414180d5e9c5bac1666, type: 3}
-  m_PrefabInstance: {fileID: 6403635770933689401}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1748816116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2412,6 +2414,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6212653018936385382, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7560448512029490805, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
       propertyPath: m_Name
       value: Witch
@@ -2419,6 +2425,10 @@ PrefabInstance:
     - target: {fileID: 7560448512029490805, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7560448512029490805, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 7835690311734015852, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2657,6 +2667,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin
       objectReference: {fileID: 0}
+    - target: {fileID: 2168631824770729869, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.8430002
@@ -2708,19 +2722,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1717388120}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 824080819681382659, guid: 35d78adfca552414180d5e9c5bac1666, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.116
+      value: -4.62
       objectReference: {fileID: 0}
     - target: {fileID: 824080819681382659, guid: 35d78adfca552414180d5e9c5bac1666, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.4000002
+      value: 0.71
       objectReference: {fileID: 0}
     - target: {fileID: 824080819681382659, guid: 35d78adfca552414180d5e9c5bac1666, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.3500004
+      value: -7.59
       objectReference: {fileID: 0}
     - target: {fileID: 824080819681382659, guid: 35d78adfca552414180d5e9c5bac1666, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2974,3 +2988,4 @@ SceneRoots:
   - {fileID: 1717388120}
   - {fileID: 298476643}
   - {fileID: 3594005864599358852}
+  - {fileID: 6403635770933689401}

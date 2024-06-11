@@ -59,15 +59,18 @@ public class Witch : MonoBehaviour
     {
         barrierAnimation.SetActive(true);
         animator.SetTrigger("Barrier");
+        enemyScript.SetArmor();
+        enemyScript.SetCantFlinch();
         yield return new WaitForSeconds(1);
         animator.ResetTrigger("Barrier");
-        enemyScript.SetArmor();
+        
         barrierAnimation.SetActive(false);
         
         enemyScript.SetIdleTime(12);
         //enemyScript.SetIdleStart();
         enemyScript.NonStandardIdleStart();
         Barrier();
+        enemyScript.UnsetCantFlinch();
     }
     public void Barrier()
     {
@@ -92,7 +95,8 @@ public class Witch : MonoBehaviour
     public void Attack()
     {
         //animator.SetBool("Idle",false);
-        animator.SetTrigger("Attack");
+        animator.SetTrigger("Bomb");
+        enemyScript.SetBomb();
         //enemyScript.SetDamage(1);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();

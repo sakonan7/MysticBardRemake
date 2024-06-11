@@ -441,7 +441,7 @@ public class PlayerController : MonoBehaviour
         //ViolinHitEffect(newPosition);
         Instantiate(trumpetHitbox, newPosition, trumpetHitbox.transform.rotation);
         //Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
-        StartCoroutine(Lag(0.75f));
+        StartCoroutine(Lag(0.5f));
         trumpetGauge.fillAmount -= (float)1 / trumpetTotal;
         currentTrumpet--;
         trumpetText.text = currentTrumpet + "/" + trumpetTotal;
@@ -493,7 +493,7 @@ public class PlayerController : MonoBehaviour
     {
         hitCount++;
         allAttackGauge.fillAmount += (float)1 / 30;
-        if(hitCount >=30)
+        if(hitCount >=30 && hitCountReached==false)
         {
             hitCountReached = true;
             StartCoroutine(AllAttackBarFlash());
@@ -501,9 +501,9 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator AllAttackBarFlash()
     {
-        allAttackGauge.transform.localScale += new Vector3(0, allAttackGauge.transform.localScale.y*0.1f, 0);
+        allAttackGauge.transform.localScale += new Vector3(allAttackGauge.transform.localScale.x * 0.1f, allAttackGauge.transform.localScale.y*0.2f, 0);
         yield return new WaitForSeconds(1);
-        allAttackGauge.transform.localScale -= new Vector3(0, allAttackGauge.transform.localScale.y * 0.1f, 0);
+        allAttackGauge.transform.localScale -= new Vector3(allAttackGauge.transform.localScale.x / 0.1f, allAttackGauge.transform.localScale.y / 0.2f, 0);
     }
     public void AllAttack()
     {
@@ -512,6 +512,7 @@ public class PlayerController : MonoBehaviour
         for (int i= 0; i < enemies.Length; i++)
         {
             enemies[i].GetComponent<Enemy>().TakeDamage(20, true);
+            enemies[i].GetComponent<Enemy>().Flinch();
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             //ViolinHitEffect(enemies[i].transform.position);
         }

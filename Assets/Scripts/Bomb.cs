@@ -28,26 +28,26 @@ public class Bomb : MonoBehaviour
             if (transform.position.x <= -4.32f)
             {
                 transform.position = new Vector3(-4.31f, transform.position.y, transform.position.z);
-                playerScript.WindEnd();
-                EnemyExplode();
+                //playerScript.WindEnd();
+                //EnemyExplode();
             }
             if (transform.position.x >= 4.32f)
             {
                 transform.position = new Vector3(4.31f, transform.position.y, transform.position.z);
-                playerScript.WindEnd();
-                EnemyExplode();
+                //playerScript.WindEnd();
+                //EnemyExplode();
             }
             if (transform.position.y <= -3f)
             {
                 transform.position = new Vector3(transform.position.x, -3f, transform.position.z);
-                playerScript.WindEnd();
-                EnemyExplode();
+                //playerScript.WindEnd();
+                //EnemyExplode();
             }
             if (transform.position.y >= 3f)
             {
                 transform.position = new Vector3(transform.position.x, 3f, transform.position.z);
-                playerScript.WindEnd();
-                EnemyExplode();
+                //playerScript.WindEnd();
+                //EnemyExplode();
             }
         }
     }
@@ -84,6 +84,7 @@ public class Bomb : MonoBehaviour
         transform.Find("Appearance").gameObject.SetActive(false);
         transform.Find("Hitbox").gameObject.SetActive(true);
         Destroy(gameObject, 2);
+        Debug.Log("Blow Up");
     }
     private void OnMouseDown()
     {
@@ -100,6 +101,7 @@ public class Bomb : MonoBehaviour
                         StopCoroutine(explodeCancel);
                         StopCoroutine(explodeEffectCancel);
                         aboutToExplode.SetActive(false);
+                        //Debug.Log("Grabbed.");
                     }
                 }
             }
@@ -145,7 +147,7 @@ public class Bomb : MonoBehaviour
             EnemyExplode();
             //StopCoroutine(explodeEffectCancel);
         }
-        if (other.CompareTag("Violin"))
+        if (other.CompareTag("Harp"))
         {
             EnemyExplode();
             //StopCoroutine(explodeEffectCancel);
