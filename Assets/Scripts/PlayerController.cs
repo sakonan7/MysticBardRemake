@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     private GameObject shieldShatter;
     private GameObject weaponSelected;
     private TextMeshProUGUI numPotions;
-    private int numPotionsInt = 4;
+    //private int numPotionsInt = 4;
     private GameObject potionUsedIcon;
 
     //Private Numerics
@@ -92,6 +92,8 @@ public class PlayerController : MonoBehaviour
     public static float fluteTotal = 3;
     private static float currentShield = 10;
     public static float shieldTotal = 10;
+    private static float currentPotion = 4;
+    public static float potionTotal = 4;
     public static int level = 6;
     //EXPCounter will be the number that goes down
     //currentEXP is for holding the amount
@@ -168,7 +170,7 @@ public class PlayerController : MonoBehaviour
                 shieldShatter = GameObject.Find("Filter").transform.Find("Shield Shatter").gameObject;
                 weaponSelected = GameObject.Find("Weapons");
                 numPotions = GameObject.Find("Number of Potions").GetComponent<TextMeshProUGUI>();
-                numPotions.text = "X " + numPotionsInt;
+                numPotions.text = "X " + currentPotion;
                 potionUsedIcon = GameObject.Find("Potions").transform.Find("Use Potion").gameObject;
             }
         }
@@ -188,6 +190,7 @@ public class PlayerController : MonoBehaviour
         currentTrumpet = trumpetTotal;
         currentFlute = fluteTotal;
         currentShield = shieldTotal;
+        currentPotion = potionTotal;
         HPText = GameObject.Find("HP Bar Object").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
         HPText.text = HPTotal + "/" + HPTotal;
         harpText = GameObject.Find("Harp").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
@@ -503,7 +506,7 @@ public class PlayerController : MonoBehaviour
     {
         allAttackGauge.transform.localScale += new Vector3(allAttackGauge.transform.localScale.x * 0.1f, allAttackGauge.transform.localScale.y*0.2f, 0);
         yield return new WaitForSeconds(1);
-        allAttackGauge.transform.localScale -= new Vector3(allAttackGauge.transform.localScale.x / 0.1f, allAttackGauge.transform.localScale.y / 0.2f, 0);
+        //allAttackGauge.transform.localScale -= new Vector3(allAttackGauge.transform.localScale.x / 0.1f, allAttackGauge.transform.localScale.y / 0.2f, 0);
     }
     public void AllAttack()
     {
@@ -558,13 +561,13 @@ public class PlayerController : MonoBehaviour
         if (currentHP < 20) {
             currentHP += 4;
             HPBar.fillAmount += (float)4 / HPTotal;
-            numPotionsInt--;
-            numPotions.text = "X " + numPotionsInt;
+            currentPotion--;
+            numPotions.text = "X " + currentPotion;
             if (potionUsed == false) {
                 StartCoroutine(PotionUse());
             }
         }
-        if (numPotionsInt <= 0)
+        if (currentPotion <= 0)
         {
             numPotions.text = "";
         }
@@ -681,10 +684,12 @@ public class PlayerController : MonoBehaviour
         shieldGauge.fillAmount -= (float)damage / shieldTotal;
         currentShield-=damage;
         shieldText.text = currentShield + "/" + shieldTotal;
+        bool shieldBroken = false;
         if (damage > currentShield)
         {
             GeneralDamageCode(damage - currentShield, 3);
             audio.PlayOneShot(shieldBreak, 2f);
+            shieldBroken = true;
         }
         if (currentShield <= 0)
         {
@@ -704,6 +709,10 @@ public class PlayerController : MonoBehaviour
         if (red == true)
         {
             cancelDamageShake = StartCoroutine(CameraShake(3));
+        }
+        if(shieldBroken ==true)
+        {
+            StartCoroutine(ShieldBreakAnimation());
         }
     }
     public void GeneralDamageCode(float damage, float shakeAmount)
@@ -914,8 +923,8 @@ public class PlayerController : MonoBehaviour
     }
     public void PotionUp()
     {
-        //potionTotal += 2;
-        //currentPotion = potionTotal;
+        potionTotal += 1;
+        currentPotion = potionTotal;
         gameScript.ContinueOrQuit();
     }
     public void OnMouseUp()

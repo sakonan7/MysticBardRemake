@@ -23,6 +23,7 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool increaseTrumpet = false;
     public bool increaseFlute = false;
     public bool increaseShield = false;
+    public bool increasePotion = false;
 
     [Header("Level Select")]
     public bool level1 = false;
@@ -111,6 +112,10 @@ public class PrivateButtonCaller : MonoBehaviour
         if (increaseShield == true)
         {
             player.ShieldUp();
+        }
+        if (increasePotion == true)
+        {
+            player.PotionUp();
         }
     }
 }

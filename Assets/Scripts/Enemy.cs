@@ -236,6 +236,7 @@ public class Enemy : MonoBehaviour
     public void SetGreen()
     {
         green = true;
+        SetCantFlinch();
     }
     public void SetBomb()
     {
@@ -416,6 +417,8 @@ public class Enemy : MonoBehaviour
     public void StartFlinchWindow()
     {
         flinchOpportunityCancel = StartCoroutine(FlinchWindow());
+        //For simplicity, I'm putting this here. I could put this in Green Thief, but I need this for Dragon too
+        UnsetCantFlinch();
     }
     //If you hit the foe with the right attack during this window, their attack will be interr
     IEnumerator FlinchWindow()
@@ -423,6 +426,10 @@ public class Enemy : MonoBehaviour
         flinchInterrupt = true;
         yield return new WaitForSeconds(0.5f);
         flinchInterrupt = false;
+        if (green == true)
+        {
+            SetCantFlinch();
+        }
     }
     //I forgot to do AttackReadyOff() after an attack, to not repeat the attack. This lead to other problems 04/15/24
     public void AttackReadyOff()
