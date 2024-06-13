@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
     private PlayerController playerScript;
     private GameObject effectPosition;
     private GameManager gameScript;
+    private GameObject counterAttackCloud;
     private GameObject counterAttackStart;
     private GameObject counterAttackOn;
 
@@ -126,6 +127,7 @@ public class Enemy : MonoBehaviour
 
         //May need to do this in awake, either in this or in Green Thief
         if (green ==true) {
+            counterAttackCloud = transform.Find("Counterattack Objects").transform.Find("Counterattack Cloud 2").gameObject;
             counterAttackStart = transform.Find("Counterattack Objects").transform.Find("Counterattack Start").gameObject;
             counterAttackOn = transform.Find("Counterattack Objects").transform.Find("Counterattack On").gameObject;
         }
@@ -241,6 +243,18 @@ public class Enemy : MonoBehaviour
     {
         green = true;
         SetCantFlinch();
+        counterAttackCloud = transform.Find("Counterattack Objects").transform.Find("Counterattack Cloud 2").gameObject;
+        counterAttackStart = transform.Find("Counterattack Objects").transform.Find("Counterattack Start").gameObject;
+        counterAttackOn = transform.Find("Counterattack Objects").transform.Find("Counterattack On").gameObject;
+    }
+    public void UnsetRed()
+    {
+        red = false;
+    }
+    public void UnsetGreen()
+    {
+        red = false;
+        UnsetCantFlinch();
     }
     public void SetBomb()
     {
@@ -569,9 +583,16 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            StartCoroutine(CounterAttackStart());
+            StartCoroutine(CounterattackCloud());
             
         }
+    }
+    IEnumerator CounterattackCloud()
+    {
+        counterAttackCloud.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(CounterAttackStart());
+
     }
     IEnumerator CounterAttackStart()
     {
@@ -589,6 +610,8 @@ public class Enemy : MonoBehaviour
         StartCoroutine(FollowUpAttack(4));
         animator.SetBool("Idle", true);
         counterAttackOn.SetActive(false);
+        counterAttackCloud.SetActive(false);
+
     }
     IEnumerator FollowUpAttack(int waitTime)
     {
@@ -643,6 +666,8 @@ public class Enemy : MonoBehaviour
             //StartCoroutine(FollowUpAttack(4));
             animator.SetBool("Idle", true);
             counterAttackOn.SetActive(false);
+            counterAttackCloud.SetActive(false);
+
         }
     }
     public void WindCaptureEnd()

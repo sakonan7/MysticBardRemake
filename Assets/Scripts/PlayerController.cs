@@ -422,7 +422,7 @@ public class PlayerController : MonoBehaviour
     {
         //if (violinDrained ==false) {
         Instantiate(harpHitbox, newPosition, harpHitbox.transform.rotation);
-        Instantiate(harpSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), harpSoundwave.transform.rotation);
+        //Instantiate(harpSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), harpSoundwave.transform.rotation);
         //ViolinHitEffect(newPosition);
         StartCoroutine(Lag(0.5f));
             harpGauge.fillAmount -= (float)1 / harpTotal;
@@ -443,7 +443,7 @@ public class PlayerController : MonoBehaviour
         //if (violinDrained ==false) {
         //ViolinHitEffect(newPosition);
         Instantiate(trumpetHitbox, newPosition, trumpetHitbox.transform.rotation);
-        Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
+        //Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
         StartCoroutine(Lag(0.5f));
         trumpetGauge.fillAmount -= (float)1 / trumpetTotal;
         currentTrumpet--;
