@@ -7,6 +7,9 @@ public class GrandDragon : MonoBehaviour
     private bool idle = true;
     private Animator animator;
     private Enemy enemyScript;
+    private bool firstPhase = true;
+    private bool secondPhase = false;
+    private bool thirdPhase = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,11 +28,13 @@ public class GrandDragon : MonoBehaviour
 
         //if(enemyScript.HP < 1000-40 && enemyScript.HP > 1000-80)
         //{
+        if (firstPhase ==true) {
             if (enemyScript.attackReady == true)
-           {
+            {
                 RedAttack();
                 //Debug.Log("Attack");
             }
+        }
         //}
         //Last phase
         //< 500, secondPhase ==true

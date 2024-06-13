@@ -145,6 +145,17 @@ public class GameManager : MonoBehaviour
         player.FullRestore();
         SceneManager.LoadScene(currentLevel);
     }
+    public void DestroyDebris()
+    {
+        GameObject[] debris = GameObject.FindGameObjectsWithTag("Debris"); 
+        for (int i = 0; i< debris.Length; i++)
+        {
+            if (debris[i].GetComponent<Debris>().windCaptured == false)
+            {
+                Destroy(debris[i]);
+            }
+        }
+    }
     IEnumerator StartGenerateDebris()
     {
         yield return new WaitForSeconds(5);

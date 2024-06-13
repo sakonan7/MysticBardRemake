@@ -28,6 +28,10 @@ using System.Linq.Expressions;
 //be limited to having to follow it (something strict). You always have to follow these rules and you can't break these rules.
 //Maybe use white filter for enemy if their attack can't be interrupted
 
+//06/12/24
+//For stuff like phases and complex attack patterns, do them in the individual enemy script
+//For attacks where I don't want a flinch, just use a mix of not using a flinchwindow and using cantflinch
+
 //TaskList
 //Make Foe Not Spazz Between Idle And Att
 public class Enemy : MonoBehaviour
@@ -285,6 +289,10 @@ public class Enemy : MonoBehaviour
     {
         cantFlinch = false;
     }
+    public void DestroyDebris()
+    {
+        gameScript.DestroyDebris();
+    }
     public void DamageText(float damage)
     {
         gameObject.transform.Find("Damage Received").GetComponent<TextMesh>().text = "" + damage;
@@ -391,6 +399,10 @@ public class Enemy : MonoBehaviour
             //Don't know why I didn't put this here right away, because I successful flinch will always start a flinchdur
             flinchCancel = StartCoroutine(FlinchDuration());
 
+            if(green == true)
+            {
+                SetCantFlinch();
+            }
         }
     }
     IEnumerator FlinchDuration()
@@ -481,7 +493,7 @@ public class Enemy : MonoBehaviour
     }
     public void StopAttackEffect()
     {
-        //attackEffects[effectNumber].Stop();
+        attackEffects[effectNumber].Stop();
     }
     public void DealDamage(float newDamage)
     {
@@ -496,7 +508,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                playerScript.GeneralDamageCode(newDamage, 5);
+                playerScript.GeneralDamageCode(newDamage, 8);
             }
         }
         else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
@@ -833,7 +845,8 @@ public class Enemy : MonoBehaviour
                     Flinch();
                 }
                 playerScript.HitCountUp();
-                //playerScript.ViolinHitEffect(effectPosition.transform.position);
+                //For some reason this causes multiple hits
+                //playerScript.HarpHitEffect(effectPosition.transform.position);
             }
         }
         if (other.CompareTag("Hitbox"))
