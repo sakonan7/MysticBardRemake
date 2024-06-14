@@ -276,7 +276,13 @@ public class Enemy : MonoBehaviour
         armorObj.SetActive(true);
         armorFill = armorObj.transform.Find("Actual").GetComponent<Image>();
         armorFill.fillAmount = 1;
-        transform.Find("root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(true);
+        if (name == "Witch") {
+            transform.Find("root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(true);
+        }
+        else
+        {
+            transform.Find("Root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(true);
+        }
     }
     public void ArmorOff()
     {

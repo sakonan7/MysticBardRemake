@@ -11,14 +11,29 @@ public class Bomb : MonoBehaviour
     private Coroutine explodeEffectCancel;
     private GameObject effectPosition;
     private GameObject aboutToExplode;
+    private GameObject timeIndicator;
+    public bool timedBomb = false;
+    public float time = 0;
     // Start is called before the first frame update
     void Start()
     {
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         effectPosition = transform.Find("Effect Position").gameObject;
-        explodeCancel = StartCoroutine(TimedExplosion());
+        
         aboutToExplode = transform.Find("About To Explode").gameObject;
-        explodeEffectCancel = StartCoroutine(AboutToExplode());
+        timeIndicator = transform.Find("Timer").gameObject;
+
+        if (timedBomb == false)
+        {
+            explodeCancel = StartCoroutine(TimedExplosion());
+            explodeEffectCancel = StartCoroutine(AboutToExplode());
+        }
+        else
+        {
+            explodeCancel = StartCoroutine(SpecificTimedExplosion());
+            explodeEffectCancel = StartCoroutine(SpecificAboutToExplode());
+            StartCoroutine(TimeIndicatorDisappear());
+        }
     }
 
     // Update is called once per frame
@@ -73,6 +88,35 @@ public class Bomb : MonoBehaviour
     IEnumerator AboutToExplode()
     {
         yield return new WaitForSeconds(6-2);
+        aboutToExplode.SetActive(true);
+    }
+    IEnumerator TimeIndicatorDisappear()
+    {
+        yield return new WaitForSeconds(2);
+        timeIndicator.SetActive(false);
+    }
+    IEnumerator SpecificTimedExplosion()
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(gameObject);
+        if (playerScript.shieldOn == false && playerScript.specialInvincibility == false)
+        {
+            playerScript.GeneralDamageCode(2, 3);
+            //playerScript.PlayHurtEffect(effectAppear.transform.position);
+            //playerScript.DamageFlashOn();
+        }
+        else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
+        {
+            playerScript.GenerateShield(effectPosition.transform.position);
+            if (playerScript.shieldOn == true)
+            {
+                playerScript.ShieldGaugeDown(2, false);
+            }
+        }
+    }
+    IEnumerator SpecificAboutToExplode()
+    {
+        yield return new WaitForSeconds(time - 2);
         aboutToExplode.SetActive(true);
     }
     public void EnemyExplode()

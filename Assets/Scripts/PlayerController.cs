@@ -721,7 +721,7 @@ public class PlayerController : MonoBehaviour
         if (currentHP >0) {
             currentHP -= damage;
             HPBar.fillAmount -= (float)damage / HPTotal;
-            PlayHurtEffect();
+            //PlayHurtEffect();
             HPText.text = currentHP + "/" + HPTotal;
 
             //I'm thinking about not cancelling the Coroutine and just changing the value of damage
