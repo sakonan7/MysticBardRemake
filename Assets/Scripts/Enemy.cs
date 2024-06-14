@@ -90,6 +90,7 @@ public class Enemy : MonoBehaviour
     private bool armor = false;
     private bool noAttack = false;
     private bool bomb = false;
+    private bool firstSalvo = true;
     private float armorGauge = 30;
     private float fullArmorGauge = 30;
     private GameObject armorObj;
@@ -289,7 +290,14 @@ public class Enemy : MonoBehaviour
         armor = false;
         BarrierOff();
         armorObj.SetActive(false);
-        transform.Find("root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(false);
+        if (name == "Witch")
+        {
+            transform.Find("root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(false);
+        }
+        else
+        {
+            transform.Find("Root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(false);
+        }
         GameObject []enemies=GameObject.FindGameObjectsWithTag("Enemy");
         for(int i =0; i < enemies.Length; i++)
         {
@@ -361,6 +369,7 @@ public class Enemy : MonoBehaviour
     {
         //Putting this here instead of using cantFlinch code everywhere
         if (cantFlinch ==false) {
+            //Debug.Log("Flinched!");
             attackReady = false;
             if (flinchInterrupt == true)
             {
@@ -435,6 +444,18 @@ public class Enemy : MonoBehaviour
         }
         flinching = false;
         idleCancel = StartCoroutine(IdleAnimation(3));
+    }
+    public void FlinchCancel()
+    {
+        if (flinchCancel != null)
+        {
+            StopCoroutine(flinchCancel);
+        }
+        if (animatorTrue == true)
+        {
+            animator.ResetTrigger("Flinch");
+        }
+        flinching = false;
     }
     IEnumerator WindFlinch()
     {
@@ -593,6 +614,18 @@ public class Enemy : MonoBehaviour
             
         }
     }
+    //Used more for forcing the boss back into its attack pattern
+    //Like with Revenge Value
+    //I may need to merge this with FlinchCancel();
+    //Maybe make a RevengeValue Method
+    //It's annoying, because both IdleAnimation and Flinch cause IdleAnimation
+    public void IdleAnimationCancel()
+    {
+        if (idleCancel != null)
+        {
+            StopCoroutine(idleCancel);
+        }
+    }
     IEnumerator CounterattackCloud()
     {
         counterAttackCloud.SetActive(true);
@@ -644,7 +677,7 @@ public class Enemy : MonoBehaviour
 
             if (armor == true)
             {
-                Debug.Log("Armor damaged ");
+                //Debug.Log("Armor damaged ");
                 armorGauge -= damage;
                 armorFill.fillAmount -= (float)damage / fullArmorGauge;
                 if (armorGauge <= 0)

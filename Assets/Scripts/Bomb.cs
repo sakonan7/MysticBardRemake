@@ -128,7 +128,7 @@ public class Bomb : MonoBehaviour
         transform.Find("Appearance").gameObject.SetActive(false);
         transform.Find("Hitbox").gameObject.SetActive(true);
         Destroy(gameObject, 2);
-        Debug.Log("Blow Up");
+        //Debug.Log("Blow Up");
     }
     private void OnMouseDown()
     {
