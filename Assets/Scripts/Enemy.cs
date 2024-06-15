@@ -90,6 +90,7 @@ public class Enemy : MonoBehaviour
     private bool armor = false;
     private bool noAttack = false;
     private bool bomb = false;
+    private bool boss = false;
     private bool firstSalvo = true;
     private float armorGauge = 30;
     private float fullArmorGauge = 30;
@@ -146,7 +147,17 @@ public class Enemy : MonoBehaviour
         if (HP <= 0)
         {
             WindCaptureEnd();
-            Destroy(gameObject);
+            if(boss ==false)
+            {
+                Destroy(gameObject);
+
+            }
+            else
+            {
+                animator.SetBool("Dying",true);
+                Destroy(gameObject, 4);
+
+            }
             playerScript.GainEXP(EXP); //Putting this after ReduceNumEnemies is making it so that the last 70 doesn't add 
             gameScript.ReduceNumEnemies();
             
@@ -309,6 +320,10 @@ public class Enemy : MonoBehaviour
     public void BarrierOff()
     {
         barrier = false;
+    }
+    public void SetBoss()
+    {
+        boss = true;
     }
     public void SetCantFlinch()
     {

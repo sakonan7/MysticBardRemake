@@ -8841,6 +8841,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4632194908189391429, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
+      propertyPath: dying
+      value: 
+      objectReference: {fileID: 2100000, guid: d86ce2c33541da34fbdbfbe568727a32, type: 2}
+    - target: {fileID: 4632194908189391429, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
       propertyPath: bombRing3
       value: 
       objectReference: {fileID: 2136612685417633049, guid: 8944c9e7c13299f4ca0ede806827e176, type: 3}

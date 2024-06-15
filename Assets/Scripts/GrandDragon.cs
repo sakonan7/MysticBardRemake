@@ -8,6 +8,7 @@ public class GrandDragon : MonoBehaviour
     public Material red;
     public Material purple;
     public Material green;
+    public Material dying;
     public GameObject barrier;
     public GameObject regularBombRing1;
     public GameObject regularBombRing2;
@@ -41,10 +42,11 @@ public class GrandDragon : MonoBehaviour
         skin = transform.Find("Dragon").GetComponent<SkinnedMeshRenderer>();
         bombFlare = transform.Find("Bomb Light").transform.Find("Lens").gameObject;
         barrierAnimation = transform.Find("Root").transform.Find("Personal Barrier Object").transform.Find("Barrier Animation").gameObject;
-        enemyScript.SetHP(1000);
+        enemyScript.SetHP(10);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(5);
         enemyScript.SetRed();
+        enemyScript.SetBoss();
     }
 
     // Update is called once per frame
@@ -138,6 +140,10 @@ public class GrandDragon : MonoBehaviour
             enemyScript.SetGreen();
             enemyScript.SetRed();
             skin.material = red;
+        }
+        if(enemyScript.HP<=0)
+        {
+            skin.material = dying;
         }
         //if (enemyScript.HP < 1000 - 50 && firstPhase == true)
         //{
