@@ -11,6 +11,8 @@ public class GrandDragon : MonoBehaviour
     public GameObject barrier;
     public GameObject regularBombRing1;
     public GameObject regularBombRing2;
+    public GameObject bombRing3;
+    public GameObject bombRing4;
     private bool regularBombRing1Used = false;
     private bool regularBombRing2Used = false;
     private GameObject barrierAnimation;
@@ -88,6 +90,8 @@ public class GrandDragon : MonoBehaviour
             //And after another 10 seconds, set out more mines
             //The issue is bomb. Making more than it should
             enemyScript.SetIdleTime(10);
+            regularBombRing1Used = false;
+            regularBombRing2Used = false;
         }
         if (enemyScript.HP < 1000 - 40 && fourthPhase == true)
         {
@@ -103,6 +107,8 @@ public class GrandDragon : MonoBehaviour
             //And after another 10 seconds, set out more mines
             //The issue is bomb. Making more than it should
             enemyScript.SetIdleTime(10);
+            regularBombRing1Used = false;
+            regularBombRing2Used = false;
         }
         if (enemyScript.HP < 1000 - 50 && fifthPhase == true)
         {
@@ -120,7 +126,18 @@ public class GrandDragon : MonoBehaviour
             enemyScript.FlinchCancel();
             enemyScript.AttackReadyOff();
             StartCoroutine(BarrierAnimation());
-            enemyScript.SetIdleTime(20);
+            enemyScript.SetIdleTime(30);
+            regularBombRing1Used = false;
+            regularBombRing2Used = false;
+        }
+        if (enemyScript.HP < 1000 - 60 && sixthPhase == true)
+        {
+            sixthPhase = false;
+            seventhPhase = true;
+            enemyScript.UnsetBomb();
+            enemyScript.SetGreen();
+            enemyScript.SetRed();
+            skin.material = red;
         }
         //if (enemyScript.HP < 1000 - 50 && firstPhase == true)
         //{
@@ -190,6 +207,58 @@ public class GrandDragon : MonoBehaviour
                 if (fourthPhaseRegular == false)
                 {
                     RedAttack();
+                    fourthPhaseRegular = true;
+                }
+                else
+                {
+                    //RegularBombRing1();
+                    Debug.Log("Bomb Attack Regular");
+                    //Randomize
+                    //Make first ring appear right away
+                    //At least 20 seconds between salvos
+                    if (regularBombRing1Used == false && regularBombRing2Used == false)
+                    {
+                        int random = Random.Range(0, 1);
+                        if (random == 0)
+                        {
+                            RegularBombRing1();
+                            regularBombRing1Used = true;
+                        }
+                        else
+                        {
+                            RegularBombRing2();
+                            regularBombRing2Used = true;
+                        }
+                    }
+                    else if (regularBombRing1Used == false && regularBombRing2Used == true)
+                    {
+                        RegularBombRing1();
+                        regularBombRing1Used = true;
+                    }
+                    else if (regularBombRing1Used == true && regularBombRing2Used == false)
+                    {
+                        RegularBombRing2();
+                        regularBombRing2Used = true;
+                    }
+                }
+
+            }
+        if (fifthPhase == true)
+        {
+            if (enemyScript.attackReady == true)
+            {
+                if (fifthPhaseRegular == false)
+                {
+                        if (enemyScript.counterAttackTriggered == true)
+                        {
+                            CounterAttack();
+                        }
+                        if (enemyScript.attackReady == true)
+                        {
+                            GreenAttack();
+                            //Debug.Log("Attack");
+                            fifthPhaseRegular = true;
+                        }
                 }
                 else
                 {
@@ -226,6 +295,56 @@ public class GrandDragon : MonoBehaviour
 
             }
         }
+        }
+        if (sixthPhase == true)
+        {
+            if (enemyScript.attackReady == true)
+            {
+                //RegularBombRing1();
+                Debug.Log("Bomb Attack Regular");
+                //Randomize
+                //Make first ring appear right away
+                //At least 20 seconds between salvos
+                if (regularBombRing1Used == false && regularBombRing2Used == false)
+                {
+                    int random = Random.Range(0, 1);
+                    if (random == 0)
+                    {
+                        BombRing3();
+                        regularBombRing1Used = true;
+                    }
+                    else
+                    {
+                        BombRing4();
+                        regularBombRing2Used = true;
+                    }
+                }
+                else if (regularBombRing1Used == false && regularBombRing2Used == true)
+                {
+                    BombRing3();
+                    regularBombRing1Used = true;
+                }
+                else if (regularBombRing1Used == true && regularBombRing2Used == false)
+                {
+                    BombRing4();
+                    regularBombRing2Used = true;
+                }
+
+            }
+        }
+        if (seventhPhase == true)
+        {
+            if (enemyScript.counterAttackTriggered == true)
+            {
+                SeventhCounterAttack();
+            }
+            if (enemyScript.attackReady == true)
+            {
+                SeventhGreenAttack();
+                //Debug.Log("Attack");
+            }
+        }
+
         //}
         //Last phase
         //< 500, secondPhase ==true
@@ -327,6 +446,30 @@ public class GrandDragon : MonoBehaviour
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(2));
     }
+    public void BombRing3()
+    {
+        //animator.SetBool("Idle",false);
+        animator.SetTrigger("Bomb");
+        enemyScript.SetBomb();
+        enemyScript.SetAttackLength(1.5f);
+        enemyScript.StartAttackLength();
+        enemyScript.StartFlinchWindow();
+        StartCoroutine(BombFlare());
+        enemyScript.AttackReadyOff();
+        StartCoroutine(BombRingAppear(3));
+    }
+    public void BombRing4()
+    {
+        //animator.SetBool("Idle",false);
+        animator.SetTrigger("Bomb");
+        enemyScript.SetBomb();
+        enemyScript.SetAttackLength(1.5f);
+        enemyScript.StartAttackLength();
+        enemyScript.StartFlinchWindow();
+        StartCoroutine(BombFlare());
+        enemyScript.AttackReadyOff();
+        StartCoroutine(BombRingAppear(4));
+    }
     IEnumerator BombRingAppear(int number)
     {
         yield return new WaitForSeconds(1);
@@ -338,10 +481,32 @@ public class GrandDragon : MonoBehaviour
         {
             Instantiate(regularBombRing2, regularBombRing2.transform.position, regularBombRing2.transform.rotation);
         }
+        if (number == 3)
+        {
+            Instantiate(bombRing3, bombRing3.transform.position, bombRing3.transform.rotation);
+        }
+        if (number == 4)
+        {
+            Instantiate(bombRing4, bombRing4.transform.position, bombRing4.transform.rotation);
+        }
         if (regularBombRing1Used == true && regularBombRing2Used == true)
         {
             regularBombRing1Used = false;
             regularBombRing2Used = false;
+        }
+        if (fourthPhase == true)
+        {
+            if (fourthPhaseRegular == true)
+            {
+                fourthPhaseRegular = false;
+            }
+        }
+        if (fifthPhase ==true)
+        {
+            if (fifthPhaseRegular ==true)
+            {
+                fifthPhaseRegular = false;
+            }
         }
     }
     IEnumerator BombFlare()
@@ -376,6 +541,43 @@ public class GrandDragon : MonoBehaviour
         animator.SetTrigger("Attack");
         animator.SetTrigger("Attack2");
         enemyScript.SetDamage(2);
+        enemyScript.SetAttackLength(1.5f);
+        enemyScript.StartAttackLength();
+        enemyScript.StartFlinchWindow();
+        //if (enemyScript.teamAttackOn == true)
+        //{
+        //enemyScript.PlayAttackEffect(1);
+        //}
+        //else
+        //{
+        //enemyScript.PlayAttackEffect(1);
+        //}
+        enemyScript.AttackReadyOff();
+    }
+    public void SeventhCounterAttack()
+    {
+        //animator.SetBool("Idle",false);
+        animator.SetTrigger("Counterattack");
+        enemyScript.SetDamage(4);
+        enemyScript.SetAttackLength(1.5f);
+        enemyScript.StartCounterAttackLength();
+        //enemyScript.StartFlinchWindow();
+        //if (enemyScript.teamAttackOn == true)
+        //{
+        //enemyScript.PlayAttackEffect(1);
+        //}
+        //else
+        //{
+        //enemyScript.PlayAttackEffect(0);
+        //}
+        enemyScript.CounterAttackReadyOff();
+    }
+    public void SeventhGreenAttack()
+    {
+        //animator.SetBool("Idle",false);
+        animator.SetTrigger("Attack");
+        animator.SetTrigger("Attack2");
+        enemyScript.SetDamage(4);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
