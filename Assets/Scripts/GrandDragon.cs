@@ -33,6 +33,8 @@ public class GrandDragon : MonoBehaviour
     private bool fourthPhaseRegular = false;
     private bool fifthPhaseRegular = false;
 
+    private int maxHP = 350;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,7 +44,7 @@ public class GrandDragon : MonoBehaviour
         skin = transform.Find("Dragon").GetComponent<SkinnedMeshRenderer>();
         bombFlare = transform.Find("Bomb Light").transform.Find("Lens").gameObject;
         barrierAnimation = transform.Find("Root").transform.Find("Personal Barrier Object").transform.Find("Barrier Animation").gameObject;
-        enemyScript.SetHP(10);
+        enemyScript.SetHP(325);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(5);
         enemyScript.SetRed();
@@ -52,7 +54,7 @@ public class GrandDragon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(enemyScript.HP < 1000 -10 &&firstPhase==true)
+        if(enemyScript.HP < 350 -10 &&firstPhase==true)
         {
             firstPhase = false;
             secondPhase = true;
@@ -70,7 +72,7 @@ public class GrandDragon : MonoBehaviour
             StartCoroutine(BarrierAnimation());
             enemyScript.SetIdleTime(20);
         }
-        if (enemyScript.HP < 1000 - 20 && secondPhase == true)
+        if (enemyScript.HP < 350 - 20 && secondPhase == true)
         {
             secondPhase = false;
             thirdPhase = true;
@@ -78,7 +80,7 @@ public class GrandDragon : MonoBehaviour
             enemyScript.SetGreen();
             skin.material = green;
         }
-        if (enemyScript.HP < 1000 - 30 && thirdPhase == true)
+        if (enemyScript.HP < 350 - 30 && thirdPhase == true)
         {
             thirdPhase = false;
             fourthPhase = true;
@@ -95,7 +97,7 @@ public class GrandDragon : MonoBehaviour
             regularBombRing1Used = false;
             regularBombRing2Used = false;
         }
-        if (enemyScript.HP < 1000 - 40 && fourthPhase == true)
+        if (enemyScript.HP < 350 - 40 && fourthPhase == true)
         {
             fourthPhase = false;
             fifthPhase = true;
@@ -112,7 +114,7 @@ public class GrandDragon : MonoBehaviour
             regularBombRing1Used = false;
             regularBombRing2Used = false;
         }
-        if (enemyScript.HP < 1000 - 50 && fifthPhase == true)
+        if (enemyScript.HP < 350 - 50 && fifthPhase == true)
         {
             fifthPhase = false;
             sixthPhase = true;
@@ -132,7 +134,7 @@ public class GrandDragon : MonoBehaviour
             regularBombRing1Used = false;
             regularBombRing2Used = false;
         }
-        if (enemyScript.HP < 1000 - 60 && sixthPhase == true)
+        if (enemyScript.HP < 350 - 60 && sixthPhase == true)
         {
             sixthPhase = false;
             seventhPhase = true;
