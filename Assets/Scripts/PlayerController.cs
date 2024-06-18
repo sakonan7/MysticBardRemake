@@ -84,15 +84,15 @@ public class PlayerController : MonoBehaviour
     private float originalHP = 20;
     private float originalHarp = 15;
     private float originalTrumpet = 10;
-    private float originalFlute = 3;
+    private float originalFlute = 4;
     public static float currentHP = 20;
     public static float HPTotal = 20;
     private static float currentHarp = 15;
     public static float harpTotal = 15;
     private static float currentTrumpet = 10;
     public static float trumpetTotal = 10;
-    private static float currentFlute = 3;
-    public static float fluteTotal = 3;
+    private static float currentFlute = 4;
+    public static float fluteTotal = 4;
     private static float currentShield = 10;
     public static float shieldTotal = 10;
     private static float currentPotion = 4;
@@ -499,8 +499,8 @@ public class PlayerController : MonoBehaviour
     public void HitCountUp()
     {
         hitCount++;
-        allAttackGauge.fillAmount += (float)1 / 30;
-        if(hitCount >=30 && hitCountReached==false)
+        allAttackGauge.fillAmount += (float)1 / 25;
+        if(hitCount >=25 && hitCountReached==false)
         {
             hitCountReached = true;
             StartCoroutine(AllAttackBarFlash());
@@ -508,9 +508,11 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator AllAttackBarFlash()
     {
-        allAttackGauge.transform.localScale += new Vector3(allAttackGauge.transform.localScale.x * 0.1f, allAttackGauge.transform.localScale.y*0.2f, 0);
+        allAttackGauge.transform.localScale += new Vector3(allAttackGauge.transform.localScale.x * 0.05f, allAttackGauge.transform.localScale.y*0.2f, 0);
+        allAttackGauge.color = new Color(0.9931557f, 0.8836478f,1,1);
         yield return new WaitForSeconds(1);
         allAttackGauge.transform.localScale -= new Vector3(allAttackGauge.transform.localScale.x * 0.1f, allAttackGauge.transform.localScale.y * 0.2f, 0);
+        allAttackGauge.color = new Color(0.9411778f, 0, 1, 1);
     }
     public void AllAttack()
     {

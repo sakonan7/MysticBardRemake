@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private GameObject gameOverFilter;
     private GameObject gameOverButtons;
     public GameObject[] debris;
+    private int numDebris = 4;
     private Vector3[] debrisLocation =new Vector3[4];
     public bool gameOver = false;
 
@@ -83,7 +84,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void StartGame()
@@ -163,18 +163,23 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void ReduceNumDebris()
+    {
+        numDebris--;
+        if(numDebris <=0)
+        {
+            StartCoroutine(StartGenerateDebris());
+        }
+    }
     IEnumerator StartGenerateDebris()
     {
         yield return new WaitForSeconds(5);
         for (int i =0; i<debrisLocation.Length;i++)
         {
-            GameObject currentDebris = debris[Random.Range(0, 5)];
+            GameObject currentDebris = debris[Random.Range(0, 4)];
             Quaternion currentRotation = currentDebris.transform.rotation;
-            Instantiate(currentDebris, debrisLocation[i], new Quaternion(0, 0, 0,0));
+            Instantiate(currentDebris, debrisLocation[i], currentRotation);
         }
-    }
-    public void GenerateDebris ()
-    {
-        //Randomize them
+        numDebris = 4;
     }
 }

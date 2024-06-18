@@ -79,15 +79,6 @@ public class Debris : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (playerScript.wind == true)
-        {
-            //Wind off. Need wind variable for enemy
-            if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Bomb"))
-            {
-                gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                playerScript.WindEnd();
-            }
-        }
+
     }
 }

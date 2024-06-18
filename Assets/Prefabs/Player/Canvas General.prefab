@@ -1143,6 +1143,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &762877892742757819
 GameObject:
   m_ObjectHideFlags: 0
@@ -2665,6 +2668,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &1480312796575172270
 GameObject:
   m_ObjectHideFlags: 0
@@ -4559,6 +4565,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &2161744671831268497
 GameObject:
   m_ObjectHideFlags: 0
@@ -5247,6 +5256,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &2422823866479184848
 GameObject:
   m_ObjectHideFlags: 0
@@ -8853,6 +8865,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &4113068453145260289
 GameObject:
   m_ObjectHideFlags: 0
@@ -9852,7 +9867,7 @@ RectTransform:
   m_GameObject: {fileID: 4394821563071852121}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 5.1845, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3589886077333381320}
@@ -11454,7 +11469,7 @@ RectTransform:
   m_GameObject: {fileID: 5212191958747536901}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 5.1845, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4282532386851791721}
@@ -11735,7 +11750,7 @@ RectTransform:
   m_GameObject: {fileID: 5302287598736310628}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 5.1845, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4282532386851791721}
@@ -12139,6 +12154,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &5660889620591681735
 GameObject:
   m_ObjectHideFlags: 0
@@ -12695,6 +12713,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &5973166092526899196
 GameObject:
   m_ObjectHideFlags: 0
@@ -13692,6 +13713,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &6435613135226299931
 GameObject:
   m_ObjectHideFlags: 0
@@ -16944,6 +16968,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &8047584973847857945
 GameObject:
   m_ObjectHideFlags: 0
@@ -17399,6 +17426,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &8158307125912441179
 GameObject:
   m_ObjectHideFlags: 0
@@ -18246,7 +18276,7 @@ RectTransform:
   m_GameObject: {fileID: 8352763443981585497}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 5.1845, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3589886077333381320}
@@ -20189,6 +20219,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &9088497968868878833
 GameObject:
   m_ObjectHideFlags: 0
@@ -20414,6 +20447,9 @@ MonoBehaviour:
   level1: 0
   level2: 0
   level3: 0
+  level4: 0
+  level5: 0
+  level6: 0
 --- !u!1 &9125099376814525339
 GameObject:
   m_ObjectHideFlags: 0

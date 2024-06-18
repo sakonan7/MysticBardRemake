@@ -851,8 +851,9 @@ public class Enemy : MonoBehaviour
             TeamAttackPositives();
             //Debug.Log("Team Attack On");
             }
-            //Debug.Log("Crash!");
-        }
+                //Debug.Log("Crash!");
+                playerScript.HitCountUp();
+            }
             if (collision.gameObject.CompareTag("Debris"))
             {
                 bool damaged = false;
@@ -871,7 +872,9 @@ public class Enemy : MonoBehaviour
                 WindCaptureEnd();
                 //}
                 playerScript.WindHitEffect(collision.GetContact(0).point);
-                Destroy(collision.gameObject, 1);
+                Destroy(collision.gameObject);
+                playerScript.HitCountUp();
+                gameScript.ReduceNumDebris();
             }
         }
     }

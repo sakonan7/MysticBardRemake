@@ -1744,7 +1744,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -2.786, y: -3.4737387e-17, z: -8}
-  m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1660290451289720811}
@@ -1794,9 +1794,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
-  effectAppear: {fileID: 0}
+  counterAttackTriggered: 0
   attackEffects: []
   teamAttackAura: {fileID: 0}
+  HP: 10
+  EXP: 0
   teamAttackOn: 0
 --- !u!114 &4524930941711944100
 MonoBehaviour:

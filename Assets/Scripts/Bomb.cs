@@ -7,6 +7,7 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     private PlayerController playerScript;
+    private GameManager gameScript;
     private Coroutine explodeCancel;
     private Coroutine explodeEffectCancel;
     private GameObject effectPosition;
@@ -18,6 +19,7 @@ public class Bomb : MonoBehaviour
     void Start()
     {
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         effectPosition = transform.Find("Effect Position").gameObject;
         
         aboutToExplode = transform.Find("About To Explode").gameObject;
@@ -123,6 +125,10 @@ public class Bomb : MonoBehaviour
         {
             StopCoroutine(explodeEffectCancel);
         }
+        if (explodeCancel != null)
+        {
+            StopCoroutine(explodeCancel);
+        }
         transform.Find("Appearance").gameObject.SetActive(false);
         transform.Find("Hitbox").gameObject.SetActive(true);
         Destroy(gameObject, 2);
@@ -179,6 +185,13 @@ public class Bomb : MonoBehaviour
                 collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 playerScript.WindEnd();
                 EnemyExplode();
+            }
+            if (collision.gameObject.CompareTag("Debris"))
+            {
+
+                playerScript.WindHitEffect(collision.GetContact(0).point);
+                Destroy(collision.gameObject);
+                gameScript.ReduceNumDebris();
             }
         }
     }
