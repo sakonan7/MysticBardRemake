@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2916899123964551359}
   - component: {fileID: 7535090082522923685}
   - component: {fileID: 1738018415691820782}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crate Dry Explode
   m_TagString: Debris
   m_Icon: {fileID: 0}

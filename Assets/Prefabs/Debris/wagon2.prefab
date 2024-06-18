@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7425342433293764415}
   - component: {fileID: 2154234731522552625}
   - component: {fileID: 1752706748446086218}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7563987601901607604}
   - component: {fileID: 435285214435731761}
   - component: {fileID: 850044392685012328}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cylinder_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 2378466886875118847}
   - component: {fileID: 4232171877184538040}
   - component: {fileID: 491132108415336877}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: wagon2
   m_TagString: Debris
   m_Icon: {fileID: 0}

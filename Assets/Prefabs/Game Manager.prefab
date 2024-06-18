@@ -44,4 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ac83b5737d09942a4c98a7cdc4c499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debris:
+  - {fileID: 1762299993224416091, guid: cef0e78a80b066648a7dd39d7e173470, type: 3}
+  - {fileID: 8934065819855448562, guid: c07434cf9263bc542beaed0fdc78823a, type: 3}
+  - {fileID: 5967179862070929489, guid: f6393f6dc1cc6e846bce797a2cae4a76, type: 3}
+  - {fileID: 7669743340490989771, guid: 9a81cb84ff7b2f740b05c91a8c7a1e8a, type: 3}
   gameOver: 0
+  levelUp: 0
+  victory: 0
+  titleNonStatic: 0
+  levelSelectNonStatic: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4527778644157742188}
   - component: {fileID: 8383623309712217923}
   - component: {fileID: 5432848405911724939}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stone_Pillar_Rnd_a_lod1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1577860874448170774}
   - component: {fileID: 6539432437565447649}
   - component: {fileID: 2962324719180812361}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stone_Pillar_Rnd_a_lod2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 8769561062656422994}
   - component: {fileID: 579823057101647353}
   - component: {fileID: 8296346733389129847}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stone_Pillar_Rnd_a_col
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 3599707320226078437}
   - component: {fileID: 8820990359200891350}
   - component: {fileID: 7738844259845114789}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stone_Pillar_Rnd_a_lod0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 1968208663703913377}
   - component: {fileID: 8123482130706111649}
   - component: {fileID: 3164547502750258168}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stone_Pillar_Rnd_a_lod3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 1609899172167744054}
   - component: {fileID: 2865454310050938193}
   - component: {fileID: 8383826608510111766}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stone_Pillar_Rnd_a
   m_TagString: Debris
   m_Icon: {fileID: 0}

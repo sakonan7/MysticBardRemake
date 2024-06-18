@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4577651303940055713}
   - component: {fileID: 3747874210206063682}
   - component: {fileID: 3855904064331802154}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 6497487289032132081}
   - component: {fileID: 7798574702384316714}
   - component: {fileID: 1038405140283372552}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 8772977427620292392}
   - component: {fileID: 3678902549456395977}
   - component: {fileID: 115468824145590260}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,7 +324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6610506496467846636}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Effect Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 4478690547365269343}
   - component: {fileID: 3021001915262737744}
   - component: {fileID: 7759047072087074734}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hitbox
   m_TagString: Hitbox
   m_Icon: {fileID: 0}
@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 5628204992888371294}
   - component: {fileID: 7187527490217453177}
   - component: {fileID: 5079652464569319321}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: About To Explode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -568,7 +568,7 @@ GameObject:
   - component: {fileID: 1597286240503102455}
   - component: {fileID: 3416555143708126408}
   - component: {fileID: 8300787038352416134}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 275200826678880621}
   - component: {fileID: 1345622543704544231}
   - component: {fileID: 8770211082485800729}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -778,7 +778,7 @@ GameObject:
   - component: {fileID: 4531557006025726921}
   - component: {fileID: 92485112283464155}
   - component: {fileID: 2086466506555721919}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bomb
   m_TagString: Bomb
   m_Icon: {fileID: 0}
@@ -875,7 +875,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3666389497471439809}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Appearance
   m_TagString: Untagged
   m_Icon: {fileID: 0}

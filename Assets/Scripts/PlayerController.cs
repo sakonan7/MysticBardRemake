@@ -422,8 +422,8 @@ public class PlayerController : MonoBehaviour
     {
         //if (violinDrained ==false) {
         Instantiate(harpHitbox, newPosition, harpHitbox.transform.rotation);
-        //Instantiate(harpSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), harpSoundwave.transform.rotation);
-        //ViolinHitEffect(newPosition);
+        Instantiate(harpSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), harpSoundwave.transform.rotation);
+        HarpHitEffect(newPosition);
         StartCoroutine(Lag(0.5f));
             harpGauge.fillAmount -= (float)1 / harpTotal;
         currentHarp--;
@@ -436,14 +436,15 @@ public class PlayerController : MonoBehaviour
             }
         //}
         audio.Stop();
-        audio.PlayOneShot(harpSound, 1);
+        audio.PlayOneShot(harpSound, 0.75f);
     }
     public void TrumpetAttack(Vector3 newPosition)
     {
         //if (violinDrained ==false) {
         //ViolinHitEffect(newPosition);
         Instantiate(trumpetHitbox, newPosition, trumpetHitbox.transform.rotation);
-        //Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
+        Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
+        HarpHitEffect(newPosition);
         StartCoroutine(Lag(0.5f));
         trumpetGauge.fillAmount -= (float)1 / trumpetTotal;
         currentTrumpet--;
@@ -457,11 +458,11 @@ public class PlayerController : MonoBehaviour
         int random = Random.Range(0, 2);
         if(random == 0)
         {
-            audio.PlayOneShot(trumpet1, 1);
+            audio.PlayOneShot(trumpet1, 0.75f);
         }
         else
         {
-            audio.PlayOneShot(trumpet2, 1);
+            audio.PlayOneShot(trumpet2, 0.75f);
         }
     }
     public void FluteAttack()

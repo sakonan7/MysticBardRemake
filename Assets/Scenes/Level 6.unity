@@ -10208,6 +10208,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 431087092046865492, guid: 8f288dc09d55c5d478f4cee4f254a480, type: 3}
+      propertyPath: harpSoundwave
+      value: 
+      objectReference: {fileID: 485518619082792125, guid: 2083fc50530717a4eb580d21782d1ff6, type: 3}
     - target: {fileID: 4015009680743265378, guid: 8f288dc09d55c5d478f4cee4f254a480, type: 3}
       propertyPath: m_Name
       value: Player
@@ -10330,10 +10334,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin
       objectReference: {fileID: 0}
-    - target: {fileID: 2168631824770729869, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.48
@@ -10373,14 +10373,6 @@ PrefabInstance:
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5170885567865982382, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 8eef3d88c6d3aec48ad35c3cb5cc56b7, type: 2}
-    - target: {fileID: 6316299207828985120, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

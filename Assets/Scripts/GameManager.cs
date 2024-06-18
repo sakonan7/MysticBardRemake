@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     private GameObject gameOverText;
     private GameObject gameOverFilter;
     private GameObject gameOverButtons;
+    public GameObject[] debris;
+    private Vector3[] debrisLocation =new Vector3[4];
     public bool gameOver = false;
 
     private int numEnemies = 0;
@@ -70,7 +72,12 @@ public class GameManager : MonoBehaviour
             numEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         }
 
-
+        GameObject[] currentDebris = GameObject.FindGameObjectsWithTag("Debris");
+        //debrisLocation = GameObject.FindGameObjectsWithTag("Debris").transform.position;
+        for(int i =0;i < currentDebris.Length;i++)
+        {
+            debrisLocation[i] = currentDebris[i].transform.position;
+        }
     }
 
     // Update is called once per frame
@@ -159,6 +166,12 @@ public class GameManager : MonoBehaviour
     IEnumerator StartGenerateDebris()
     {
         yield return new WaitForSeconds(5);
+        for (int i =0; i<debrisLocation.Length;i++)
+        {
+            GameObject currentDebris = debris[Random.Range(0, 5)];
+            Quaternion currentRotation = currentDebris.transform.rotation;
+            Instantiate(currentDebris, debrisLocation[i], new Quaternion(0, 0, 0,0));
+        }
     }
     public void GenerateDebris ()
     {

@@ -20,6 +20,7 @@ public class Witch : MonoBehaviour
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
         enemyScript.SetHP(60);
+        enemyScript.SetEXP(100);
 
         enemyScript.SetNormal();
         enemyScript.SetNoAttack();

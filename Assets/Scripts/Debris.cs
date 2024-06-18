@@ -18,28 +18,29 @@ public class Debris : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerScript.wind == true)
+        if (transform.position.x <= -5.49f)
         {
-            if (transform.position.x <= -4.32f)
-            {
-                transform.position = new Vector3(-4.31f, transform.position.y, transform.position.z);
-                //playerScript.WindEnd();
-            }
-            if (transform.position.x >= 4.32f)
-            {
-                transform.position = new Vector3(4.31f, transform.position.y, transform.position.z);
-                //playerScript.WindEnd();
-            }
-            if (transform.position.y <= -3f)
-            {
-                transform.position = new Vector3(transform.position.x, -3f, transform.position.z);
-                //playerScript.WindEnd();
-            }
-            if (transform.position.y >= 3f)
-            {
-                transform.position = new Vector3(transform.position.x, 3f, transform.position.z);
-                //playerScript.WindEnd();
-            }
+            transform.position = new Vector3(-5.49f, transform.position.y, transform.position.z);
+            //playerScript.WindEnd();
+            //WindCaptureEnd();
+        }
+        if (transform.position.x >= 5.49f)
+        {
+            transform.position = new Vector3(5.49f, transform.position.y, transform.position.z);
+            //playerScript.WindEnd();
+            //WindCaptureEnd();
+        }
+        if (transform.position.y <= -3f)
+        {
+            transform.position = new Vector3(transform.position.x, -3f, transform.position.z);
+            //playerScript.WindEnd();
+            //WindCaptureEnd();
+        }
+        if (transform.position.y >= 3.47f)
+        {
+            transform.position = new Vector3(transform.position.x, 3.47f, transform.position.z);
+            //playerScript.WindEnd();
+            //WindCaptureEnd();
         }
     }
 

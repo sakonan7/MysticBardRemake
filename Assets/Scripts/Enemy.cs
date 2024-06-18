@@ -162,15 +162,15 @@ public class Enemy : MonoBehaviour
             gameScript.ReduceNumEnemies();
             
         }
-        if (transform.position.x <= -4.32f)
+        if (transform.position.x <= -5.49f)
         {
-            transform.position = new Vector3(-4.31f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-5.49f, transform.position.y, transform.position.z);
             //playerScript.WindEnd();
             //WindCaptureEnd();
         }
-        if (transform.position.x >= 4.32f)
+        if (transform.position.x >= 5.49f)
         {
-            transform.position = new Vector3(4.31f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(5.49f, transform.position.y, transform.position.z);
             //playerScript.WindEnd();
             //WindCaptureEnd();
         }
@@ -180,9 +180,9 @@ public class Enemy : MonoBehaviour
             //playerScript.WindEnd();
             //WindCaptureEnd();
         }
-        if (transform.position.y >= 3f)
+        if (transform.position.y >= 3.47f)
         {
-            transform.position = new Vector3(transform.position.x, 3f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 3.47f, transform.position.z);
             //playerScript.WindEnd();
             //WindCaptureEnd();
         }

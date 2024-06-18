@@ -11026,6 +11026,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Select Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1703487157665988837, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.07682451
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703487157665988837, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -128.59999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703487157665988837, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -16.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703487157665988837, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2258099785206682675, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.07682451
+      objectReference: {fileID: 0}
+    - target: {fileID: 2258099785206682675, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -128.59999
+      objectReference: {fileID: 0}
+    - target: {fileID: 2258099785206682675, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666431993115763352, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403487451469167265, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_text
+      value: 3 Goblins
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881440818790825668, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4428259477618142124, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.07682451
+      objectReference: {fileID: 0}
+    - target: {fileID: 4428259477618142124, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -128.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4428259477618142124, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5218026405703101616, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.8
@@ -11122,6 +11174,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6878826432722049410, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6.1586
+      objectReference: {fileID: 0}
+    - target: {fileID: 6878826432722049410, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 479
+      objectReference: {fileID: 0}
     - target: {fileID: 6892397647599760266, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6387942
@@ -11145,6 +11205,10 @@ PrefabInstance:
     - target: {fileID: 7330245874920402157, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657949065525114535, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
