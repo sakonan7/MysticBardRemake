@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
+//Need to ensure skip to next phase if HP reaches another phase
+//Maybe have the attack play at least
+//Don't have to worry about attack damage because each attack sets the attack damage
+//I'm thinking of if the boss is flinching, reset the pattern
+//Maybe I should have a flash to reset everything
+//1.) Make bombs not deal damage at start of bombs appear
+//2.) Witch (Fix armor us)
 public class GrandDragon : MonoBehaviour
 {
     public Material red;
     public Material purple;
     public Material green;
+    public Material flashing;
     public Material dying;
     public GameObject barrier;
     public GameObject regularBombRing1;
@@ -30,6 +38,7 @@ public class GrandDragon : MonoBehaviour
     private bool sixthPhase = false;
     private bool seventhPhase = false;
 
+    //After a bomb attack, trigger this
     private bool fourthPhaseRegular = false;
     private bool fifthPhaseRegular = false;
 
@@ -44,7 +53,7 @@ public class GrandDragon : MonoBehaviour
         skin = transform.Find("Dragon").GetComponent<SkinnedMeshRenderer>();
         bombFlare = transform.Find("Bomb Light").transform.Find("Lens").gameObject;
         barrierAnimation = transform.Find("Root").transform.Find("Personal Barrier Object").transform.Find("Barrier Animation").gameObject;
-        enemyScript.SetHP(325);
+        enemyScript.SetHP(maxHP);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(5);
         enemyScript.SetRed();
@@ -156,6 +165,8 @@ public class GrandDragon : MonoBehaviour
         if (firstPhase ==true) {
             if (enemyScript.attackReady == true)
             {
+                StartCoroutine(Flashing());
+
                 RedAttack();
                 //Debug.Log("Attack");
             }
@@ -357,12 +368,20 @@ public class GrandDragon : MonoBehaviour
         //Last phase
         //< 500, secondPhase ==true
     }
-    IEnumerator IdleAnimation()
+IEnumerator Flashing()
     {
-        animator.SetBool("Idle", true);
-        yield return new WaitForSeconds(2);
-        //idle = false;
-        //Attack();
+        int numFlash = 0;
+        while(numFlash < 2)
+        {
+            skin.material = flashing;
+            Debug.Log("White");
+            yield return new WaitForSeconds(0.5f);
+            //Depends on phase
+            skin.material = red;
+            numFlash++;
+
+            Debug.Log("Red");
+        }
     }
     public void RedAttack()
     {

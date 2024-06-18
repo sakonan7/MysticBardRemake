@@ -473,6 +473,12 @@ public class Enemy : MonoBehaviour
         }
         flinching = false;
     }
+    //For Flashing (Revenge Value/ Boss interrupt)
+    IEnumerator Interrupt()
+    {
+        cantFlinch = true;
+        yield return new WaitForSeconds(2);
+    }
     IEnumerator WindFlinch()
     {
         yield return new WaitForSeconds(1);

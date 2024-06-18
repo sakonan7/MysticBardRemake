@@ -14,6 +14,7 @@ public class Giant : MonoBehaviour
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
         enemyScript.SetHP(100);
+        enemyScript.SetEXP(90);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(5);
         enemyScript.SetRed();

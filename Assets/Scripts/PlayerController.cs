@@ -13,6 +13,9 @@ using Unity.VisualScripting.Antlr3.Runtime;
 //04/30/24
 //A lot of this has to be in Enemy. It makes sense becuase MouseDrag and MouseUp only work on the target directly
 //It also make sense because the enemy needs to detect the hitbox. Like in Beast Dominion
+//06/17/24
+//To reload weapons while not using them, wait for a IEnumerator called harpReload
+//If you use the weapon, you will cancel out
 public class PlayerController : MonoBehaviour
 {
     //I made these with the idea of sticking stuff together. Shield stuff with shield stuff, violin stuff with violin stuff, IE

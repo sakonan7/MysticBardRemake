@@ -29,6 +29,9 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool level1 = false;
     public bool level2 = false;
     public bool level3 = false;
+    public bool level4 = false;
+    public bool level5 = false;
+    public bool level6 = false;
 
     // Start is called before the first frame update
     void Start()
