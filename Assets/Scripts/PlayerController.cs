@@ -116,6 +116,15 @@ public class PlayerController : MonoBehaviour
     public bool trumpetOn = false;
     private bool trumpetDrained = false;
     public bool fluteDrained = false;
+    private bool harpReloading = false;
+    private Coroutine harpReloadCancel;
+    private bool harpReloadStart = false;
+    private bool trumpetReloading = false;
+    private Coroutine trumpetReloadCancel;
+    private bool trumpetReloadStart = false;
+    private bool fluteReloading = false;
+    private Coroutine fluteReloadCancel;
+    private bool fluteReloadStart = false;
 
     //Private bools
     private bool harp = true;
@@ -175,6 +184,7 @@ public class PlayerController : MonoBehaviour
                 numPotions = GameObject.Find("Number of Potions").GetComponent<TextMeshProUGUI>();
                 numPotions.text = "X " + currentPotion;
                 potionUsedIcon = GameObject.Find("Potions").transform.Find("Use Potion").gameObject;
+                weaponImages.transform.Find("Harp Image").gameObject.SetActive(true);
             }
         }
         audio = GetComponent<AudioSource>();
@@ -289,6 +299,76 @@ public class PlayerController : MonoBehaviour
                                 }
                             }
                         }
+                        //I have to increase based on the actual gauge amount
+                        //I think
+                        //That'll be the nerf
+                        //See if it causes problems
+                        //It should, so I will
+                        if (harpReloading == true)
+                        {
+                            harpGauge.fillAmount += (float)2 / harpTotal * Time.deltaTime;
+                            if (harpGauge.fillAmount >= 1)
+                            {
+                                harpGauge.color = new Color(0.9503901f, 1, 0, 1);
+                                HarpReloadCancel();
+                                currentHarp = harpTotal;
+                                harpText.text = harpTotal + "/" + harpTotal;
+                                harpReloadStart = false;
+                            }
+                        }
+                        if (trumpetReloading == true)
+                        {
+                            trumpetGauge.fillAmount += (float)1 / trumpetTotal * Time.deltaTime;
+                            if (trumpetGauge.fillAmount >= 1)
+                            {
+                                trumpetGauge.color = new Color(0.9503901f, 1, 0, 1);
+                                TrumpetReloadCancel();
+                                currentTrumpet = trumpetTotal;
+                                trumpetText.text = trumpetTotal + "/" + trumpetTotal;
+                                trumpetReloadStart = false;
+                            }
+                        }
+                        if (fluteReloading == true)
+                        {
+                            fluteGauge.fillAmount += (float)1 /fluteTotal * Time.deltaTime;
+                            if (fluteGauge.fillAmount >= 1)
+                            {
+                                fluteGauge.color = new Color(0.9503901f, 1, 0, 1);
+                                FluteReloadCancel();
+                                currentFlute = fluteTotal;
+                                fluteText.text = fluteTotal + "/" + fluteTotal;
+                                fluteReloadStart = false;
+                            }
+                        }
+                        //Start Reload Process
+                        //I need some way to restart harpReloadStart
+                        //-Atm, I will cancel it when IEnumerator starts and restart it if the IEnumerator gets cancelled or reloading bool finishes
+                        //ATM, this is going to keep playing
+                        //Unless I have another IEnumerator called harpUsed that lasts 0.5f
+                        if (currentHarp < harpTotal) {
+                            if (harpReloadStart == false)
+                            {
+                                harpReloadCancel = StartCoroutine(HarpReload());
+                            }
+                        }
+                        if (currentTrumpet < trumpetTotal)
+                        {
+                            if (trumpetReloadStart == false)
+                            {
+                                trumpetReloadCancel = StartCoroutine(TrumpetReload());
+                            }
+                        }
+                        //So flute doesn't reload while being used
+                        if(wind==false)
+                        {
+                            if (currentFlute < fluteTotal)
+                            {
+                                if (fluteReloadStart == false)
+                                {
+                                    fluteReloadCancel = StartCoroutine(FluteReload());
+                                }
+                            }
+                        }
                         //if (Input.GetKeyDown(KeyCode.S))
                         //{
                         //trumpetOn = true;
@@ -398,18 +478,27 @@ public class PlayerController : MonoBehaviour
             weaponSelected.transform.Find("Harp Selected").gameObject.SetActive(true);
             weaponSelected.transform.Find("Trumpet Selected").gameObject.SetActive(false);
             weaponSelected.transform.Find("Flute Selected").gameObject.SetActive(false);
+            weaponImages.transform.Find("Harp Image").gameObject.SetActive(true);
+            weaponImages.transform.Find("Trumpet Image").gameObject.SetActive(false);
+            weaponImages.transform.Find("Flute Image").gameObject.SetActive(false);
         }
         if (trumpet == true)
         {
             weaponSelected.transform.Find("Harp Selected").gameObject.SetActive(false);
             weaponSelected.transform.Find("Trumpet Selected").gameObject.SetActive(true);
             weaponSelected.transform.Find("Flute Selected").gameObject.SetActive(false);
+            weaponImages.transform.Find("Harp Image").gameObject.SetActive(false);
+            weaponImages.transform.Find("Trumpet Image").gameObject.SetActive(true);
+            weaponImages.transform.Find("Flute Image").gameObject.SetActive(false);
         }
         if (flute == true)
         {
             weaponSelected.transform.Find("Harp Selected").gameObject.SetActive(false);
             weaponSelected.transform.Find("Trumpet Selected").gameObject.SetActive(false);
             weaponSelected.transform.Find("Flute Selected").gameObject.SetActive(true);
+            weaponImages.transform.Find("Harp Image").gameObject.SetActive(false);
+            weaponImages.transform.Find("Trumpet Image").gameObject.SetActive(false);
+            weaponImages.transform.Find("Flute Image").gameObject.SetActive(true);
         }
     }
     public void WeaponReset ()
@@ -483,7 +572,14 @@ public class PlayerController : MonoBehaviour
     {
         wind = true;
         fluteWind.SetActive(true);
-        weaponImages.transform.Find("Flute Image").gameObject.SetActive(true);
+        if (flute == true)
+        {
+            fluteReloadStart = false;
+            if (fluteReloadCancel != null)
+            {
+                FluteReloadCancel();
+            }
+        }
     }
     public void WindEnd()
     {
@@ -494,7 +590,6 @@ public class PlayerController : MonoBehaviour
             //enemies[i].GetComponent<Enemy>().AnalyzeTeamAttackCapability();
         //}
         fluteWind.SetActive(false);
-        weaponImages.transform.Find("Flute Image").gameObject.SetActive(false);
     }
     public void HitCountUp()
     {
@@ -595,27 +690,24 @@ public class PlayerController : MonoBehaviour
     IEnumerator Lag(float time)
     {
         lag = true;
-        //toolIcon.SetActive(true);
-        if (harp ==true) {
-            weaponImages.transform.Find("Harp Image").gameObject.SetActive(true);
-        }
-        else if (trumpet == true)
+        if(harp == true)
         {
-            weaponImages.transform.Find("Trumpet Image").gameObject.SetActive(true);
-            trumpetRange.SetActive(false);
+            harpReloadStart = false;
+            if (harpReloadCancel !=null)
+            {
+                HarpReloadCancel();
+            }
+        }
+        if (trumpet == true)
+        {
+            trumpetReloadStart = false;
+            if (trumpetReloadCancel != null)
+            {
+                TrumpetReloadCancel();
+            }
         }
         yield return new WaitForSeconds(time);
         lag = false;
-        //toolIcon.SetActive(false);
-        if (harp == true)
-        {
-            weaponImages.transform.Find("Harp Image").gameObject.SetActive(false);
-        }
-        else if (trumpet == true)
-        {
-            weaponImages.transform.Find("Trumpet Image").gameObject.SetActive(false);
-            trumpetRange.SetActive(true);
-        }
     }
     public void InterruptEffect(Vector3 position)
     {
@@ -796,6 +888,57 @@ public class PlayerController : MonoBehaviour
         damageFlash.SetActive(true);
         yield return new WaitForSeconds(1);
         damageFlash.SetActive(false);
+    }
+    //06/19/24
+    //After 2 seconds pass, start reloading. Gauge turns Green and thick
+    //Gonna use ReloadCancel Methods for simplicity
+    IEnumerator HarpReload()
+    {
+        yield return new WaitForSeconds(2);
+        harpReloading = true;
+        harpGauge.transform.localScale += new Vector3(harpGauge.transform.localScale.x * 0.05f, harpGauge.transform.localScale.y * 0.05f, 0);
+        harpGauge.color = new Color(0.6066045f, 0, 0.4308175f, 0);
+    }
+    public void HarpReloadCancel()
+    {
+        if (harpReloadCancel != null)
+        {
+            StopCoroutine(harpReloadCancel);
+        }
+        harpReloading = false;
+        harpGauge.transform.localScale -= new Vector3(harpGauge.transform.localScale.x * 0.05f, harpGauge.transform.localScale.y * 0.05f, 0);
+    }
+    IEnumerator TrumpetReload()
+    {
+        yield return new WaitForSeconds(2);
+        trumpetReloading = true;
+        trumpetGauge.transform.localScale += new Vector3(trumpetGauge.transform.localScale.x*0.05f, trumpetGauge.transform.localScale.y * 0.05f, 0);
+        trumpetGauge.color = new Color(0.6066045f,0, 0.4308175f,0);
+    }
+    public void TrumpetReloadCancel()
+    {
+        if(trumpetReloadCancel!=null)
+        {
+            StopCoroutine(trumpetReloadCancel);
+        }
+        trumpetReloading = false;
+        trumpetGauge.transform.localScale -= new Vector3(trumpetGauge.transform.localScale.x * 0.05f, trumpetGauge.transform.localScale.y * 0.05f, 0);
+    }
+    IEnumerator FluteReload()
+    {
+        yield return new WaitForSeconds(2);
+        fluteReloading = true;
+        fluteGauge.transform.localScale += new Vector3(fluteGauge.transform.localScale.x * 0.05f, fluteGauge.transform.localScale.y * 0.05f, 0);
+        fluteGauge.color = new Color(0.6066045f, 0, 0.4308175f, 0);
+    }
+    public void FluteReloadCancel()
+    {
+        if (fluteReloadCancel != null)
+        {
+            StopCoroutine(fluteReloadCancel);
+        }
+        fluteReloading = false;
+        fluteGauge.transform.localScale -= new Vector3(fluteGauge.transform.localScale.x * 0.05f, fluteGauge.transform.localScale.y * 0.05f, 0);
     }
     public void FullRestore()
     {

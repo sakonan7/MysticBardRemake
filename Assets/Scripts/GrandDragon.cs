@@ -13,6 +13,8 @@ using UnityEngine;
 //06/18/24
 //I want Red Dragon's cycle to restart when a new phase starts
 //I don't think this will stop bombs from being spawned, though, so thatis not a bad thing
+//I will have to do this case by case. The main concern is enemy attack cycle getting interrupted between phases
+//It looks like that's happening with Green
 public class GrandDragon : MonoBehaviour
 {
     public Material red;
