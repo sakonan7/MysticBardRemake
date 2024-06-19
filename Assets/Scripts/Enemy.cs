@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
     private float attackLength = 1;
     private bool windCaptured = false;
     private bool repeat = true;
-    private bool flinching = false;
+    public bool flinching = false;
     private bool barrier = false;
     private bool counterAttackActive = false;
     public bool counterAttackTriggered = false;
@@ -278,7 +278,11 @@ public class Enemy : MonoBehaviour
     }
     public void SetNoAttack()
     {
-        noAttack = !noAttack;
+        noAttack = true;
+    }
+    public void UnsetNoAttack()
+    {
+        noAttack = false;
     }
     //This is less of an enemy type and more of a mode
     public void SetArmor()
@@ -474,10 +478,16 @@ public class Enemy : MonoBehaviour
         flinching = false;
     }
     //For Flashing (Revenge Value/ Boss interrupt)
-    IEnumerator Interrupt()
+    public void Interrupt()
+    {
+        StartCoroutine(IdleAnimation(1));
+        StartCoroutine(InterruptTime());
+    }
+    IEnumerator InterruptTime()
     {
         cantFlinch = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
+        cantFlinch = false;
     }
     IEnumerator WindFlinch()
     {

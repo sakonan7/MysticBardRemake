@@ -10,6 +10,9 @@ using UnityEngine;
 //Maybe I should have a flash to reset everything
 //1.) Make bombs not deal damage at start of bombs appear
 //2.) Witch (Fix armor us)
+//06/18/24
+//I want Red Dragon's cycle to restart when a new phase starts
+//I don't think this will stop bombs from being spawned, though, so thatis not a bad thing
 public class GrandDragon : MonoBehaviour
 {
     public Material red;
@@ -51,6 +54,7 @@ public class GrandDragon : MonoBehaviour
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
         skin = transform.Find("Dragon").GetComponent<SkinnedMeshRenderer>();
+        skin.material = red;
         bombFlare = transform.Find("Bomb Light").transform.Find("Lens").gameObject;
         barrierAnimation = transform.Find("Root").transform.Find("Personal Barrier Object").transform.Find("Barrier Animation").gameObject;
         enemyScript.SetHP(maxHP);
@@ -72,12 +76,23 @@ public class GrandDragon : MonoBehaviour
             //enemyScript.SetGreen();
             //skin.material = green;
             //enemyScript.SetBomb();
+            enemyScript.SetNoAttack();
             skin.material = purple;
             //For simplicity, I am making a cancel IdleAnimation();
             //I could use this for a revenge value att
             enemyScript.IdleAnimationCancel();
-            enemyScript.FlinchCancel();
+
             enemyScript.AttackReadyOff();
+            if(enemyScript.flinching ==true)
+            {
+                enemyScript.Interrupt(); //At the moment, he will just go into barrier animation
+                enemyScript.FlinchCancel();
+                StartCoroutine(Flashing());
+            }
+            else
+            {
+
+            }
             StartCoroutine(BarrierAnimation());
             enemyScript.SetIdleTime(20);
         }
@@ -86,6 +101,7 @@ public class GrandDragon : MonoBehaviour
             secondPhase = false;
             thirdPhase = true;
             enemyScript.UnsetBomb();
+            enemyScript.SetNoAttack();
             enemyScript.SetGreen();
             skin.material = green;
         }
@@ -94,6 +110,7 @@ public class GrandDragon : MonoBehaviour
             thirdPhase = false;
             fourthPhase = true;
             enemyScript.UnsetGreen();
+            enemyScript.SetNoAttack();
             enemyScript.SetRed();
             skin.material = purple;
             enemyScript.IdleAnimationCancel();
@@ -111,6 +128,7 @@ public class GrandDragon : MonoBehaviour
             fourthPhase = false;
             fifthPhase = true;
             enemyScript.UnsetRed();
+            enemyScript.SetNoAttack();
             enemyScript.SetGreen();
             skin.material = purple;
             enemyScript.IdleAnimationCancel();
@@ -128,6 +146,7 @@ public class GrandDragon : MonoBehaviour
             fifthPhase = false;
             sixthPhase = true;
             enemyScript.UnsetGreen();
+            enemyScript.SetNoAttack();
             //SetBomb, but also set CantFlinch for barrier
             //enemyScript.SetGreen();
             //skin.material = green;
@@ -148,6 +167,7 @@ public class GrandDragon : MonoBehaviour
             sixthPhase = false;
             seventhPhase = true;
             enemyScript.UnsetBomb();
+            enemyScript.UnsetNoAttack();
             enemyScript.SetGreen();
             enemyScript.SetRed();
             skin.material = red;
@@ -165,7 +185,7 @@ public class GrandDragon : MonoBehaviour
         if (firstPhase ==true) {
             if (enemyScript.attackReady == true)
             {
-                StartCoroutine(Flashing());
+                //StartCoroutine(Flashing());
 
                 RedAttack();
                 //Debug.Log("Attack");
@@ -175,6 +195,7 @@ public class GrandDragon : MonoBehaviour
         {
             if (enemyScript.attackReady == true)
             {
+                enemyScript.SetNoAttack();
                 //RegularBombRing1();
                 Debug.Log("Bomb Attack Regular");
                 //Randomize
@@ -230,6 +251,7 @@ public class GrandDragon : MonoBehaviour
                 }
                 else
                 {
+                    enemyScript.SetNoAttack();
                     //RegularBombRing1();
                     Debug.Log("Bomb Attack Regular");
                     //Randomize
@@ -281,8 +303,9 @@ public class GrandDragon : MonoBehaviour
                 }
                 else
                 {
-                    //RegularBombRing1();
-                    Debug.Log("Bomb Attack Regular");
+                        enemyScript.SetNoAttack();
+                        //RegularBombRing1();
+                        Debug.Log("Bomb Attack Regular");
                     //Randomize
                     //Make first ring appear right away
                     //At least 20 seconds between salvos
@@ -319,6 +342,7 @@ public class GrandDragon : MonoBehaviour
         {
             if (enemyScript.attackReady == true)
             {
+                enemyScript.SetNoAttack();
                 //RegularBombRing1();
                 Debug.Log("Bomb Attack Regular");
                 //Randomize
@@ -371,16 +395,32 @@ public class GrandDragon : MonoBehaviour
 IEnumerator Flashing()
     {
         int numFlash = 0;
-        while(numFlash < 2)
+        while (numFlash < 2)
         {
             skin.material = flashing;
-            Debug.Log("White");
-            yield return new WaitForSeconds(0.5f);
+            //Debug.Log("White");
+            yield return new WaitForSeconds(1);
             //Depends on phase
-            skin.material = red;
+            if (secondPhase == true)
+            {
+                skin.material = purple;
+            }
+            if (thirdPhase == true)
+            {
+                skin.material = green;
+            }
+            if (fourthPhase == true)
+            {
+                skin.material = green;
+            }
+            if (fifthPhase == true)
+            {
+                skin.material = green;
+            }
+
             numFlash++;
 
-            Debug.Log("Red");
+            Debug.Log(numFlash);
         }
     }
     public void RedAttack()
@@ -393,6 +433,7 @@ IEnumerator Flashing()
         enemyScript.StartFlinchWindow();
             //enemyScript.PlayAttackEffect(0);
         enemyScript.AttackReadyOff();
+        enemyScript.UnsetNoAttack();
     }
     IEnumerator BarrierAnimation()
     {
@@ -561,6 +602,7 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(0);
         //}
         enemyScript.CounterAttackReadyOff();
+        enemyScript.UnsetNoAttack();
     }
     public void GreenAttack()
     {
@@ -580,6 +622,7 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(1);
         //}
         enemyScript.AttackReadyOff();
+        enemyScript.UnsetNoAttack();
     }
     public void SeventhCounterAttack()
     {
