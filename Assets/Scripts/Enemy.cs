@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour
     private bool barrier = false;
     private bool counterAttackActive = false;
     public bool counterAttackTriggered = false;
+    public bool unflinchingFollow = false;
 
     public ParticleSystem[] attackEffects;
     private int effectNumber = 0;
@@ -90,6 +91,7 @@ public class Enemy : MonoBehaviour
     private bool armor = false;
     private bool noAttack = false;
     private bool bomb = false;
+    public bool bombUser = false;
     private bool boss = false;
     private bool firstSalvo = true;
     private float armorGauge = 30;
@@ -265,7 +267,7 @@ public class Enemy : MonoBehaviour
     }
     public void UnsetGreen()
     {
-        red = false;
+        green = false;
         UnsetCantFlinch();
     }
     public void SetBomb()
@@ -275,6 +277,14 @@ public class Enemy : MonoBehaviour
     public void UnsetBomb()
     {
         bomb = false;
+    }
+    public void SetBombUser()
+    {
+        bombUser = true;
+    }
+    public void UnsetBombUser()
+    {
+        bombUser = false;
     }
     public void SetNoAttack()
     {
@@ -288,6 +298,8 @@ public class Enemy : MonoBehaviour
     public void SetArmor()
     {
         armor = true;
+        //06/19/24
+        SetCantFlinch();
         armorObj = GameObject.Find("Armor Bar Object").transform.Find("Armor Bar").gameObject;
         armorObj.SetActive(true);
         armorFill = armorObj.transform.Find("Actual").GetComponent<Image>();
@@ -314,10 +326,16 @@ public class Enemy : MonoBehaviour
         {
             transform.Find("Root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(false);
         }
-        GameObject []enemies=GameObject.FindGameObjectsWithTag("Enemy");
-        for(int i =0; i < enemies.Length; i++)
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i = 0; i < enemies.Length; i++)
         {
             enemies[i].GetComponent<Enemy>().BarrierOff();
+        }
+        //06/19/24
+        //Almost did this without green ==false. I need this for Dragon
+        if (green == false)
+        {
+            UnsetCantFlinch();
         }
     }
     //Fun fact, triggerExit doesn't count if the object is destroyed
@@ -480,13 +498,13 @@ public class Enemy : MonoBehaviour
     //For Flashing (Revenge Value/ Boss interrupt)
     public void Interrupt()
     {
-        StartCoroutine(IdleAnimation(1));
+        StartCoroutine(IdleAnimation(2.5f));
         StartCoroutine(InterruptTime());
     }
     IEnumerator InterruptTime()
     {
         cantFlinch = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2.5f);
         cantFlinch = false;
     }
     IEnumerator WindFlinch()
@@ -503,7 +521,7 @@ public class Enemy : MonoBehaviour
     {
         flinchOpportunityCancel = StartCoroutine(FlinchWindow());
         //For simplicity, I'm putting this here. I could put this in Green Thief, but I need this for Dragon too
-        UnsetCantFlinch();
+        //UnsetCantFlinch();
     }
     //If you hit the foe with the right attack during this window, their attack will be interr
     IEnumerator FlinchWindow()
@@ -511,7 +529,7 @@ public class Enemy : MonoBehaviour
         flinchInterrupt = true;
         yield return new WaitForSeconds(0.5f);
         flinchInterrupt = false;
-        if (green == true)
+        if (unflinchingFollow == true)
         {
             SetCantFlinch();
         }
@@ -524,6 +542,10 @@ public class Enemy : MonoBehaviour
     public void CounterAttackReadyOff()
     {
         counterAttackTriggered = false;
+    }
+    public void UnflinchingFollowOff()
+    {
+        unflinchingFollow = false;
     }
     public void StartAttackLength()
     {
@@ -630,6 +652,7 @@ public class Enemy : MonoBehaviour
                 animator.ResetTrigger("Attack");
             }
         }
+        UnflinchingFollowOff();
         yield return new WaitForSeconds(idleTime);
         idle = false;
         if (green == false) {
@@ -682,7 +705,8 @@ public class Enemy : MonoBehaviour
         animator.SetBool("Idle", true);
         counterAttackOn.SetActive(false);
         counterAttackCloud.SetActive(false);
-
+        //06/19/24forgot to dothis, which may be why Green Dragon isn't getting Unflinched
+        UnsetCantFlinch();
     }
     IEnumerator FollowUpAttack(int waitTime)
     {
@@ -696,11 +720,20 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(float damage, bool armorBreak)
     {
+        //Bomb user will not get double protection for ease, but it will have cantFlinch()
         if (counterAttackActive==false) {
-            if ((barrier == true || armor == true))
+            if ((barrier == true && bombUser ==false))
             {
                 //Debug.Log("Reduced Damage");
                 if (armorBreak ==false) {
+                    damage /= 2;
+                    //Debug.Log("Not armorBreak");
+                }
+            }
+            else if(bombUser == true&& armor==true)
+            {
+                if (armorBreak == false)
+                {
                     damage /= 2;
                     //Debug.Log("Not armorBreak");
                 }
@@ -733,6 +766,7 @@ public class Enemy : MonoBehaviour
         {
             StopCoroutine(counterAttackCancel);
             counterAttackTriggered = true;
+            unflinchingFollow = true;
             counterAttackActive = false;
             //StartCoroutine(FollowUpAttack(4));
             animator.SetBool("Idle", true);

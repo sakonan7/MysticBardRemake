@@ -511,7 +511,7 @@ public class PlayerController : MonoBehaviour
         allAttackGauge.transform.localScale += new Vector3(allAttackGauge.transform.localScale.x * 0.05f, allAttackGauge.transform.localScale.y*0.2f, 0);
         allAttackGauge.color = new Color(0.9931557f, 0.8836478f,1,1);
         yield return new WaitForSeconds(1);
-        allAttackGauge.transform.localScale -= new Vector3(allAttackGauge.transform.localScale.x * 0.1f, allAttackGauge.transform.localScale.y * 0.2f, 0);
+        allAttackGauge.transform.localScale -= new Vector3(allAttackGauge.transform.localScale.x * 0.05f, allAttackGauge.transform.localScale.y * 0.2f, 0);
         allAttackGauge.color = new Color(0.9411778f, 0, 1, 1);
     }
     public void AllAttack()
@@ -687,9 +687,10 @@ public class PlayerController : MonoBehaviour
     public void ShieldGaugeDown(float damage, bool red)
     {
         //Want a deep pianonote to play when this happens
-        shieldGauge.fillAmount -= (float)damage / shieldTotal;
-        currentShield-=damage;
-        shieldText.text = currentShield + "/" + shieldTotal;
+
+        //06/19/24
+        //Need to place this here, because it interprets this after the damage has been done. Aka, you have 2 left after 4 damage, it's interpreted
+        //as 4 > 2, when it's supposed to be 4 > 2 before shield break
         bool shieldBroken = false;
         if (damage > currentShield)
         {
@@ -697,6 +698,10 @@ public class PlayerController : MonoBehaviour
             audio.PlayOneShot(shieldBreak, 2f);
             shieldBroken = true;
         }
+        shieldGauge.fillAmount -= (float)damage / shieldTotal;
+        currentShield-=damage;
+        shieldText.text = currentShield + "/" + shieldTotal;
+
         if (currentShield <= 0)
         {
             currentShield = 0; //For Some Reason This Solved A Problem Where ShieldGauge Would Say 1/10

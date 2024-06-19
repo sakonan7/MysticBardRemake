@@ -33,6 +33,7 @@ public class GrandDragon : MonoBehaviour
     private Animator animator;
     private Enemy enemyScript;
     private SkinnedMeshRenderer skin;
+    private bool forcedPhaseChange = false;
     private bool firstPhase = true;
     private bool secondPhase = false;
     private bool thirdPhase = false;
@@ -67,7 +68,24 @@ public class GrandDragon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(enemyScript.HP < 350 -10 &&firstPhase==true)
+        //06/19/24
+        //I will atm make an if case to trigger phase force because I need this for every phase
+        //I think I was about to write that I don't need IdleAnimationCancel for everything
+        //I think it's because I want bombs to start asap
+        //At the moment, I won't
+        //Everything boils down to the IdleAnimation
+        //It has attackReady!
+        //At the moment, I've written bomb phases to wait a little bit and then perform bombs
+        //Logically, it makes sense because it's not flinching and I want it to perform bomb right after barrier
+        //I have to use OpeningBombUser() to have my cake and eat it, too
+        //The issue is that interrupt is causing multiple bombs to be spawned
+        //I'm really going to have to have my cake and eat it, too
+        if(forcedPhaseChange ==true)
+        {
+            forcedPhaseChange = false;
+            ForcedPhaseChange();
+        }
+        if(enemyScript.HP < 350 -50 &&firstPhase==true)
         {
             firstPhase = false;
             secondPhase = true;
@@ -77,44 +95,52 @@ public class GrandDragon : MonoBehaviour
             //skin.material = green;
             //enemyScript.SetBomb();
             enemyScript.SetNoAttack();
+            enemyScript.SetBombUser();
             skin.material = purple;
-            //For simplicity, I am making a cancel IdleAnimation();
-            //I could use this for a revenge value att
-            enemyScript.IdleAnimationCancel();
 
-            enemyScript.AttackReadyOff();
             if(enemyScript.flinching ==true)
             {
-                enemyScript.Interrupt(); //At the moment, he will just go into barrier animation
-                enemyScript.FlinchCancel();
-                StartCoroutine(Flashing());
+                forcedPhaseChange = true;
             }
             else
             {
-
+                OpeningBombUser();
             }
             StartCoroutine(BarrierAnimation());
             enemyScript.SetIdleTime(20);
         }
-        if (enemyScript.HP < 350 - 20 && secondPhase == true)
+        if (enemyScript.HP < 350 - 100 && secondPhase == true)
         {
             secondPhase = false;
             thirdPhase = true;
             enemyScript.UnsetBomb();
-            enemyScript.SetNoAttack();
+            enemyScript.UnsetNoAttack();
+            enemyScript.UnsetBombUser();
             enemyScript.SetGreen();
             skin.material = green;
+            if (enemyScript.flinching == true)
+            {
+                forcedPhaseChange = true;
+            }
         }
-        if (enemyScript.HP < 350 - 30 && thirdPhase == true)
+        if (enemyScript.HP < 350 - 150 && thirdPhase == true)
         {
+            //Debug.Log("Fourth Phase");
             thirdPhase = false;
             fourthPhase = true;
             enemyScript.UnsetGreen();
             enemyScript.SetNoAttack();
+            enemyScript.SetBombUser();
             enemyScript.SetRed();
             skin.material = purple;
-            enemyScript.IdleAnimationCancel();
-            enemyScript.FlinchCancel();
+            if (enemyScript.flinching == true)
+            {
+                forcedPhaseChange = true;
+            }
+            else
+            {
+                OpeningBombUser();
+            }
             StartCoroutine(BarrierAnimation());
             //Need opportunities to do an attack every 10 seconds
             //And after another 10 seconds, set out more mines
@@ -123,7 +149,7 @@ public class GrandDragon : MonoBehaviour
             regularBombRing1Used = false;
             regularBombRing2Used = false;
         }
-        if (enemyScript.HP < 350 - 40 && fourthPhase == true)
+        if (enemyScript.HP < 350 - 200 && fourthPhase == true)
         {
             fourthPhase = false;
             fifthPhase = true;
@@ -131,8 +157,14 @@ public class GrandDragon : MonoBehaviour
             enemyScript.SetNoAttack();
             enemyScript.SetGreen();
             skin.material = purple;
-            enemyScript.IdleAnimationCancel();
-            enemyScript.FlinchCancel();
+            if (enemyScript.flinching == true)
+            {
+                forcedPhaseChange = true;
+            }
+            else
+            {
+                OpeningBombUser();
+            }
             StartCoroutine(BarrierAnimation());
             //Need opportunities to do an attack every 10 seconds
             //And after another 10 seconds, set out more mines
@@ -141,7 +173,7 @@ public class GrandDragon : MonoBehaviour
             regularBombRing1Used = false;
             regularBombRing2Used = false;
         }
-        if (enemyScript.HP < 350 - 50 && fifthPhase == true)
+        if (enemyScript.HP < 350 - 250 && fifthPhase == true)
         {
             fifthPhase = false;
             sixthPhase = true;
@@ -154,20 +186,27 @@ public class GrandDragon : MonoBehaviour
             skin.material = purple;
             //For simplicity, I am making a cancel IdleAnimation();
             //I could use this for a revenge value att
-            enemyScript.IdleAnimationCancel();
-            enemyScript.FlinchCancel();
+            if (enemyScript.flinching == true)
+            {
+                forcedPhaseChange = true;
+            }
+            else
+            {
+                OpeningBombUser();
+            }
             enemyScript.AttackReadyOff();
             StartCoroutine(BarrierAnimation());
             enemyScript.SetIdleTime(30);
             regularBombRing1Used = false;
             regularBombRing2Used = false;
         }
-        if (enemyScript.HP < 350 - 60 && sixthPhase == true)
+        if (enemyScript.HP < 350 - 300 && sixthPhase == true)
         {
             sixthPhase = false;
             seventhPhase = true;
             enemyScript.UnsetBomb();
             enemyScript.UnsetNoAttack();
+            enemyScript.UnsetBombUser();
             enemyScript.SetGreen();
             enemyScript.SetRed();
             skin.material = red;
@@ -232,10 +271,15 @@ public class GrandDragon : MonoBehaviour
         {
             if (enemyScript.counterAttackTriggered == true)
             {
+                StartCoroutine(Flashing());
                 CounterAttack();
             }
             if (enemyScript.attackReady == true)
             {
+                if(enemyScript.unflinchingFollow==true)
+                {
+                    StartCoroutine(Flashing());
+                }
                 GreenAttack();
                 //Debug.Log("Attack");
             }
@@ -392,6 +436,25 @@ public class GrandDragon : MonoBehaviour
         //Last phase
         //< 500, secondPhase ==true
     }
+    public void ForcedPhaseChange()
+    {
+        //For simplicity, I am making a cancel IdleAnimation();
+        //I could use this for a revenge value att
+        enemyScript.IdleAnimationCancel();
+        enemyScript.AttackReadyOff();
+        //The way this code is written, this should make Dragon go into an attack almost immediately
+        if (enemyScript.bombUser ==true) {
+            enemyScript.Interrupt(); //At the moment, he will just go into barrier animation
+        }
+        enemyScript.FlinchCancel();
+        StartCoroutine(Flashing());
+    }
+    public void OpeningBombUser ()
+    {
+        enemyScript.IdleAnimationCancel();
+        enemyScript.AttackReadyOff();
+        //enemyScript.Interrupt();
+    }
 IEnumerator Flashing()
     {
         int numFlash = 0;
@@ -411,9 +474,17 @@ IEnumerator Flashing()
             }
             if (fourthPhase == true)
             {
-                skin.material = green;
+                skin.material = purple;
             }
             if (fifthPhase == true)
+            {
+                skin.material = purple;
+            }
+            if (sixthPhase == true)
+            {
+                skin.material = purple;
+            }
+            if (seventhPhase == true)
             {
                 skin.material = green;
             }
@@ -451,24 +522,43 @@ IEnumerator Flashing()
         //enemyScript.NonStandardIdleStart();
         Barrier();
         enemyScript.UnsetCantFlinch();
-        if (regularBombRing1Used == false && regularBombRing2Used == false)
-        {
-            int random = Random.Range(0, 1);
-            if (random == 0)
+        if (secondPhase ==true ||fourthPhase ==true||fifthPhase==true) {
+            if (regularBombRing1Used == false && regularBombRing2Used == false)
             {
-                RegularBombRing1();
-                regularBombRing1Used = true;
+                int random = Random.Range(0, 1);
+                if (random == 0)
+                {
+                    RegularBombRing1();
+                    regularBombRing1Used = true;
+                }
+                else
+                {
+                    RegularBombRing2();
+                    regularBombRing2Used = true;
+                }
             }
-            else
+        }
+        else if(sixthPhase ==true)
+        {
+            if (regularBombRing1Used == false && regularBombRing2Used == false)
             {
-                RegularBombRing2();
-                regularBombRing2Used = true;
+                int random = Random.Range(0, 1);
+                if (random == 0)
+                {
+                    BombRing3();
+                    regularBombRing1Used = true;
+                }
+                else
+                {
+                    BombRing4();
+                    regularBombRing2Used = true;
+                }
             }
         }
     }
     public void Barrier()
     {
-        Instantiate(barrier, new Vector3(transform.position.x, transform.position.y, barrier.transform.position.z), barrier.transform.rotation);
+        Instantiate(barrier, new Vector3(transform.position.x, transform.position.y + 1, barrier.transform.position.z), barrier.transform.rotation);
     }
     public void RegularBombRing1()
     {

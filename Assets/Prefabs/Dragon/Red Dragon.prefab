@@ -3238,7 +3238,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  flinching: 0
   counterAttackTriggered: 0
+  unflinchingFollow: 0
   attackEffects:
   - {fileID: 4785136369774669916}
   teamAttackAura: {fileID: 0}
@@ -3260,6 +3262,7 @@ MonoBehaviour:
   red: {fileID: 2100000, guid: a4ccf838d07408c40b37e887640c45d7, type: 2}
   purple: {fileID: 2100000, guid: c6a1d1f1e0ac339489c17274f110669a, type: 2}
   green: {fileID: 2100000, guid: acd197acde96c544b8d8fd85cc2e8b20, type: 2}
+  flashing: {fileID: 2100000, guid: 0a5409e6b341c094e81eee62e134ba31, type: 2}
   dying: {fileID: 2100000, guid: d86ce2c33541da34fbdbfbe568727a32, type: 2}
   barrier: {fileID: 1425184617861594602, guid: 58355bb4e0012be4ea4283594115fb59, type: 3}
   regularBombRing1: {fileID: 8745522000255101211, guid: 31ce86acfb59a844181e85f3eae84004, type: 3}
@@ -6318,7 +6321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3902752507332126252, guid: 9b8da676f5245a84fa1a88524a7d322b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.29
+      value: 4.49
       objectReference: {fileID: 0}
     - target: {fileID: 3902752507332126252, guid: 9b8da676f5245a84fa1a88524a7d322b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7119,7 +7122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3550217306713820875, guid: 02f2e69a6adac474bac28a64d21cfcff, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 3550217306713820875, guid: 02f2e69a6adac474bac28a64d21cfcff, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7127,7 +7130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3550217306713820875, guid: 02f2e69a6adac474bac28a64d21cfcff, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.314
+      value: 4.82
       objectReference: {fileID: 0}
     - target: {fileID: 3550217306713820875, guid: 02f2e69a6adac474bac28a64d21cfcff, type: 3}
       propertyPath: m_LocalRotation.w
