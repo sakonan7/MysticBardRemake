@@ -2285,6 +2285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e8956b61ec0ea24c91be7333e05c42d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flashing: {fileID: 0}
 --- !u!114 &56372154062965420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2298,7 +2299,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  flinching: 0
   counterAttackTriggered: 0
+  unflinchingFollow: 0
   attackEffects:
   - {fileID: 5380910818498090488}
   - {fileID: 4051972430259431372}
@@ -2306,6 +2309,7 @@ MonoBehaviour:
   HP: 10
   EXP: 0
   teamAttackOn: 0
+  bombUser: 0
 --- !u!136 &8760742796181254250
 CapsuleCollider:
   m_ObjectHideFlags: 0

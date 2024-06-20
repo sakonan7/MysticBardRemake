@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         {
             levelUp = true;
         }
+        SetLevel(SceneManager.GetActiveScene().buildIndex);
     }
     void Start()
     {
@@ -151,6 +152,10 @@ public class GameManager : MonoBehaviour
     {
         player.FullRestore();
         SceneManager.LoadScene(currentLevel);
+    }
+    public void SetLevel(int level)
+    {
+        currentLevel = level;
     }
     public void DestroyDebris()
     {

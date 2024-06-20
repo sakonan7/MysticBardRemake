@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
                 shieldShatter = GameObject.Find("Filter").transform.Find("Shield Shatter").gameObject;
                 weaponSelected = GameObject.Find("Weapons");
                 numPotions = GameObject.Find("Number of Potions").GetComponent<TextMeshProUGUI>();
-                numPotions.text = "X " + currentPotion;
+                //numPotions.text = "X " + currentPotion;
                 potionUsedIcon = GameObject.Find("Potions").transform.Find("Use Potion").gameObject;
                 weaponImages.transform.Find("Harp Image").gameObject.SetActive(true);
             }
@@ -214,6 +214,7 @@ public class PlayerController : MonoBehaviour
         fluteText.text = fluteTotal + "/" + fluteTotal;
         shieldText = GameObject.Find("Shield").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
         shieldText.text = shieldTotal + "/" + shieldTotal;
+        numPotions.text = "X " + currentPotion;
     }
 
     // Update is called once per frame
@@ -307,6 +308,7 @@ public class PlayerController : MonoBehaviour
                         if (harpReloading == true)
                         {
                             harpGauge.fillAmount += (float)2 / harpTotal * Time.deltaTime;
+                            harpText.text = currentHarp + "/" + harpTotal;
                             if (harpGauge.fillAmount >= 1)
                             {
                                 harpGauge.color = new Color(0.9503901f, 1, 0, 1);
@@ -319,6 +321,7 @@ public class PlayerController : MonoBehaviour
                         if (trumpetReloading == true)
                         {
                             trumpetGauge.fillAmount += (float)1 / trumpetTotal * Time.deltaTime;
+                            trumpetText.text = currentTrumpet + "/" + trumpetTotal;
                             if (trumpetGauge.fillAmount >= 1)
                             {
                                 trumpetGauge.color = new Color(0.9503901f, 1, 0, 1);
@@ -331,6 +334,7 @@ public class PlayerController : MonoBehaviour
                         if (fluteReloading == true)
                         {
                             fluteGauge.fillAmount += (float)1 /fluteTotal * Time.deltaTime;
+                            fluteText.text = currentFlute + "/" + fluteTotal;
                             if (fluteGauge.fillAmount >= 1)
                             {
                                 fluteGauge.color = new Color(0.9503901f, 1, 0, 1);
@@ -340,35 +344,8 @@ public class PlayerController : MonoBehaviour
                                 fluteReloadStart = false;
                             }
                         }
-                        //Start Reload Process
-                        //I need some way to restart harpReloadStart
-                        //-Atm, I will cancel it when IEnumerator starts and restart it if the IEnumerator gets cancelled or reloading bool finishes
-                        //ATM, this is going to keep playing
-                        //Unless I have another IEnumerator called harpUsed that lasts 0.5f
-                        if (currentHarp < harpTotal) {
-                            if (harpReloadStart == false)
-                            {
-                                harpReloadCancel = StartCoroutine(HarpReload());
-                            }
-                        }
-                        if (currentTrumpet < trumpetTotal)
-                        {
-                            if (trumpetReloadStart == false)
-                            {
-                                trumpetReloadCancel = StartCoroutine(TrumpetReload());
-                            }
-                        }
-                        //So flute doesn't reload while being used
-                        if(wind==false)
-                        {
-                            if (currentFlute < fluteTotal)
-                            {
-                                if (fluteReloadStart == false)
-                                {
-                                    fluteReloadCancel = StartCoroutine(FluteReload());
-                                }
-                            }
-                        }
+
+
                         //if (Input.GetKeyDown(KeyCode.S))
                         //{
                         //trumpetOn = true;
@@ -659,7 +636,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Potion()
     {
-        if (currentHP < 20) {
+        if (currentHP < HPTotal) {
             currentHP += 4;
             HPBar.fillAmount += (float)4 / HPTotal;
             currentPotion--;
@@ -708,6 +685,14 @@ public class PlayerController : MonoBehaviour
         }
         yield return new WaitForSeconds(time);
         lag = false;
+        if (harp == true)
+        {
+            harpReloadStart = false;
+        }
+        if (trumpet == true)
+        {
+            trumpetReloadStart = false;
+        }
     }
     public void InterruptEffect(Vector3 position)
     {
@@ -896,8 +881,8 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         harpReloading = true;
-        harpGauge.transform.localScale += new Vector3(harpGauge.transform.localScale.x * 0.05f, harpGauge.transform.localScale.y * 0.05f, 0);
-        harpGauge.color = new Color(0.6066045f, 0, 0.4308175f, 0);
+        //harpGauge.transform.localScale += new Vector3(harpGauge.transform.localScale.x * 0.05f, harpGauge.transform.localScale.y * 0.05f, 0);
+        harpGauge.color = new Color(0.6997535f, 0, 0.5817609f, 0);
     }
     public void HarpReloadCancel()
     {
@@ -906,14 +891,14 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(harpReloadCancel);
         }
         harpReloading = false;
-        harpGauge.transform.localScale -= new Vector3(harpGauge.transform.localScale.x * 0.05f, harpGauge.transform.localScale.y * 0.05f, 0);
+        //harpGauge.transform.localScale -= new Vector3(harpGauge.transform.localScale.x * 0.05f, harpGauge.transform.localScale.y * 0.05f, 0);
     }
     IEnumerator TrumpetReload()
     {
         yield return new WaitForSeconds(2);
         trumpetReloading = true;
-        trumpetGauge.transform.localScale += new Vector3(trumpetGauge.transform.localScale.x*0.05f, trumpetGauge.transform.localScale.y * 0.05f, 0);
-        trumpetGauge.color = new Color(0.6066045f,0, 0.4308175f,0);
+        //trumpetGauge.transform.localScale += new Vector3(trumpetGauge.transform.localScale.x*0.05f, trumpetGauge.transform.localScale.y * 0.05f, 0);
+        trumpetGauge.color = new Color(0.6997535f, 0, 0.5817609f, 0);
     }
     public void TrumpetReloadCancel()
     {
@@ -922,14 +907,14 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(trumpetReloadCancel);
         }
         trumpetReloading = false;
-        trumpetGauge.transform.localScale -= new Vector3(trumpetGauge.transform.localScale.x * 0.05f, trumpetGauge.transform.localScale.y * 0.05f, 0);
+        //trumpetGauge.transform.localScale -= new Vector3(trumpetGauge.transform.localScale.x * 0.05f, trumpetGauge.transform.localScale.y * 0.05f, 0);
     }
     IEnumerator FluteReload()
     {
         yield return new WaitForSeconds(2);
         fluteReloading = true;
-        fluteGauge.transform.localScale += new Vector3(fluteGauge.transform.localScale.x * 0.05f, fluteGauge.transform.localScale.y * 0.05f, 0);
-        fluteGauge.color = new Color(0.6066045f, 0, 0.4308175f, 0);
+        //fluteGauge.transform.localScale += new Vector3(fluteGauge.transform.localScale.x * 0.05f, fluteGauge.transform.localScale.y * 0.05f, 0);
+        fluteGauge.color = new Color(0.6997535f, 0, 0.5817609f, 0);
     }
     public void FluteReloadCancel()
     {
@@ -938,7 +923,7 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(fluteReloadCancel);
         }
         fluteReloading = false;
-        fluteGauge.transform.localScale -= new Vector3(fluteGauge.transform.localScale.x * 0.05f, fluteGauge.transform.localScale.y * 0.05f, 0);
+        //fluteGauge.transform.localScale -= new Vector3(fluteGauge.transform.localScale.x * 0.05f, fluteGauge.transform.localScale.y * 0.05f, 0);
     }
     public void FullRestore()
     {
@@ -988,6 +973,13 @@ public class PlayerController : MonoBehaviour
             EXPToLevel--;
             //EXPCounter--;
             //EXPToLevel--;
+            if (EXPToLevel <= 0)
+            {
+                //EXPToLevel = EXPToLevelMax 3 / 2;
+                //currentEXP = EXPToLevel;
+                LevelUp();
+                //levelUp = true;
+            }
             GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP Gained").GetComponent<TextMeshProUGUI>().text = "EXP Gained: " +EXPGained;
             GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP To Level").GetComponent<TextMeshProUGUI>().text = "EXP To Level: " + EXPToLevel;
             yield return new WaitForSeconds(0.025f);
@@ -995,13 +987,7 @@ public class PlayerController : MonoBehaviour
             //{
             //level++;
             //}
-            if (exp > 0 && EXPToLevel <= 0)
-            {
-                //EXPToLevel = EXPToLevelMax 3 / 2;
-                //currentEXP = EXPToLevel;
-                LevelUp();
-                levelUp = true;
-            }
+
             if (exp <= 0)
             {
                 if (levelUp == true)

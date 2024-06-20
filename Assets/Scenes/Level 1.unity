@@ -7455,12 +7455,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  flinching: 0
   counterAttackTriggered: 0
+  unflinchingFollow: 0
   attackEffects: []
   teamAttackAura: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
+  bombUser: 0
 --- !u!1001 &1108909565
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2313,12 +2313,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  flinching: 0
   counterAttackTriggered: 0
+  unflinchingFollow: 0
   attackEffects: []
   teamAttackAura: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
+  bombUser: 0
 --- !u!114 &1135701891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2553,7 +2556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.279
+      value: 0.79
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3872,6 +3875,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 753262565785737965, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1004461229694944963, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4224,7 +4231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.146
+      value: -0.06
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4735,6 +4742,7 @@ SceneRoots:
   - {fileID: 765267278}
   - {fileID: 705507995}
   - {fileID: 5903260411966377768}
+  - {fileID: 1591250257}
   - {fileID: 681677053}
   - {fileID: 1748816116}
   - {fileID: 3070088143507982095}
@@ -4744,7 +4752,6 @@ SceneRoots:
   - {fileID: 179945740}
   - {fileID: 2068670229}
   - {fileID: 612763030}
-  - {fileID: 1591250257}
   - {fileID: 1717388120}
   - {fileID: 298476643}
   - {fileID: 226873570}

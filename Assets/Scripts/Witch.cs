@@ -20,10 +20,11 @@ public class Witch : MonoBehaviour
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
         enemyScript.SetHP(60);
-        enemyScript.SetEXP(100);
+        enemyScript.SetEXP(90);
 
         enemyScript.SetNormal();
         enemyScript.SetNoAttack();
+        enemyScript.SetBombUser();
         //Barrier();
         
         bombFlare = transform.Find("Bomb Light").transform.Find("Lens").gameObject;

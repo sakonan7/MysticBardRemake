@@ -95,6 +95,18 @@ public class PrivateButtonCaller : MonoBehaviour
         {
             SceneManager.LoadScene(4);
         }
+        if (level4 == true)
+        {
+            SceneManager.LoadScene(5);
+        }
+        if (level5 == true)
+        {
+            SceneManager.LoadScene(6);
+        }
+        if (level6 == true)
+        {
+            SceneManager.LoadScene(7);
+        }
 
         if (increaseHP == true)
         {

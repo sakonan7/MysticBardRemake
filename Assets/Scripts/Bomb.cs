@@ -23,7 +23,7 @@ public class Bomb : MonoBehaviour
         effectPosition = transform.Find("Effect Position").gameObject;
         
         aboutToExplode = transform.Find("About To Explode").gameObject;
-        timeIndicator = transform.Find("Timer").gameObject;
+        
 
         if (timedBomb == false)
         {
@@ -35,6 +35,7 @@ public class Bomb : MonoBehaviour
             explodeCancel = StartCoroutine(SpecificTimedExplosion());
             explodeEffectCancel = StartCoroutine(SpecificAboutToExplode());
             StartCoroutine(TimeIndicatorDisappear());
+            timeIndicator = transform.Find("Timer").gameObject;
         }
     }
 
@@ -185,6 +186,7 @@ public class Bomb : MonoBehaviour
                 collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 playerScript.WindEnd();
                 EnemyExplode();
+                playerScript.HitCountUp();
             }
             if (collision.gameObject.CompareTag("Debris"))
             {

@@ -481,7 +481,13 @@ public class Enemy : MonoBehaviour
             animator.ResetTrigger("Flinch");
         }
         flinching = false;
-        idleCancel = StartCoroutine(IdleAnimation(3));
+        if (green ==false) {
+            idleCancel = StartCoroutine(IdleAnimation(3));
+        }
+        else
+        {
+            idleCancel = StartCoroutine(IdleAnimation(idleTime));
+        }
     }
     public void FlinchCancel()
     {
