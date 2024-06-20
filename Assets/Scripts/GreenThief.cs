@@ -6,6 +6,26 @@ using UnityEngine;
 public class GreenThief : MonoBehaviour
 {
     public GameObject flashing;
+    public SkinnedMeshRenderer armor1;
+    public SkinnedMeshRenderer armor2;
+    public SkinnedMeshRenderer body;
+    public SkinnedMeshRenderer head;
+    public SkinnedMeshRenderer helmet;
+    public SkinnedMeshRenderer legs;
+    public Material originalArmor1;
+    public Material originalArmor2;
+    public Material originalBody;
+    public Material originalHead;
+    public Material originalHelmet;
+    public Material originalLegs;
+
+
+    public Material flashArmor1;
+    public Material flashArmor2;
+    public Material flashBody;
+    public Material flashHead;
+    public Material flashHelmet;
+    public Material flashLegs;
     private bool idle = true;
     private Animator animator;
     private Enemy enemyScript;
@@ -18,7 +38,7 @@ public class GreenThief : MonoBehaviour
         enemyScript.SetHP(80);
         enemyScript.SetEXP(90);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
-        enemyScript.SetIdleTime(7);
+        enemyScript.SetIdleTime(5);
         enemyScript.SetGreen();
     }
 
@@ -37,7 +57,7 @@ public class GreenThief : MonoBehaviour
                 StartCoroutine(Flashing());
             }
             RegularAttack();
-            //Debug.Log("Attack");
+            Debug.Log("Attack");
         }
     }
     IEnumerator Flashing()
@@ -45,10 +65,20 @@ public class GreenThief : MonoBehaviour
         int numFlash = 0;
         while (numFlash < 2)
         {
-            flashing.SetActive(true);
-            //Debug.Log("White");
-            yield return new WaitForSeconds(1);
-            flashing.SetActive(false);
+    armor1.material=flashArmor1;
+        armor2.material=flashArmor1;
+        body.material=flashBody;
+        head.material=flashHead;
+        helmet.material=flashHelmet;
+        legs.material=flashLegs;
+
+    yield return new WaitForSeconds(0.5f);
+            armor1.material = originalArmor1;
+            armor2.material = originalArmor1;
+            body.material = originalBody;
+            head.material = originalHead;
+            helmet.material = originalHelmet;
+            legs.material = originalLegs;
 
 
             numFlash++;
@@ -83,7 +113,9 @@ public class GreenThief : MonoBehaviour
         enemyScript.SetDamage(2);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
-        enemyScript.StartFlinchWindow();
+        if (enemyScript.unflinchingFollow == false) {
+            enemyScript.StartFlinchWindow();
+        }
         //if (enemyScript.teamAttackOn == true)
         //{
         //enemyScript.PlayAttackEffect(1);

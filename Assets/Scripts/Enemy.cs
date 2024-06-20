@@ -119,7 +119,13 @@ public class Enemy : MonoBehaviour
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         if (idleStart == true)
         {
-            idleCancel = StartCoroutine(IdleAnimation(Random.Range(4, 10)));
+            if (green==false) {
+                idleCancel = StartCoroutine(IdleAnimation(Random.Range(4, 10)));
+            }
+            else
+            {
+                idleCancel = StartCoroutine(IdleAnimation(Random.Range(1, 7)));
+            }
             //Debug.Log("Id");
         }
         //Quaternion lookRotation = Quaternion.LookRotation(GameObject.Find("Look At").transform.position - transform.position);
@@ -481,13 +487,7 @@ public class Enemy : MonoBehaviour
             animator.ResetTrigger("Flinch");
         }
         flinching = false;
-        if (green ==false) {
-            idleCancel = StartCoroutine(IdleAnimation(3));
-        }
-        else
-        {
-            idleCancel = StartCoroutine(IdleAnimation(idleTime));
-        }
+            idleCancel = StartCoroutine(IdleAnimation(3+2));
     }
     public void FlinchCancel()
     {
@@ -535,10 +535,7 @@ public class Enemy : MonoBehaviour
         flinchInterrupt = true;
         yield return new WaitForSeconds(0.5f);
         flinchInterrupt = false;
-        if (unflinchingFollow == true)
-        {
-            SetCantFlinch();
-        }
+
     }
     //I forgot to do AttackReadyOff() after an attack, to not repeat the attack. This lead to other problems 04/15/24
     public void AttackReadyOff()
@@ -564,6 +561,8 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(attackLength);
         //animator.ResetTrigger("Attack");
         //StartCoroutine(IdleAnimation());
+        //06/20/24
+        //The problem is that I'm using StartIdle no matter what. For counterattack, I'm not supposed to do that
         StartIdle();
         if (noAttack==false) {
             DealDamage(damage);
@@ -615,14 +614,16 @@ public class Enemy : MonoBehaviour
         else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
         {
             playerScript.GenerateShield(effectPosition.transform.position);
-            if (playerScript.shieldOn == true)
-            {
-                if (red ==false) {
-                    playerScript.ShieldGaugeDown(newDamage,false);
-                }
-                else
+            if (playerScript.specialInvincibility== false) {
+                if (playerScript.shieldOn == true)
                 {
-                    playerScript.ShieldGaugeDown(newDamage, true);
+                    if (red == false) {
+                        playerScript.ShieldGaugeDown(newDamage, false);
+                    }
+                    else
+                    {
+                        playerScript.ShieldGaugeDown(newDamage, true);
+                    }
                 }
             }
         }
@@ -672,6 +673,7 @@ public class Enemy : MonoBehaviour
         else
         {
             StartCoroutine(CounterattackCloud());
+            Debug.Log("CounterattackCloud");
             
         }
     }

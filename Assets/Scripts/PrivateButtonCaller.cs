@@ -114,7 +114,7 @@ public class PrivateButtonCaller : MonoBehaviour
         }
         if (increaseViolin == true)
         {
-            player.ViolinUp();
+            player.HarpUp();
         }
         if (increaseTrumpet == true)
         {

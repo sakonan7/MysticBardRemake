@@ -704,7 +704,9 @@ IEnumerator Flashing()
         enemyScript.SetDamage(2);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
-        enemyScript.StartFlinchWindow();
+        if (enemyScript.unflinchingFollow == false) {
+            enemyScript.StartFlinchWindow();
+        }
         //if (enemyScript.teamAttackOn == true)
         //{
         //enemyScript.PlayAttackEffect(1);
@@ -742,7 +744,10 @@ IEnumerator Flashing()
         enemyScript.SetDamage(4);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
-        enemyScript.StartFlinchWindow();
+        if (enemyScript.unflinchingFollow == false)
+        {
+            enemyScript.StartFlinchWindow();
+        }
         //if (enemyScript.teamAttackOn == true)
         //{
         //enemyScript.PlayAttackEffect(1);

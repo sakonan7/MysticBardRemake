@@ -127,8 +127,24 @@ public class GameManager : MonoBehaviour
     //I'm going to ask players if they want to progress or to go back to the menu
     public void ContinueOrQuit()
     {
+        if (player.levelUpStock > 0)
+        {
+            StartCoroutine(BlankPage());
+        }
+        else
+        {
+            GameObject.Find("Level Done Object").transform.Find("Increase Stat").gameObject.SetActive(false);
+            GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
+        }
+
+    }
+    IEnumerator BlankPage()
+    {
         GameObject.Find("Level Done Object").transform.Find("Increase Stat").gameObject.SetActive(false);
-        GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
+        GameObject.Find("Level Done Object").transform.Find("Blank Page").gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        GameObject.Find("Level Done Object").transform.Find("Increase Stat").gameObject.SetActive(true);
+        GameObject.Find("Level Done Object").transform.Find("Blank Page").gameObject.SetActive(false);
     }
     public void Continue()
     {

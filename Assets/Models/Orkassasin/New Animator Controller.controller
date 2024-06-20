@@ -141,31 +141,31 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Attack2
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Flinch
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Counterattack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Idle
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -2801,13 +2801,13 @@ AnimatorStateMachine:
     m_Position: {x: -140, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1430891294230423061}
-    m_Position: {x: -430, y: 280, z: 0}
+    m_Position: {x: -600, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4032734563404111356}
     m_Position: {x: -470, y: 370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8617115050124105870}
-    m_Position: {x: -288.43762, y: 147.9375, z: 0}
+    m_Position: {x: -560, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3094307256096150995}
     m_Position: {x: -470, y: 460, z: 0}

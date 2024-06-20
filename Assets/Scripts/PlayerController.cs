@@ -109,6 +109,7 @@ public class PlayerController : MonoBehaviour
     private static float EXPToLevelLimit = 200;
     private static float EXPToLevel = EXPToLevelLimit;
     private static float EXPGained = 0;
+    public int levelUpStock = 0;
 
     public bool shieldOn = false;
     public bool shieldDrained = false;
@@ -189,12 +190,6 @@ public class PlayerController : MonoBehaviour
         }
         audio = GetComponent<AudioSource>();
 
-        //I think I should use numeric values for the bar length and HP num
-        if (gameScript.levelUp==true)
-        {
-            LevelUp();
-            gameScript.LevelUpOff();
-        }
         levelText.text = "Lv. " + level;
 
         //This is necessary in case I didn't increase any of these values
@@ -305,9 +300,13 @@ public class PlayerController : MonoBehaviour
                         //That'll be the nerf
                         //See if it causes problems
                         //It should, so I will
+                        //06/20/24
+                        //Lag will trigger this, but only if reloading isn't already on
+                        //I think that's what I was missing
+                        //I don't know why the bar is disappearing, though
                         if (harpReloading == true)
                         {
-                            harpGauge.fillAmount += (float)2 / harpTotal * Time.deltaTime;
+                            harpGauge.fillAmount += (float)1 / harpTotal * Time.deltaTime;
                             harpText.text = currentHarp + "/" + harpTotal;
                             if (harpGauge.fillAmount >= 1)
                             {
@@ -683,7 +682,11 @@ public class PlayerController : MonoBehaviour
                 TrumpetReloadCancel();
             }
         }
-        yield return new WaitForSeconds(time);
+        if (trumpet == true)
+        {
+            trumpetRange.SetActive(false);
+        }
+            yield return new WaitForSeconds(time);
         lag = false;
         if (harp == true)
         {
@@ -692,6 +695,10 @@ public class PlayerController : MonoBehaviour
         if (trumpet == true)
         {
             trumpetReloadStart = false;
+        }
+        if (trumpet == true)
+        {
+            trumpetRange.SetActive(true);
         }
     }
     public void InterruptEffect(Vector3 position)
@@ -884,6 +891,9 @@ public class PlayerController : MonoBehaviour
         //harpGauge.transform.localScale += new Vector3(harpGauge.transform.localScale.x * 0.05f, harpGauge.transform.localScale.y * 0.05f, 0);
         harpGauge.color = new Color(0.6997535f, 0, 0.5817609f, 0);
     }
+    //06/20/24
+    //Wait, why do I even need StopCoroutine in ReloadCancel()
+    //I think it's for lag
     public void HarpReloadCancel()
     {
         if (harpReloadCancel != null)
@@ -973,13 +983,7 @@ public class PlayerController : MonoBehaviour
             EXPToLevel--;
             //EXPCounter--;
             //EXPToLevel--;
-            if (EXPToLevel <= 0)
-            {
-                //EXPToLevel = EXPToLevelMax 3 / 2;
-                //currentEXP = EXPToLevel;
-                LevelUp();
-                //levelUp = true;
-            }
+
             GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP Gained").GetComponent<TextMeshProUGUI>().text = "EXP Gained: " +EXPGained;
             GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP To Level").GetComponent<TextMeshProUGUI>().text = "EXP To Level: " + EXPToLevel;
             yield return new WaitForSeconds(0.025f);
@@ -987,7 +991,13 @@ public class PlayerController : MonoBehaviour
             //{
             //level++;
             //}
-
+            if (exp > 0 &&EXPToLevel <= 0)
+            {
+                //EXPToLevel = EXPToLevelMax 3 / 2;
+                //currentEXP = EXPToLevel;
+                LevelUp();
+                levelUp = true;
+            }
             if (exp <= 0)
             {
                 if (levelUp == true)
@@ -1012,10 +1022,16 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1);
         GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("Buttons").transform.Find("Continue With Level Up").gameObject.SetActive(true);
     }
+    IEnumerator PauseBeforeLevelUpAgainButton()
+    {
+        yield return new WaitForSeconds(1);
+        GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("Buttons").transform.Find("More Level Up").gameObject.SetActive(true);
+    }
     IEnumerator PauseBeforeLevelUp()
     {
         yield return new WaitForSeconds(1);
         GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Lv. " + level;
+        levelText.text = "Lv. " + level;
         //Continue Button
     }
     public void LevelUp()
@@ -1027,6 +1043,7 @@ public class PlayerController : MonoBehaviour
         EXPToLevelLimit *= 3 / 2;
         EXPToLevel = EXPToLevelLimit;
         //Debug.Log(EXPToLevel);
+        levelUpStock++;
     }
     public void HPUp()
     {
@@ -1034,37 +1051,43 @@ public class PlayerController : MonoBehaviour
         //currentHP += 3;
         HPTotal += 3;
         currentHP = HPTotal;
+        levelUpStock--;
         //gameScript.ProgressLevel();
         gameScript.ContinueOrQuit();
     }
-    public void ViolinUp()
+    public void HarpUp()
     {
         harpTotal += 3;
         currentHarp = harpTotal;
+        levelUpStock--;
         gameScript.ContinueOrQuit();
     }
     public void TrumpetUp()
     {
         trumpetTotal += 2;
         currentTrumpet = trumpetTotal;
+        levelUpStock--;
         gameScript.ContinueOrQuit();
     }
     public void FluteUp()
     {
         fluteTotal += 1;
         currentFlute = fluteTotal;
+        levelUpStock--;
         gameScript.ContinueOrQuit();
     }
     public void ShieldUp()
     {
         shieldTotal += 2;
         currentShield = shieldTotal;
+        levelUpStock--;
         gameScript.ContinueOrQuit();
     }
     public void PotionUp()
     {
         potionTotal += 1;
         currentPotion = potionTotal;
+        levelUpStock--;
         gameScript.ContinueOrQuit();
     }
     public void OnMouseUp()
