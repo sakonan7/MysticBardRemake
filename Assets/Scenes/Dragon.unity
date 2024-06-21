@@ -5583,6 +5583,11 @@ Transform:
   - {fileID: 1503857096}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!198 &375480180 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1886336184039578512, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
+  m_PrefabInstance: {fileID: 2083300742}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &390114838
 GameObject:
   m_ObjectHideFlags: 0
@@ -7068,6 +7073,7 @@ MonoBehaviour:
   EXP: 0
   teamAttackOn: 0
   bombUser: 0
+  cantMove: 0
 --- !u!1001 &1108909565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8704,6 +8710,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1794926978474596812, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
+      propertyPath: m_Name
+      value: Red Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 1794926978474596812, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4500354848426529278, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
+      propertyPath: m_Height
+      value: 985.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4500354848426529278, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
+      propertyPath: m_Center.x
+      value: -203.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4632194908189391429, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
+      propertyPath: final
+      value: 
+      objectReference: {fileID: 2100000, guid: 70484e669af1bc04dadcc4d2a66671b0, type: 2}
     - target: {fileID: 4632194908189391429, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
       propertyPath: redAura.Array.size
       value: 8
@@ -8776,6 +8802,14 @@ PrefabInstance:
       propertyPath: greenAura.Array.data[7]
       value: 
       objectReference: {fileID: 1944564829}
+    - target: {fileID: 4632194908189391429, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
+      propertyPath: greenTailAura.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4632194908189391429, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
+      propertyPath: greenTailAura.Array.data[0]
+      value: 
+      objectReference: {fileID: 375480180}
     - target: {fileID: 5853811417667699940, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.033342004
@@ -8820,6 +8854,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Red Dragon
       objectReference: {fileID: 0}
+    - target: {fileID: 7421965875450926849, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a4ccf838d07408c40b37e887640c45d7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9422,14 +9460,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 30257832438141765, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 293223765184538922, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4069388352127207279, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
       propertyPath: m_Pivot.x
       value: 0

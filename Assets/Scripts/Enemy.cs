@@ -101,6 +101,8 @@ public class Enemy : MonoBehaviour
     private Image armorFill;
 
     private bool cantFlinch = false;
+
+    public bool cantMove = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -343,6 +345,11 @@ public class Enemy : MonoBehaviour
         {
             UnsetCantFlinch();
         }
+
+        for(int i =0;i <enemies.Length; i++)
+        {
+            enemies[i].GetComponent<Enemy>().BarrierOff();
+        }
     }
     //Fun fact, triggerExit doesn't count if the object is destroyed
     public void BarrierOff()
@@ -426,7 +433,7 @@ public class Enemy : MonoBehaviour
                 StopCoroutine(flinchOpportunityCancel);
                 StopCoroutine(attackLengthCancel);
                 //playerScript.InterruptEffect(effectPosition.transform.position);
-                StopAttackEffect();
+                //StopAttackEffect();
             }
 
             if (animatorTrue == true)
@@ -587,6 +594,10 @@ public class Enemy : MonoBehaviour
         StartCoroutine(FollowUpAttack(1));
         DealDamage(damage);
     }
+    //06/21/24
+    //This triggered an error somehow
+    //But I loaded effectNumber;
+    //Oh I know why. Because I don't PlayAttackEffect(). I deactivated it to stop crashing the editor.
     public void PlayAttackEffect(int attackEffect)
     {
         effectNumber = attackEffect;
@@ -662,20 +673,24 @@ public class Enemy : MonoBehaviour
         }
         UnflinchingFollowOff();
         yield return new WaitForSeconds(idleTime);
-        idle = false;
-        if (green == false) {
-            attack = true;
-            attackReady = true;
-            if (animatorTrue == true)
-            {
-                animator.SetBool("Idle", false);
-            }
-        }
-        else
+        if (cantMove == false)
         {
-            StartCoroutine(CounterattackCloud());
-            Debug.Log("CounterattackCloud");
-            
+            idle = false;
+            if (green == false)
+            {
+                attack = true;
+                attackReady = true;
+                if (animatorTrue == true)
+                {
+                    animator.SetBool("Idle", false);
+                }
+            }
+            else
+            {
+                StartCoroutine(CounterattackCloud());
+                Debug.Log("CounterattackCloud");
+
+            }
         }
     }
     //Used more for forcing the boss back into its attack pattern
@@ -888,7 +903,10 @@ public class Enemy : MonoBehaviour
                     damaged = true;
                     TakeDamage(3, true);
                     //Destroy(other.gameObject);
-                    Flinch();
+                    if (armor == false)
+                    {
+                        Flinch();
+                    }
                 }
                 //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 //collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -915,7 +933,10 @@ public class Enemy : MonoBehaviour
                     damaged = true;
                     TakeDamage(2, false);
                     //Destroy(other.gameObject);
-                    Flinch();
+                    if (red == false && armor == false)
+                    {
+                        Flinch();
+                    }
                 }
                 //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 //collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;

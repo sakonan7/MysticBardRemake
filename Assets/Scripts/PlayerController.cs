@@ -611,7 +611,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(SpecialInvincibility());
         StartCoroutine(CameraShakeSpec(0));
         //allAttackEffect.SetActive(true);
-        StartCoroutine(AllAttackDisappear1());
+        //StartCoroutine(AllAttackDisappear1());
         hitCountReached = false;
     }
     IEnumerator AllAttackDisappear1()

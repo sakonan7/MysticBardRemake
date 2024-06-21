@@ -20,6 +20,8 @@ public class GrandDragon : MonoBehaviour
     public Material red;
     public Material purple;
     public Material green;
+    public Material final;
+
     public Material flashing;
     public Material dying;
     public ParticleSystem []redAura;
@@ -86,232 +88,178 @@ public class GrandDragon : MonoBehaviour
         //I have to use OpeningBombUser() to have my cake and eat it, too
         //The issue is that interrupt is causing multiple bombs to be spawned
         //I'm really going to have to have my cake and eat it, too
-        if(forcedPhaseChange ==true)
+        if (enemyScript.cantMove == false)
         {
-            forcedPhaseChange = false;
-            ForcedPhaseChange();
-        }
-        if(enemyScript.HP < 350 -50 &&firstPhase==true)
-        {
-            firstPhase = false;
-            secondPhase = true;
-            enemyScript.UnsetRed();
-            //SetBomb, but also set CantFlinch for barrier
-            //enemyScript.SetGreen();
-            //skin.material = green;
-            //enemyScript.SetBomb();
-            enemyScript.SetNoAttack();
-            enemyScript.SetBombUser();
-            skin.material = purple;
-            //Forced Bomb Start
-
-            if(enemyScript.flinching ==true)
+            if (forcedPhaseChange == true)
             {
-                forcedPhaseChange = true;
+                forcedPhaseChange = false;
+                ForcedPhaseChange();
             }
-            else
+            if (enemyScript.HP < 350 - 50 && firstPhase == true)
             {
-                OpeningBombUser();
-            }
-            StartCoroutine(BarrierAnimation());
-            enemyScript.SetIdleTime(20);
-        }
-        if (enemyScript.HP < 350 - 100 && secondPhase == true)
-        {
-            secondPhase = false;
-            thirdPhase = true;
-            enemyScript.UnsetBomb();
-            enemyScript.UnsetNoAttack();
-            enemyScript.UnsetBombUser();
-            enemyScript.SetGreen();
-            skin.material = green;
-            enemyScript.SetIdleTime(3);
-            //if (enemyScript.flinching == true)
-            //{
-                //forcedPhaseChange = true;
-            //}
-        }
-        if (enemyScript.HP < 350 - 150 && thirdPhase == true)
-        {
-            //Debug.Log("Fourth Phase");
-            thirdPhase = false;
-            fourthPhase = true;
-            enemyScript.UnsetGreen();
-            enemyScript.SetNoAttack();
-            enemyScript.SetBombUser();
-            enemyScript.SetRed();
-            skin.material = purple;
-            //Roar
-            //Just do an IEnumerator and an invincibility periodbaby
-            if (enemyScript.flinching == true)
-            {
-                forcedPhaseChange = true;
-            }
-            else
-            {
-                OpeningBombUser();
-            }
-            Roar();
-            StartCoroutine(RoarDuration());
-            RedAuraOn();
-
-            //StartCoroutine(BarrierAnimation());
-            //Need opportunities to do an attack every 10 seconds
-            //And after another 10 seconds, set out more mines
-            //The issue is bomb. Making more than it should
-            enemyScript.SetIdleTime(10);
-            regularBombRing1Used = false;
-            regularBombRing2Used = false;
-        }
-        if (enemyScript.HP < 350 - 200 && fourthPhase == true)
-        {
-            fourthPhase = false;
-            fifthPhase = true;
-            enemyScript.UnsetRed();
-            enemyScript.SetNoAttack();
-            enemyScript.SetGreen();
-            skin.material = purple;
-            if (enemyScript.flinching == true)
-            {
-                forcedPhaseChange = true;
-            }
-            else
-            {
-                OpeningBombUser();
-            }
-            Roar();
-            StartCoroutine(RoarDuration());
-            GreenAuraOn();
-            //Need opportunities to do an attack every 10 seconds
-            //And after another 10 seconds, set out more mines
-            //The issue is bomb. Making more than it should
-            enemyScript.SetIdleTime(10);
-            regularBombRing1Used = false;
-            regularBombRing2Used = false;
-        }
-        if (enemyScript.HP < 350 - 250 && fifthPhase == true)
-        {
-            fifthPhase = false;
-            sixthPhase = true;
-            enemyScript.UnsetGreen();
-            enemyScript.SetNoAttack();
-            //SetBomb, but also set CantFlinch for barrier
-            //enemyScript.SetGreen();
-            //skin.material = green;
-            //enemyScript.SetBomb();
-            skin.material = purple;
-            //For simplicity, I am making a cancel IdleAnimation();
-            //I could use this for a revenge value att
-            if (enemyScript.flinching == true)
-            {
-                forcedPhaseChange = true;
-            }
-            else
-            {
-                OpeningBombUser();
-            }
-            Roar();
-            StartCoroutine(RoarDuration());
-            PurpleAuraOn();
-            enemyScript.SetIdleTime(30);
-            regularBombRing1Used = false;
-            regularBombRing2Used = false;
-        }
-        if (enemyScript.HP < 350 - 300 && sixthPhase == true)
-        {
-            sixthPhase = false;
-            seventhPhase = true;
-            enemyScript.UnsetBomb();
-            enemyScript.UnsetNoAttack();
-            enemyScript.UnsetBombUser();
-            enemyScript.SetGreen();
-            enemyScript.SetRed();
-            skin.material = red;
-            enemyScript.SetIdleTime(3);
-        }
-        if(enemyScript.HP<=0)
-        {
-            skin.material = dying;
-        }
-        //if (enemyScript.HP < 1000 - 50 && firstPhase == true)
-        //{
-        //firstPhase = false;
-        //}
-        //if(enemyScript.HP < 1000-40 && enemyScript.HP > 1000-80)
-        //{
-        if (firstPhase ==true) {
-            if (enemyScript.attackReady == true)
-            {
-                //StartCoroutine(Flashing());
-
-                RedAttack();
-                //Debug.Log("Attack");
-            }
-        }
-        if (secondPhase == true)
-        {
-            if (enemyScript.attackReady == true)
-            {
+                firstPhase = false;
+                secondPhase = true;
+                enemyScript.UnsetRed();
+                //SetBomb, but also set CantFlinch for barrier
+                //enemyScript.SetGreen();
+                //skin.material = green;
+                //enemyScript.SetBomb();
                 enemyScript.SetNoAttack();
-                //RegularBombRing1();
-                Debug.Log("Bomb Attack Regular");
-                //Randomize
-                //Make first ring appear right away
-                //At least 20 seconds between salvos
-                if (regularBombRing1Used == false && regularBombRing2Used == false)
-                {
-                    int random = Random.Range(0, 1);
-                    if (random == 0)
-                    {
-                        RegularBombRing1();
-                        regularBombRing1Used = true;
-                    }
-                    else
-                    {
-                        RegularBombRing2();
-                        regularBombRing2Used = true;
-                    }
-                }
-                else if (regularBombRing1Used ==false && regularBombRing2Used ==true)
-                {
-                  RegularBombRing1();
-                     regularBombRing1Used = true;
-                }
-                else if (regularBombRing1Used == true && regularBombRing2Used == false)
-                {
-                    RegularBombRing2();
-                    regularBombRing2Used = true;
-                }
+                enemyScript.SetBombUser();
+                skin.material = purple;
+                //Forced Bomb Start
 
-            }
-        }
-        if (thirdPhase == true)
-        {
-            if (enemyScript.counterAttackTriggered == true)
-            {
-                StartCoroutine(Flashing());
-                CounterAttack();
-            }
-            if (enemyScript.attackReady == true)
-            {
-                if(enemyScript.unflinchingFollow==true)
+                if (enemyScript.flinching == true)
                 {
-                    StartCoroutine(Flashing());
-                }
-                GreenAttack();
-                //Debug.Log("Attack");
-            }
-        }
-        if (fourthPhase == true)
-        {
-            if (enemyScript.attackReady == true)
-            {
-                if (fourthPhaseRegular == false)
-                {
-                    RedAttack();
-                    fourthPhaseRegular = true;
+                    forcedPhaseChange = true;
                 }
                 else
+                {
+                    OpeningBombUser();
+                }
+                StartCoroutine(BarrierAnimation(1));
+                enemyScript.SetIdleTime(20);
+            }
+            if (enemyScript.HP < 350 - 100 && secondPhase == true)
+            {
+                secondPhase = false;
+                thirdPhase = true;
+                enemyScript.UnsetBomb();
+                enemyScript.UnsetNoAttack();
+                enemyScript.UnsetBombUser();
+                enemyScript.SetGreen();
+                skin.material = green;
+                enemyScript.SetIdleTime(3);
+                //if (enemyScript.flinching == true)
+                //{
+                //forcedPhaseChange = true;
+                //}
+            }
+            if (enemyScript.HP < 350 - 150 && thirdPhase == true)
+            {
+                //Debug.Log("Fourth Phase");
+                thirdPhase = false;
+                fourthPhase = true;
+                enemyScript.UnsetGreen();
+                enemyScript.SetNoAttack();
+                enemyScript.SetBombUser();
+                enemyScript.SetRed();
+                skin.material = purple;
+                //Roar
+                //Just do an IEnumerator and an invincibility periodbaby
+                if (enemyScript.flinching == true)
+                {
+                    forcedPhaseChange = true;
+                }
+                else
+                {
+                    OpeningBombUser();
+                }
+                Roar();
+                StartCoroutine(RoarDuration());
+                RedAuraOn();
+
+                //StartCoroutine(BarrierAnimation());
+                //Need opportunities to do an attack every 10 seconds
+                //And after another 10 seconds, set out more mines
+                //The issue is bomb. Making more than it should
+                enemyScript.SetIdleTime(10);
+                regularBombRing1Used = false;
+                regularBombRing2Used = false;
+            }
+            if (enemyScript.HP < 350 - 200 && fourthPhase == true)
+            {
+                fourthPhase = false;
+                fifthPhase = true;
+                enemyScript.UnsetRed();
+                enemyScript.SetNoAttack();
+                enemyScript.SetGreen();
+                skin.material = purple;
+                if (enemyScript.flinching == true)
+                {
+                    forcedPhaseChange = true;
+                }
+                else
+                {
+                    OpeningBombUser();
+                }
+                Roar();
+                StartCoroutine(RoarDuration());
+                RedAuraOff();
+                GreenAuraOn();
+                //Need opportunities to do an attack every 10 seconds
+                //And after another 10 seconds, set out more mines
+                //The issue is bomb. Making more than it should
+                enemyScript.SetIdleTime(10);
+                regularBombRing1Used = false;
+                regularBombRing2Used = false;
+            }
+            if (enemyScript.HP < 350 - 250 && fifthPhase == true)
+            {
+                fifthPhase = false;
+                sixthPhase = true;
+                enemyScript.UnsetGreen();
+                enemyScript.SetNoAttack();
+                //SetBomb, but also set CantFlinch for barrier
+                //enemyScript.SetGreen();
+                //skin.material = green;
+                //enemyScript.SetBomb();
+                skin.material = purple;
+                //For simplicity, I am making a cancel IdleAnimation();
+                //I could use this for a revenge value att
+                if (enemyScript.flinching == true)
+                {
+                    forcedPhaseChange = true;
+                }
+                else
+                {
+                    OpeningBombUser();
+                }
+                Roar();
+                StartCoroutine(RoarDuration());
+                GreenAuraOff();
+                PurpleAuraOn();
+                enemyScript.SetIdleTime(30);
+                regularBombRing1Used = false;
+                regularBombRing2Used = false;
+            }
+            if (enemyScript.HP < 350 - 300 && sixthPhase == true)
+            {
+                sixthPhase = false;
+                seventhPhase = true;
+                enemyScript.UnsetBomb();
+                enemyScript.UnsetNoAttack();
+                enemyScript.UnsetBombUser();
+                enemyScript.SetGreen();
+                enemyScript.SetRed();
+                PurpleAuraOff();
+                FinalAuraOn();
+                skin.material = final;
+                enemyScript.SetIdleTime(3);
+            }
+            if (enemyScript.HP <= 0)
+            {
+                skin.material = dying;
+            }
+            //if (enemyScript.HP < 1000 - 50 && firstPhase == true)
+            //{
+            //firstPhase = false;
+            //}
+            //if(enemyScript.HP < 1000-40 && enemyScript.HP > 1000-80)
+            //{
+            if (firstPhase == true)
+            {
+                if (enemyScript.attackReady == true)
+                {
+                    //StartCoroutine(Flashing());
+
+                    RedAttack();
+                    //Debug.Log("Attack");
+                }
+            }
+            if (secondPhase == true)
+            {
+                if (enemyScript.attackReady == true)
                 {
                     enemyScript.SetNoAttack();
                     //RegularBombRing1();
@@ -343,31 +291,131 @@ public class GrandDragon : MonoBehaviour
                         RegularBombRing2();
                         regularBombRing2Used = true;
                     }
-                }
 
-            }
-        if (fifthPhase == true)
-        {
-            if (enemyScript.attackReady == true)
-            {
-                if (fifthPhaseRegular == false)
-                {
-                        if (enemyScript.counterAttackTriggered == true)
-                        {
-                            CounterAttack();
-                        }
-                        if (enemyScript.attackReady == true)
-                        {
-                            GreenAttack();
-                            //Debug.Log("Attack");
-                            fifthPhaseRegular = true;
-                        }
                 }
-                else
+            }
+            if (thirdPhase == true)
+            {
+                if (enemyScript.counterAttackTriggered == true)
                 {
+                    StartCoroutine(Flashing());
+                    CounterAttack();
+                }
+                if (enemyScript.attackReady == true)
+                {
+                    if (enemyScript.unflinchingFollow == true)
+                    {
+                        StartCoroutine(Flashing());
+                    }
+                    GreenAttack();
+                    //Debug.Log("Attack");
+                }
+            }
+            if (fourthPhase == true)
+            {
+                if (enemyScript.attackReady == true)
+                {
+                    if (fourthPhaseRegular == false)
+                    {
+                        RedAttack();
+                        fourthPhaseRegular = true;
+                    }
+                    else
+                    {
                         enemyScript.SetNoAttack();
                         //RegularBombRing1();
                         Debug.Log("Bomb Attack Regular");
+                        //Randomize
+                        //Make first ring appear right away
+                        //At least 20 seconds between salvos
+                        if (regularBombRing1Used == false && regularBombRing2Used == false)
+                        {
+                            int random = Random.Range(0, 1);
+                            if (random == 0)
+                            {
+                                RegularBombRing1();
+                                regularBombRing1Used = true;
+                            }
+                            else
+                            {
+                                RegularBombRing2();
+                                regularBombRing2Used = true;
+                            }
+                        }
+                        else if (regularBombRing1Used == false && regularBombRing2Used == true)
+                        {
+                            RegularBombRing1();
+                            regularBombRing1Used = true;
+                        }
+                        else if (regularBombRing1Used == true && regularBombRing2Used == false)
+                        {
+                            RegularBombRing2();
+                            regularBombRing2Used = true;
+                        }
+                    }
+
+                }
+                if (fifthPhase == true)
+                {
+                    if (enemyScript.attackReady == true)
+                    {
+                        if (fifthPhaseRegular == false)
+                        {
+                            if (enemyScript.counterAttackTriggered == true)
+                            {
+                                CounterAttack();
+                            }
+                            if (enemyScript.attackReady == true)
+                            {
+                                GreenAttack();
+                                //Debug.Log("Attack");
+                                fifthPhaseRegular = true;
+                            }
+                        }
+                        else
+                        {
+                            enemyScript.SetNoAttack();
+                            //RegularBombRing1();
+                            Debug.Log("Bomb Attack Regular");
+                            //Randomize
+                            //Make first ring appear right away
+                            //At least 20 seconds between salvos
+                            if (regularBombRing1Used == false && regularBombRing2Used == false)
+                            {
+                                int random = Random.Range(0, 1);
+                                if (random == 0)
+                                {
+                                    RegularBombRing1();
+                                    regularBombRing1Used = true;
+                                }
+                                else
+                                {
+                                    RegularBombRing2();
+                                    regularBombRing2Used = true;
+                                }
+                            }
+                            else if (regularBombRing1Used == false && regularBombRing2Used == true)
+                            {
+                                RegularBombRing1();
+                                regularBombRing1Used = true;
+                            }
+                            else if (regularBombRing1Used == true && regularBombRing2Used == false)
+                            {
+                                RegularBombRing2();
+                                regularBombRing2Used = true;
+                            }
+                        }
+
+                    }
+                }
+            }
+            if (sixthPhase == true)
+            {
+                if (enemyScript.attackReady == true)
+                {
+                    enemyScript.SetNoAttack();
+                    //RegularBombRing1();
+                    Debug.Log("Bomb Attack Regular");
                     //Randomize
                     //Make first ring appear right away
                     //At least 20 seconds between salvos
@@ -376,83 +424,45 @@ public class GrandDragon : MonoBehaviour
                         int random = Random.Range(0, 1);
                         if (random == 0)
                         {
-                            RegularBombRing1();
+                            BombRing3();
                             regularBombRing1Used = true;
                         }
                         else
                         {
-                            RegularBombRing2();
+                            BombRing4();
                             regularBombRing2Used = true;
                         }
                     }
                     else if (regularBombRing1Used == false && regularBombRing2Used == true)
                     {
-                        RegularBombRing1();
+                        BombRing3();
                         regularBombRing1Used = true;
                     }
                     else if (regularBombRing1Used == true && regularBombRing2Used == false)
                     {
-                        RegularBombRing2();
-                        regularBombRing2Used = true;
-                    }
-                }
-
-            }
-        }
-        }
-        if (sixthPhase == true)
-        {
-            if (enemyScript.attackReady == true)
-            {
-                enemyScript.SetNoAttack();
-                //RegularBombRing1();
-                Debug.Log("Bomb Attack Regular");
-                //Randomize
-                //Make first ring appear right away
-                //At least 20 seconds between salvos
-                if (regularBombRing1Used == false && regularBombRing2Used == false)
-                {
-                    int random = Random.Range(0, 1);
-                    if (random == 0)
-                    {
-                        BombRing3();
-                        regularBombRing1Used = true;
-                    }
-                    else
-                    {
                         BombRing4();
                         regularBombRing2Used = true;
                     }
-                }
-                else if (regularBombRing1Used == false && regularBombRing2Used == true)
-                {
-                    BombRing3();
-                    regularBombRing1Used = true;
-                }
-                else if (regularBombRing1Used == true && regularBombRing2Used == false)
-                {
-                    BombRing4();
-                    regularBombRing2Used = true;
-                }
 
+                }
             }
-        }
-        if (seventhPhase == true)
-        {
-            if (enemyScript.counterAttackTriggered == true)
+            if (seventhPhase == true)
             {
-                SeventhCounterAttack();
+                if (enemyScript.counterAttackTriggered == true)
+                {
+                    SeventhCounterAttack();
+                }
+                if (enemyScript.attackReady == true)
+                {
+                    SeventhGreenAttack();
+                    //Debug.Log("Attack");
+                }
             }
-            if (enemyScript.attackReady == true)
-            {
-                SeventhGreenAttack();
-                //Debug.Log("Attack");
-            }
-        }
 
-        //}
-        //Last phase
-        //< 500, secondPhase ==true
+            //}
+            //Last phase
+            //< 500, secondPhase ==true
+        }
     }
     public void ForcedPhaseChange()
     {
@@ -480,7 +490,7 @@ IEnumerator Flashing()
         {
             skin.material = flashing;
             //Debug.Log("White");
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.25f);
             //Depends on phase
             if (secondPhase == true)
             {
@@ -523,7 +533,7 @@ IEnumerator Flashing()
         yield return new WaitForSeconds(1.5f);
         animator.ResetTrigger("Bomb");
         animator.SetBool("Idle", true);
-        StartCoroutine(BarrierAnimation());
+        StartCoroutine(BarrierAnimation(2));
     }
     public void RedAuraOn()
     {
@@ -541,30 +551,30 @@ IEnumerator Flashing()
     }
     public void GreenAuraOn()
     {
-        for (int i = 0; i < redAura.Length; i++)
+        for (int i = 0; i < greenAura.Length; i++)
         {
-            redAura[i].gameObject.SetActive(true);
+            greenAura[i].gameObject.SetActive(true);
         }
     }
     public void GreenAuraOff()
     {
-        for (int i = 0; i < redAura.Length; i++)
+        for (int i = 0; i < greenAura.Length; i++)
         {
-            redAura[i].gameObject.SetActive(false);
+            greenAura[i].gameObject.SetActive(false);
         }
     }
     public void PurpleAuraOn()
     {
-        for (int i = 0; i < redAura.Length; i++)
+        for (int i = 0; i < purpleAura.Length; i++)
         {
-            redAura[i].gameObject.SetActive(true);
+            purpleAura[i].gameObject.SetActive(true);
         }
     }
     public void PurpleAuraOff()
     {
-        for (int i = 0; i < redAura.Length; i++)
+        for (int i = 0; i < purpleAura.Length; i++)
         {
-            redAura[i].gameObject.SetActive(false);
+            purpleAura[i].gameObject.SetActive(false);
         }
     }
     public void FinalAuraOn()
@@ -580,6 +590,7 @@ IEnumerator Flashing()
     }
     public void RedAttack()
     {
+        enemyScript.UnsetNoAttack();
         //animator.SetBool("Idle",false);
         animator.SetTrigger("StrongAttack");
         enemyScript.SetDamage(4);
@@ -588,15 +599,15 @@ IEnumerator Flashing()
         enemyScript.StartFlinchWindow();
             //enemyScript.PlayAttackEffect(0);
         enemyScript.AttackReadyOff();
-        enemyScript.UnsetNoAttack();
+        
     }
-    IEnumerator BarrierAnimation()
+    IEnumerator BarrierAnimation(int time)
     {
         barrierAnimation.SetActive(true);
         //animator.SetTrigger("Barrier");
         enemyScript.SetArmor();
         enemyScript.SetCantFlinch();
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(time);
         //animator.ResetTrigger("Barrier");
 
         barrierAnimation.SetActive(false);
@@ -761,9 +772,10 @@ IEnumerator Flashing()
     //Last Phase. 4 damage. For now, Green Attack Animations
     public void CounterAttack()
     {
+        enemyScript.UnsetNoAttack();
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Counterattack");
-        enemyScript.SetDamage(2);
+        enemyScript.SetDamage(2.65f);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartCounterAttackLength();
         //enemyScript.StartFlinchWindow();
@@ -776,14 +788,15 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(0);
         //}
         enemyScript.CounterAttackReadyOff();
-        enemyScript.UnsetNoAttack();
+        
     }
     public void GreenAttack()
     {
+        enemyScript.UnsetNoAttack();
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Attack");
         animator.SetTrigger("Attack2");
-        enemyScript.SetDamage(2);
+        enemyScript.SetDamage(2.65f);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         if (enemyScript.unflinchingFollow == false) {
@@ -798,7 +811,7 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(1);
         //}
         enemyScript.AttackReadyOff();
-        enemyScript.UnsetNoAttack();
+        
     }
     public void SeventhCounterAttack()
     {

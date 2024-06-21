@@ -45,19 +45,22 @@ public class GreenThief : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyScript.counterAttackTriggered == true)
+        if (enemyScript.cantMove == false)
         {
-            StartCoroutine(Flashing());
-            CounterAttack();
-        }
-        if (enemyScript.attackReady == true)
-        {
-            if (enemyScript.unflinchingFollow == true)
+            if (enemyScript.counterAttackTriggered == true)
             {
                 StartCoroutine(Flashing());
+                CounterAttack();
             }
-            RegularAttack();
-            Debug.Log("Attack");
+            if (enemyScript.attackReady == true)
+            {
+                if (enemyScript.unflinchingFollow == true)
+                {
+                    StartCoroutine(Flashing());
+                }
+                RegularAttack();
+                Debug.Log("Attack");
+            }
         }
     }
     IEnumerator Flashing()

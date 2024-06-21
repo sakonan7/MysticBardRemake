@@ -31,10 +31,12 @@ public class Gob : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyScript.attackReady==true)
-        {
-            Attack();
-            //Debug.Log("Attack");
+        if (enemyScript.cantMove ==false) {
+            if (enemyScript.attackReady == true)
+            {
+                Attack();
+                //Debug.Log("Attack");
+            }
         }
     }
     IEnumerator IdleAnimation()

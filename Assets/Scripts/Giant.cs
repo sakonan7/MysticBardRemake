@@ -23,10 +23,13 @@ public class Giant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyScript.attackReady == true)
+        if (enemyScript.cantMove == false)
         {
-            Attack();
-            //Debug.Log("Attack");
+            if (enemyScript.attackReady == true)
+            {
+                Attack();
+                //Debug.Log("Attack");
+            }
         }
     }
     IEnumerator IdleAnimation()
