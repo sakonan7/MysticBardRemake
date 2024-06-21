@@ -35,10 +35,10 @@ public class GreenThief : MonoBehaviour
         animator = GetComponent<Animator>();
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
-        enemyScript.SetHP(80);
+        enemyScript.SetHP(90);
         enemyScript.SetEXP(90);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
-        enemyScript.SetIdleTime(5);
+        enemyScript.SetIdleTime(3);
         enemyScript.SetGreen();
     }
 
@@ -92,6 +92,8 @@ public class GreenThief : MonoBehaviour
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Counterattack");
         enemyScript.SetDamage(2);
+        //Below isn't the problem because both counterattacklength and attacklength uses attacklength set by
+        //SetAttackLength()
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartCounterAttackLength();
         //enemyScript.StartFlinchWindow();

@@ -22,6 +22,10 @@ public class GrandDragon : MonoBehaviour
     public Material green;
     public Material flashing;
     public Material dying;
+    public ParticleSystem []redAura;
+    public ParticleSystem []greenAura;
+    public ParticleSystem[] purpleAura;
+    public ParticleSystem[] greenTailAura;
     public GameObject barrier;
     public GameObject regularBombRing1;
     public GameObject regularBombRing2;
@@ -99,6 +103,7 @@ public class GrandDragon : MonoBehaviour
             enemyScript.SetNoAttack();
             enemyScript.SetBombUser();
             skin.material = purple;
+            //Forced Bomb Start
 
             if(enemyScript.flinching ==true)
             {
@@ -120,10 +125,11 @@ public class GrandDragon : MonoBehaviour
             enemyScript.UnsetBombUser();
             enemyScript.SetGreen();
             skin.material = green;
-            if (enemyScript.flinching == true)
-            {
-                forcedPhaseChange = true;
-            }
+            enemyScript.SetIdleTime(3);
+            //if (enemyScript.flinching == true)
+            //{
+                //forcedPhaseChange = true;
+            //}
         }
         if (enemyScript.HP < 350 - 150 && thirdPhase == true)
         {
@@ -135,6 +141,8 @@ public class GrandDragon : MonoBehaviour
             enemyScript.SetBombUser();
             enemyScript.SetRed();
             skin.material = purple;
+            //Roar
+            //Just do an IEnumerator and an invincibility periodbaby
             if (enemyScript.flinching == true)
             {
                 forcedPhaseChange = true;
@@ -143,7 +151,11 @@ public class GrandDragon : MonoBehaviour
             {
                 OpeningBombUser();
             }
-            StartCoroutine(BarrierAnimation());
+            Roar();
+            StartCoroutine(RoarDuration());
+            RedAuraOn();
+
+            //StartCoroutine(BarrierAnimation());
             //Need opportunities to do an attack every 10 seconds
             //And after another 10 seconds, set out more mines
             //The issue is bomb. Making more than it should
@@ -167,7 +179,9 @@ public class GrandDragon : MonoBehaviour
             {
                 OpeningBombUser();
             }
-            StartCoroutine(BarrierAnimation());
+            Roar();
+            StartCoroutine(RoarDuration());
+            GreenAuraOn();
             //Need opportunities to do an attack every 10 seconds
             //And after another 10 seconds, set out more mines
             //The issue is bomb. Making more than it should
@@ -196,8 +210,9 @@ public class GrandDragon : MonoBehaviour
             {
                 OpeningBombUser();
             }
-            enemyScript.AttackReadyOff();
-            StartCoroutine(BarrierAnimation());
+            Roar();
+            StartCoroutine(RoarDuration());
+            PurpleAuraOn();
             enemyScript.SetIdleTime(30);
             regularBombRing1Used = false;
             regularBombRing2Used = false;
@@ -212,6 +227,7 @@ public class GrandDragon : MonoBehaviour
             enemyScript.SetGreen();
             enemyScript.SetRed();
             skin.material = red;
+            enemyScript.SetIdleTime(3);
         }
         if(enemyScript.HP<=0)
         {
@@ -445,9 +461,9 @@ public class GrandDragon : MonoBehaviour
         enemyScript.IdleAnimationCancel();
         enemyScript.AttackReadyOff();
         //The way this code is written, this should make Dragon go into an attack almost immediately
-        if (enemyScript.bombUser ==true) {
-            enemyScript.Interrupt(); //At the moment, he will just go into barrier animation
-        }
+        //if (enemyScript.bombUser ==true) {
+            //enemyScript.Interrupt(); //At the moment, he will just go into barrier animation
+        //}
         enemyScript.FlinchCancel();
         StartCoroutine(Flashing());
     }
@@ -494,6 +510,72 @@ IEnumerator Flashing()
             numFlash++;
 
             Debug.Log(numFlash);
+        }
+    }
+    public void Roar()
+    {
+        animator.SetTrigger("Bomb");
+        animator.SetBool("Idle", false);
+    }
+    IEnumerator RoarDuration()
+    {
+        enemyScript.SetCantFlinch();
+        yield return new WaitForSeconds(1.5f);
+        animator.ResetTrigger("Bomb");
+        animator.SetBool("Idle", true);
+        StartCoroutine(BarrierAnimation());
+    }
+    public void RedAuraOn()
+    {
+        for (int i =0;i< redAura.Length;i++)
+        {
+            redAura[i].gameObject.SetActive(true);
+        }
+    }
+    public void RedAuraOff()
+    {
+        for (int i = 0; i < redAura.Length; i++)
+        {
+            redAura[i].gameObject.SetActive(false);
+        }
+    }
+    public void GreenAuraOn()
+    {
+        for (int i = 0; i < redAura.Length; i++)
+        {
+            redAura[i].gameObject.SetActive(true);
+        }
+    }
+    public void GreenAuraOff()
+    {
+        for (int i = 0; i < redAura.Length; i++)
+        {
+            redAura[i].gameObject.SetActive(false);
+        }
+    }
+    public void PurpleAuraOn()
+    {
+        for (int i = 0; i < redAura.Length; i++)
+        {
+            redAura[i].gameObject.SetActive(true);
+        }
+    }
+    public void PurpleAuraOff()
+    {
+        for (int i = 0; i < redAura.Length; i++)
+        {
+            redAura[i].gameObject.SetActive(false);
+        }
+    }
+    public void FinalAuraOn()
+    {
+        for (int i = 0; i < redAura.Length; i++)
+        {
+            redAura[i].gameObject.SetActive(true);
+        }
+        for (int i = 0; i < greenTailAura.Length; i++)
+        {
+            greenTailAura[i].gameObject.SetActive(true);
         }
     }
     public void RedAttack()

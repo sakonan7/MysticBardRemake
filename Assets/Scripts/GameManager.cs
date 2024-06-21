@@ -100,7 +100,13 @@ public class GameManager : MonoBehaviour
         numEnemies--;
         if (numEnemies <= 0)
         {
-            EXP();
+            if (player.levelUpStock >=14) {
+                EXP();
+            }
+            else
+            {
+                GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
+            }
             player.WeaponReset();
             victory = true;
         }

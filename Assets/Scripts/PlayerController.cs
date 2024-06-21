@@ -164,6 +164,7 @@ public class PlayerController : MonoBehaviour
                 shieldGauge = GameObject.Find("Shield Gauge").GetComponent<Image>();
                 toolIcon = GameObject.Find("Tool Icons");
                 weaponImages = GameObject.Find("Weapon Images");
+                numPotions = GameObject.Find("Number of Potions").GetComponent<TextMeshProUGUI>();
             }
             else
             {
@@ -1012,6 +1013,10 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    public void ContinueInstead()
+    {
+        StartCoroutine(ContinueButton());
+    }
     IEnumerator ContinueButton()
     {
         yield return new WaitForSeconds(1);
@@ -1032,6 +1037,11 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1);
         GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Lv. " + level;
         levelText.text = "Lv. " + level;
+        if(level >= 14)
+        {
+            GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Lv. MAX";
+            levelText.text = "Lv. MAX";
+        }
         //Continue Button
     }
     public void LevelUp()
@@ -1044,6 +1054,11 @@ public class PlayerController : MonoBehaviour
         EXPToLevel = EXPToLevelLimit;
         //Debug.Log(EXPToLevel);
         levelUpStock++;
+        if (level >=14)
+        {
+            level = 14;
+            levelUpStock = 1;
+        }
     }
     public void HPUp()
     {

@@ -404,7 +404,7 @@ public class Enemy : MonoBehaviour
         {
             teamAttackOn = false;
             TeamAttackOff();
-            Debug.Log("No enemies next to each");
+            //Debug.Log("No enemies next to each");
         }
     }
     //So far so good. The only problem is that I can't do Idle"", false. I need to keep snapping back to Idle
@@ -472,9 +472,10 @@ public class Enemy : MonoBehaviour
             //Don't know why I didn't put this here right away, because I successful flinch will always start a flinchdur
             flinchCancel = StartCoroutine(FlinchDuration());
 
-            if(green == true)
+            if (green == true)
             {
                 SetCantFlinch();
+                Debug.Log("Green ThiefFlinched");
             }
         }
     }
@@ -533,7 +534,7 @@ public class Enemy : MonoBehaviour
     IEnumerator FlinchWindow()
     {
         flinchInterrupt = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         flinchInterrupt = false;
 
     }
@@ -866,7 +867,7 @@ public class Enemy : MonoBehaviour
         {
             playerScript.WindEnd();
             WindCaptureEnd();
-            Debug.Log("End");
+            //Debug.Log("End");
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -912,7 +913,7 @@ public class Enemy : MonoBehaviour
                 if (damaged == false)
                 {
                     damaged = true;
-                    TakeDamage(2, true);
+                    TakeDamage(2, false);
                     //Destroy(other.gameObject);
                     Flinch();
                 }
