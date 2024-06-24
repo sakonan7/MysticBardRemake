@@ -2241,7 +2241,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -2.698, y: 0, z: -7.59}
-  m_LocalScale: {x: 0.88, y: 0.88, z: 0.88}
+  m_LocalScale: {x: 0.9240001, y: 0.9240001, z: 0.9240001}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7627449076419318406}
@@ -2330,6 +2330,7 @@ MonoBehaviour:
   EXP: 0
   teamAttackOn: 0
   bombUser: 0
+  cantMove: 0
 --- !u!136 &8760742796181254250
 CapsuleCollider:
   m_ObjectHideFlags: 0

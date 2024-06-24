@@ -28,6 +28,9 @@ public class GrandDragon : MonoBehaviour
     public ParticleSystem []greenAura;
     public ParticleSystem[] purpleAura;
     public ParticleSystem[] greenTailAura;
+    public ParticleSystem[] counterattackAura;
+    public ParticleSystem[] finalAttackAura;
+
     public GameObject barrier;
     public GameObject regularBombRing1;
     public GameObject regularBombRing2;
@@ -42,10 +45,10 @@ public class GrandDragon : MonoBehaviour
     private Enemy enemyScript;
     private SkinnedMeshRenderer skin;
     private bool forcedPhaseChange = false;
-    private bool firstPhase = true;
+    private bool firstPhase = false;
     private bool secondPhase = false;
     private bool thirdPhase = false;
-    private bool fourthPhase = false;
+    private bool fourthPhase = true;
     private bool fifthPhase = false;
     private bool sixthPhase = false;
     private bool seventhPhase = false;
@@ -54,7 +57,7 @@ public class GrandDragon : MonoBehaviour
     private bool fourthPhaseRegular = false;
     private bool fifthPhaseRegular = false;
 
-    private int maxHP = 350;
+    private int maxHP = 50*6+120;
 
     // Start is called before the first frame update
     void Awake()
@@ -66,7 +69,7 @@ public class GrandDragon : MonoBehaviour
         skin.material = red;
         bombFlare = transform.Find("Bomb Light").transform.Find("Lens").gameObject;
         barrierAnimation = transform.Find("Root").transform.Find("Personal Barrier Object").transform.Find("Barrier Animation").gameObject;
-        enemyScript.SetHP(maxHP);
+        enemyScript.SetHP(215);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(5);
         enemyScript.SetRed();
@@ -95,7 +98,7 @@ public class GrandDragon : MonoBehaviour
                 forcedPhaseChange = false;
                 ForcedPhaseChange();
             }
-            if (enemyScript.HP < 350 - 50 && firstPhase == true)
+            if (enemyScript.HP < maxHP - 50 && firstPhase == true)
             {
                 firstPhase = false;
                 secondPhase = true;
@@ -120,7 +123,7 @@ public class GrandDragon : MonoBehaviour
                 StartCoroutine(BarrierAnimation(1));
                 enemyScript.SetIdleTime(20);
             }
-            if (enemyScript.HP < 350 - 100 && secondPhase == true)
+            if (enemyScript.HP < maxHP - 100 && secondPhase == true)
             {
                 secondPhase = false;
                 thirdPhase = true;
@@ -135,7 +138,7 @@ public class GrandDragon : MonoBehaviour
                 //forcedPhaseChange = true;
                 //}
             }
-            if (enemyScript.HP < 350 - 150 && thirdPhase == true)
+            if (enemyScript.HP < maxHP - 150 && thirdPhase == true)
             {
                 //Debug.Log("Fourth Phase");
                 thirdPhase = false;
@@ -167,7 +170,7 @@ public class GrandDragon : MonoBehaviour
                 regularBombRing1Used = false;
                 regularBombRing2Used = false;
             }
-            if (enemyScript.HP < 350 - 200 && fourthPhase == true)
+            if (enemyScript.HP < 220 && fourthPhase == true)
             {
                 fourthPhase = false;
                 fifthPhase = true;
@@ -194,7 +197,7 @@ public class GrandDragon : MonoBehaviour
                 regularBombRing1Used = false;
                 regularBombRing2Used = false;
             }
-            if (enemyScript.HP < 350 - 250 && fifthPhase == true)
+            if (enemyScript.HP < maxHP - 250 && fifthPhase == true)
             {
                 fifthPhase = false;
                 sixthPhase = true;
@@ -223,7 +226,8 @@ public class GrandDragon : MonoBehaviour
                 regularBombRing1Used = false;
                 regularBombRing2Used = false;
             }
-            if (enemyScript.HP < 350 - 300 && sixthPhase == true)
+            //This works perfectly on its own
+            if (enemyScript.HP <=120 && sixthPhase == true)
             {
                 sixthPhase = false;
                 seventhPhase = true;
@@ -588,12 +592,44 @@ IEnumerator Flashing()
             greenTailAura[i].gameObject.SetActive(true);
         }
     }
+    public void CounterattackAuraOn()
+    {
+        for (int i = 0; i < counterattackAura.Length; i++)
+        {
+            counterattackAura[i].gameObject.SetActive(true);
+        }
+        StartCoroutine(CounterattackAuraOff());
+    }
+    IEnumerator CounterattackAuraOff()
+    {
+        yield return new WaitForSeconds(1.5f*2);
+        for (int i = 0; i < counterattackAura.Length; i++)
+        {
+            counterattackAura[i].gameObject.SetActive(false);
+        }
+    }
+    public void FinalAttackAuraOn()
+    {
+        for (int i = 0; i < finalAttackAura.Length; i++)
+        {
+            finalAttackAura[i].gameObject.SetActive(true);
+        }
+        StartCoroutine(FinalAttackAuraOff());
+    }
+    IEnumerator FinalAttackAuraOff()
+    {
+        yield return new WaitForSeconds(1.5f * 2);
+        for (int i = 0; i < finalAttackAura.Length; i++)
+        {
+            finalAttackAura[i].gameObject.SetActive(false);
+        }
+    }
     public void RedAttack()
     {
         enemyScript.UnsetNoAttack();
         //animator.SetBool("Idle",false);
         animator.SetTrigger("StrongAttack");
-        enemyScript.SetDamage(4);
+        enemyScript.SetDamage(4.5f);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
@@ -775,7 +811,7 @@ IEnumerator Flashing()
         enemyScript.UnsetNoAttack();
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Counterattack");
-        enemyScript.SetDamage(2.65f);
+        enemyScript.SetDamage(4);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartCounterAttackLength();
         //enemyScript.StartFlinchWindow();
@@ -796,7 +832,7 @@ IEnumerator Flashing()
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Attack");
         animator.SetTrigger("Attack2");
-        enemyScript.SetDamage(2.65f);
+        enemyScript.SetDamage(3);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         if (enemyScript.unflinchingFollow == false) {
@@ -817,7 +853,7 @@ IEnumerator Flashing()
     {
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Counterattack");
-        enemyScript.SetDamage(4);
+        enemyScript.SetDamage(6);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartCounterAttackLength();
         //enemyScript.StartFlinchWindow();
@@ -830,13 +866,14 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(0);
         //}
         enemyScript.CounterAttackReadyOff();
+        CounterattackAuraOn();
     }
     public void SeventhGreenAttack()
     {
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Attack");
         animator.SetTrigger("Attack2");
-        enemyScript.SetDamage(4);
+        enemyScript.SetDamage(4.5f);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         if (enemyScript.unflinchingFollow == false)
@@ -852,5 +889,6 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(1);
         //}
         enemyScript.AttackReadyOff();
+        FinalAttackAuraOn();
     }
 }

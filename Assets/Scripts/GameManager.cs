@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public static int currentLevel = 2;
 
     public bool victory = false;
+    private bool boss = false;
 
     //06/05/24
     //This should be okay
@@ -80,6 +81,17 @@ public class GameManager : MonoBehaviour
         {
             debrisLocation[i] = currentDebris[i].transform.position;
         }
+        if (numEnemies > 0)
+        {
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); 
+            for(int i =0; i < numEnemies; i++)
+            {
+                if (enemies[i].GetComponent<Enemy>().boss == true)
+                {
+                    boss = true;
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -100,14 +112,20 @@ public class GameManager : MonoBehaviour
         numEnemies--;
         if (numEnemies <= 0)
         {
-            if (player.levelUpStock >=14) {
-                EXP();
+            if (boss ==false) {
+                if (player.levelUpStock >= 14) {
+                    EXP();
+                }
+                else
+                {
+                    GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
+                }
+                player.WeaponReset();
             }
             else
             {
-                GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
+                StartCoroutine(DefeatBoss());
             }
-            player.WeaponReset();
             victory = true;
         }
     }
@@ -116,6 +134,19 @@ public class GameManager : MonoBehaviour
         gameOverText.SetActive(true);
         gameOverFilter.SetActive(true);
         gameOverButtons.SetActive(true);
+    }
+    IEnumerator DefeatBoss()
+    {
+        yield return new WaitForSeconds(6);
+        if (player.levelUpStock >= 14)
+        {
+            EXP();
+        }
+        else
+        {
+            GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
+        }
+        player.WeaponReset();
     }
     public void EXP()
     {

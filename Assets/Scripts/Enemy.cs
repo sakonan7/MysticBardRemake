@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour
     private bool noAttack = false;
     private bool bomb = false;
     public bool bombUser = false;
-    private bool boss = false;
+    public bool boss = false;
     private bool firstSalvo = true;
     private float armorGauge = 30;
     private float fullArmorGauge = 30;
@@ -165,8 +165,8 @@ public class Enemy : MonoBehaviour
             else
             {
                 animator.SetBool("Dying",true);
-                Destroy(gameObject, 4);
-
+                Destroy(gameObject, 5);
+                tag = "Untagged";
             }
             playerScript.GainEXP(EXP); //Putting this after ReduceNumEnemies is making it so that the last 70 doesn't add 
             gameScript.ReduceNumEnemies();
@@ -324,7 +324,7 @@ public class Enemy : MonoBehaviour
     public void ArmorOff()
     {
         armor = false;
-        BarrierOff();
+        
         armorObj.SetActive(false);
         if (name == "Witch")
         {
@@ -350,6 +350,7 @@ public class Enemy : MonoBehaviour
         {
             enemies[i].GetComponent<Enemy>().BarrierOff();
         }
+        BarrierOff();
     }
     //Fun fact, triggerExit doesn't count if the object is destroyed
     public void BarrierOff()
@@ -442,7 +443,12 @@ public class Enemy : MonoBehaviour
                 animator.SetTrigger("Flinch");
                 //I can see this being a problem for the Red Dragon's last phase
                 //I will make an if case where green == true and red==true
-                if (red == true)
+                if (red == true&& green== true)
+                {
+                    animator.ResetTrigger("Attack");
+                    animator.ResetTrigger("Attack2");
+                }
+                else if (red == true)
                 {
                     animator.ResetTrigger("StrongAttack");
                 }
@@ -482,7 +488,7 @@ public class Enemy : MonoBehaviour
             if (green == true)
             {
                 SetCantFlinch();
-                Debug.Log("Green ThiefFlinched");
+                Debug.Log("Green ThiefFlinched " + cantFlinch);
             }
         }
     }
@@ -495,7 +501,10 @@ public class Enemy : MonoBehaviour
             animator.ResetTrigger("Flinch");
         }
         flinching = false;
-            idleCancel = StartCoroutine(IdleAnimation(3+2));
+        //06/24/24
+        //ATM, use idleTime. Most foes have idleTimes of 5. It wouldn't make sense for Witch
+            idleCancel = StartCoroutine(IdleAnimation(idleTime));
+        //Debug.Log("IdleAnimation");
     }
     public void FlinchCancel()
     {
@@ -657,7 +666,12 @@ public class Enemy : MonoBehaviour
 
             //06/03/24
             //I just realized I don't even reset the triggers after an attack if I don't interrupt them
-            if (red == true)
+            if (red == true && green == true)
+            {
+                animator.ResetTrigger("Attack");
+                animator.ResetTrigger("Attack2");
+            }
+            else if (red == true)
             {
                 animator.ResetTrigger("StrongAttack");
             }
@@ -729,8 +743,7 @@ public class Enemy : MonoBehaviour
         animator.SetBool("Idle", true);
         counterAttackOn.SetActive(false);
         counterAttackCloud.SetActive(false);
-        //06/19/24forgot to dothis, which may be why Green Dragon isn't getting Unflinched
-        UnsetCantFlinch();
+
     }
     IEnumerator FollowUpAttack(int waitTime)
     {
@@ -740,6 +753,13 @@ public class Enemy : MonoBehaviour
         if (animatorTrue == true)
         {
             animator.SetBool("Idle", false);
+        }
+        if(unflinchingFollow == false)
+        {
+            //06/19/24forgot to dothis, which may be why Green Dragon isn't getting Unflinched
+            if (armor ==false) {
+                UnsetCantFlinch();
+            }
         }
     }
     public void TakeDamage(float damage, bool armorBreak)
@@ -773,6 +793,7 @@ public class Enemy : MonoBehaviour
                 {
                     ArmorOff();
                     Destroy(GameObject.Find("Barrier(Clone)"));
+                    Destroy(GameObject.Find("Dragon Barrier(Clone)"));
                 }
             }
             else
@@ -819,6 +840,11 @@ public class Enemy : MonoBehaviour
     {
         teamAttackAura.SetActive(false);
         damage--;
+    }
+    public void BossDying()
+    {
+        damage = 0;
+        attackReady = false;
     }
 
     private void OnMouseOver()
@@ -873,7 +899,7 @@ public class Enemy : MonoBehaviour
         if (playerScript.wind==true)
         {
             
-            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 7.59f));
+            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y-3, -Camera.main.transform.position.z - 7.59f));
         }
     }
     private void OnMouseUp()

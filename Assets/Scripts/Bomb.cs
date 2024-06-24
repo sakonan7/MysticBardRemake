@@ -93,7 +93,7 @@ public class Bomb : MonoBehaviour
     }
     IEnumerator TimeIndicatorDisappear()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         timeIndicator.SetActive(false);
     }
     IEnumerator SpecificTimedExplosion()

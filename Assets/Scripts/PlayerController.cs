@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private GameManager gameScript;
     private float originalCameraY;
     private Image HPBar;
+    private Image damageBar;
     private TextMeshProUGUI levelText;
     private TextMeshProUGUI EXPText;
     private GameObject damageFlash;
@@ -59,6 +60,9 @@ public class PlayerController : MonoBehaviour
     private TextMeshProUGUI numPotions;
     //private int numPotionsInt = 4;
     private GameObject potionUsedIcon;
+
+    //Private transparent
+
 
     //Private Numerics
     //It's very hard to be organized. Either you put all the HP stuff together and the private and statics are mixed up,
@@ -127,6 +131,9 @@ public class PlayerController : MonoBehaviour
     private Coroutine fluteReloadCancel;
     private bool fluteReloadStart = false;
 
+    private bool shieldReloading = false;
+    private Coroutine shieldReloadCancel;
+
     //Private bools
     private bool harp = true;
     private bool trumpet = false;
@@ -144,6 +151,7 @@ public class PlayerController : MonoBehaviour
     private Coroutine cancelDamageShake;
     private Coroutine cancelDamageFlash;
     private Coroutine cancelShield;
+    private bool gettingDamaged = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -165,10 +173,12 @@ public class PlayerController : MonoBehaviour
                 toolIcon = GameObject.Find("Tool Icons");
                 weaponImages = GameObject.Find("Weapon Images");
                 numPotions = GameObject.Find("Number of Potions").GetComponent<TextMeshProUGUI>();
+                numPotions.text = "X " + currentPotion;
             }
             else
             {
                 HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
+                damageBar = GameObject.Find("Damage Done").GetComponent<Image>();
                 levelText = GameObject.Find("Mugshot").transform.Find("Level Text").GetComponent<TextMeshProUGUI>();
                 damageFlash = GameObject.Find("Damage Object").transform.Find("Damage").gameObject;
                 harpGauge = GameObject.Find("Harp Gauge").GetComponent<Image>();
@@ -187,6 +197,7 @@ public class PlayerController : MonoBehaviour
                 //numPotions.text = "X " + currentPotion;
                 potionUsedIcon = GameObject.Find("Potions").transform.Find("Use Potion").gameObject;
                 weaponImages.transform.Find("Harp Image").gameObject.SetActive(true);
+                //TransparentUI(5);
             }
         }
         audio = GetComponent<AudioSource>();
@@ -344,7 +355,18 @@ public class PlayerController : MonoBehaviour
                                 fluteReloadStart = false;
                             }
                         }
+                        if (shieldReloading == true)
+                        {
 
+                            if (shieldGauge.fillAmount >= 1)
+                            {
+                                shieldGauge.color = new Color(0.9503901f, 1, 0, 1);
+                                ShieldReloadCancel();
+                                currentShield = shieldTotal;
+                                shieldText.text = shieldTotal + "/" + shieldTotal;
+                                //shieldReloadStart = false;
+                            }
+                        }
 
                         //if (Input.GetKeyDown(KeyCode.S))
                         //{
@@ -513,7 +535,7 @@ public class PlayerController : MonoBehaviour
         //ViolinHitEffect(newPosition);
         Instantiate(trumpetHitbox, newPosition, trumpetHitbox.transform.rotation);
         //Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
-        //HarpHitEffect(newPosition);
+        //TrumpetHitEffect(newPosition);
         StartCoroutine(Lag(0.5f));
         trumpetGauge.fillAmount -= (float)1 / trumpetTotal;
         currentTrumpet--;
@@ -592,8 +614,9 @@ public class PlayerController : MonoBehaviour
         GameObject [] enemies =GameObject.FindGameObjectsWithTag("Enemy");
         for (int i= 0; i < enemies.Length; i++)
         {
-            enemies[i].GetComponent<Enemy>().TakeDamage(20, true);
+            //Nerf, destroying armor will not cause foe to flinch
             enemies[i].GetComponent<Enemy>().Flinch();
+            enemies[i].GetComponent<Enemy>().TakeDamage(20, true);
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             //ViolinHitEffect(enemies[i].transform.position);
         }
@@ -649,6 +672,7 @@ public class PlayerController : MonoBehaviour
         {
             numPotions.text = "";
         }
+        damageBar.fillAmount = HPBar.fillAmount;
     }
     IEnumerator PotionUse()
     {
@@ -727,10 +751,16 @@ public class PlayerController : MonoBehaviour
         shieldOn = true;
         weaponImages.transform.Find("Shield Image").gameObject.SetActive(true);
         shieldFilter.SetActive(true);
+        ShieldReloadCancel();
         yield return new WaitForSeconds(2);
         shieldOn = false;
         weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
         shieldFilter.SetActive(false);
+
+        if (shieldReloading == false && currentShield < shieldTotal)
+        {
+            shieldReloadCancel = StartCoroutine(ShieldReload());
+        }
     }
     IEnumerator ShieldBreakAnimation()
     {
@@ -776,6 +806,11 @@ public class PlayerController : MonoBehaviour
         //06/19/24
         //Need to place this here, because it interprets this after the damage has been done. Aka, you have 2 left after 4 damage, it's interpreted
         //as 4 > 2, when it's supposed to be 4 > 2 before shield break
+
+        //06/23/24
+        //I will do shieldReloading == false, but I need some way to start this up again if stop using shield
+        //Maybe do ShieldReload IEnumerator here, too
+        ShieldReloadCancel();
         bool shieldBroken = false;
         if (damage > currentShield)
         {
@@ -801,6 +836,7 @@ public class PlayerController : MonoBehaviour
                 weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
                 shieldFilter.SetActive(false);
             }
+            
         }
         if (red == true)
         {
@@ -842,12 +878,23 @@ public class PlayerController : MonoBehaviour
                 gameScript.GameOver();
             }
         }
+        if(gettingDamaged ==false)
+        {
+            StartCoroutine(DamageBar());
+        }
     }
     IEnumerator DamageText(float damage)
     {
         damageText.GetComponent<TextMesh>().text = "" + damage;
         yield return new WaitForSeconds(1);
         damageText.GetComponent<TextMesh>().text = "";
+    }
+    IEnumerator DamageBar()
+    {
+        gettingDamaged = true;
+        yield return new WaitForSeconds(3);
+        gettingDamaged = false;
+        damageBar.fillAmount = HPBar.fillAmount;
     }
     IEnumerator OldCameraShake(float power)
     {
@@ -935,6 +982,53 @@ public class PlayerController : MonoBehaviour
         }
         fluteReloading = false;
         //fluteGauge.transform.localScale -= new Vector3(fluteGauge.transform.localScale.x * 0.05f, fluteGauge.transform.localScale.y * 0.05f, 0);
+    }
+    IEnumerator ShieldReload()
+    {
+        yield return new WaitForSeconds(5);
+        shieldReloading = true;
+        //fluteGauge.transform.localScale += new Vector3(fluteGauge.transform.localScale.x * 0.05f, fluteGauge.transform.localScale.y * 0.05f, 0);
+        //shieldGauge.color = new Color(0.6997535f, 0, 0.5817609f, 0);
+        StartCoroutine(ActualShieldReload());
+    }
+    public void ShieldReloadCancel()
+    {
+        if (shieldReloadCancel != null)
+        {
+            StopCoroutine(shieldReloadCancel);
+        }
+        shieldReloading = false;
+        //fluteGauge.transform.localScale -= new Vector3(fluteGauge.transform.localScale.x * 0.05f, fluteGauge.transform.localScale.y * 0.05f, 0);
+    }
+    IEnumerator ActualShieldReload()
+    {
+        while (shieldReloading == true)
+        {
+            yield return new WaitForSeconds(1);
+            currentShield++;
+            //shieldGauge.color = new Color(0.6997535f, 0, 0.5817609f, 0);
+            //shieldGauge.fillAmount += (float)1 / 10 * Time.deltaTime;
+            shieldGauge.fillAmount += (float)(1 / shieldTotal);
+            //I need to add to a quantity over time
+            shieldText.text = currentShield + "/" + shieldTotal;
+        }
+        if (currentShield > shieldTotal)
+        {
+            currentShield = shieldTotal;
+            shieldText.text = currentShield + "/" + shieldTotal;
+        }
+        Debug.Log("End");
+    }
+    public void TransparentUI(float time)
+    {
+        //4 + weapon images (use bool) + shield + weapons + potions
+        //No text atm
+        GameObject.Find("HP Bar Background").GetComponent<RawImage>().color = new Color(this.GetComponent<RawImage>().color.r, this.GetComponent<RawImage>().color.g, this.GetComponent<RawImage>().color.b, 0.5f);
+        StartCoroutine(TransparentUITime(time));
+    }
+    IEnumerator TransparentUITime(float time)
+    {
+        yield return new WaitForSeconds(time);
     }
     public void FullRestore()
     {

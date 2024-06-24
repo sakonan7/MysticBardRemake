@@ -94,7 +94,7 @@ public class GreenThief : MonoBehaviour
     {
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Counterattack");
-        enemyScript.SetDamage(2);
+        enemyScript.SetDamage(3);
         //Below isn't the problem because both counterattacklength and attacklength uses attacklength set by
         //SetAttackLength()
         enemyScript.SetAttackLength(1.5f);
