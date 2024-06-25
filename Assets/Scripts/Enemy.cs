@@ -53,6 +53,8 @@ public class Enemy : MonoBehaviour
     private Coroutine flinchOpportunityCancel;
     private Coroutine attackLengthCancel;
     private Coroutine counterAttackCancel;
+    private Coroutine counterAttackWholeCancel;
+
 
     private GameObject[] enemies;
 
@@ -433,8 +435,8 @@ public class Enemy : MonoBehaviour
                 //Also, I have to cancel different Coroutines for different mo
                 StopCoroutine(flinchOpportunityCancel);
                 StopCoroutine(attackLengthCancel);
-                //playerScript.InterruptEffect(effectPosition.transform.position);
-                //StopAttackEffect();
+                playerScript.InterruptEffect(effectPosition.transform.position);
+                StopAttackEffect();
             }
 
             if (animatorTrue == true)
@@ -609,12 +611,16 @@ public class Enemy : MonoBehaviour
     //Oh I know why. Because I don't PlayAttackEffect(). I deactivated it to stop crashing the editor.
     public void PlayAttackEffect(int attackEffect)
     {
-        effectNumber = attackEffect;
-        attackEffects[effectNumber].Play();
+        if (gameScript.playEffects== true) {
+            effectNumber = attackEffect;
+            attackEffects[effectNumber].Play();
+        }
     }
     public void StopAttackEffect()
     {
-        attackEffects[effectNumber].Stop();
+        if (gameScript.playEffects ==true) {
+            attackEffects[effectNumber].Stop();
+        }
     }
     public void DealDamage(float newDamage)
     {
@@ -701,9 +707,8 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                StartCoroutine(CounterattackCloud());
-                Debug.Log("CounterattackCloud");
-
+                    counterAttackWholeCancel =StartCoroutine(CounterattackCloud());
+                    //Debug.Log("CounterattackCloud");
             }
         }
     }
@@ -739,11 +744,11 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         counterAttackActive = false;
-        StartCoroutine(FollowUpAttack(4));
+        StartCoroutine(FollowUpAttack(3));
         animator.SetBool("Idle", true);
         counterAttackOn.SetActive(false);
         counterAttackCloud.SetActive(false);
-
+        Debug.Log("Counterattack over");
     }
     IEnumerator FollowUpAttack(int waitTime)
     {
@@ -761,6 +766,22 @@ public class Enemy : MonoBehaviour
                 UnsetCantFlinch();
             }
         }
+        Debug.Log("Followup Attack");
+    }
+    public void CounterAttackWholeCancel()
+    {
+        if (counterAttackWholeCancel !=null) {
+            StopCoroutine(counterAttackWholeCancel);
+        }
+        if (counterAttackCancel != null)
+        {
+            StopCoroutine(counterAttackCancel);
+        }
+        counterAttackStart.SetActive(false);
+        counterAttackOn.SetActive(false);
+        counterAttackCloud.SetActive(false);
+        counterAttackActive = false;
+        counterAttackTriggered = false;
     }
     public void TakeDamage(float damage, bool armorBreak)
     {
@@ -817,7 +838,7 @@ public class Enemy : MonoBehaviour
             animator.SetBool("Idle", true);
             counterAttackOn.SetActive(false);
             counterAttackCloud.SetActive(false);
-
+            //Debug.Log("Counterattack triggered " + counterAttackTriggered);
         }
     }
     public void WindCaptureEnd()
@@ -845,6 +866,8 @@ public class Enemy : MonoBehaviour
     {
         damage = 0;
         attackReady = false;
+        noAttack = true;
+        animator.SetBool("Idle", false);
     }
 
     private void OnMouseOver()

@@ -101,7 +101,8 @@ public class PlayerController : MonoBehaviour
     public static float shieldTotal = 10;
     private static float currentPotion = 4;
     public static float potionTotal = 4;
-    public static int level = 6;
+    public static int level = 5;
+    public  int levelNonStatic = 5;
     //EXPCounter will be the number that goes down
     //currentEXP is for holding the amount
     //subtract if you levelled up
@@ -203,6 +204,7 @@ public class PlayerController : MonoBehaviour
         audio = GetComponent<AudioSource>();
 
         levelText.text = "Lv. " + level;
+        levelNonStatic = level;
 
         //This is necessary in case I didn't increase any of these values
         currentHP = HPTotal;
@@ -222,6 +224,7 @@ public class PlayerController : MonoBehaviour
         shieldText = GameObject.Find("Shield").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
         shieldText.text = shieldTotal + "/" + shieldTotal;
         numPotions.text = "X " + currentPotion;
+        //AllAttack();
     }
 
     // Update is called once per frame
@@ -513,8 +516,10 @@ public class PlayerController : MonoBehaviour
     {
         //if (violinDrained ==false) {
         Instantiate(harpHitbox, newPosition, harpHitbox.transform.rotation);
-        //Instantiate(harpSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), harpSoundwave.transform.rotation);
-        //HarpHitEffect(newPosition);
+        if (gameScript.playEffects ==true) {
+            Instantiate(harpSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), harpSoundwave.transform.rotation);
+        }
+        HarpHitEffect(newPosition);
         StartCoroutine(Lag(0.5f));
             harpGauge.fillAmount -= (float)1 / harpTotal;
         currentHarp--;
@@ -534,8 +539,11 @@ public class PlayerController : MonoBehaviour
         //if (violinDrained ==false) {
         //ViolinHitEffect(newPosition);
         Instantiate(trumpetHitbox, newPosition, trumpetHitbox.transform.rotation);
-        //Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
-        //TrumpetHitEffect(newPosition);
+        if (gameScript.playEffects == true)
+        {
+            Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
+        }
+        TrumpetHitEffect(newPosition);
         StartCoroutine(Lag(0.5f));
         trumpetGauge.fillAmount -= (float)1 / trumpetTotal;
         currentTrumpet--;
@@ -632,24 +640,25 @@ public class PlayerController : MonoBehaviour
         hitCount = 0;
         allAttackGauge.fillAmount=0;
         StartCoroutine(SpecialInvincibility());
-        StartCoroutine(CameraShakeSpec(0));
+        StartCoroutine(CameraShakeSpec(3));
         //allAttackEffect.SetActive(true);
-        //StartCoroutine(AllAttackDisappear1());
+        StartCoroutine(AllAttackDisappear1());
         hitCountReached = false;
     }
     IEnumerator AllAttackDisappear1()
     {
         allAttackEffect.SetActive(true);
-        yield return new WaitForSeconds(0.25f*2);
+        yield return new WaitForSeconds(0.75f);
         allAttackEffect.SetActive(false);
         StartCoroutine(AllAttackAgain());
     }
     IEnumerator AllAttackAgain()
     {
         //allAttackEffect.SetActive(true);
-        yield return new WaitForSeconds(0.25f *2);
+        yield return new WaitForSeconds(0.50f);
         allAttackEffect.SetActive(true);
         StartCoroutine(AllAttackDisappear2());
+        StartCoroutine(CameraShakeSpec(3));
     }
     IEnumerator AllAttackDisappear2()
     {
@@ -664,6 +673,7 @@ public class PlayerController : MonoBehaviour
             HPBar.fillAmount += (float)4 / HPTotal;
             currentPotion--;
             numPotions.text = "X " + currentPotion;
+            HPText.text = currentHP + "/" + HPTotal;
             if (potionUsed == false) {
                 StartCoroutine(PotionUse());
             }
@@ -728,18 +738,24 @@ public class PlayerController : MonoBehaviour
     }
     public void InterruptEffect(Vector3 position)
     {
-        Instantiate(interruptEffect, new Vector3(position.x, interruptEffect.transform.position.y, interruptEffect.transform.position.z), interruptEffect.transform.rotation);
+        if (gameScript.playEffects== true) {
+            Instantiate(interruptEffect, new Vector3(position.x, interruptEffect.transform.position.y, interruptEffect.transform.position.z), interruptEffect.transform.rotation);
+        }
     }
     public void PlayHurtEffect()
     {
-        hurtEffect.Play();
+        if (gameScript.playEffects == true) {
+            hurtEffect.Play();
+        }
     }
     public void HarpHitEffect(Vector3 position)
     {
+        if (gameScript.playEffects == true)
         Instantiate(harpHitEffect, position, harpHitbox.transform.rotation);
     }
     public void TrumpetHitEffect(Vector3 position)
     {
+        if (gameScript.playEffects == true)
         Instantiate(trumpetHitEffect, position, trumpetHitEffect.transform.rotation);
     }
     public void WindHitEffect(Vector3 position)
@@ -853,7 +869,7 @@ public class PlayerController : MonoBehaviour
         if (currentHP >0) {
             currentHP -= damage;
             HPBar.fillAmount -= (float)damage / HPTotal;
-            //PlayHurtEffect();
+            PlayHurtEffect();
             HPText.text = currentHP + "/" + HPTotal;
 
             //I'm thinking about not cancelling the Coroutine and just changing the value of damage
@@ -1131,7 +1147,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1);
         GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Lv. " + level;
         levelText.text = "Lv. " + level;
-        if(level >= 14)
+        if(level >= 11)
         {
             GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Lv. MAX";
             levelText.text = "Lv. MAX";
@@ -1144,13 +1160,13 @@ public class PlayerController : MonoBehaviour
         //currentHP = originalHP;
         //currentHP += 3;
         level += 1;
-        EXPToLevelLimit *= 3 / 2;
+        EXPToLevelLimit *= 1.75f;
         EXPToLevel = EXPToLevelLimit;
         //Debug.Log(EXPToLevel);
         levelUpStock++;
-        if (level >=14)
+        if (level >=11)
         {
-            level = 14;
+            level = 11;
             levelUpStock = 1;
         }
     }

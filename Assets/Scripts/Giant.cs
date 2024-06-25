@@ -53,6 +53,7 @@ public class Giant : MonoBehaviour
         }
         else
         {
+            //if(gameScript.PlayEffects == false)
             enemyScript.PlayAttackEffect(0);
         }
         enemyScript.AttackReadyOff();

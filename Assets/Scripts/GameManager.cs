@@ -7,6 +7,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private PlayerController player;
+    private AudioSource audio;
+    public bool playEffects = false;
+    public AudioClip regularBattle;
+    public AudioClip bossMusic;
     private GameObject gameOverObject;
     private GameObject gameOverText;
     private GameObject gameOverFilter;
@@ -65,7 +69,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        
+        audio = GameObject.Find("Main Camera").GetComponent<AudioSource>();
         if (title ==false) {
             player = GameObject.Find("Player").GetComponent<PlayerController>();
             gameOverObject = GameObject.Find("Game Over Object");
@@ -89,6 +93,8 @@ public class GameManager : MonoBehaviour
                 if (enemies[i].GetComponent<Enemy>().boss == true)
                 {
                     boss = true;
+                    audio.clip =bossMusic;
+                    audio.Play();
                 }
             }
         }
@@ -113,7 +119,7 @@ public class GameManager : MonoBehaviour
         if (numEnemies <= 0)
         {
             if (boss ==false) {
-                if (player.levelUpStock >= 14) {
+                if (player.levelNonStatic < 11) {
                     EXP();
                 }
                 else

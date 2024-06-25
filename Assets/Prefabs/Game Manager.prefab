@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ac83b5737d09942a4c98a7cdc4c499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playEffects: 1
+  regularBattle: {fileID: 8300000, guid: 33ceb7a4217d99640bc13293010db0de, type: 3}
+  bossMusic: {fileID: 8300000, guid: 8da6657db43c5f14ba7cdfe3a555b772, type: 3}
   debris:
   - {fileID: 1762299993224416091, guid: cef0e78a80b066648a7dd39d7e173470, type: 3}
   - {fileID: 8934065819855448562, guid: c07434cf9263bc542beaed0fdc78823a, type: 3}
