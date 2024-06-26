@@ -46,6 +46,11 @@ public class Enemy : MonoBehaviour
     private GameObject counterAttackCloud;
     private GameObject counterAttackStart;
     private GameObject counterAttackOn;
+    private GameObject bossHPBarObject;
+    private GameObject bossHPBarBackground;
+    private Image HPBarActual;
+    private TextMeshProUGUI HPText;
+    private Image damageBar;
 
     private Coroutine cancelDamageDisplay;
     private Coroutine flinchCancel; //or flinchReset
@@ -82,6 +87,7 @@ public class Enemy : MonoBehaviour
     public GameObject teamAttackAura;
 
     public float HP = 10;
+    private float originalHP;
     private float damage = 0;
     public float EXP = 0;
     //Individual enemy abilit
@@ -103,6 +109,7 @@ public class Enemy : MonoBehaviour
     private Image armorFill;
 
     private bool cantFlinch = false;
+    private bool gettingDamaged = false;
 
     public bool cantMove = false;
     // Start is called before the first frame update
@@ -144,6 +151,17 @@ public class Enemy : MonoBehaviour
             counterAttackCloud = transform.Find("Counterattack Objects").transform.Find("Counterattack Cloud 2").gameObject;
             counterAttackStart = transform.Find("Counterattack Objects").transform.Find("Counterattack Start").gameObject;
             counterAttackOn = transform.Find("Counterattack Objects").transform.Find("Counterattack On").gameObject;
+        }
+        if (boss ==true)
+        {
+            originalHP = HP;
+            bossHPBarObject = GameObject.Find("Boss HP Object");
+            bossHPBarBackground = bossHPBarObject.transform.Find("Boss HP Bar Background").gameObject;
+            bossHPBarBackground.SetActive(true);
+            HPBarActual = bossHPBarBackground.transform.Find("Boss HP Bar").GetComponent<Image>();
+            HPText = bossHPBarBackground.transform.Find("Boss Numeric").GetComponent<TextMeshProUGUI>();
+            HPText.text = originalHP + "/" + originalHP;
+            damageBar = GameObject.Find("Damage Taken").GetComponent<Image>();
         }
     }
 
@@ -505,8 +523,11 @@ public class Enemy : MonoBehaviour
         flinching = false;
         //06/24/24
         //ATM, use idleTime. Most foes have idleTimes of 5. It wouldn't make sense for Witch
-            idleCancel = StartCoroutine(IdleAnimation(idleTime));
-        //Debug.Log("IdleAnimation");
+        //06/25/24 atm, I am doing this because I don't want Dragon to be not doing something for so long
+        //I can do something like recoveryIdleTime
+        //if (useRecoveryIdleTime), IdleAnimation(recoveryIdleTime)
+            idleCancel = StartCoroutine(IdleAnimation(5));
+        Debug.Log("IdleAnimation");
     }
     public void FlinchCancel()
     {
@@ -827,6 +848,15 @@ public class Enemy : MonoBehaviour
                 StopCoroutine(cancelDamageDisplay);
             }
             cancelDamageDisplay = StartCoroutine(DamageDisplayDuration(damage));
+            if (boss ==true)
+            {
+                HPBarActual.fillAmount -= (float)damage / originalHP;
+                HPText.text = HP + "/" + originalHP;
+            }
+            if (gettingDamaged == false)
+            {
+                StartCoroutine(DamageBar());
+            }
         }
         else
         {
@@ -840,6 +870,13 @@ public class Enemy : MonoBehaviour
             counterAttackCloud.SetActive(false);
             //Debug.Log("Counterattack triggered " + counterAttackTriggered);
         }
+    }
+    IEnumerator DamageBar()
+    {
+        gettingDamaged = true;
+        yield return new WaitForSeconds(3);
+        gettingDamaged = false;
+        damageBar.fillAmount = HPBarActual.fillAmount;
     }
     public void WindCaptureEnd()
     {

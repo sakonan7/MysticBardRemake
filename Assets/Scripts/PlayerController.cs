@@ -19,7 +19,7 @@ using Unity.VisualScripting.Antlr3.Runtime;
 public class PlayerController : MonoBehaviour
 {
     //I made these with the idea of sticking stuff together. Shield stuff with shield stuff, violin stuff with violin stuff, IE
-    public GameObject damageText;
+    private GameObject damageText;
     public AudioClip harpSound;
     public AudioClip trumpet1;
     public AudioClip trumpet2;
@@ -199,6 +199,7 @@ public class PlayerController : MonoBehaviour
                 potionUsedIcon = GameObject.Find("Potions").transform.Find("Use Potion").gameObject;
                 weaponImages.transform.Find("Harp Image").gameObject.SetActive(true);
                 //TransparentUI(5);
+                damageText = GameObject.Find("Player Damage Received");
             }
         }
         audio = GetComponent<AudioSource>();
@@ -773,6 +774,7 @@ public class PlayerController : MonoBehaviour
         weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
         shieldFilter.SetActive(false);
 
+        //Maybe do shieldReloadCancel != null
         if (shieldReloading == false && currentShield < shieldTotal)
         {
             shieldReloadCancel = StartCoroutine(ShieldReload());
@@ -901,9 +903,9 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator DamageText(float damage)
     {
-        damageText.GetComponent<TextMesh>().text = "" + damage;
+        damageText.GetComponent<TextMeshProUGUI>().text = "" + damage;
         yield return new WaitForSeconds(1);
-        damageText.GetComponent<TextMesh>().text = "";
+        damageText.GetComponent<TextMeshProUGUI>().text = "";
     }
     IEnumerator DamageBar()
     {
@@ -1001,7 +1003,7 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator ShieldReload()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(5 +3);
         shieldReloading = true;
         //fluteGauge.transform.localScale += new Vector3(fluteGauge.transform.localScale.x * 0.05f, fluteGauge.transform.localScale.y * 0.05f, 0);
         //shieldGauge.color = new Color(0.6997535f, 0, 0.5817609f, 0);
