@@ -740,7 +740,7 @@ public class PlayerController : MonoBehaviour
     public void InterruptEffect(Vector3 position)
     {
         if (gameScript.playEffects== true) {
-            Instantiate(interruptEffect, new Vector3(position.x, interruptEffect.transform.position.y, interruptEffect.transform.position.z), interruptEffect.transform.rotation);
+            Instantiate(interruptEffect, position, interruptEffect.transform.rotation);
         }
     }
     public void PlayHurtEffect()

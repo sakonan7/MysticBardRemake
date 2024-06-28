@@ -7,18 +7,22 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     private PlayerController playerScript;
+    private AudioSource audio;
     private GameManager gameScript;
     private Coroutine explodeCancel;
     private Coroutine explodeEffectCancel;
     private GameObject effectPosition;
     private GameObject aboutToExplode;
     private GameObject timeIndicator;
+    public GameObject explosion;
+    public AudioClip attackImpact;
     public bool timedBomb = false;
     public float time = 0;
     // Start is called before the first frame update
     void Start()
     {
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        audio = GetComponent<AudioSource>();
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         effectPosition = transform.Find("Effect Position").gameObject;
         
@@ -70,19 +74,31 @@ public class Bomb : MonoBehaviour
     IEnumerator TimedExplosion()
     {
         yield return new WaitForSeconds(6);
-        Destroy(gameObject);
+        transform.Find("Appearance").gameObject.SetActive(false);
+        Instantiate(explosion, transform.position, transform.rotation);
+        StartCoroutine(ActualDamage());
+    }
+    IEnumerator ActualDamage()
+    {
+        yield return new WaitForSeconds(0.5f);
+        audio.PlayOneShot(attackImpact, 1);
+        Destroy(gameObject, 2);
+
+        //Instantiate explosion effect, then 0.5 seconds, do actual damage
+        //Will need to do destroy later, because there won't be anything to play damage codethedamage
         if (playerScript.shieldOn == false && playerScript.specialInvincibility == false)
         {
             playerScript.GeneralDamageCode(2, 3);
             //playerScript.PlayHurtEffect(effectAppear.transform.position);
             //playerScript.DamageFlashOn();
+            audio.PlayOneShot(attackImpact, 1);
         }
         else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
         {
             playerScript.GenerateShield(effectPosition.transform.position);
             if (playerScript.shieldOn == true)
             {
-                playerScript.ShieldGaugeDown(2,false);
+                playerScript.ShieldGaugeDown(2, false);
             }
         }
     }
@@ -99,21 +115,9 @@ public class Bomb : MonoBehaviour
     IEnumerator SpecificTimedExplosion()
     {
         yield return new WaitForSeconds(time);
-        Destroy(gameObject);
-        if (playerScript.shieldOn == false && playerScript.specialInvincibility == false)
-        {
-            playerScript.GeneralDamageCode(2, 3);
-            //playerScript.PlayHurtEffect(effectAppear.transform.position);
-            //playerScript.DamageFlashOn();
-        }
-        else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
-        {
-            playerScript.GenerateShield(effectPosition.transform.position);
-            if (playerScript.shieldOn == true)
-            {
-                playerScript.ShieldGaugeDown(2, false);
-            }
-        }
+        transform.Find("Appearance").gameObject.SetActive(false);
+        Instantiate(explosion, transform.position, transform.rotation);
+        StartCoroutine(ActualDamage());
     }
     IEnumerator SpecificAboutToExplode()
     {
@@ -131,8 +135,10 @@ public class Bomb : MonoBehaviour
             StopCoroutine(explodeCancel);
         }
         transform.Find("Appearance").gameObject.SetActive(false);
-        transform.Find("Hitbox").gameObject.SetActive(true);
+        //transform.Find("Hitbox").gameObject.SetActive(true);
+        Instantiate(explosion, transform.position,transform.rotation);
         Destroy(gameObject, 2);
+        audio.PlayOneShot(attackImpact, 1);
         //Debug.Log("Blow Up");
     }
     private void OnMouseDown()

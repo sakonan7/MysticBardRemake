@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private AudioSource audio;
     public bool playEffects = false;
     public AudioClip regularBattle;
+    public AudioClip regularBattle2;
     public AudioClip bossMusic;
     private GameObject gameOverObject;
     private GameObject gameOverText;
@@ -96,6 +97,21 @@ public class GameManager : MonoBehaviour
                     audio.clip =bossMusic;
                     audio.Play();
                 }
+            }
+        }
+        if (currentLevel >=3 && boss==false)
+        {
+            int random = 0;
+            random = Random.Range(0, 2);
+            if (random== 0)
+            {
+                audio.clip = regularBattle;
+                audio.Play();
+            }
+            else
+            {
+                audio.clip = regularBattle2;
+                audio.Play();
             }
         }
     }

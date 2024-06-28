@@ -1644,6 +1644,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1973552354276501371, guid: e011a914a5d8b3d4bb7ee76b4a09d449, type: 3}
+      propertyPath: m_Volume
+      value: 0.242
+      objectReference: {fileID: 0}
     - target: {fileID: 5993981217535868307, guid: e011a914a5d8b3d4bb7ee76b4a09d449, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2436,6 +2440,8 @@ MonoBehaviour:
   EXP: 0
   teamAttackOn: 0
   bombUser: 0
+  boss: 0
+  cantMove: 0
 --- !u!114 &1135701891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2448,6 +2454,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e8956b61ec0ea24c91be7333e05c42d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flashing: {fileID: 0}
+  armor1: {fileID: 0}
+  armor2: {fileID: 0}
+  body: {fileID: 0}
+  head: {fileID: 0}
+  helmet: {fileID: 0}
+  legs: {fileID: 0}
+  originalArmor1: {fileID: 0}
+  originalArmor2: {fileID: 0}
+  originalBody: {fileID: 0}
+  originalHead: {fileID: 0}
+  originalHelmet: {fileID: 0}
+  originalLegs: {fileID: 0}
+  flashArmor1: {fileID: 0}
+  flashArmor2: {fileID: 0}
+  flashBody: {fileID: 0}
+  flashHead: {fileID: 0}
+  flashHelmet: {fileID: 0}
+  flashLegs: {fileID: 0}
 --- !u!1 &1503857094
 GameObject:
   m_ObjectHideFlags: 3
@@ -3972,6 +3997,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2789669595854285029, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
+      propertyPath: playEffects
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2994056704253568011, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: m_Name
       value: Game Manager

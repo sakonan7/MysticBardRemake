@@ -227,7 +227,7 @@ public class GrandDragon : MonoBehaviour
                 StartCoroutine(RoarDuration());
                 GreenAuraOff();
                 PurpleAuraOn();
-                enemyScript.SetIdleTime(25);
+                enemyScript.SetIdleTime(20);
                 regularBombRing1Used = false;
                 regularBombRing2Used = false;
             }

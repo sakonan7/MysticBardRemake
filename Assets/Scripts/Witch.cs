@@ -80,18 +80,20 @@ public class Witch : MonoBehaviour
     }
     public void BombCross()
     {
-        Instantiate(bomb, new Vector3(transform.position.x + 2+1, transform.position.y, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x - 2-1, transform.position.y, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x, transform.position.y + 2+1, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x, transform.position.y - 2 - 1, -7.59f), bomb.transform.rotation);
+        Vector3 bombPosition = new Vector3(0, 0.7f,-7.59f);
+        Instantiate(bomb, new Vector3(bombPosition.x + 2+1, bombPosition.y, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(bombPosition.x - 2-1, bombPosition.y, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(bombPosition.x, bombPosition.y + 2+1, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(bombPosition.x, bombPosition.y - 2 - 1, -7.59f), bomb.transform.rotation);
         enemyScript.AttackReadyOff();
     }
     public void BombCube()
     {
-        Instantiate(bomb, new Vector3(transform.position.x + 1.5f +1, transform.position.y + 1.5f + 1, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x - 1.5f - 1, transform.position.y + 1.5f + 1, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x + 1.5f + 1, transform.position.y - 1.5f - 1, -7.59f), bomb.transform.rotation);
-        Instantiate(bomb, new Vector3(transform.position.x - 1.5f - 1, transform.position.y - 1.5f - 1, -7.59f), bomb.transform.rotation);
+        Vector3 bombPosition = new Vector3(0, 0.7f, -7.59f);
+        Instantiate(bomb, new Vector3(bombPosition.x + 1.5f +1, bombPosition.y + 1.5f + 1, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(bombPosition.x - 1.5f - 1, bombPosition.y + 1.5f + 1, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(bombPosition.x + 1.5f + 1, bombPosition.y - 1.5f - 1, -7.59f), bomb.transform.rotation);
+        Instantiate(bomb, new Vector3(bombPosition.x - 1.5f - 1, bombPosition.y - 1.5f - 1, -7.59f), bomb.transform.rotation);
         enemyScript.AttackReadyOff();
     }
     public void Attack()

@@ -32,12 +32,17 @@ using System.Linq.Expressions;
 //For stuff like phases and complex attack patterns, do them in the individual enemy script
 //For attacks where I don't want a flinch, just use a mix of not using a flinchwindow and using cantflinch
 
+//06/26/24
+//Bomb users will give a number of sounds to play Based on how many bombs they'd make .The sound is fzz
+//Bonds will draw from the prefabs for effects so I don't have to account for the bonds being destroyed 
+
 //TaskList
 //Make Foe Not Spazz Between Idle And Att
 public class Enemy : MonoBehaviour
 {
     private Animator animator;
     private Animation animation;
+    private AudioSource audio;
     private bool animatorTrue = false;
     private bool animationTrue = false;
     private PlayerController playerScript;
@@ -85,6 +90,7 @@ public class Enemy : MonoBehaviour
 
     //public gameOb
     public GameObject teamAttackAura;
+    public AudioClip attackImpact;
 
     public float HP = 10;
     private float originalHP;
@@ -117,6 +123,7 @@ public class Enemy : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         animation = GetComponent<Animation>();
+        audio = GetComponent<AudioSource>();
         if (animator != null)
         {
             animatorTrue = true;
@@ -632,8 +639,9 @@ public class Enemy : MonoBehaviour
     //Oh I know why. Because I don't PlayAttackEffect(). I deactivated it to stop crashing the editor.
     public void PlayAttackEffect(int attackEffect)
     {
+        effectNumber = attackEffect;
         if (gameScript.playEffects== true) {
-            effectNumber = attackEffect;
+            
             attackEffects[effectNumber].Play();
         }
     }
@@ -650,13 +658,15 @@ public class Enemy : MonoBehaviour
             //playerScript.GeneralDamageCode(newDamage, newDamage);
             //playerScript.PlayHurtEffect(effectAppear.transform.position);
             //playerScript.DamageFlashOn();
-            if(red ==false)
+            if(newDamage <3)
             {
                 playerScript.GeneralDamageCode(newDamage, 3);
+                audio.PlayOneShot(attackImpact, 1);
             }
             else
             {
                 playerScript.GeneralDamageCode(newDamage, 8);
+                audio.PlayOneShot(attackImpact, 1.5f);
             }
         }
         else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
@@ -841,6 +851,16 @@ public class Enemy : MonoBehaviour
             else
             {
                 HP -= damage;
+                if (boss == true)
+                {
+                    HPBarActual.fillAmount -= (float)damage / originalHP;
+                    HPText.text = HP + "/" + originalHP;
+                    if (gettingDamaged == false)
+                    {
+                        StartCoroutine(DamageBar());
+                    }
+                }
+
             }
             //DamageText(damage);
             if (cancelDamageDisplay != null)
@@ -848,15 +868,7 @@ public class Enemy : MonoBehaviour
                 StopCoroutine(cancelDamageDisplay);
             }
             cancelDamageDisplay = StartCoroutine(DamageDisplayDuration(damage));
-            if (boss ==true)
-            {
-                HPBarActual.fillAmount -= (float)damage / originalHP;
-                HPText.text = HP + "/" + originalHP;
-            }
-            if (gettingDamaged == false)
-            {
-                StartCoroutine(DamageBar());
-            }
+
         }
         else
         {

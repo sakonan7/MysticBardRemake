@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Level 4.unity
     guid: 8fd1f3e5786d94f4cbd4d6e31c5e6e6d
   - enabled: 1
-    path: Assets/Scenes/Level 7.unity
+    path: Assets/Scenes/First Witch.unity
     guid: d4513be9bbeef0c45b033aeeabefec70
   - enabled: 1
     path: Assets/Scenes/Level 5.unity
