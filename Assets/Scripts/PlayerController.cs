@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem interruptEffect;
     public GameObject hurt;
     public ParticleSystem hurtEffect;
+    public ParticleSystem hurtEffect2;
     public ParticleSystem harpHitEffect;
     public ParticleSystem trumpetHitEffect;
     public ParticleSystem windCrash;
@@ -771,10 +772,16 @@ public class PlayerController : MonoBehaviour
             Instantiate(interruptEffect, position, interruptEffect.transform.rotation);
         }
     }
-    public void PlayHurtEffect()
+    public void PlayHurtEffect(bool unblockable)
     {
         if (gameScript.playEffects == true) {
-            hurtEffect.Play();
+            if (unblockable ==false) {
+                hurtEffect.Play();
+            }
+            else
+            {
+                hurtEffect2.Play();
+            }
         }
     }
     public void HarpHitEffect(Vector3 position)
@@ -860,7 +867,7 @@ public class PlayerController : MonoBehaviour
         bool shieldBroken = false;
         if (damage > currentShield)
         {
-            GeneralDamageCode(damage - currentShield, 3);
+            GeneralDamageCode(damage - currentShield, 3, false);
             audio.PlayOneShot(shieldBreak, 2f);
             shieldBroken = true;
         }
@@ -893,13 +900,13 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ShieldBreakAnimation());
         }
     }
-    public void GeneralDamageCode(float damage, float shakeAmount)
+    public void GeneralDamageCode(float damage, float shakeAmount, bool unblockable)
     {
         //StartCoroutine(CameraShake(1/10));
         if (currentHP >0) {
             currentHP -= damage;
             HPBar.fillAmount -= (float)damage / HPTotal;
-            PlayHurtEffect();
+            PlayHurtEffect(unblockable);
             HPText.text = currentHP + "/" + HPTotal;
 
             //I'm thinking about not cancelling the Coroutine and just changing the value of damage

@@ -114,6 +114,10 @@ public class Enemy : MonoBehaviour
     //private Image armorBackground;
     private Image armorFill;
 
+    //Attack
+    private bool comboAttack = false;
+    private bool unblockable = false;
+
     private bool cantFlinch = false;
     private bool gettingDamaged = false;
 
@@ -321,6 +325,7 @@ public class Enemy : MonoBehaviour
     {
         bombUser = false;
     }
+
     public void SetNoAttack()
     {
         noAttack = true;
@@ -328,6 +333,14 @@ public class Enemy : MonoBehaviour
     public void UnsetNoAttack()
     {
         noAttack = false;
+    }
+    public void SetUnblockable()
+    {
+        unblockable = true; 
+    }
+    public void UnsetUnblockable()
+    {
+        unblockable = false;
     }
     //This is less of an enemy type and more of a mode
     public void SetArmor()
@@ -660,12 +673,25 @@ public class Enemy : MonoBehaviour
             //playerScript.DamageFlashOn();
             if(newDamage <3)
             {
-                playerScript.GeneralDamageCode(newDamage, 3);
+                playerScript.GeneralDamageCode(newDamage, 3,unblockable);
                 audio.PlayOneShot(attackImpact, 1);
             }
             else
             {
-                playerScript.GeneralDamageCode(newDamage, 8);
+                playerScript.GeneralDamageCode(newDamage, 8,unblockable);
+                audio.PlayOneShot(attackImpact, 1.5f);
+            }
+        }
+        else if (unblockable ==true)
+        {
+            if (newDamage < 3)
+            {
+                playerScript.GeneralDamageCode(newDamage, 3, unblockable);
+                audio.PlayOneShot(attackImpact, 1);
+            }
+            else
+            {
+                playerScript.GeneralDamageCode(newDamage, 8, unblockable);
                 audio.PlayOneShot(attackImpact, 1.5f);
             }
         }
