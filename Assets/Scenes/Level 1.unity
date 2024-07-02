@@ -8108,6 +8108,7 @@ MonoBehaviour:
   unflinchingFollow: 0
   attackEffects: []
   teamAttackAura: {fileID: 0}
+  attackImpact: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -11644,13 +11645,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 431087092046865492, guid: 8f288dc09d55c5d478f4cee4f254a480, type: 3}
-      propertyPath: harpSoundwave
+      propertyPath: fluteSound
       value: 
-      objectReference: {fileID: 485518619082792125, guid: 2083fc50530717a4eb580d21782d1ff6, type: 3}
-    - target: {fileID: 684061841406032331, guid: 8f288dc09d55c5d478f4cee4f254a480, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8300000, guid: 63dbfe7a15f02974e96aeb74478a20db, type: 3}
     - target: {fileID: 4015009680743265378, guid: 8f288dc09d55c5d478f4cee4f254a480, type: 3}
       propertyPath: m_Name
       value: Player

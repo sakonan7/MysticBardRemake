@@ -21,10 +21,15 @@ public class PlayerController : MonoBehaviour
     //I made these with the idea of sticking stuff together. Shield stuff with shield stuff, violin stuff with violin stuff, IE
     private GameObject damageText;
     public AudioClip harpSound;
+    public AudioClip harpSound2;
     public AudioClip trumpet1;
     public AudioClip trumpet2;
+    public AudioClip fluteSound;
+    public AudioClip fluteSound2;
     public AudioClip shieldTune;
     public AudioClip shieldBreak;
+    public AudioClip allAttack;
+    public AudioClip allAttackFilled;
     private GameObject camera;
     private CinemachineBasicMultiChannelPerlin camShake;
     private GameManager gameScript;
@@ -533,7 +538,16 @@ public class PlayerController : MonoBehaviour
             }
         //}
         audio.Stop();
-        audio.PlayOneShot(harpSound, 0.75f);
+        int random = Random.Range(0, 2);
+        if (random == 0)
+        {
+            audio.PlayOneShot(harpSound, 0.75f);
+        }
+        else
+        {
+            audio.PlayOneShot(harpSound2, 0.75f);
+        }
+        
     }
     public void TrumpetAttack(Vector3 newPosition)
     {
@@ -555,6 +569,7 @@ public class PlayerController : MonoBehaviour
             trumpetGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
         }
         //}
+        audio.Stop();
         int random = Random.Range(0, 2);
         if(random == 0)
         {
@@ -588,6 +603,16 @@ public class PlayerController : MonoBehaviour
                 FluteReloadCancel();
             }
         }
+        audio.Stop();
+        int random = Random.Range(0, 2);
+        if (random == 0)
+        {
+            audio.PlayOneShot(fluteSound, 1);
+        }
+        else
+        {
+            audio.PlayOneShot(fluteSound, 1);
+        }
     }
     public void WindEnd()
     {
@@ -607,6 +632,8 @@ public class PlayerController : MonoBehaviour
         {
             hitCountReached = true;
             StartCoroutine(AllAttackBarFlash());
+            audio.Stop();
+            audio.PlayOneShot(allAttackFilled,2);
         }
     }
     IEnumerator AllAttackBarFlash()
@@ -645,6 +672,7 @@ public class PlayerController : MonoBehaviour
         //allAttackEffect.SetActive(true);
         StartCoroutine(AllAttackDisappear1());
         hitCountReached = false;
+        audio.PlayOneShot(allAttack,2);
     }
     IEnumerator AllAttackDisappear1()
     {
