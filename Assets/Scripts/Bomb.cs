@@ -88,7 +88,7 @@ public class Bomb : MonoBehaviour
         //Will need to do destroy later, because there won't be anything to play damage codethedamage
         if (playerScript.shieldOn == false && playerScript.specialInvincibility == false)
         {
-            playerScript.GeneralDamageCode(2, 3,false);
+            playerScript.GeneralDamageCode(2, 3);
             //playerScript.PlayHurtEffect(effectAppear.transform.position);
             //playerScript.DamageFlashOn();
             audio.PlayOneShot(attackImpact, 1);
