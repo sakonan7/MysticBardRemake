@@ -10,7 +10,7 @@ public class Witch : MonoBehaviour
     public GameObject barrier;
     public GameObject bomb;
     private GameObject barrierAnimation;
-    private GameObject bombFlare;
+    private ParticleSystem bombFlare;
     private Animator animator;
     private Enemy enemyScript;
     // Start is called before the first frame update
@@ -26,8 +26,9 @@ public class Witch : MonoBehaviour
         enemyScript.SetNoAttack();
         enemyScript.SetBombUser();
         //Barrier();
-        
-        bombFlare = transform.Find("Bomb Light").transform.Find("Lens").gameObject;
+
+        //bombFlare = transform.Find("Bomb Light").transform.Find("Lens").gameObject;
+        bombFlare = transform.Find("Lens Flare").gameObject.GetComponent<ParticleSystem>();
         barrierAnimation= transform.Find("root").transform.Find("Personal Barrier Object").transform.Find("Barrier Animation").gameObject;
 
         StartCoroutine(BarrierAnimation());
@@ -118,8 +119,8 @@ public class Witch : MonoBehaviour
     }
     IEnumerator BombFlare()
     {
-        bombFlare.SetActive(true);
+        //bombFlare.SetActive(true);
         yield return new WaitForSeconds(1f);
-        bombFlare.SetActive(false);
+        bombFlare.Play();
     }
 }

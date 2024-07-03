@@ -922,7 +922,7 @@ public class Enemy : MonoBehaviour
     private void OnMouseOver()
     {
 
-        if (normal == false || cantFlinch ==false)
+        if (normal == false)
         {
             if (playerScript.flute ==true &&playerScript.wind==false)
             {
@@ -1089,7 +1089,7 @@ public class Enemy : MonoBehaviour
                 //Destroy(other.gameObject);
                 
                 playerScript.HitCountUp();
-                //playerScript.TrumpetHitEffect(effectPosition.transform.position);
+                playerScript.TrumpetHitEffect(effectPosition.transform.position);
             }
         }
         if (other.CompareTag("Harp"))
@@ -1107,7 +1107,7 @@ public class Enemy : MonoBehaviour
                 }
                 playerScript.HitCountUp();
                 //For some reason this causes multiple hits
-                //playerScript.HarpHitEffect(effectPosition.transform.position);
+                playerScript.HarpHitEffect(effectPosition.transform.position);
             }
         }
         if (other.CompareTag("Hitbox"))

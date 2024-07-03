@@ -67,7 +67,17 @@ public class PlayerController : MonoBehaviour
     private GameObject potionUsedIcon;
 
     //Private transparent
-
+    private RawImage HPBackgroundT;
+    private Image HPBarT;
+    private Image damageBarT;
+    private TextMeshProUGUI numericT;
+    private RawImage mugShotT;
+    private TextMeshProUGUI levelT;
+    private RawImage bossHPBackgroundT;
+    private Image bossHPBarT;
+    private Image bossdamageBarT;
+    //Weapon Images, Just Make Them All Transparent
+    //I just have the weapon barsleft
 
     //Private Numerics
     //It's very hard to be organized. Either you put all the HP stuff together and the private and statics are mixed up,
@@ -611,7 +621,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            audio.PlayOneShot(fluteSound, 1);
+            audio.PlayOneShot(fluteSound2, 1);
         }
     }
     public void WindEnd()
