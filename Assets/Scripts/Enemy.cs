@@ -49,8 +49,8 @@ public class Enemy : MonoBehaviour
     private GameObject effectPosition;
     private GameManager gameScript;
     private GameObject counterAttackCloud;
-    private GameObject counterAttackStart;
-    private GameObject counterAttackOn;
+    private ParticleSystem counterAttackStart;
+    private ParticleSystem counterAttackOn;
     private GameObject bossHPBarObject;
     private GameObject bossHPBarBackground;
     private Image HPBarActual;
@@ -157,8 +157,8 @@ public class Enemy : MonoBehaviour
         //May need to do this in awake, either in this or in Green Thief
         if (green ==true) {
             counterAttackCloud = transform.Find("Counterattack Objects").transform.Find("Counterattack Cloud New").gameObject;
-            counterAttackStart = transform.Find("Counterattack Objects").transform.Find("Counterattack Start").gameObject;
-            counterAttackOn = transform.Find("Counterattack Objects").transform.Find("Counterattack On").gameObject;
+            counterAttackStart = transform.Find("Counterattack Objects").transform.Find("Lens Flare").gameObject.GetComponent<ParticleSystem>();
+            counterAttackOn = transform.Find("Counterattack Objects").transform.Find("Beam").gameObject.GetComponent<ParticleSystem>();
         }
         if (boss ==true)
         {
@@ -294,8 +294,8 @@ public class Enemy : MonoBehaviour
         green = true;
         SetCantFlinch();
         counterAttackCloud = transform.Find("Counterattack Objects").transform.Find("Counterattack Cloud New").gameObject;
-        counterAttackStart = transform.Find("Counterattack Objects").transform.Find("Counterattack Start").gameObject;
-        counterAttackOn = transform.Find("Counterattack Objects").transform.Find("Counterattack On").gameObject;
+        counterAttackStart = transform.Find("Counterattack Objects").transform.Find("Lens Flare").gameObject.GetComponent<ParticleSystem>();
+        counterAttackOn = transform.Find("Counterattack Objects").transform.Find("Beam").gameObject.GetComponent<ParticleSystem>();
     }
     public void UnsetRed()
     {
@@ -769,11 +769,12 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator CounterAttackStart()
     {
-        counterAttackStart.SetActive(true);
+        counterAttackStart.Play();
+        counterAttackOn.Play();
         yield return new WaitForSeconds(1);
         counterAttackCancel = StartCoroutine(CounterAttack());
-        counterAttackStart.SetActive(false);
-        counterAttackOn.SetActive(true);
+        //counterAttackStart.SetActive(false);
+        
         counterAttackActive = true;
     }
     IEnumerator CounterAttack()
@@ -782,7 +783,7 @@ public class Enemy : MonoBehaviour
         counterAttackActive = false;
         StartCoroutine(FollowUpAttack(3));
         animator.SetBool("Idle", true);
-        counterAttackOn.SetActive(false);
+        counterAttackOn.Stop();
         counterAttackCloud.SetActive(false);
         Debug.Log("Counterattack over");
     }
@@ -813,8 +814,8 @@ public class Enemy : MonoBehaviour
         {
             StopCoroutine(counterAttackCancel);
         }
-        counterAttackStart.SetActive(false);
-        counterAttackOn.SetActive(false);
+        //counterAttackStart.SetActive(false);
+        counterAttackOn.Stop();
         counterAttackCloud.SetActive(false);
         counterAttackActive = false;
         counterAttackTriggered = false;
@@ -883,7 +884,7 @@ public class Enemy : MonoBehaviour
             counterAttackActive = false;
             //StartCoroutine(FollowUpAttack(4));
             animator.SetBool("Idle", true);
-            counterAttackOn.SetActive(false);
+            counterAttackOn.Stop();
             counterAttackCloud.SetActive(false);
             //Debug.Log("Counterattack triggered " + counterAttackTriggered);
         }
@@ -961,6 +962,28 @@ public class Enemy : MonoBehaviour
                     {
                         //TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
                         if (normal == true) {
+                            playerScript.FluteAttack();
+                            playerScript.WindOn();
+                            windCaptured = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private void OnKeyDown()
+    {
+        if (playerScript.wind == false)
+        {
+            if (playerScript.flute == true)
+            {
+                if (playerScript.fluteDrained == false)
+                {
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        //TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                        if (normal == true)
+                        {
                             playerScript.FluteAttack();
                             playerScript.WindOn();
                             windCaptured = true;

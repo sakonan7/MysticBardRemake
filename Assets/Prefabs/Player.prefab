@@ -159,6 +159,7 @@ MonoBehaviour:
   shieldBreak: {fileID: 8300000, guid: 30aec24afb885724bb71f720b3a5f4f9, type: 3}
   allAttack: {fileID: 8300000, guid: 558e23d49f3937a41a2816d4c53c6602, type: 3}
   allAttackFilled: {fileID: 8300000, guid: 61cc809e719806b4aa4618ef80985429, type: 3}
+  debrisHit: {fileID: 8300000, guid: 60196797f13cbae4f8e47eb534b99781, type: 3}
   interruptEffect: {fileID: 3974351313356374250, guid: 97e8a325e349fd348be4658e1f4201bd, type: 3}
   hurt: {fileID: 1612960297063342916, guid: c85ccdb892e5b1144adcde82e92f4c72, type: 3}
   hurtEffect: {fileID: 8578284643070386047}

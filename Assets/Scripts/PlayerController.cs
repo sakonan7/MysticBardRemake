@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip shieldBreak;
     public AudioClip allAttack;
     public AudioClip allAttackFilled;
+    public AudioClip debrisHit;
     private GameObject camera;
     private CinemachineBasicMultiChannelPerlin camShake;
     private GameManager gameScript;
@@ -442,6 +443,10 @@ public class PlayerController : MonoBehaviour
                                     {
                                         TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
                                     }
+                                    else if (Input.GetKeyDown(KeyCode.E))
+                                    {
+                                        TrumpetAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                                    }
                                 }
                             }
                             if (harp == true)
@@ -449,6 +454,10 @@ public class PlayerController : MonoBehaviour
                                 if (harpDrained == false)
                                 {
                                     if (Input.GetMouseButtonDown(0))
+                                    {
+                                        HarpAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
+                                    }
+                                    else if (Input.GetKeyDown(KeyCode.E))
                                     {
                                         HarpAttack(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.264f)));
                                     }
@@ -805,6 +814,7 @@ public class PlayerController : MonoBehaviour
     public void DebrisHitEffect(Vector3 position)
     {
         Instantiate(debrisCrash, new Vector3(position.x, position.y, -7.59f), debrisCrash.transform.rotation);
+        audio.PlayOneShot(debrisHit, 0.75f);
     }
     IEnumerator ShieldOn()
     {
