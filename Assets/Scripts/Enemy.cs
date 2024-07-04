@@ -91,6 +91,7 @@ public class Enemy : MonoBehaviour
     //public gameOb
     public GameObject teamAttackAura;
     public AudioClip attackImpact;
+    public GameObject attackEffectObject;
 
     public float HP = 10;
     private float originalHP;
@@ -155,7 +156,7 @@ public class Enemy : MonoBehaviour
 
         //May need to do this in awake, either in this or in Green Thief
         if (green ==true) {
-            counterAttackCloud = transform.Find("Counterattack Objects").transform.Find("Counterattack Cloud 2").gameObject;
+            counterAttackCloud = transform.Find("Counterattack Objects").transform.Find("Counterattack Cloud New").gameObject;
             counterAttackStart = transform.Find("Counterattack Objects").transform.Find("Counterattack Start").gameObject;
             counterAttackOn = transform.Find("Counterattack Objects").transform.Find("Counterattack On").gameObject;
         }
@@ -292,7 +293,7 @@ public class Enemy : MonoBehaviour
     {
         green = true;
         SetCantFlinch();
-        counterAttackCloud = transform.Find("Counterattack Objects").transform.Find("Counterattack Cloud 2").gameObject;
+        counterAttackCloud = transform.Find("Counterattack Objects").transform.Find("Counterattack Cloud New").gameObject;
         counterAttackStart = transform.Find("Counterattack Objects").transform.Find("Counterattack Start").gameObject;
         counterAttackOn = transform.Find("Counterattack Objects").transform.Find("Counterattack On").gameObject;
     }
@@ -515,7 +516,7 @@ public class Enemy : MonoBehaviour
             if (green == true)
             {
                 SetCantFlinch();
-                Debug.Log("Green ThiefFlinched " + cantFlinch);
+                //Debug.Log("Green ThiefFlinched " + cantFlinch);
             }
         }
     }
@@ -675,14 +676,18 @@ public class Enemy : MonoBehaviour
             if (playerScript.specialInvincibility== false) {
                 if (playerScript.shieldOn == true)
                 {
-                    if (red == false) {
-                        playerScript.ShieldGaugeDown(newDamage, false);
-                    }
-                    else
-                    {
-                        playerScript.ShieldGaugeDown(newDamage, true);
-                    }
+                    //if (newDamage <3) {
+                        //playerScript.ShieldGaugeDown(newDamage);
+                    //}
+                    //else
+                    //{
+                        playerScript.ShieldGaugeDown(newDamage);
+                    //}
                 }
+            }
+            else
+            {
+                playerScript.PlayGuardSound();
             }
         }
     }
@@ -1043,7 +1048,7 @@ public class Enemy : MonoBehaviour
                 //if (windCaptured==true) {
                 WindCaptureEnd();
                 //}
-                playerScript.WindHitEffect(collision.GetContact(0).point);
+                playerScript.DebrisHitEffect(collision.GetContact(0).point);
                 Destroy(collision.gameObject);
                 playerScript.HitCountUp();
                 gameScript.ReduceNumDebris();

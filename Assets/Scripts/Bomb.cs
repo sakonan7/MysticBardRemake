@@ -98,7 +98,7 @@ public class Bomb : MonoBehaviour
             playerScript.GenerateShield(effectPosition.transform.position);
             if (playerScript.shieldOn == true)
             {
-                playerScript.ShieldGaugeDown(2, false);
+                playerScript.ShieldGaugeDown(2);
             }
         }
     }

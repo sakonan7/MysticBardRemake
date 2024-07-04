@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip fluteSound;
     public AudioClip fluteSound2;
     public AudioClip shieldTune;
+    public AudioClip guard;
+    public AudioClip pianoSlam;
     public AudioClip shieldBreak;
     public AudioClip allAttack;
     public AudioClip allAttackFilled;
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem harpHitEffect;
     public ParticleSystem trumpetHitEffect;
     public ParticleSystem windCrash;
+    public ParticleSystem debrisCrash;
     public bool attack = false;
     public bool lag = false;
     public int hitCount = 0;
@@ -157,7 +160,7 @@ public class PlayerController : MonoBehaviour
     public bool wind = false;
     private bool potionUsed = false;
     private bool paused = false;
-
+    private int numOfSoundEffects = 0;
 
     //Statics for the most part
     public static int EXP = 0;
@@ -535,7 +538,6 @@ public class PlayerController : MonoBehaviour
         if (gameScript.playEffects ==true) {
             Instantiate(harpSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), harpSoundwave.transform.rotation);
         }
-        HarpHitEffect(newPosition);
         StartCoroutine(Lag(0.5f));
             harpGauge.fillAmount -= (float)1 / harpTotal;
         currentHarp--;
@@ -568,7 +570,6 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
         }
-        TrumpetHitEffect(newPosition);
         StartCoroutine(Lag(0.5f));
         trumpetGauge.fillAmount -= (float)1 / trumpetTotal;
         currentTrumpet--;
@@ -801,6 +802,10 @@ public class PlayerController : MonoBehaviour
     {
         Instantiate(windCrash, new Vector3(position.x, position.y, -7.59f), windCrash.transform.rotation);
     }
+    public void DebrisHitEffect(Vector3 position)
+    {
+        Instantiate(debrisCrash, new Vector3(position.x, position.y, -7.59f), debrisCrash.transform.rotation);
+    }
     IEnumerator ShieldOn()
     {
         shieldOn = true;
@@ -817,6 +822,8 @@ public class PlayerController : MonoBehaviour
         {
             shieldReloadCancel = StartCoroutine(ShieldReload());
         }
+
+        numOfSoundEffects = 0;
     }
     IEnumerator ShieldBreakAnimation()
     {
@@ -855,7 +862,7 @@ public class PlayerController : MonoBehaviour
         //}
         //Instantiate(shield,position,shield.transform.rotation);
     }
-    public void ShieldGaugeDown(float damage, bool red)
+    public void ShieldGaugeDown(float damage)
     {
         //Want a deep pianonote to play when this happens
 
@@ -891,17 +898,31 @@ public class PlayerController : MonoBehaviour
                 shieldOn = false;
                 weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
                 shieldFilter.SetActive(false);
+                numOfSoundEffects = 0;
             }
             
+
         }
-        if (red == true)
+        if (damage >=3)
         {
             cancelDamageShake = StartCoroutine(CameraShake(3));
+            audio.PlayOneShot(pianoSlam, 1.5f);
+        }
+        else
+        {
+            numOfSoundEffects++;
+            if (numOfSoundEffects < 4) {
+                audio.PlayOneShot(guard, 1);
+            }
         }
         if(shieldBroken ==true)
         {
             StartCoroutine(ShieldBreakAnimation());
         }
+    }
+    public void PlayGuardSound()
+    {
+        audio.PlayOneShot(guard, 1);
     }
     public void GeneralDamageCode(float damage, float shakeAmount)
     {
