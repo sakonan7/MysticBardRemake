@@ -75,7 +75,9 @@ public class Bomb : MonoBehaviour
     {
         yield return new WaitForSeconds(6);
         transform.Find("Appearance").gameObject.SetActive(false);
-        Instantiate(explosion, transform.position, transform.rotation);
+        if (gameScript.playEffects ==true) {
+            Instantiate(explosion, transform.position, transform.rotation);
+        }
         StartCoroutine(ActualDamage());
     }
     IEnumerator ActualDamage()
@@ -116,7 +118,9 @@ public class Bomb : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         transform.Find("Appearance").gameObject.SetActive(false);
-        Instantiate(explosion, transform.position, transform.rotation);
+        if (gameScript.playEffects == true) { 
+            Instantiate(explosion, transform.position, transform.rotation);
+    }
         StartCoroutine(ActualDamage());
     }
     IEnumerator SpecificAboutToExplode()
@@ -136,7 +140,10 @@ public class Bomb : MonoBehaviour
         }
         transform.Find("Appearance").gameObject.SetActive(false);
         //transform.Find("Hitbox").gameObject.SetActive(true);
-        Instantiate(explosion, transform.position,transform.rotation);
+        if (gameScript.playEffects == true)
+        {
+            Instantiate(explosion, transform.position, transform.rotation);
+        }
         Destroy(gameObject, 2);
         audio.PlayOneShot(attackImpact, 1);
         //Debug.Log("Blow Up");

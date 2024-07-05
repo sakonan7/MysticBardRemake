@@ -39,7 +39,7 @@ public class GrandDragon : MonoBehaviour
     private bool regularBombRing1Used = false;
     private bool regularBombRing2Used = false;
     private GameObject barrierAnimation;
-    private GameObject bombFlare;
+    private ParticleSystem bombFlare;
     private bool idle = true;
     private Animator animator;
     private Enemy enemyScript;
@@ -67,7 +67,7 @@ public class GrandDragon : MonoBehaviour
         enemyScript = GetComponent<Enemy>();
         skin = transform.Find("Dragon").GetComponent<SkinnedMeshRenderer>();
         skin.material = red;
-        bombFlare = transform.Find("Bomb Light").transform.Find("Lens").gameObject;
+        bombFlare = transform.Find("Bomb Light").transform.Find("Lens Flare").gameObject.GetComponent<ParticleSystem>();
         barrierAnimation = transform.Find("Root").transform.Find("Personal Barrier Object").transform.Find("Barrier Animation").gameObject;
         enemyScript.SetHP(maxHP);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
@@ -824,9 +824,9 @@ IEnumerator Flashing()
     }
     IEnumerator BombFlare()
     {
-        bombFlare.SetActive(true);
+        //bombFlare.SetActive(true);
         yield return new WaitForSeconds(1f);
-        bombFlare.SetActive(false);
+        bombFlare.Play();
     }
     //Green Attack. 2.65 damage
     //Last Phase. 4 damage. For now, Green Attack Animations
@@ -864,7 +864,7 @@ IEnumerator Flashing()
         }
         //if (enemyScript.teamAttackOn == true)
         //{
-        //enemyScript.PlayAttackEffect(1);
+        enemyScript.PlayAttackEffect(1);
         //}
         //else
         //{
@@ -906,7 +906,7 @@ IEnumerator Flashing()
         }
         //if (enemyScript.teamAttackOn == true)
         //{
-        //enemyScript.PlayAttackEffect(1);
+        enemyScript.PlayAttackEffect(1);
         //}
         //else
         //{

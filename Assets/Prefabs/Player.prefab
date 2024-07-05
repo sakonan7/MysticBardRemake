@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   harpSound: {fileID: 8300000, guid: 3c3512af19dfe6e4c9eed8eef48932fa, type: 3}
   harpSound2: {fileID: 8300000, guid: 0627c9cdd3d0af94d94d91156a9409ab, type: 3}
-  trumpet1: {fileID: 8300000, guid: b186ed061928f264ba164bbd49e2b275, type: 3}
+  trumpet1: {fileID: 8300000, guid: 976e8cfeb5cd97e4da193287b790e3a7, type: 3}
   trumpet2: {fileID: 8300000, guid: f641e02dd48e0414aad093823cf3b884, type: 3}
   fluteSound: {fileID: 8300000, guid: 63dbfe7a15f02974e96aeb74478a20db, type: 3}
   fluteSound2: {fileID: 8300000, guid: 95d62d9cfd913784fa6585b5c64111b1, type: 3}
@@ -160,6 +160,8 @@ MonoBehaviour:
   allAttack: {fileID: 8300000, guid: 558e23d49f3937a41a2816d4c53c6602, type: 3}
   allAttackFilled: {fileID: 8300000, guid: 61cc809e719806b4aa4618ef80985429, type: 3}
   debrisHit: {fileID: 8300000, guid: 60196797f13cbae4f8e47eb534b99781, type: 3}
+  interrupt1: {fileID: 8300000, guid: 222a2ede5e10869459eb13af3917c539, type: 3}
+  interrupt2: {fileID: 8300000, guid: 7f3e19c5f33cc354895b61b886d1b942, type: 3}
   interruptEffect: {fileID: 3974351313356374250, guid: 97e8a325e349fd348be4658e1f4201bd, type: 3}
   hurt: {fileID: 1612960297063342916, guid: c85ccdb892e5b1144adcde82e92f4c72, type: 3}
   hurtEffect: {fileID: 8578284643070386047}

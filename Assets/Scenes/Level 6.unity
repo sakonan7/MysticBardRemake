@@ -175,18 +175,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Green Thief 2
       objectReference: {fileID: 0}
-    - target: {fileID: 8213148910564112173, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.83
-      objectReference: {fileID: 0}
-    - target: {fileID: 8213148910564112173, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 8213148910564112173, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.36
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10227,6 +10215,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2789669595854285029, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
+      propertyPath: playEffects
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2994056704253568011, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: m_Name
       value: Game Manager

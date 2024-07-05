@@ -770,11 +770,11 @@ public class Enemy : MonoBehaviour
     IEnumerator CounterAttackStart()
     {
         counterAttackStart.Play();
-        counterAttackOn.Play();
+        //counterAttackOn.Play();
         yield return new WaitForSeconds(1);
         counterAttackCancel = StartCoroutine(CounterAttack());
         //counterAttackStart.SetActive(false);
-        
+        counterAttackOn.Play();
         counterAttackActive = true;
     }
     IEnumerator CounterAttack()

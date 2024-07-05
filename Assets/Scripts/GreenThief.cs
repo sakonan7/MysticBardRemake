@@ -106,7 +106,7 @@ public class GreenThief : MonoBehaviour
         //}
         //else
         //{
-            //enemyScript.PlayAttackEffect(0);
+            enemyScript.PlayAttackEffect(1);
         //}
         enemyScript.CounterAttackReadyOff();
     }

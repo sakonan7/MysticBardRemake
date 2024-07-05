@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip allAttack;
     public AudioClip allAttackFilled;
     public AudioClip debrisHit;
+    public AudioClip interrupt1;
+    public AudioClip interrupt2;
     private GameObject camera;
     private CinemachineBasicMultiChannelPerlin camShake;
     private GameManager gameScript;
@@ -790,6 +792,15 @@ public class PlayerController : MonoBehaviour
         if (gameScript.playEffects== true) {
             Instantiate(interruptEffect, position, interruptEffect.transform.rotation);
         }
+        int random = Random.Range(0, 2);
+        if (random == 0)
+        {
+            audio.PlayOneShot(interrupt1, 0.5f);
+        }
+        else
+        {
+            audio.PlayOneShot(interrupt2, 0.5f);
+        }
     }
     public void PlayHurtEffect()
     {
@@ -813,8 +824,11 @@ public class PlayerController : MonoBehaviour
     }
     public void DebrisHitEffect(Vector3 position)
     {
-        Instantiate(debrisCrash, new Vector3(position.x, position.y, -7.59f), debrisCrash.transform.rotation);
-        audio.PlayOneShot(debrisHit, 0.75f);
+        if (gameScript.playEffects == true)
+        {
+            Instantiate(debrisCrash, new Vector3(position.x, position.y, -7.59f), debrisCrash.transform.rotation);
+        }
+        audio.PlayOneShot(debrisHit, 0.6f);
     }
     IEnumerator ShieldOn()
     {
