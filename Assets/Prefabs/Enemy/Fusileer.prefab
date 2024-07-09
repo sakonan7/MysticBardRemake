@@ -196,14 +196,14 @@ PrefabInstance:
     - target: {fileID: 9500000, guid: 4587202ece1f38e43824178ccd0f8d90, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 6d1b70fc430ff7d4ab09a3fdea942909, type: 2}
+      objectReference: {fileID: 9100000, guid: 3146e114018fa7742b1cef3370ab9876, type: 2}
     - target: {fileID: 9500000, guid: 4587202ece1f38e43824178ccd0f8d90, type: 3}
       propertyPath: m_WarningMessage
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 4587202ece1f38e43824178ccd0f8d90, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -312,6 +312,7 @@ MonoBehaviour:
   teamAttackAura: {fileID: 0}
   attackImpact: {fileID: 8300000, guid: 32db2a07aed62a84094082f47f4ff1b6, type: 3}
   attackEffectObject: {fileID: 0}
+  barrierSound: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -330,6 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb61187e6e688e4fbf01cb23082a2cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gun: {fileID: 8300000, guid: 454bde8a86c98014f9e13468300dca69, type: 3}
 --- !u!82 &6579784758627402584
 AudioSource:
   m_ObjectHideFlags: 0

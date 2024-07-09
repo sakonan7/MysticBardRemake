@@ -7463,6 +7463,7 @@ MonoBehaviour:
   teamAttackAura: {fileID: 0}
   attackImpact: {fileID: 0}
   attackEffectObject: {fileID: 0}
+  barrierSound: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0

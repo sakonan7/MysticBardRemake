@@ -1790,6 +1790,7 @@ MonoBehaviour:
   teamAttackAura: {fileID: 0}
   attackImpact: {fileID: 0}
   attackEffectObject: {fileID: 0}
+  barrierSound: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -1921,6 +1922,10 @@ PrefabInstance:
     - target: {fileID: 1232144811388331418, guid: ed29a5a5eaedce84ca511ae2842120e9, type: 3}
       propertyPath: m_Name
       value: Guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232144811388331418, guid: ed29a5a5eaedce84ca511ae2842120e9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4247262225631085290, guid: ed29a5a5eaedce84ca511ae2842120e9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3693,6 +3698,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 194409325472540582, guid: 67455d89a0364e94285881afa70d0257, type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 8300000, guid: 454bde8a86c98014f9e13468300dca69, type: 3}
     - target: {fileID: 2279919816002453006, guid: 67455d89a0364e94285881afa70d0257, type: 3}
       propertyPath: m_Name
       value: Fusileer

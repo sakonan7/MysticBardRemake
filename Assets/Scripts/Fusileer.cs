@@ -7,12 +7,15 @@ public class Fusileer : MonoBehaviour
     private bool idle = true;
     private Animator animator;
     private Enemy enemyScript;
+    private AudioSource audio;
     private int hitCount = 0;
+    public AudioClip gun;
     private void Awake()
     {
         enemyScript = GetComponent<Enemy>();
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         animator = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
         //StartCoroutine(IdleAnimation());
 
         enemyScript.SetHP(60);
@@ -57,6 +60,7 @@ public class Fusileer : MonoBehaviour
         enemyScript.AttackReadyOff();
         StartCoroutine(Special());
         enemyScript.SetSpecial();
+        audio.PlayOneShot(gun, 1);
     }
     IEnumerator Special()
     {
@@ -85,6 +89,7 @@ public class Fusileer : MonoBehaviour
         }
         //This works because the whole loop is over
         hitCount = 0;
+        audio.Stop();
     }
 
 }

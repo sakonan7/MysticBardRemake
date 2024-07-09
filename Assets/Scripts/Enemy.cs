@@ -686,14 +686,30 @@ public class Enemy : MonoBehaviour
     }
     public void DealDamage(float newDamage)
     {
-        if (playerScript.shieldOn == false && playerScript.specialInvincibility == false)
+        if (unblockable ==true)
+        {
+            if (playerScript.specialInvincibility ==true)
+            {
+                playerScript.GenerateShield(effectPosition.transform.position);
+                playerScript.PlayGuardSound();
+            }
+            else
+            {
+                if (gameScript.gameOver == false)
+                {
+                    playerScript.GeneralDamageCode(newDamage, 8, unblockable);
+                }
+                audio.PlayOneShot(attackImpact, 1.5f);
+            }
+        }
+        else if (playerScript.shieldOn == false && playerScript.specialInvincibility == false)
         {
             //playerScript.GeneralDamageCode(newDamage, newDamage);
             //playerScript.PlayHurtEffect(effectAppear.transform.position);
             //playerScript.DamageFlashOn();
             if(newDamage <3)
             {
-                playerScript.GeneralDamageCode(newDamage, 3);
+                playerScript.GeneralDamageCode(newDamage, 3, unblockable);
                 if (gameScript.gameOver==false) {
                     audio.PlayOneShot(attackImpact, 1);
                 }
@@ -702,7 +718,7 @@ public class Enemy : MonoBehaviour
             {
                 if (gameScript.gameOver == false)
                 {
-                    playerScript.GeneralDamageCode(newDamage, 8);
+                    playerScript.GeneralDamageCode(newDamage, 8, unblockable);
                 }
                 audio.PlayOneShot(attackImpact, 1.5f);
             }
@@ -731,7 +747,7 @@ public class Enemy : MonoBehaviour
     public void StartIdle()
     {
         idleCancel = StartCoroutine(IdleAnimation(idleTime));
-        Debug.Log("Idle Now");
+        //Debug.Log("Idle Now");
     }
     //This makes sense because not all foes have the same idletime
     IEnumerator IdleAnimation(float idleTime)

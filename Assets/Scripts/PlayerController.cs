@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip fluteSound;
     public AudioClip fluteSound2;
     public AudioClip shieldTune;
+    public AudioClip shieldTune2;
     public AudioClip guard;
     public AudioClip pianoSlam;
     public AudioClip shieldBreak;
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem interruptEffect;
     public GameObject hurt;
     public ParticleSystem hurtEffect;
+    public ParticleSystem hurtEffect2;
     public ParticleSystem harpHitEffect;
     public ParticleSystem trumpetHitEffect;
     public ParticleSystem windCrash;
@@ -117,8 +119,8 @@ public class PlayerController : MonoBehaviour
     public static float HPTotal = 20;
     private static float currentHarp = 15;
     public static float harpTotal = 15;
-    private static float currentTrumpet = 10;
-    public static float trumpetTotal = 10;
+    private static float currentTrumpet = 8;
+    public static float trumpetTotal = 8;
     private static float currentFlute = 4;
     public static float fluteTotal = 4;
     private static float currentShield = 10;
@@ -332,7 +334,15 @@ public class PlayerController : MonoBehaviour
                                 if (Input.GetKeyDown(KeyCode.A))
                                 {
                                     cancelShield = StartCoroutine(ShieldOn());
-                                    audio.PlayOneShot(shieldTune, 1.5f);
+                                    int random = Random.Range(0, 2);
+                                    if (random == 0)
+                                    {
+                                        audio.PlayOneShot(shieldTune, 1.5f);
+                                    }
+                                    else
+                                    {
+                                        audio.PlayOneShot(shieldTune2, 1);
+                                    }
                                 }
                             }
                         }
@@ -668,7 +678,10 @@ public class PlayerController : MonoBehaviour
             hitCountReached = true;
             StartCoroutine(AllAttackBarFlash());
             //audio.Stop();
-            StartCoroutine(UninterruptibleSound());
+            if (uninterruptibleSound == true)
+            {
+                StartCoroutine(UninterruptibleSound());
+            }
             audio.PlayOneShot(allAttackFilled,2);
         }
     }
@@ -708,7 +721,10 @@ public class PlayerController : MonoBehaviour
         //allAttackEffect.SetActive(true);
         StartCoroutine(AllAttackDisappear1());
         hitCountReached = false;
-        StartCoroutine(UninterruptibleSound());
+        if (uninterruptibleSound == true)
+        {
+            StartCoroutine(UninterruptibleSound());
+        }
         audio.PlayOneShot(allAttack,2);
     }
     IEnumerator AllAttackDisappear1()
@@ -749,7 +765,10 @@ public class PlayerController : MonoBehaviour
             numPotions.text = "";
         }
         damageBar.fillAmount = HPBar.fillAmount;
-        StartCoroutine(UninterruptibleSound());
+        if (uninterruptibleSound == true)
+        {
+            StartCoroutine(UninterruptibleSound());
+        }
         int random = Random.Range(0, 2);
         if (random == 0)
         {
@@ -757,7 +776,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            //audio.PlayOneShot(harpSound2, 0.75f);
+            audio.PlayOneShot(bell2, 0.25f);
         }
         StartCoroutine(Gulp());
     }
@@ -823,7 +842,10 @@ public class PlayerController : MonoBehaviour
         if (gameScript.playEffects== true) {
             Instantiate(interruptEffect, position, interruptEffect.transform.rotation);
         }
-        StartCoroutine(UninterruptibleSound());
+        if (uninterruptibleSound == true)
+        {
+            StartCoroutine(UninterruptibleSound());
+        }
         int random = Random.Range(0, 2);
         if (random == 0)
         {
@@ -834,10 +856,17 @@ public class PlayerController : MonoBehaviour
             audio.PlayOneShot(interrupt2, 0.5f);
         }
     }
-    public void PlayHurtEffect()
+    public void PlayHurtEffect(bool unblockable)
     {
         if (gameScript.playEffects == true) {
-            hurtEffect.Play();
+            if (unblockable == false)
+            {
+                hurtEffect.Play();
+            }
+            else
+            {
+                hurtEffect2.Play();
+            }
         }
     }
     public void HarpHitEffect(Vector3 position)
@@ -937,8 +966,11 @@ public class PlayerController : MonoBehaviour
         bool shieldBroken = false;
         if (damage > currentShield)
         {
-            StartCoroutine(UninterruptibleSound());
-            GeneralDamageCode(damage - currentShield, 3);
+            if (uninterruptibleSound == true)
+            {
+                StartCoroutine(UninterruptibleSound());
+            }
+            GeneralDamageCode(damage - currentShield, 3, false);
             audio.PlayOneShot(shieldBreak, 2f);
             shieldBroken = true;
         }
@@ -966,7 +998,10 @@ public class PlayerController : MonoBehaviour
         }
         if (damage >=3)
         {
-            StartCoroutine(UninterruptibleSound());
+            if (uninterruptibleSound == true)
+            {
+                StartCoroutine(UninterruptibleSound());
+            }
             cancelDamageShake = StartCoroutine(CameraShake(3));
             audio.PlayOneShot(pianoSlam, 1.5f);
         }
@@ -986,13 +1021,13 @@ public class PlayerController : MonoBehaviour
     {
         audio.PlayOneShot(guard, 1);
     }
-    public void GeneralDamageCode(float damage, float shakeAmount)
+    public void GeneralDamageCode(float damage, float shakeAmount, bool unblockable)
     {
         //StartCoroutine(CameraShake(1/10));
         if (currentHP >0) {
             currentHP -= damage;
             HPBar.fillAmount -= (float)damage / HPTotal;
-            PlayHurtEffect();
+            PlayHurtEffect(unblockable);
             HPText.text = currentHP + "/" + HPTotal;
 
             //I'm thinking about not cancelling the Coroutine and just changing the value of damage
