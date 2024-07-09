@@ -164,6 +164,7 @@ public class PlayerController : MonoBehaviour
     private bool potionUsed = false;
     private bool paused = false;
     private int numOfSoundEffects = 0;
+    private bool uninterruptibleSound = false;
 
     //Statics for the most part
     public static int EXP = 0;
@@ -560,7 +561,10 @@ public class PlayerController : MonoBehaviour
             
             }
         //}
-        audio.Stop();
+        if (uninterruptibleSound == false)
+        {
+            audio.Stop();
+        }
         int random = Random.Range(0, 2);
         if (random == 0)
         {
@@ -591,7 +595,10 @@ public class PlayerController : MonoBehaviour
             trumpetGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
         }
         //}
-        audio.Stop();
+        if (uninterruptibleSound == false)
+        {
+            audio.Stop();
+        }
         int random = Random.Range(0, 2);
         if(random == 0)
         {
@@ -625,7 +632,10 @@ public class PlayerController : MonoBehaviour
                 FluteReloadCancel();
             }
         }
-        audio.Stop();
+        if (uninterruptibleSound == false)
+        {
+            audio.Stop();
+        }
         int random = Random.Range(0, 2);
         if (random == 0)
         {
@@ -654,7 +664,8 @@ public class PlayerController : MonoBehaviour
         {
             hitCountReached = true;
             StartCoroutine(AllAttackBarFlash());
-            audio.Stop();
+            //audio.Stop();
+            StartCoroutine(UninterruptibleSound());
             audio.PlayOneShot(allAttackFilled,2);
         }
     }
@@ -694,6 +705,7 @@ public class PlayerController : MonoBehaviour
         //allAttackEffect.SetActive(true);
         StartCoroutine(AllAttackDisappear1());
         hitCountReached = false;
+        StartCoroutine(UninterruptibleSound());
         audio.PlayOneShot(allAttack,2);
     }
     IEnumerator AllAttackDisappear1()
@@ -897,6 +909,10 @@ public class PlayerController : MonoBehaviour
         //06/23/24
         //I will do shieldReloading == false, but I need some way to start this up again if stop using shield
         //Maybe do ShieldReload IEnumerator here, too
+        if (uninterruptibleSound==false)
+        {
+            audio.Stop();
+        }
         ShieldReloadCancel();
         bool shieldBroken = false;
         if (damage > currentShield)
@@ -1119,6 +1135,12 @@ public class PlayerController : MonoBehaviour
             shieldText.text = currentShield + "/" + shieldTotal;
         }
         Debug.Log("End");
+    }
+    IEnumerator UninterruptibleSound()
+    {
+        uninterruptibleSound = true;
+        yield return new WaitForSeconds(2);
+        uninterruptibleSound = false;
     }
     public void TransparentUI(float time)
     {

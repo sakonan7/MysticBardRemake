@@ -115,6 +115,10 @@ public class Enemy : MonoBehaviour
     //private Image armorBackground;
     private Image armorFill;
 
+    //Individual Attacks
+    private bool unblockable = false;
+    private bool special = false;
+
     private bool cantFlinch = false;
     private bool gettingDamaged = false;
 
@@ -138,7 +142,7 @@ public class Enemy : MonoBehaviour
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         if (idleStart == true)
         {
-            if (green==false) {
+            if (green == false) {
                 idleCancel = StartCoroutine(IdleAnimation(Random.Range(4, 10)));
             }
             else
@@ -155,12 +159,12 @@ public class Enemy : MonoBehaviour
         effectPosition = transform.Find("Effect Position").gameObject;
 
         //May need to do this in awake, either in this or in Green Thief
-        if (green ==true) {
+        if (green == true) {
             counterAttackCloud = transform.Find("Counterattack Objects").transform.Find("Counterattack Cloud New").gameObject;
             counterAttackStart = transform.Find("Counterattack Objects").transform.Find("Lens Flare").gameObject.GetComponent<ParticleSystem>();
             counterAttackOn = transform.Find("Counterattack Objects").transform.Find("Beam").gameObject.GetComponent<ParticleSystem>();
         }
-        if (boss ==true)
+        if (boss == true)
         {
             originalHP = HP;
             bossHPBarObject = GameObject.Find("Boss HP Object");
@@ -185,20 +189,20 @@ public class Enemy : MonoBehaviour
         if (HP <= 0)
         {
             WindCaptureEnd();
-            if(boss ==false)
+            if (boss == false)
             {
                 Destroy(gameObject);
 
             }
             else
             {
-                animator.SetBool("Dying",true);
+                animator.SetBool("Dying", true);
                 Destroy(gameObject, 5);
                 tag = "Untagged";
             }
             playerScript.GainEXP(EXP); //Putting this after ReduceNumEnemies is making it so that the last 70 doesn't add 
             gameScript.ReduceNumEnemies();
-            
+
         }
         if (transform.position.x <= -5.49f)
         {
@@ -233,7 +237,7 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(WindFlinch());
                 StartCoroutine(WindDamage());
             }
-            if (armor ==false) {
+            if (armor == false) {
                 //transform.Rotate(Vector3.up * 180 * Time.deltaTime);
             }
         }
@@ -269,7 +273,7 @@ public class Enemy : MonoBehaviour
     {
         idleTime = newTime;
     }
-   public void NonStandardIdleStart()
+    public void NonStandardIdleStart()
     {
         idleCancel = StartCoroutine(IdleAnimation(Random.Range(4, 10)));
     }
@@ -352,7 +356,7 @@ public class Enemy : MonoBehaviour
     public void ArmorOff()
     {
         armor = false;
-        
+
         armorObj.SetActive(false);
         if (name == "Witch")
         {
@@ -374,7 +378,7 @@ public class Enemy : MonoBehaviour
             UnsetCantFlinch();
         }
 
-        for(int i =0;i <enemies.Length; i++)
+        for (int i = 0; i < enemies.Length; i++)
         {
             enemies[i].GetComponent<Enemy>().BarrierOff();
         }
@@ -448,7 +452,7 @@ public class Enemy : MonoBehaviour
     public void Flinch()
     {
         //Putting this here instead of using cantFlinch code everywhere
-        if (cantFlinch ==false) {
+        if (cantFlinch == false) {
             //Debug.Log("Flinched!");
             attackReady = false;
             if (flinchInterrupt == true)
@@ -471,7 +475,7 @@ public class Enemy : MonoBehaviour
                 animator.SetTrigger("Flinch");
                 //I can see this being a problem for the Red Dragon's last phase
                 //I will make an if case where green == true and red==true
-                if (red == true&& green== true)
+                if (red == true && green == true)
                 {
                     animator.ResetTrigger("Attack");
                     animator.ResetTrigger("Attack2");
@@ -534,7 +538,7 @@ public class Enemy : MonoBehaviour
         //06/25/24 atm, I am doing this because I don't want Dragon to be not doing something for so long
         //I can do something like recoveryIdleTime
         //if (useRecoveryIdleTime), IdleAnimation(recoveryIdleTime)
-            idleCancel = StartCoroutine(IdleAnimation(5));
+        idleCancel = StartCoroutine(IdleAnimation(5));
         Debug.Log("IdleAnimation");
     }
     public void FlinchCancel()
@@ -598,6 +602,21 @@ public class Enemy : MonoBehaviour
     {
         unflinchingFollow = false;
     }
+
+    public void SetSpecial()
+    {
+        special = true;
+    }
+    public void UnsetSpecial()
+    {
+        special = false;
+        //if (idleCancel ==null)
+        //{
+            StartIdle();
+            //Debug.Log("StartIdle");
+        //}
+    }
+
     public void StartAttackLength()
     {
         attackLengthCancel = StartCoroutine(AttackLength());
@@ -611,7 +630,10 @@ public class Enemy : MonoBehaviour
         //StartCoroutine(IdleAnimation());
         //06/20/24
         //The problem is that I'm using StartIdle no matter what. For counterattack, I'm not supposed to do that
-        StartIdle();
+        if (special==false) {
+            StartIdle();
+            Debug.Log("StartIdleNormal");
+        }
         if (noAttack==false) {
             DealDamage(damage);
         }
@@ -694,6 +716,7 @@ public class Enemy : MonoBehaviour
     public void StartIdle()
     {
         idleCancel = StartCoroutine(IdleAnimation(idleTime));
+        Debug.Log("Idle Now");
     }
     //This makes sense because not all foes have the same idletime
     IEnumerator IdleAnimation(float idleTime)
