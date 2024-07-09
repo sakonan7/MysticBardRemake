@@ -712,6 +712,7 @@ IEnumerator Flashing()
     public void Barrier()
     {
         Instantiate(barrier, new Vector3(transform.position.x, transform.position.y + 1, barrier.transform.position.z), barrier.transform.rotation);
+        enemyScript.PlayBarrierSound();
     }
     public void RegularBombRing1()
     {

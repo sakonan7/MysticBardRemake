@@ -92,6 +92,7 @@ public class Enemy : MonoBehaviour
     public GameObject teamAttackAura;
     public AudioClip attackImpact;
     public GameObject attackEffectObject;
+    public AudioClip barrierSound;
 
     public float HP = 10;
     private float originalHP;
@@ -124,11 +125,15 @@ public class Enemy : MonoBehaviour
 
     public bool cantMove = false;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        audio = GetComponent<AudioSource>();
+    }
     void Start()
     {
         animator = GetComponent<Animator>();
         animation = GetComponent<Animation>();
-        audio = GetComponent<AudioSource>();
+        
         if (animator != null)
         {
             animatorTrue = true;
@@ -352,6 +357,11 @@ public class Enemy : MonoBehaviour
         {
             transform.Find("Root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(true);
         }
+        
+    }
+    public void PlayBarrierSound()
+    {
+        audio.PlayOneShot(barrierSound, 0.5f);
     }
     public void ArmorOff()
     {
@@ -684,11 +694,16 @@ public class Enemy : MonoBehaviour
             if(newDamage <3)
             {
                 playerScript.GeneralDamageCode(newDamage, 3);
-                audio.PlayOneShot(attackImpact, 1);
+                if (gameScript.gameOver==false) {
+                    audio.PlayOneShot(attackImpact, 1);
+                }
             }
             else
             {
-                playerScript.GeneralDamageCode(newDamage, 8);
+                if (gameScript.gameOver == false)
+                {
+                    playerScript.GeneralDamageCode(newDamage, 8);
+                }
                 audio.PlayOneShot(attackImpact, 1.5f);
             }
         }

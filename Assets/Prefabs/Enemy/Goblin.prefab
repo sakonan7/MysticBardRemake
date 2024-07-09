@@ -1542,7 +1542,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4882579866491631790}
   - component: {fileID: 1589706221770736086}
-  - component: {fileID: 1372381060724930641}
   - component: {fileID: 8986666859480579711}
   m_Layer: 0
   m_Name: deb_Goblin01_W
@@ -1620,26 +1619,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.000000014901161, y: 0.0000018849969, z: 0.30613878}
     m_Extent: {x: 0.089675784, y: 0.089675784, z: 0.47134152}
   m_DirtyAABB: 0
---- !u!114 &1372381060724930641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6316299207828985120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bff4f5a8991d7fa47baed5c5ff25979f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: ae721c767fcd6664ca1cf46b36bb56b7, type: 2}
-  duration: 0.5
-  corner: 1
-  loop: 0
-  points:
-  - {x: -0.008822486, y: -0.31, z: 0}
-  - {x: -0.008822486, y: -0.43, z: 0}
-  - {x: -0.008822486, y: -0.55, z: 0}
 --- !u!33 &8986666859480579711
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -840,6 +840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 3546093861669874074, guid: 03f0448d17a5ef94a94720603f369aba, type: 3}
   attackImpact: {fileID: 8300000, guid: 32db2a07aed62a84094082f47f4ff1b6, type: 3}
+  fuse: {fileID: 8300000, guid: 381916e3401955f4aa3adf6bff982d25, type: 3}
   timedBomb: 0
   time: 0
 --- !u!54 &2086466506555721919

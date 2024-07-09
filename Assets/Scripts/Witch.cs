@@ -31,7 +31,11 @@ public class Witch : MonoBehaviour
         bombFlare = transform.Find("Lens Flare").gameObject.GetComponent<ParticleSystem>();
         barrierAnimation= transform.Find("root").transform.Find("Personal Barrier Object").transform.Find("Barrier Animation").gameObject;
 
-        StartCoroutine(BarrierAnimation());
+        
+    }
+    void Start()
+    {
+            StartCoroutine(BarrierAnimation());
     }
 
     // Update is called once per frame
@@ -78,6 +82,7 @@ public class Witch : MonoBehaviour
     public void Barrier()
     {
         Instantiate(barrier, new Vector3(transform.position.x, transform.position.y, barrier.transform.position.z), barrier.transform.rotation);
+        enemyScript.PlayBarrierSound();
     }
     public void BombCross()
     {

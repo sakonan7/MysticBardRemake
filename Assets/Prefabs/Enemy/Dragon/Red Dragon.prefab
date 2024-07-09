@@ -18038,6 +18038,7 @@ MonoBehaviour:
   teamAttackAura: {fileID: 0}
   attackImpact: {fileID: 8300000, guid: 32db2a07aed62a84094082f47f4ff1b6, type: 3}
   attackEffectObject: {fileID: 0}
+  barrierSound: {fileID: 8300000, guid: 97921d016a63b484fbca069c2374fe19, type: 3}
   HP: 10
   EXP: 0
   teamAttackOn: 0

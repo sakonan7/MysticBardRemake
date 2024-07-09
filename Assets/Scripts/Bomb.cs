@@ -16,6 +16,7 @@ public class Bomb : MonoBehaviour
     private GameObject timeIndicator;
     public GameObject explosion;
     public AudioClip attackImpact;
+    public AudioClip fuse;
     public bool timedBomb = false;
     public float time = 0;
     // Start is called before the first frame update
@@ -83,7 +84,9 @@ public class Bomb : MonoBehaviour
     IEnumerator ActualDamage()
     {
         yield return new WaitForSeconds(0.5f);
-        audio.PlayOneShot(attackImpact, 1);
+        //atm, I want boosh-BAM
+        audio.Stop();
+        //audio.PlayOneShot(attackImpact, 1);
         Destroy(gameObject, 2);
 
         //Instantiate explosion effect, then 0.5 seconds, do actual damage
@@ -108,6 +111,7 @@ public class Bomb : MonoBehaviour
     {
         yield return new WaitForSeconds(6-2);
         aboutToExplode.SetActive(true);
+        audio.PlayOneShot(fuse, 0.5f);
     }
     IEnumerator TimeIndicatorDisappear()
     {
@@ -127,6 +131,7 @@ public class Bomb : MonoBehaviour
     {
         yield return new WaitForSeconds(time - 2);
         aboutToExplode.SetActive(true);
+        audio.PlayOneShot(fuse, 0.5f);
     }
     public void EnemyExplode()
     {
@@ -145,6 +150,7 @@ public class Bomb : MonoBehaviour
             Instantiate(explosion, transform.position, transform.rotation);
         }
         Destroy(gameObject, 2);
+        audio.Stop();
         audio.PlayOneShot(attackImpact, 1);
         //Debug.Log("Blow Up");
     }

@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip debrisHit;
     public AudioClip interrupt1;
     public AudioClip interrupt2;
+    public AudioClip gulp;
+    public AudioClip bell1;
+    public AudioClip bell2;
     private GameObject camera;
     private CinemachineBasicMultiChannelPerlin camShake;
     private GameManager gameScript;
@@ -746,6 +749,17 @@ public class PlayerController : MonoBehaviour
             numPotions.text = "";
         }
         damageBar.fillAmount = HPBar.fillAmount;
+        StartCoroutine(UninterruptibleSound());
+        int random = Random.Range(0, 2);
+        if (random == 0)
+        {
+            audio.PlayOneShot(bell1, 0.25f);
+        }
+        else
+        {
+            //audio.PlayOneShot(harpSound2, 0.75f);
+        }
+        StartCoroutine(Gulp());
     }
     IEnumerator PotionUse()
     {
@@ -756,6 +770,11 @@ public class PlayerController : MonoBehaviour
         potionUsed = false;
         potionUsedIcon.SetActive(false);
         //HPBar.transform.localScale = new Vector3(HPBar.transform.localScale.x * 7 / 8, HPBar.transform.localScale.y * 7 / 8, HPBar.transform.localScale.z);
+    }
+    IEnumerator Gulp()
+    {
+        yield return new WaitForSeconds(1);
+        audio.PlayOneShot(gulp, 2);
     }
     IEnumerator AttackDuration()
     {
@@ -804,6 +823,7 @@ public class PlayerController : MonoBehaviour
         if (gameScript.playEffects== true) {
             Instantiate(interruptEffect, position, interruptEffect.transform.rotation);
         }
+        StartCoroutine(UninterruptibleSound());
         int random = Random.Range(0, 2);
         if (random == 0)
         {
@@ -917,6 +937,7 @@ public class PlayerController : MonoBehaviour
         bool shieldBroken = false;
         if (damage > currentShield)
         {
+            StartCoroutine(UninterruptibleSound());
             GeneralDamageCode(damage - currentShield, 3);
             audio.PlayOneShot(shieldBreak, 2f);
             shieldBroken = true;
@@ -945,6 +966,7 @@ public class PlayerController : MonoBehaviour
         }
         if (damage >=3)
         {
+            StartCoroutine(UninterruptibleSound());
             cancelDamageShake = StartCoroutine(CameraShake(3));
             audio.PlayOneShot(pianoSlam, 1.5f);
         }

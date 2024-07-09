@@ -156,6 +156,7 @@ public class GameManager : MonoBehaviour
         gameOverText.SetActive(true);
         gameOverFilter.SetActive(true);
         gameOverButtons.SetActive(true);
+        gameOver = true;
     }
     IEnumerator DefeatBoss()
     {
