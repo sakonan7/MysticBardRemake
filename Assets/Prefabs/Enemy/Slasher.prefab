@@ -1262,6 +1262,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6206632859098876911, guid: 22770dcf9dde9fe45b0dde996f87d356, type: 3}
   m_PrefabInstance: {fileID: 1404515179420515297}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &6834633492202375238 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5594783477300278183, guid: 22770dcf9dde9fe45b0dde996f87d356, type: 3}
+  m_PrefabInstance: {fileID: 1404515179420515297}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3824457061457898480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1397,6 +1402,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7381952122416656146}
+    - targetCorrespondingSourceObject: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7943454053660781342}
   m_SourcePrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
 --- !u!4 &3824457061457506610 stripped
 Transform:
@@ -1454,16 +1462,31 @@ MonoBehaviour:
   flinching: 0
   counterAttackTriggered: 0
   unflinchingFollow: 0
-  attackEffects: []
+  attackEffects:
+  - {fileID: 6834633492202375238}
   teamAttackAura: {fileID: 0}
   attackImpact: {fileID: 0}
+  grunt: {fileID: 0}
   attackEffectObject: {fileID: 0}
+  barrierSound: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
   bombUser: 0
   boss: 0
   cantMove: 0
+--- !u!114 &7943454053660781342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3824457061457931550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 813618c5f71546442ac0ab2c86f1400f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5758955002934835851
 PrefabInstance:
   m_ObjectHideFlags: 0

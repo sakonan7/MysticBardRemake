@@ -72,6 +72,7 @@ public class Enemy : MonoBehaviour
     private bool idle = false;
     private float idleTime = 1;
     public bool attackReady = false;
+    private bool playGrunt = true;
 
     private bool flinchInterrupt = false; //I may want to changethis to flincOpportuni
     private bool attack = false; //Putting this here for now. I want this code to be assimple as possible //Need this for now, because may not want to use idle (check for it
@@ -91,6 +92,7 @@ public class Enemy : MonoBehaviour
     //public gameOb
     public GameObject teamAttackAura;
     public AudioClip attackImpact;
+    public AudioClip grunt;
     public GameObject attackEffectObject;
     public AudioClip barrierSound;
 
@@ -116,9 +118,12 @@ public class Enemy : MonoBehaviour
     //private Image armorBackground;
     private Image armorFill;
 
+
     //Individual Attacks
     private bool unblockable = false;
     private bool special = false;
+    private bool harpGuard = false;
+    private bool trumpetGuard = false;
 
     private bool cantFlinch = false;
     private bool gettingDamaged = false;
@@ -477,6 +482,19 @@ public class Enemy : MonoBehaviour
                 StopCoroutine(attackLengthCancel);
                 playerScript.InterruptEffect(effectPosition.transform.position);
                 StopAttackEffect();
+                audio.PlayOneShot(grunt, 2);
+            }
+            else
+            {
+                if (playGrunt==true)
+                {
+                    audio.PlayOneShot(grunt, 2);
+                    playGrunt = false;
+                }
+                else
+                {
+                    playGrunt = true;
+                }
             }
 
             if (animatorTrue == true)
@@ -613,6 +631,30 @@ public class Enemy : MonoBehaviour
         unflinchingFollow = false;
     }
 
+    public void SetUnblockable()
+    {
+        unblockable = true;
+    }
+    public void UnsetBlockable()
+    {
+        unblockable = false;
+    }
+    public void SetHarpGuard()
+    {
+        harpGuard = true;
+    }
+    public void UnsetHarpGuard()
+    {
+        harpGuard = false;
+    }
+    public void SetTrumpetGuard()
+    {
+        trumpetGuard = true;
+    }
+    public void UnsetTrumpetGuard()
+    {
+        trumpetGuard = false;
+    }
     public void SetSpecial()
     {
         special = true;

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //ATM, Goblin attacks every few seconds
-public class Guard
-    : MonoBehaviour
+public class Slasher : MonoBehaviour
 {
     private bool idle = true;
     private Animator animator;
@@ -55,7 +54,7 @@ public class Guard
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
-        enemyScript.PlayAttackEffect(0);
+            enemyScript.PlayAttackEffect(0);
         enemyScript.AttackReadyOff();
     }
 
