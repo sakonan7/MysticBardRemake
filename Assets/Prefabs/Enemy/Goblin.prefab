@@ -516,7 +516,9 @@ MonoBehaviour:
   - {fileID: 2719395586124099335}
   teamAttackAura: {fileID: 5524596731341565533}
   attackImpact: {fileID: 8300000, guid: 32db2a07aed62a84094082f47f4ff1b6, type: 3}
+  grunt: {fileID: 8300000, guid: 91fce4c0a55aeac4f8506a52a2f671fe, type: 3}
   attackEffectObject: {fileID: 21917149828886660}
+  barrierSound: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0

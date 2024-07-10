@@ -683,6 +683,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(UninterruptibleSound());
             }
             audio.PlayOneShot(allAttackFilled,2);
+            GameObject.Find("Press S").GetComponent<TextMeshProUGUI>().text ="Press S";
         }
     }
     IEnumerator AllAttackBarFlash()
@@ -725,7 +726,8 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(UninterruptibleSound());
         }
-        audio.PlayOneShot(allAttack,2);
+        audio.PlayOneShot(allAttack,2.5f);
+        GameObject.Find("Press S").GetComponent<TextMeshProUGUI>().text = "";
     }
     IEnumerator AllAttackDisappear1()
     {

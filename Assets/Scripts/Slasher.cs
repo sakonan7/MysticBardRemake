@@ -8,6 +8,7 @@ public class Slasher : MonoBehaviour
     private bool idle = true;
     private Animator animator;
     private Enemy enemyScript;
+    private bool turnOnUnblockable = false;
     private void Awake()
     {
         enemyScript = GetComponent<Enemy>();
@@ -50,7 +51,7 @@ public class Slasher : MonoBehaviour
     {
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Attack");
-        enemyScript.SetDamage(1);
+        enemyScript.SetDamage(3);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
