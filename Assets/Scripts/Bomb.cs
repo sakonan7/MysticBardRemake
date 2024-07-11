@@ -83,7 +83,7 @@ public class Bomb : MonoBehaviour
         StartCoroutine(ActualDamage());
         audio.Stop();
         //audio.PlayOneShot(attackImpact, 1);
-        audio.PlayOneShot(explosionSound, 1);
+        audio.PlayOneShot(explosionSound, 1.5f);
     }
     IEnumerator ActualDamage()
     {
@@ -154,7 +154,7 @@ public class Bomb : MonoBehaviour
         }
         Destroy(gameObject, 2);
         audio.Stop();
-        audio.PlayOneShot(explosionSound, 1);
+        audio.PlayOneShot(explosionSound, 1.5f);
         //Debug.Log("Blow Up");
     }
     private void OnMouseDown()

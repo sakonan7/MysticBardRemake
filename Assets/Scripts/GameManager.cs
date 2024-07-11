@@ -35,22 +35,22 @@ public class GameManager : MonoBehaviour
     //06/05/24
     //This should be okay
     //Also, because I am not using bools, but using scene names
-    public static bool title = false;
-    public bool titleNonStatic = false;
+    public static bool nonGame = false;
+    public bool nonGameNonStatic = false;
     public static bool levelSelect = false;
     public bool levelSelectNonStatic = false;
     // Start is called before the first frame update
     private void Awake()
     {
-        if (SceneManager.GetActiveScene().name == "Cover")
+        if (SceneManager.GetActiveScene().name == "Cover" ||SceneManager.GetActiveScene().name == "Instructions" || SceneManager.GetActiveScene().name == "Credits")
         {
-            title = true;
-            titleNonStatic = true;
+            nonGame = true;
+            nonGameNonStatic = true;
         }
         else
         {
-            title = false;
-            titleNonStatic = false;
+            nonGame = false;
+            nonGameNonStatic = false;
         }
         if (SceneManager.GetActiveScene().name=="Level Select")
         {
@@ -71,7 +71,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         audio = GameObject.Find("Main Camera").GetComponent<AudioSource>();
-        if (title ==false) {
+        //Use bool nonGame
+        if (nonGame ==false) {
             player = GameObject.Find("Player").GetComponent<PlayerController>();
             gameOverObject = GameObject.Find("Game Over Object");
             gameOverText = gameOverObject.transform.Find("Game Over Text").gameObject;
@@ -99,19 +100,22 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        if (currentLevel >=3 && boss==false)
+        if (nonGame == false)
         {
-            int random = 0;
-            random = Random.Range(0, 2);
-            if (random== 0)
+            if (currentLevel >= 3 && boss == false)
             {
-                audio.clip = regularBattle;
-                audio.Play();
-            }
-            else
-            {
-                audio.clip = regularBattle2;
-                audio.Play();
+                int random = 0;
+                random = Random.Range(0, 2);
+                if (random == 0)
+                {
+                    audio.clip = regularBattle;
+                    audio.Play();
+                }
+                else
+                {
+                    audio.clip = regularBattle2;
+                    audio.Play();
+                }
             }
         }
     }
@@ -120,7 +124,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
     }
-
+    public void TitleScreen()
+    {
+        SceneManager.LoadScene(level1);
+    }
     public void StartGame()
     {
         SceneManager.LoadScene(level1);

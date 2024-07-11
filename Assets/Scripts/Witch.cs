@@ -46,11 +46,11 @@ public class Witch : MonoBehaviour
             int random = Random.Range(0, 2);
             if (random == 0)
             {
-                BombCross();
+                StartCoroutine(BombCross());
             }
             else if(random == 1)
             {
-                BombCube();
+                StartCoroutine(BombCube());
             }
             //Debug.Log("Attack");
             //Only doing this because I need to
@@ -84,23 +84,24 @@ public class Witch : MonoBehaviour
         Instantiate(barrier, new Vector3(transform.position.x, transform.position.y, barrier.transform.position.z), barrier.transform.rotation);
         enemyScript.PlayBarrierSound();
     }
-    public void BombCross()
+    IEnumerator BombCross()
     {
+        yield return new WaitForSeconds(0.25f);
         Vector3 bombPosition = new Vector3(0, 0.7f,-7.59f);
         Instantiate(bomb, new Vector3(bombPosition.x + 2+1, bombPosition.y, -7.59f), bomb.transform.rotation);
         Instantiate(bomb, new Vector3(bombPosition.x - 2-1, bombPosition.y, -7.59f), bomb.transform.rotation);
         Instantiate(bomb, new Vector3(bombPosition.x, bombPosition.y + 2+1, -7.59f), bomb.transform.rotation);
         Instantiate(bomb, new Vector3(bombPosition.x, bombPosition.y - 2 - 1, -7.59f), bomb.transform.rotation);
-        enemyScript.AttackReadyOff();
+        
     }
-    public void BombCube()
+    IEnumerator BombCube()
     {
+        yield return new WaitForSeconds(0.25f);
         Vector3 bombPosition = new Vector3(0, 0.7f, -7.59f);
         Instantiate(bomb, new Vector3(bombPosition.x + 1.5f +1, bombPosition.y + 1.5f + 1, -7.59f), bomb.transform.rotation);
         Instantiate(bomb, new Vector3(bombPosition.x - 1.5f - 1, bombPosition.y + 1.5f + 1, -7.59f), bomb.transform.rotation);
         Instantiate(bomb, new Vector3(bombPosition.x + 1.5f + 1, bombPosition.y - 1.5f - 1, -7.59f), bomb.transform.rotation);
         Instantiate(bomb, new Vector3(bombPosition.x - 1.5f - 1, bombPosition.y - 1.5f - 1, -7.59f), bomb.transform.rotation);
-        enemyScript.AttackReadyOff();
     }
     public void Attack()
     {
@@ -119,13 +120,14 @@ public class Witch : MonoBehaviour
         //{
         //enemyScript.PlayAttackEffect(0);
         //}
-        //enemyScript.AttackReadyOff();
-        StartCoroutine(BombFlare());
+        enemyScript.AttackReadyOff();
+        BombFlare();
+        enemyScript.PlayBombLensFlareSound();
     }
-    IEnumerator BombFlare()
+    public void BombFlare()
     {
         //bombFlare.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
         bombFlare.Play();
     }
 }

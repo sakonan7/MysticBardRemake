@@ -4494,6 +4494,8 @@ MonoBehaviour:
   grunt: {fileID: 8300000, guid: bd7bd80578689e94d92f2d7d2da09eff, type: 3}
   attackEffectObject: {fileID: 0}
   barrierSound: {fileID: 8300000, guid: 97921d016a63b484fbca069c2374fe19, type: 3}
+  barrierBreak: {fileID: 8300000, guid: 5367090b79dd25e44b802755d7bbedfa, type: 3}
+  bombLensFlare: {fileID: 8300000, guid: 624df48c4ff3ad245a6bfa346e6bd43b, type: 3}
   HP: 10
   EXP: 0
   teamAttackOn: 0

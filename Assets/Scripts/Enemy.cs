@@ -96,6 +96,8 @@ public class Enemy : MonoBehaviour
     public AudioClip grunt;
     public GameObject attackEffectObject;
     public AudioClip barrierSound;
+    public AudioClip barrierBreak;
+    public AudioClip bombLensFlare;
 
     public float HP = 10;
     private float originalHP;
@@ -368,7 +370,21 @@ public class Enemy : MonoBehaviour
     }
     public void PlayBarrierSound()
     {
-        audio.PlayOneShot(barrierSound, 0.5f);
+        StartCoroutine(DelayBarrierSound());
+    }
+    IEnumerator DelayBarrierSound()
+    {
+        yield return new WaitForSeconds(0.25f);
+        audio.PlayOneShot(barrierSound, 0.75f);
+    }
+    public void PlayBombLensFlareSound()
+    {
+        StartCoroutine(DelayBombLensSound());
+    }
+    IEnumerator DelayBombLensSound()
+    {
+        yield return new WaitForSeconds(0.35f);
+        audio.PlayOneShot(bombLensFlare, 0.75f);
     }
     public void ArmorOff()
     {
@@ -400,6 +416,7 @@ public class Enemy : MonoBehaviour
             enemies[i].GetComponent<Enemy>().BarrierOff();
         }
         BarrierOff();
+        audio.PlayOneShot(barrierBreak,1.5f);
     }
     //Fun fact, triggerExit doesn't count if the object is destroyed
     public void BarrierOff()

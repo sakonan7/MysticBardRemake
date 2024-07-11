@@ -156,7 +156,7 @@ MonoBehaviour:
   fluteSound2: {fileID: 8300000, guid: 95d62d9cfd913784fa6585b5c64111b1, type: 3}
   shieldTune: {fileID: 8300000, guid: 7845393ad1c5af148973a5bbec6f74dc, type: 3}
   shieldTune2: {fileID: 8300000, guid: a4e5b66c2fe53a149bcff54bd687848f, type: 3}
-  guard: {fileID: 8300000, guid: c8fd3b536d7d0af4cbe62e98ced42fef, type: 3}
+  guard: {fileID: 8300000, guid: b2fda7dca1b31484d8d769afb53020cc, type: 3}
   pianoSlam: {fileID: 8300000, guid: 9babf8b6ea6d95243b4ba4364a86b679, type: 3}
   shieldBreak: {fileID: 8300000, guid: 30aec24afb885724bb71f720b3a5f4f9, type: 3}
   allAttack: {fileID: 8300000, guid: 558e23d49f3937a41a2816d4c53c6602, type: 3}

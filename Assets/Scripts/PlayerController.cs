@@ -188,7 +188,7 @@ public class PlayerController : MonoBehaviour
         camShake = GameObject.Find("FreeLook Camera").GetComponent<CinemachineFreeLook>().GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         //Load different things based on levelSelectNonStatic
-        if (gameScript.titleNonStatic ==false) {
+        if (gameScript.nonGameNonStatic ==false) {
             if (gameScript.levelSelectNonStatic == true)
             {
                 HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
@@ -1013,7 +1013,7 @@ public class PlayerController : MonoBehaviour
         {
             numOfSoundEffects++;
             if (numOfSoundEffects < 4) {
-                audio.PlayOneShot(guard, 1);
+                audio.PlayOneShot(guard, 0.9f);
             }
         }
         if(shieldBroken ==true)
@@ -1023,7 +1023,7 @@ public class PlayerController : MonoBehaviour
     }
     public void PlayGuardSound()
     {
-        audio.PlayOneShot(guard, 1);
+        audio.PlayOneShot(guard, 0.9f);
     }
     public void GeneralDamageCode(float damage, float shakeAmount, bool unblockable)
     {

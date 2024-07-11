@@ -45,7 +45,10 @@ public class PrivateButtonCaller : MonoBehaviour
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         button = GetComponent<Button>();
         button.onClick.AddListener(EvokeButton);
-        difficulty = GameObject.Find("Difficulty Moderator").GetComponent<DifficultyModerator>();
+        if (gameScript.nonGameNonStatic == false)
+        {
+            difficulty = GameObject.Find("Difficulty Moderator").GetComponent<DifficultyModerator>();
+        }
 
         if(GameObject.Find("Player") !=null)
         {
