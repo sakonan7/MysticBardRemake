@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
     private Animator animator;
     private Animation animation;
     private AudioSource audio;
+    private DifficultyModerator difficulty;
     private bool animatorTrue = false;
     private bool animationTrue = false;
     private PlayerController playerScript;
@@ -138,7 +139,8 @@ public class Enemy : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         animation = GetComponent<Animation>();
-        
+        difficulty = GameObject.Find("Difficulty Moderator").GetComponent<DifficultyModerator>();
+
         if (animator != null)
         {
             animatorTrue = true;
@@ -728,6 +730,10 @@ public class Enemy : MonoBehaviour
     }
     public void DealDamage(float newDamage)
     {
+        if (difficulty.hardNonStatic==true)
+        {
+            newDamage *= 2;
+        }
         if (unblockable ==true)
         {
             if (playerScript.specialInvincibility ==true)

@@ -16,6 +16,7 @@ public class Bomb : MonoBehaviour
     private GameObject timeIndicator;
     public GameObject explosion;
     public AudioClip attackImpact;
+    public AudioClip explosionSound;
     public AudioClip fuse;
     public bool timedBomb = false;
     public float time = 0;
@@ -80,13 +81,15 @@ public class Bomb : MonoBehaviour
             Instantiate(explosion, transform.position, transform.rotation);
         }
         StartCoroutine(ActualDamage());
+        audio.Stop();
+        //audio.PlayOneShot(attackImpact, 1);
+        audio.PlayOneShot(explosionSound, 1);
     }
     IEnumerator ActualDamage()
     {
         yield return new WaitForSeconds(0.5f);
         //atm, I want boosh-BAM
-        audio.Stop();
-        //audio.PlayOneShot(attackImpact, 1);
+
         Destroy(gameObject, 2);
 
         //Instantiate explosion effect, then 0.5 seconds, do actual damage
@@ -151,7 +154,7 @@ public class Bomb : MonoBehaviour
         }
         Destroy(gameObject, 2);
         audio.Stop();
-        audio.PlayOneShot(attackImpact, 1);
+        audio.PlayOneShot(explosionSound, 1);
         //Debug.Log("Blow Up");
     }
     private void OnMouseDown()

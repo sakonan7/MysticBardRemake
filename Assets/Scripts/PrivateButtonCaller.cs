@@ -9,6 +9,7 @@ public class PrivateButtonCaller : MonoBehaviour
     private GameManager gameScript;
     private Button button;
     private PlayerController player;
+    private DifficultyModerator difficulty;
     public bool startGame = false;
     public bool levelSelect = false;
     public bool retry = false;
@@ -16,6 +17,11 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool statIncrease = false;
     public bool nextLevel = false;
     public bool continueQuit = false;
+
+    [Header("Difficulty")]
+    public bool normal = false;
+    public bool hard = false;
+    public bool noEXP = false;
 
     [Header("Increase")]
     public bool increaseHP = false;
@@ -39,6 +45,7 @@ public class PrivateButtonCaller : MonoBehaviour
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         button = GetComponent<Button>();
         button.onClick.AddListener(EvokeButton);
+        difficulty = GameObject.Find("Difficulty Moderator").GetComponent<DifficultyModerator>();
 
         if(GameObject.Find("Player") !=null)
         {
@@ -83,7 +90,22 @@ public class PrivateButtonCaller : MonoBehaviour
             gameScript.ContinueOrQuit();
         }
 
-        if(level1==true)
+        if (normal == true)
+        {
+            difficulty.SetNormal();
+        }
+        if (hard == true)
+        {
+            difficulty.SetHard();
+        }
+        if (noEXP == true)
+        {
+            player.NoEXP();
+            //Sound effect that tells you if there is or is no EXP
+            //Or change button text
+        }
+
+        if (level1==true)
         {
             gameScript.StartGame();
         }

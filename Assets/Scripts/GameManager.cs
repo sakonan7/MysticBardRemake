@@ -135,8 +135,12 @@ public class GameManager : MonoBehaviour
         if (numEnemies <= 0)
         {
             if (boss ==false) {
-                if (player.levelNonStatic < 11) {
-                    EXP();
+                if (player.noEXPNonStatic ==false)
+                {
+                    if (player.levelNonStatic < 11)
+                    {
+                        EXP();
+                    }
                 }
                 else
                 {

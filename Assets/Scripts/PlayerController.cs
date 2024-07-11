@@ -174,7 +174,8 @@ public class PlayerController : MonoBehaviour
     //Statics for the most part
     public static int EXP = 0;
     private static bool noEXP = false;
-    
+    public bool noEXPNonStatic = false;
+
     private Coroutine cancelDamageText;
     private Coroutine cancelDamageShake;
     private Coroutine cancelDamageFlash;
@@ -253,6 +254,7 @@ public class PlayerController : MonoBehaviour
         shieldText.text = shieldTotal + "/" + shieldTotal;
         numPotions.text = "X " + currentPotion;
         //AllAttack();
+        noEXPNonStatic = noEXP;
     }
 
     // Update is called once per frame
@@ -1222,7 +1224,9 @@ public class PlayerController : MonoBehaviour
     }
     public void GainEXP(float newEXP)
     {
-        EXPGained += newEXP;
+        if (noEXP ==false) {
+            EXPGained += newEXP;
+        }
         //Debug.Log(EXPGained + " equals to");
     }
     public void StartEXPUp()
@@ -1335,6 +1339,10 @@ public class PlayerController : MonoBehaviour
             level = 11;
             levelUpStock = 1;
         }
+    }
+    public void NoEXP()
+    {
+        noEXP = !noEXP;
     }
     public void HPUp()
     {

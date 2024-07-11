@@ -9,6 +9,7 @@ public class Slasher : MonoBehaviour
     private Animator animator;
     private Enemy enemyScript;
     private bool turnOnUnblockable = false;
+    private int numAttacks = 2;
     private void Awake()
     {
         enemyScript = GetComponent<Enemy>();
