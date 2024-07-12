@@ -12,7 +12,7 @@ public class Bomb : MonoBehaviour
     private Coroutine explodeCancel;
     private Coroutine explodeEffectCancel;
     private GameObject effectPosition;
-    private GameObject aboutToExplode;
+    private ParticleSystem aboutToExplode;
     private GameObject timeIndicator;
     public GameObject explosion;
     public AudioClip attackImpact;
@@ -28,7 +28,7 @@ public class Bomb : MonoBehaviour
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         effectPosition = transform.Find("Effect Position").gameObject;
         
-        aboutToExplode = transform.Find("About To Explode").gameObject;
+        aboutToExplode = transform.Find("About To Explode").gameObject.GetComponent<ParticleSystem>();
         
 
         if (timedBomb == false)
@@ -84,6 +84,7 @@ public class Bomb : MonoBehaviour
         audio.Stop();
         //audio.PlayOneShot(attackImpact, 1);
         audio.PlayOneShot(explosionSound, 1.5f);
+        aboutToExplode.Stop();
     }
     IEnumerator ActualDamage()
     {
@@ -113,7 +114,7 @@ public class Bomb : MonoBehaviour
     IEnumerator AboutToExplode()
     {
         yield return new WaitForSeconds(6-2);
-        aboutToExplode.SetActive(true);
+        aboutToExplode.Play();
         audio.PlayOneShot(fuse, 0.5f);
     }
     IEnumerator TimeIndicatorDisappear()
@@ -129,11 +130,13 @@ public class Bomb : MonoBehaviour
             Instantiate(explosion, transform.position, transform.rotation);
     }
         StartCoroutine(ActualDamage());
+        audio.PlayOneShot(explosionSound, 1.5f);
+        aboutToExplode.Stop();
     }
     IEnumerator SpecificAboutToExplode()
     {
         yield return new WaitForSeconds(time - 2);
-        aboutToExplode.SetActive(true);
+        aboutToExplode.Play();
         audio.PlayOneShot(fuse, 0.5f);
     }
     public void EnemyExplode()
@@ -171,7 +174,7 @@ public class Bomb : MonoBehaviour
                             playerScript.WindOn();
                         StopCoroutine(explodeCancel);
                         StopCoroutine(explodeEffectCancel);
-                        aboutToExplode.SetActive(false);
+                        aboutToExplode.Stop();
                         //Debug.Log("Grabbed.");
                     }
                 }

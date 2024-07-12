@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private PlayerController player;
     private AudioSource audio;
     public bool playEffects = false;
+    public GameObject background;
     public AudioClip regularBattle;
     public AudioClip regularBattle2;
     public AudioClip bossMusic;
@@ -130,7 +131,9 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene(level1);
+        //SceneManager.LoadScene(level1);
+        GameObject.Find("Story").transform.Find("Page 1").gameObject.SetActive(true);
+        background.SetActive(true);
     }
     public void LevelSelect()
     {
