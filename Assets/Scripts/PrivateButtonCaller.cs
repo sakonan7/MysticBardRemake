@@ -42,12 +42,16 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool increasePotion = false;
 
     [Header("Level Select")]
+    public bool levelSelectSound = false;
     public bool level1 = false;
     public bool level2 = false;
     public bool level3 = false;
     public bool level4 = false;
     public bool level5 = false;
     public bool level6 = false;
+    public bool level7 = false;
+    public bool level8 = false;
+    public bool level9 = false;
 
     // Start is called before the first frame update
     void Start()
@@ -129,9 +133,13 @@ public class PrivateButtonCaller : MonoBehaviour
         //Story
 
 
+        if (levelSelectSound ==true)
+        {
+            player.LevelSelectSound();
+        }
         if (level1==true)
         {
-            gameScript.StartGame();
+            SceneManager.LoadScene(2);
         }
         if (level2 == true)
         {
@@ -152,6 +160,18 @@ public class PrivateButtonCaller : MonoBehaviour
         if (level6 == true)
         {
             SceneManager.LoadScene(7);
+        }
+        if (level7 == true)
+        {
+            SceneManager.LoadScene(8);
+        }
+        if (level8 == true)
+        {
+            SceneManager.LoadScene(9);
+        }
+        if (level9 == true)
+        {
+            SceneManager.LoadScene(10);
         }
 
         if (increaseHP == true)

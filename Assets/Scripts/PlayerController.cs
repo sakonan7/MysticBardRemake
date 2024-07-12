@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip gulp;
     public AudioClip bell1;
     public AudioClip bell2;
+    public AudioClip toggleOff;
+    public AudioClip toggleOn;
     private GameObject camera;
     private CinemachineBasicMultiChannelPerlin camShake;
     private GameManager gameScript;
@@ -1357,6 +1359,50 @@ public class PlayerController : MonoBehaviour
     public void NoEXP()
     {
         noEXP = !noEXP;
+        if (noEXP ==false)
+        {
+            PlayToggleOff();
+            GameObject.Find("Difficulty Buttons").transform.Find("No EXP").gameObject.SetActive(false);
+        }
+        else
+        {
+            PlayToggleOn();
+            GameObject.Find("Difficulty Buttons").transform.Find("No EXP").gameObject.SetActive(true);
+        }
+    }
+    public void PlayToggleOff()
+    {
+        audio.PlayOneShot(toggleOff,1);
+    }
+    public void PlayToggleOn()
+    {
+        audio.PlayOneShot(toggleOn, 1);
+        StartCoroutine(ToggleOnTurnOff());
+    }
+    IEnumerator ToggleOnTurnOff()
+    {
+        yield return new WaitForSeconds(2);
+        audio.Stop();
+    }
+    public void LevelSelectSound()
+    {
+        int random = Random.Range(0, 4);
+        if (random == 0)
+        {
+            audio.PlayOneShot(harpSound, 0.75f);
+        }
+        else if (random == 1)
+        {
+            audio.PlayOneShot(harpSound2, 0.75f);
+        }
+        else if (random == 2)
+        {
+            audio.PlayOneShot(trumpet1, 0.75f);
+        }
+        else if (random == 3)
+        {
+            audio.PlayOneShot(trumpet2, 0.75f);
+        }
     }
     public void HPUp()
     {

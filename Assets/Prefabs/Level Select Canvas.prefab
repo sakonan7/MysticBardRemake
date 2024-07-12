@@ -925,6 +925,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -934,12 +937,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 1
   level1: 0
   level2: 0
   level3: 1
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &155080818553123412
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,6 +1643,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -1645,12 +1655,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &335494598178246271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1909,6 +1923,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -1918,12 +1935,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
-  level1: 1
+  levelSelectSound: 1
+  level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 1
+  level9: 0
 --- !u!1 &398630239950412568
 GameObject:
   m_ObjectHideFlags: 0
@@ -4115,6 +4136,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -4124,12 +4148,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &1255264970370609717
 GameObject:
   m_ObjectHideFlags: 0
@@ -4778,6 +4806,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -4787,12 +4818,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
-  level1: 1
+  levelSelectSound: 1
+  level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 1
+  level8: 0
+  level9: 0
 --- !u!1 &1317608157532901489
 GameObject:
   m_ObjectHideFlags: 0
@@ -4938,6 +4973,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -4947,12 +4985,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &1349525741276484852
 GameObject:
   m_ObjectHideFlags: 0
@@ -5357,9 +5399,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 124785209776693894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 331, y: -57.6}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 381, y: -107.5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4987605251825846950
@@ -6162,6 +6204,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -6171,12 +6216,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &1881968009795698439
 GameObject:
   m_ObjectHideFlags: 0
@@ -7069,6 +7118,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -7078,12 +7130,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 1
   level1: 1
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &2147989746018682802
 GameObject:
   m_ObjectHideFlags: 0
@@ -7316,6 +7372,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -7325,12 +7384,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &2156197129772389339
 GameObject:
   m_ObjectHideFlags: 0
@@ -8046,6 +8109,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -8055,12 +8121,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
-  level1: 1
+  levelSelectSound: 1
+  level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 1
 --- !u!1 &2367790531957488748
 GameObject:
   m_ObjectHideFlags: 0
@@ -8467,6 +8537,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -8476,12 +8549,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 1
   level1: 1
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &2587777298429222787
 GameObject:
   m_ObjectHideFlags: 0
@@ -9310,6 +9387,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -9319,12 +9399,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &2777792051734387558
 GameObject:
   m_ObjectHideFlags: 0
@@ -9754,6 +9838,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -9763,12 +9850,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &2839601502169367343
 GameObject:
   m_ObjectHideFlags: 0
@@ -10448,6 +10539,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -10457,12 +10551,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &3057494523018575576
 GameObject:
   m_ObjectHideFlags: 0
@@ -11697,6 +11795,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 1
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -11706,12 +11807,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &3521447888794808545
 GameObject:
   m_ObjectHideFlags: 0
@@ -12288,6 +12393,9 @@ MonoBehaviour:
   normal: 1
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -12297,12 +12405,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &3678633506707973171
 GameObject:
   m_ObjectHideFlags: 0
@@ -12448,6 +12560,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -12457,12 +12572,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 1
   level1: 0
   level2: 0
   level3: 0
   level4: 1
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &3790810195213571229
 GameObject:
   m_ObjectHideFlags: 0
@@ -13234,6 +13353,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -13243,12 +13365,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &4145496079342763569
 GameObject:
   m_ObjectHideFlags: 0
@@ -13786,6 +13912,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -13795,12 +13924,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &4220678624898598782
 GameObject:
   m_ObjectHideFlags: 0
@@ -14765,6 +14898,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -14774,12 +14910,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &4670939305178085699
 GameObject:
   m_ObjectHideFlags: 0
@@ -15331,6 +15471,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -15340,12 +15483,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &4958177919771592843
 GameObject:
   m_ObjectHideFlags: 0
@@ -16250,6 +16397,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -16259,12 +16409,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 1
   level1: 1
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &5215361229705502839
 GameObject:
   m_ObjectHideFlags: 0
@@ -19108,9 +19262,9 @@ RectTransform:
   - {fileID: 870556637092032862}
   m_Father: {fileID: 6248108930247573990}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 120.2, y: 155}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 70.2, y: 155}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6294980206368386310
@@ -19258,6 +19412,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -19267,12 +19424,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 1
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 1
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &6296815750182232478
 GameObject:
   m_ObjectHideFlags: 0
@@ -20496,6 +20657,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -20505,12 +20669,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 1
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 1
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &6990118509040085605
 GameObject:
   m_ObjectHideFlags: 0
@@ -20790,6 +20958,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -20799,12 +20970,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 1
   level1: 1
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &7003729387241264167
 GameObject:
   m_ObjectHideFlags: 0
@@ -21214,6 +21389,9 @@ MonoBehaviour:
   normal: 0
   hard: 1
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -21223,12 +21401,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &7215200159380164018
 GameObject:
   m_ObjectHideFlags: 0
@@ -21452,6 +21634,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -21461,12 +21646,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 1
   level1: 0
   level2: 1
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &7249628146008713388
 GameObject:
   m_ObjectHideFlags: 0
@@ -21840,6 +22029,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -21849,12 +22041,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 1
   level1: 1
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &7462043987170421810
 GameObject:
   m_ObjectHideFlags: 0
@@ -22616,6 +22812,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -22625,12 +22824,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &7768775014524582507
 GameObject:
   m_ObjectHideFlags: 0
@@ -24161,6 +24364,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -24170,12 +24376,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &8280475300112282492
 GameObject:
   m_ObjectHideFlags: 0
@@ -24668,6 +24878,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -24677,12 +24890,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 1
   level1: 1
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &8451056054797636485
 GameObject:
   m_ObjectHideFlags: 0
@@ -25291,6 +25508,9 @@ MonoBehaviour:
   normal: 0
   hard: 0
   noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
   page1: 0
   page2: 0
   page3: 0
@@ -25300,12 +25520,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &8624985880511318891
 GameObject:
   m_ObjectHideFlags: 0
@@ -25377,9 +25601,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 124785209776693894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 42, y: -54}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 92, y: -104}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6550278103462984282

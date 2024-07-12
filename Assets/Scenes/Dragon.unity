@@ -7216,6 +7216,8 @@ MonoBehaviour:
   grunt: {fileID: 0}
   attackEffectObject: {fileID: 0}
   barrierSound: {fileID: 0}
+  barrierBreak: {fileID: 0}
+  bombLensFlare: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -9623,7 +9625,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2789669595854285029, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: playEffects
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2994056704253568011, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: m_Name

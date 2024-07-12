@@ -10871,9 +10871,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 621204057420329964, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: level1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 621204057420329964, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: level9
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1094934390673979672, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_Name
       value: Level Select Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727074737974759012, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: level1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727074737974759012, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: level8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6450704348621102093, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_Pivot.x
@@ -10954,6 +10970,14 @@ PrefabInstance:
     - target: {fileID: 6450704348621102093, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872354639164532796, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: level1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872354639164532796, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: level7
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
