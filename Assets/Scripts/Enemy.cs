@@ -709,6 +709,17 @@ public class Enemy : MonoBehaviour
             DealDamage(damage);
         }
     }
+    public void StartAttackLengthAlternate()
+    {
+        attackLengthCancel = StartCoroutine(AttackLengthAlternate());
+    }
+    //I'm gonna need to put this in Enem
+    //I'm going to need to cancelthisif I stagger foe
+    IEnumerator AttackLengthAlternate()
+    {
+        yield return new WaitForSeconds(attackLength);
+            DealDamage(damage);
+    }
     public void StartCounterAttackLength()
     {
         //Took this out because this can't get cancelled

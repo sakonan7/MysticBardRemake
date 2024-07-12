@@ -10,6 +10,8 @@ public class PrivateButtonCaller : MonoBehaviour
     private Button button;
     private PlayerController player;
     private DifficultyModerator difficulty;
+    private GameObject story;
+    public bool title = false;
     public bool startGame = false;
     public bool levelSelect = false;
     public bool retry = false;
@@ -22,6 +24,14 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool normal = false;
     public bool hard = false;
     public bool noEXP = false;
+    [Header("Story")]
+    public bool storyPage1 = false;
+    public bool storyPage2 = false;
+    public bool storyPage3 = false;
+    [Header("Instructions")]
+    public bool page1 = false;
+    public bool page2 = false;
+    public bool page3 = false;
 
     [Header("Increase")]
     public bool increaseHP = false;
@@ -53,6 +63,10 @@ public class PrivateButtonCaller : MonoBehaviour
         if(GameObject.Find("Player") !=null)
         {
             player = GameObject.Find("Player").GetComponent<PlayerController>();
+        }
+        if (SceneManager.GetActiveScene().name =="Instructions")
+        {
+            story = GameObject.Find("Story");
         }
     }
 
@@ -108,6 +122,10 @@ public class PrivateButtonCaller : MonoBehaviour
             //Or change button text
         }
 
+        if (title == true)
+        {
+            SceneManager.LoadScene(0);
+        }
         if (level1==true)
         {
             gameScript.StartGame();

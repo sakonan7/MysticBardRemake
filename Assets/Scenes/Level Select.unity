@@ -7258,6 +7258,8 @@ MonoBehaviour:
   grunt: {fileID: 0}
   attackEffectObject: {fileID: 0}
   barrierSound: {fileID: 0}
+  barrierBreak: {fileID: 0}
+  bombLensFlare: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -10122,6 +10124,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1973552354276501371, guid: e011a914a5d8b3d4bb7ee76b4a09d449, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 66c50258679657e4facc6a9024523102, type: 3}
     - target: {fileID: 5993981217535868307, guid: e011a914a5d8b3d4bb7ee76b4a09d449, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
