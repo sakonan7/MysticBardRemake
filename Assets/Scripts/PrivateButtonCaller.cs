@@ -126,6 +126,9 @@ public class PrivateButtonCaller : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+        //Story
+
+
         if (level1==true)
         {
             gameScript.StartGame();

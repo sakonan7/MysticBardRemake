@@ -197,6 +197,7 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Level Done Object").transform.Find("Increase Stat").gameObject.SetActive(true);
         //yield return new WaitForSeconds(2);
         //ProgressLevel();
+        player.StatUpValues();
     }
     //I'm going to ask players if they want to progress or to go back to the menu
     public void ContinueOrQuit()

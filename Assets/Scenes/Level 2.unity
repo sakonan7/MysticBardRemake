@@ -2497,6 +2497,8 @@ MonoBehaviour:
   grunt: {fileID: 0}
   attackEffectObject: {fileID: 0}
   barrierSound: {fileID: 0}
+  barrierBreak: {fileID: 0}
+  bombLensFlare: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -3953,14 +3955,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2506067858027315794, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2789669595854285029, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
-    - target: {fileID: 2506067858027315794, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Continue
-      objectReference: {fileID: 0}
     - target: {fileID: 4069388352127207279, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4041,6 +4035,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5055621980579567493, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8273995824858037637, guid: d7d9efe7ae25b804bb34679f5ff39636, type: 3}
       propertyPath: m_Name
       value: Canvas General
@@ -4058,10 +4056,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2789669595854285029, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
-      propertyPath: playEffects
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2994056704253568011, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: m_Name
       value: Game Manager

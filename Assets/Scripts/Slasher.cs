@@ -17,7 +17,7 @@ public class Slasher : MonoBehaviour
         animator = GetComponent<Animator>();
         //StartCoroutine(IdleAnimation());
 
-        enemyScript.SetHP(60);
+        enemyScript.SetHP(70);
         enemyScript.SetEXP(60);
 
         enemyScript.SetIdleTime(5);

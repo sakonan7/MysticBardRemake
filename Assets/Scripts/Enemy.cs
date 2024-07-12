@@ -200,24 +200,7 @@ public class Enemy : MonoBehaviour
             //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
             //AnalyzeTeamAttackCapability();
         }
-        if (HP <= 0)
-        {
-            WindCaptureEnd();
-            if (boss == false)
-            {
-                Destroy(gameObject);
 
-            }
-            else
-            {
-                animator.SetBool("Dying", true);
-                Destroy(gameObject, 5);
-                tag = "Untagged";
-            }
-            playerScript.GainEXP(EXP); //Putting this after ReduceNumEnemies is making it so that the last 70 doesn't add 
-            gameScript.ReduceNumEnemies();
-
-        }
         if (transform.position.x <= -5.49f)
         {
             transform.position = new Vector3(-5.49f, transform.position.y, transform.position.z);
@@ -1005,6 +988,24 @@ public class Enemy : MonoBehaviour
             }
             cancelDamageDisplay = StartCoroutine(DamageDisplayDuration(damage));
 
+            if (HP <= 0)
+            {
+                WindCaptureEnd();
+                if (boss == false)
+                {
+                    Destroy(gameObject);
+
+                }
+                else
+                {
+                    animator.SetBool("Dying", true);
+                    Destroy(gameObject, 5);
+                    tag = "Untagged";
+                }
+                playerScript.GainEXP(EXP); //Putting this after ReduceNumEnemies is making it so that the last 70 doesn't add 
+                gameScript.ReduceNumEnemies();
+
+            }
         }
         else
         {

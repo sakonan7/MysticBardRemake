@@ -1068,7 +1068,7 @@ GameObject:
   - component: {fileID: 7491292213748364386}
   - component: {fileID: 6802553617573161859}
   m_Layer: 5
-  m_Name: Button
+  m_Name: HP Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1200,6 +1200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 0
   retry: 0
@@ -1207,6 +1208,15 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 1
   increaseViolin: 0
   increaseTrumpet: 0
@@ -2788,7 +2798,7 @@ GameObject:
   - component: {fileID: 6793100220328311596}
   - component: {fileID: 3420322747363698454}
   m_Layer: 5
-  m_Name: Button (6)
+  m_Name: Flute Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2908,6 +2918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 0
   retry: 0
@@ -2915,6 +2926,15 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -4152,7 +4172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 691709597470102794}
   m_Layer: 5
-  m_Name: Harp
+  m_Name: Harp Stat Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4949,6 +4969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 0
   retry: 0
@@ -4956,6 +4977,15 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -5520,7 +5550,7 @@ GameObject:
   - component: {fileID: 4549459821722227891}
   - component: {fileID: 4704030955256590137}
   m_Layer: 5
-  m_Name: Button (8)
+  m_Name: Potion Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5640,6 +5670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 0
   retry: 0
@@ -5647,6 +5678,15 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -6322,7 +6362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7473977347454712977}
   m_Layer: 5
-  m_Name: Potion
+  m_Name: Potion Stat Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6892,7 +6932,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8762890883736907068}
   m_Layer: 5
-  m_Name: Shield
+  m_Name: Shield Stat Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7206,7 +7246,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: -Warning, Level 12 is the maximum Level
+  m_text: -Warning, Level 11 is the maximum Level
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9624,7 +9664,7 @@ GameObject:
   - component: {fileID: 8181103768173893992}
   - component: {fileID: 265515164020537229}
   m_Layer: 5
-  m_Name: Button (4)
+  m_Name: Harp Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9744,6 +9784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 0
   retry: 0
@@ -9751,6 +9792,15 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 0
   increaseViolin: 1
   increaseTrumpet: 0
@@ -13491,6 +13541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 0
   retry: 0
@@ -13498,6 +13549,15 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 1
   continueQuit: 0
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -14221,6 +14281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 0
   retry: 1
@@ -14228,6 +14289,15 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -15296,6 +15366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 0
   retry: 0
@@ -15303,6 +15374,15 @@ MonoBehaviour:
   statIncrease: 1
   nextLevel: 0
   continueQuit: 0
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -15400,7 +15480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2603307134421319846}
   m_Layer: 5
-  m_Name: HP Bar Object
+  m_Name: HP Bar Stat Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16548,7 +16628,7 @@ GameObject:
   - component: {fileID: 3382569676686348861}
   - component: {fileID: 1266127229622953734}
   m_Layer: 5
-  m_Name: Stat Increase (1)
+  m_Name: Numeric
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18484,7 +18564,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6483759218906715047}
   m_Layer: 5
-  m_Name: Trumpet
+  m_Name: Trumpet Stat Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18737,7 +18817,7 @@ GameObject:
   - component: {fileID: 1795276750595134118}
   - component: {fileID: 7771661027699388748}
   m_Layer: 5
-  m_Name: Button (5)
+  m_Name: Trumpet Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18857,6 +18937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 0
   retry: 0
@@ -18864,6 +18945,15 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 1
@@ -19315,6 +19405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 0
   retry: 0
@@ -19322,6 +19413,15 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 1
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -19416,7 +19516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1080625624527332138}
   m_Layer: 5
-  m_Name: Flute
+  m_Name: Flute Stat Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21992,7 +22092,7 @@ GameObject:
   - component: {fileID: 1028232372835758358}
   - component: {fileID: 9064415007536874760}
   m_Layer: 5
-  m_Name: Button (7)
+  m_Name: Shield Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22112,6 +22212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 0
   retry: 0
@@ -22119,6 +22220,15 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -22340,6 +22450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28c4f204f4cf4141bbdd5bcb3753353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 0
   startGame: 0
   levelSelect: 1
   retry: 0
@@ -22347,6 +22458,15 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  normal: 0
+  hard: 0
+  noEXP: 0
+  storyPage1: 0
+  storyPage2: 0
+  storyPage3: 0
+  page1: 0
+  page2: 0
+  page3: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0

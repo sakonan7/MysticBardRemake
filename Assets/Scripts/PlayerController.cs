@@ -407,6 +407,12 @@ public class PlayerController : MonoBehaviour
                                 shieldText.text = shieldTotal + "/" + shieldTotal;
                                 //shieldReloadStart = false;
                             }
+                            if (currentShield > shieldTotal)
+                            {
+                                currentShield = shieldTotal;
+                                shieldText.text = currentShield + "/" + shieldTotal;
+                                shieldReloading = false;
+                            }
                         }
 
                         //if (Input.GetKeyDown(KeyCode.S))
@@ -722,7 +728,9 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(SpecialInvincibility());
         StartCoroutine(CameraShakeSpec(3));
         //allAttackEffect.SetActive(true);
-        StartCoroutine(AllAttackDisappear1());
+        if (gameScript.playEffects==true) {
+            StartCoroutine(AllAttackDisappear1());
+        }
         hitCountReached = false;
         if (uninterruptibleSound == true)
         {
@@ -1189,13 +1197,19 @@ public class PlayerController : MonoBehaviour
             shieldGauge.fillAmount += (float)(1 / shieldTotal);
             //I need to add to a quantity over time
             shieldText.text = currentShield + "/" + shieldTotal;
+            if (currentShield > shieldTotal)
+            {
+                currentShield = shieldTotal;
+                shieldText.text = currentShield + "/" + shieldTotal;
+                shieldReloading = false;
+            }
         }
         if (currentShield > shieldTotal)
         {
             currentShield = shieldTotal;
             shieldText.text = currentShield + "/" + shieldTotal;
         }
-        Debug.Log("End");
+        //Debug.Log("End");
     }
     IEnumerator UninterruptibleSound()
     {
@@ -1388,6 +1402,50 @@ public class PlayerController : MonoBehaviour
         currentPotion = potionTotal;
         levelUpStock--;
         gameScript.ContinueOrQuit();
+    }
+    //Had to do this because the button stuff is confusing
+    public void StatUpValues()
+    {
+        //GameObject.Find("Level Done Object").transform.Find("Increase Stat").transform.Find("Weapons").transform.Find("Harp");
+        //GameObject.Find("Level Done Object").transform.Find("Increase Stat").transform.Find("Weapons").transform.Find("Harp").transform.Find("Numeric").GetComponent<TextMeshProUGUI>().text = harpTotal + "/"+harpTotal;
+        //GameObject.Find("Level Done Object").transform.Find("Increase Stat").transform.Find("Weapons").transform.Find("Trumpet").transform.Find("Numeric").GetComponent<TextMeshProUGUI>().text = trumpetTotal + "/" + trumpetTotal;
+        GameObject.Find("HP Bar Stat Up").transform.Find("Numeric").GetComponent<TextMeshProUGUI>().text = HPTotal + "/" + HPTotal;
+        GameObject.Find("Harp Stat Up").transform.Find("Numeric").GetComponent<TextMeshProUGUI>().text = harpTotal + "/" + harpTotal;
+        GameObject.Find("Trumpet Stat Up").transform.Find("Numeric").GetComponent<TextMeshProUGUI>().text = trumpetTotal + "/" + trumpetTotal;
+        GameObject.Find("Flute Stat Up").transform.Find("Numeric").GetComponent<TextMeshProUGUI>().text = fluteTotal + "/" + fluteTotal;
+        GameObject.Find("Shield Stat Up").transform.Find("Numeric").GetComponent<TextMeshProUGUI>().text = shieldTotal + "/" + shieldTotal;
+        GameObject.Find("Potion Stat Up").transform.Find("Numeric").GetComponent<TextMeshProUGUI>().text = potionTotal + "/" + potionTotal;
+
+        if (HPTotal >= 32)
+        {
+            GameObject.Find("HP Bar Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
+            GameObject.Find("HP Button").gameObject.SetActive(false);
+        }
+        if (harpTotal >= 24)
+        {
+            GameObject.Find("Harp Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
+            GameObject.Find("Harp Button").gameObject.SetActive(false);
+        }
+        if (trumpetTotal >= 14)
+        {
+            GameObject.Find("Trumpet Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
+            GameObject.Find("Trumpet Button").gameObject.SetActive(false);
+        }
+        if (fluteTotal >= 7)
+        {
+            GameObject.Find("Flute Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
+            GameObject.Find("Flute Button").gameObject.SetActive(false);
+        }
+        if (shieldTotal >= 16)
+        {
+            GameObject.Find("Shield Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
+            GameObject.Find("Shield Button").gameObject.SetActive(false);
+        }
+        if (potionTotal >= 8)
+        {
+            GameObject.Find("Potion Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
+            GameObject.Find("Potion Button").gameObject.SetActive(false);
+        }
     }
     public void OnMouseUp()
     {

@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playEffects: 0
+  background: {fileID: 0}
   regularBattle: {fileID: 8300000, guid: 9d624f4cdf5259946afcea7f5651472b, type: 3}
   regularBattle2: {fileID: 8300000, guid: 63616ff7ac3d87f44bc9a3af6e921bce, type: 3}
   bossMusic: {fileID: 8300000, guid: 1790afd66de01e04fa427b75e3ff18f5, type: 3}
@@ -56,5 +57,5 @@ MonoBehaviour:
   gameOver: 0
   levelUp: 0
   victory: 0
-  titleNonStatic: 0
+  nonGameNonStatic: 0
   levelSelectNonStatic: 0
