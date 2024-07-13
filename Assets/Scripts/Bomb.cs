@@ -149,8 +149,10 @@ public class Bomb : MonoBehaviour
         {
             StopCoroutine(explodeCancel);
         }
+        GetComponent<SphereCollider>().enabled = false;
         transform.Find("Appearance").gameObject.SetActive(false);
-        //transform.Find("Hitbox").gameObject.SetActive(true);
+        transform.Find("Hitbox").gameObject.SetActive(true);
+        Destroy(transform.Find("Hitbox").gameObject);
         if (gameScript.playEffects == true)
         {
             Instantiate(explosion, transform.position, transform.rotation);
@@ -202,25 +204,6 @@ public class Bomb : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (playerScript.wind == true)
-        {
-            //Wind off. Need wind variable for enemy
-            if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Bomb") || collision.gameObject.CompareTag("Debris"))
-            {
-                gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                playerScript.WindEnd();
-                EnemyExplode();
-                playerScript.HitCountUp();
-            }
-            if (collision.gameObject.CompareTag("Debris"))
-            {
-
-                playerScript.WindHitEffect(collision.GetContact(0).point);
-                Destroy(collision.gameObject);
-                gameScript.ReduceNumDebris();
-            }
-        }
     }
     private void OnTriggerEnter(Collider other)
     {

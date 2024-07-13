@@ -569,7 +569,7 @@ public class Enemy : MonoBehaviour
         //I can do something like recoveryIdleTime
         //if (useRecoveryIdleTime), IdleAnimation(recoveryIdleTime)
         idleCancel = StartCoroutine(IdleAnimation(5));
-        Debug.Log("IdleAnimation");
+        //Debug.Log("IdleAnimation");
     }
     public void FlinchCancel()
     {
@@ -1206,6 +1206,24 @@ public class Enemy : MonoBehaviour
                 Destroy(collision.gameObject);
                 playerScript.HitCountUp();
                 gameScript.ReduceNumDebris();
+            }
+            if (collision.gameObject.CompareTag("Bomb"))
+            {
+                bool damaged = false;
+                if (damaged == false)
+                {
+                    damaged = true;
+                    TakeDamage(3, false);
+                    //Destroy(other.gameObject);
+                    if (red == false && armor == false)
+                    {
+                        Flinch();
+                    }
+                }
+                playerScript.WindEnd();
+                WindCaptureEnd();
+                playerScript.HitCountUp();
+                collision.gameObject.GetComponent<Bomb>().EnemyExplode();
             }
         }
     }

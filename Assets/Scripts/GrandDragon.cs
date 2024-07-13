@@ -732,7 +732,7 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(0);
         //}
         //enemyScript.AttackReadyOff();
-        StartCoroutine(BombFlare());
+        BombFlare();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(1));
     }
@@ -754,7 +754,7 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(0);
         //}
         //enemyScript.AttackReadyOff();
-        StartCoroutine(BombFlare());
+        BombFlare();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(2));
     }
@@ -766,7 +766,7 @@ IEnumerator Flashing()
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
-        StartCoroutine(BombFlare());
+        BombFlare();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(3));
     }
@@ -778,7 +778,7 @@ IEnumerator Flashing()
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
-        StartCoroutine(BombFlare());
+        BombFlare();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(4));
     }
@@ -823,10 +823,10 @@ IEnumerator Flashing()
         Debug.Log("Fifth Phase " + fifthPhase);
         Debug.Log("Fifth Phase Regular" + fifthPhaseRegular);
     }
-    IEnumerator BombFlare()
+    public void BombFlare()
     {
         //bombFlare.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
         bombFlare.Play();
     }
     //Green Attack. 2.65 damage

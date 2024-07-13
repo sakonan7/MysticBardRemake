@@ -649,12 +649,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &37613139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,12 +1118,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &56749474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2036,12 +2044,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 1
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &147694046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3003,12 +3015,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &215017834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4858,12 +4874,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &446769878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5171,12 +5191,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &458121214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7098,12 +7122,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &660026636
 GameObject:
   m_ObjectHideFlags: 0
@@ -7892,12 +7920,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &725798156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9127,12 +9159,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &814408329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13066,12 +13102,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &1100634221
 GameObject:
   m_ObjectHideFlags: 0
@@ -14122,12 +14162,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1175716044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14285,12 +14329,16 @@ MonoBehaviour:
   increaseFlute: 1
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1181671179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14744,12 +14792,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1196323266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15009,7 +15061,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1206276572
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15923,12 +15975,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1256311828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16336,12 +16392,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1264188288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17911,12 +17971,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1383936258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18162,12 +18226,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1412407449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18916,12 +18984,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1453408416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22271,12 +22343,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1666485848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22568,12 +22644,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 1
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1691809908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23385,12 +23465,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &1723389730
 GameObject:
   m_ObjectHideFlags: 0
@@ -24874,12 +24958,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1827498430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25037,12 +25125,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &1834518710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26626,12 +26718,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &2028008462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27715,12 +27811,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!114 &2077187381
 MonoBehaviour:
   m_ObjectHideFlags: 0

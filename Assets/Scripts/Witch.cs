@@ -19,7 +19,7 @@ public class Witch : MonoBehaviour
         animator = GetComponent<Animator>();
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
-        enemyScript.SetHP(60);
+        enemyScript.SetHP(60 + 10);
         enemyScript.SetEXP(90);
 
         enemyScript.SetNormal();
