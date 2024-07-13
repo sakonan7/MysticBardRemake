@@ -9092,6 +9092,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 974165924082623030, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 1839936574914723739, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
       propertyPath: m_IsActive
       value: 0

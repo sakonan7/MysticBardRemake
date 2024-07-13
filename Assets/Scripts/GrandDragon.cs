@@ -98,7 +98,7 @@ public class GrandDragon : MonoBehaviour
                 forcedPhaseChange = false;
                 ForcedPhaseChange();
             }
-            if (enemyScript.HP < maxHP - 50 && firstPhase == true)
+            if (enemyScript.HP < maxHP - 75 && firstPhase == true)
             {
                 firstPhase = false;
                 secondPhase = true;
@@ -123,7 +123,7 @@ public class GrandDragon : MonoBehaviour
                 StartCoroutine(BarrierAnimation(1));
                 enemyScript.SetIdleTime(20);
             }
-            if (enemyScript.HP < maxHP - 100 && secondPhase == true)
+            if (enemyScript.HP < maxHP - 150 && secondPhase == true)
             {
                 secondPhase = false;
                 thirdPhase = true;
@@ -138,7 +138,7 @@ public class GrandDragon : MonoBehaviour
                 //forcedPhaseChange = true;
                 //}
             }
-            if (enemyScript.HP < maxHP - 150 && thirdPhase == true)
+            if (enemyScript.HP < maxHP - 225 && thirdPhase == true)
             {
                 //Debug.Log("Fourth Phase");
                 thirdPhase = false;
@@ -171,7 +171,7 @@ public class GrandDragon : MonoBehaviour
                 regularBombRing1Used = false;
                 regularBombRing2Used = false;
             }
-            if (enemyScript.HP < maxHP - 200 && fourthPhase == true)
+            if (enemyScript.HP < maxHP - 300 && fourthPhase == true)
             {
                 fourthPhase = false;
                 fifthPhase = true;
@@ -200,7 +200,7 @@ public class GrandDragon : MonoBehaviour
                 regularBombRing2Used = false;
                 
             }
-            if (enemyScript.HP < maxHP - 250 && fifthPhase == true)
+            if (enemyScript.HP < maxHP - 375 && fifthPhase == true)
             {
                 fifthPhase = false;
                 sixthPhase = true;
@@ -735,6 +735,20 @@ IEnumerator Flashing()
         BombFlare();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(1));
+        //SetIdleTime during Bombrings
+        //SamIAm
+        if (secondPhase == true)
+        {
+            enemyScript.SetIdleTime(20);
+        }
+        if (fourthPhase == true)
+        {
+            enemyScript.SetIdleTime(10);
+        }
+        if (fifthPhase == true)
+        {
+            enemyScript.SetIdleTime(6);
+        }
     }
     public void RegularBombRing2()
     {
@@ -757,6 +771,18 @@ IEnumerator Flashing()
         BombFlare();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(2));
+        if (secondPhase == true)
+        {
+            enemyScript.SetIdleTime(20);
+        }
+        if (fourthPhase == true)
+        {
+            enemyScript.SetIdleTime(10);
+        }
+        if (fifthPhase == true)
+        {
+            enemyScript.SetIdleTime(6);
+        }
     }
     public void BombRing3()
     {
@@ -769,6 +795,7 @@ IEnumerator Flashing()
         BombFlare();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(3));
+        enemyScript.SetIdleTime(20);
     }
     public void BombRing4()
     {
@@ -781,6 +808,7 @@ IEnumerator Flashing()
         BombFlare();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(4));
+        enemyScript.SetIdleTime(20);
     }
     IEnumerator BombRingAppear(int number)
     {
