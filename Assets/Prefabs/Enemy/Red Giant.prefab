@@ -1778,6 +1778,7 @@ GameObject:
   - component: {fileID: 8222785869091681504}
   - component: {fileID: 6286576798732578529}
   - component: {fileID: 1653135535948098325}
+  - component: {fileID: 238870444943033949}
   m_Layer: 0
   m_Name: Red Giant
   m_TagString: Enemy
@@ -1858,6 +1859,8 @@ MonoBehaviour:
   grunt: {fileID: 8300000, guid: fb0142c6209ad2943accad586539fa4e, type: 3}
   attackEffectObject: {fileID: 6957979161433741804}
   barrierSound: {fileID: 0}
+  barrierBreak: {fileID: 0}
+  bombLensFlare: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -2043,6 +2046,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &238870444943033949
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4625541724328400951}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2.44
+  m_Center: {x: 0, y: 1.86, z: 0}
 --- !u!1 &4664583152405899151
 GameObject:
   m_ObjectHideFlags: 0

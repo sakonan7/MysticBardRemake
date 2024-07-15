@@ -78,6 +78,8 @@ public class PlayerController : MonoBehaviour
     private TextMeshProUGUI numPotions;
     //private int numPotionsInt = 4;
     private GameObject potionUsedIcon;
+    private GameObject pause;
+    private GameObject cantPauseObject;
 
     //Private transparent
     private RawImage HPBackgroundT;
@@ -170,6 +172,7 @@ public class PlayerController : MonoBehaviour
     public bool wind = false;
     private bool potionUsed = false;
     private bool paused = false;
+    private bool cantPause = false;
     private int numOfSoundEffects = 0;
     private bool uninterruptibleSound = false;
 
@@ -230,6 +233,8 @@ public class PlayerController : MonoBehaviour
                 weaponImages.transform.Find("Harp Image").gameObject.SetActive(true);
                 //TransparentUI(5);
                 damageText = GameObject.Find("Player Damage Received");
+                pause = GameObject.Find("Pause Object").transform.Find("Pause").gameObject;
+                cantPause = GameObject.Find("Pause Object").transform.Find("Can't Pause").gameObject;
             }
         }
         audio = GetComponent<AudioSource>();
@@ -274,12 +279,14 @@ public class PlayerController : MonoBehaviour
                         {
                             paused = true;
                             Time.timeScale = 0;
+                            pause.SetActive(true);
                         }
                         else
                         {
                             paused = false;
                             Time.timeScale = 1;
-                            Debug.Log("Pause Undone");
+                            //Debug.Log("Pause Undone");
+                            pause.SetActive(false);
                         }
                     }
                     if (paused == false)
@@ -911,6 +918,9 @@ public class PlayerController : MonoBehaviour
         weaponImages.transform.Find("Shield Image").gameObject.SetActive(true);
         shieldFilter.SetActive(true);
         ShieldReloadCancel();
+        weaponImages.transform.Find("Harp Image").gameObject.SetActive(false);
+        weaponImages.transform.Find("Trumpet Image").gameObject.SetActive(false);
+        weaponImages.transform.Find("Flute Image").gameObject.SetActive(false);
         yield return new WaitForSeconds(2);
         shieldOn = false;
         weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
@@ -923,6 +933,7 @@ public class PlayerController : MonoBehaviour
         }
 
         numOfSoundEffects = 0;
+        WeaponSelect();
     }
     IEnumerator ShieldBreakAnimation()
     {
@@ -937,10 +948,16 @@ public class PlayerController : MonoBehaviour
         specialInvincibility = true;
         //weaponImages.transform.Find("Shield Image").gameObject.SetActive(true);
         specialFilter.SetActive(true);
+        weaponImages.transform.Find("Harp Image").gameObject.SetActive(false);
+        weaponImages.transform.Find("Trumpet Image").gameObject.SetActive(false);
+        weaponImages.transform.Find("Flute Image").gameObject.SetActive(false);
+        weaponImages.transform.Find("Special Image").gameObject.SetActive(true);
         yield return new WaitForSeconds(2);
         specialInvincibility = false;
         //weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
         specialFilter.SetActive(false);
+        WeaponSelect();
+        weaponImages.transform.Find("Special Image").gameObject.SetActive(false);
     }
     public void GenerateShield(Vector3 position)
     {
@@ -1006,6 +1023,7 @@ public class PlayerController : MonoBehaviour
                 weaponImages.transform.Find("Shield Image").gameObject.SetActive(false);
                 shieldFilter.SetActive(false);
                 numOfSoundEffects = 0;
+                WeaponSelect();
             }
             
 

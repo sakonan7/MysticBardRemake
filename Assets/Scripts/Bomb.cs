@@ -88,7 +88,7 @@ public class Bomb : MonoBehaviour
     }
     IEnumerator ActualDamage()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.25f);
         //atm, I want boosh-BAM
 
         Destroy(gameObject, 2);

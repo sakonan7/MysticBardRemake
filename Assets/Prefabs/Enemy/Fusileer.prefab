@@ -236,6 +236,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100064, guid: 4587202ece1f38e43824178ccd0f8d90, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6579784758627402584}
+    - targetCorrespondingSourceObject: {fileID: 100064, guid: 4587202ece1f38e43824178ccd0f8d90, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4945338667230079570}
   m_SourcePrefab: {fileID: 100100000, guid: 4587202ece1f38e43824178ccd0f8d90, type: 3}
 --- !u!1 &2279919816002453006 stripped
 GameObject:
@@ -261,10 +264,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.94
-  m_Height: 3.26
+  m_Radius: 0.79
+  m_Height: 2.36
   m_Direction: 1
-  m_Center: {x: 0, y: 0.72, z: -0.05}
+  m_Center: {x: 0, y: 0.92, z: -0.05}
 --- !u!54 &698799287207074024
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -311,8 +314,11 @@ MonoBehaviour:
   attackEffects: []
   teamAttackAura: {fileID: 0}
   attackImpact: {fileID: 8300000, guid: 32db2a07aed62a84094082f47f4ff1b6, type: 3}
+  grunt: {fileID: 0}
   attackEffectObject: {fileID: 0}
   barrierSound: {fileID: 0}
+  barrierBreak: {fileID: 0}
+  bombLensFlare: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -428,6 +434,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &4945338667230079570
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2279919816002453006}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.25
+  m_Center: {x: 0, y: 0.96, z: 0}
 --- !u!4 &2279919816002544174 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400064, guid: 4587202ece1f38e43824178ccd0f8d90, type: 3}

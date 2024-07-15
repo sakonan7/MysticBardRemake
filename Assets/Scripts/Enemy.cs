@@ -68,6 +68,8 @@ public class Enemy : MonoBehaviour
 
 
     private GameObject[] enemies;
+    private List<Collider> collidingEnemies;
+    private int collisionCount = 0;
 
     private bool idleStart = false;
     private bool idle = false;
@@ -169,6 +171,7 @@ public class Enemy : MonoBehaviour
         //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        collidingEnemies = new List<Collider>();
 
         effectPosition = transform.Find("Effect Position").gameObject;
 
@@ -241,6 +244,20 @@ public class Enemy : MonoBehaviour
         if (armor == true)
         {
             armorObj.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0));
+        }
+        if(teamAttack==true)
+        {
+            if (collisionCount<=0)
+            {
+                TeamAttackOff();
+            }
+            else
+            {
+                if (teamAttackOn==false) {
+                    teamAttackOn = true;
+                    TeamAttackPositives();
+                }
+            }
         }
     }
     //Setters
@@ -392,11 +409,6 @@ public class Enemy : MonoBehaviour
         if (green == false)
         {
             UnsetCantFlinch();
-        }
-
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            enemies[i].GetComponent<Enemy>().BarrierOff();
         }
         BarrierOff();
         audio.PlayOneShot(barrierBreak,1.5f);
@@ -993,6 +1005,10 @@ public class Enemy : MonoBehaviour
                 WindCaptureEnd();
                 if (boss == false)
                 {
+                    for(int i=0;i <collidingEnemies.Count;i++)
+                    {
+                        collidingEnemies[i].GetComponent<Enemy>().CollisionCountDown();
+                    }
                     Destroy(gameObject);
 
                 }
@@ -1047,6 +1063,10 @@ public class Enemy : MonoBehaviour
     {
         teamAttackAura.SetActive(false);
         damage--;
+    }
+    public void CollisionCountDown()
+    {
+        collisionCount--;
     }
     public void BossDying()
     {
@@ -1152,7 +1172,7 @@ public class Enemy : MonoBehaviour
         if (playerScript.wind==true)
         {
         //Wind off. Need wind variable for enemy
-        if (collision.gameObject.CompareTag("Enemy"))
+            if (collision.gameObject.CompareTag("Enemy"))
             {
                 bool damaged = false;
                 if (damaged == false)
@@ -1173,15 +1193,15 @@ public class Enemy : MonoBehaviour
                     WindCaptureEnd();
                 //}
                     playerScript.WindHitEffect(collision.GetContact(0).point);
-            if (teamAttack == true && teamAttackOn == false)
-            {
-            teamAttackOn = true;
-            TeamAttackPositives();
-            //Debug.Log("Team Attack On");
-            }
+                    if (teamAttack == true && teamAttackOn == false)
+                    {
+                    teamAttackOn = true;
+                    TeamAttackPositives();
+                    //Debug.Log("Team Attack On");
+                    }
                 //Debug.Log("Crash!");
-                playerScript.HitCountUp();
-            }
+                    playerScript.HitCountUp();
+                }
             if (collision.gameObject.CompareTag("Debris"))
             {
                 bool damaged = false;
@@ -1213,7 +1233,7 @@ public class Enemy : MonoBehaviour
                 if (damaged == false)
                 {
                     damaged = true;
-                    TakeDamage(3, false);
+                    TakeDamage(3, true);
                     //Destroy(other.gameObject);
                     if (red == false && armor == false)
                     {
@@ -1226,28 +1246,14 @@ public class Enemy : MonoBehaviour
                 collision.gameObject.GetComponent<Bomb>().EnemyExplode();
             }
         }
+
     }
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            if (teamAttack == true && teamAttackOn == false)
-            {
-                teamAttackOn = true;
-                TeamAttackPositives();
-                //Debug.Log("Team Attack On");
-            }
-        }
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            if (teamAttack == true)
-            {
-                TeamAttackOff();
-            }
-        }
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -1299,6 +1305,12 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
+        if (other.CompareTag("Enemy"))
+        {
+            collidingEnemies.Add(other);
+            collisionCount++;
+            Debug.Log("Touched");
+        }
     }
     private void OnTriggerStay(Collider other)
     {
@@ -1312,6 +1324,16 @@ public class Enemy : MonoBehaviour
         if (other.CompareTag("Barrier") &&armor==false)
         {
             barrier = false;
+        }
+        if (other.CompareTag("Enemy"))
+        {
+            //if (teamAttack == true)
+            //{
+            //TeamAttackOff();
+            //}
+            collidingEnemies.Remove(other);
+            collisionCount--;
+            Debug.Log("Lost");
         }
     }
 }
