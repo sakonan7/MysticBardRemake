@@ -9088,18 +9088,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 460001416677277315, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 974165924082623030, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
-      propertyPath: InitialModule.startSize.minScalar
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1839936574914723739, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5853811417667699940, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.033342004
@@ -9143,14 +9131,6 @@ PrefabInstance:
     - target: {fileID: 6371318126653473218, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
       propertyPath: m_Name
       value: Red Dragon
-      objectReference: {fileID: 0}
-    - target: {fileID: 7917747654413592645, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8217936557805594973, guid: 89f07a824c175d043886f6b8f729db6e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

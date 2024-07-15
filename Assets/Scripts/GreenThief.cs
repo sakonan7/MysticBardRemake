@@ -29,6 +29,8 @@ public class GreenThief : MonoBehaviour
     private bool idle = true;
     private Animator animator;
     private Enemy enemyScript;
+
+    private bool repeat = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -62,19 +64,27 @@ public class GreenThief : MonoBehaviour
                 Debug.Log("Attack");
             }
         }
+
+        //I'm going to need to write this code differently for when other foes flash for attacks that can't be interrupted
+        //I think I just have to make two flashes (two coroutines)
+        if(enemyScript.unflinchingFollow ==true&&repeat==false)
+        {
+            StartCoroutine(Flashing());
+        }
     }
     IEnumerator Flashing()
     {
-        int numFlash = 0;
-        while (numFlash < 2)
-        {
+        //int numFlash = 0;
+        //while (numFlash < 3)
+        //{
     armor1.material=flashArmor1;
         armor2.material=flashArmor1;
         body.material=flashBody;
         head.material=flashHead;
         helmet.material=flashHelmet;
         legs.material=flashLegs;
-
+            flashing.SetActive(true);
+        repeat = true;
     yield return new WaitForSeconds(0.5f);
             armor1.material = originalArmor1;
             armor2.material = originalArmor1;
@@ -84,10 +94,11 @@ public class GreenThief : MonoBehaviour
             legs.material = originalLegs;
 
 
-            numFlash++;
-
-            Debug.Log(numFlash);
-        }
+            //numFlash++;
+            flashing.SetActive(false);
+        //Debug.Log(numFlash);
+        repeat = false;
+        //}
     }
     //I need a revenge value
     public void CounterAttack()

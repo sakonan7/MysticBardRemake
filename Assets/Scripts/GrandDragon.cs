@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 //Need to ensure skip to next phase if HP reaches another phase
 //Maybe have the attack play at least
@@ -23,6 +24,7 @@ public class GrandDragon : MonoBehaviour
     public Material final;
 
     public Material flashing;
+    public GameObject flashingLight;
     public Material dying;
     public ParticleSystem []redAura;
     public ParticleSystem []greenAura;
@@ -56,6 +58,8 @@ public class GrandDragon : MonoBehaviour
     //After a bomb attack, trigger this
     private bool fourthPhaseRegular = false;
     private bool fifthPhaseRegular = false;
+
+    private bool repeat = false;
 
     private int maxHP = 75*6+150;
 
@@ -486,6 +490,10 @@ public class GrandDragon : MonoBehaviour
             //Last phase
             //< 500, secondPhase ==true
         }
+        if (enemyScript.unflinchingFollow == true && repeat == false)
+        {
+            StartCoroutine(Flashing());
+        }
     }
     public void ForcedPhaseChange()
     {
@@ -508,12 +516,11 @@ public class GrandDragon : MonoBehaviour
     }
 IEnumerator Flashing()
     {
-        int numFlash = 0;
-        while (numFlash < 2)
-        {
             skin.material = flashing;
-            //Debug.Log("White");
-            yield return new WaitForSeconds(0.25f);
+        //Debug.Log("White");
+        repeat = true;
+        flashingLight.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
             //Depends on phase
             if (secondPhase == true)
             {
@@ -539,11 +546,8 @@ IEnumerator Flashing()
             {
                 skin.material = final;
             }
-
-            numFlash++;
-
-            Debug.Log(numFlash);
-        }
+        repeat = false;
+        flashingLight.SetActive(false);
     }
     public void Roar()
     {
