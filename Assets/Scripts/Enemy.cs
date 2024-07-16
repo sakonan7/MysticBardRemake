@@ -344,6 +344,10 @@ public class Enemy : MonoBehaviour
     {
         playerScript.CantPauseMethod(time);
     }
+    public void PlayerTransparentUI(float time)
+    {
+        playerScript.TransparentUI(time);
+    }
     public void SetNoAttack()
     {
         noAttack = true;

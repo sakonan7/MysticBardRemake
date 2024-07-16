@@ -259,12 +259,27 @@ public class PlayerController : MonoBehaviour
                 potionT = GameObject.Find("Potion Icon").GetComponent<RawImage>();
                 if (gameScript.boss==true) {
                     bossHPBackgroundT = GameObject.Find("Boss HP Object").transform.Find("Boss HP Bar Background").GetComponent<RawImage>();
-                    bossHPBarT = bossHPBackgroundT.transform.Find("HP Bar").GetComponent<Image>();
+                    bossHPBarT = bossHPBackgroundT.transform.Find("Boss HP Bar").GetComponent<Image>();
                     bossdamageBarT = bossHPBackgroundT.transform.Find("Damage Taken").GetComponent<Image>();
                 }
                 harpBar1 =GameObject.Find("Harp").transform.Find("Image").GetComponent<Image>();
+                harpBar2 = GameObject.Find("Harp").transform.Find("Image (1)").GetComponent<Image>();
+                harpBar3 = GameObject.Find("Harp").transform.Find("Image (2)").GetComponent<Image>();
+                harpBar4 = GameObject.Find("Harp").transform.Find("Image (3)").GetComponent<Image>();
+                trumpetBar1 = GameObject.Find("Trumpet").transform.Find("Image").GetComponent<Image>();
+                trumpetBar2 = GameObject.Find("Trumpet").transform.Find("Image (1)").GetComponent<Image>();
+                trumpetBar3 = GameObject.Find("Trumpet").transform.Find("Image (2)").GetComponent<Image>();
+                trumpetBar4 = GameObject.Find("Trumpet").transform.Find("Image (3)").GetComponent<Image>();
+                fluteBar1 = GameObject.Find("Flute").transform.Find("Image").GetComponent<Image>();
+                fluteBar2 = GameObject.Find("Flute").transform.Find("Image (1)").GetComponent<Image>();
+                fluteBar3 = GameObject.Find("Flute").transform.Find("Image (2)").GetComponent<Image>();
+                fluteBar4 = GameObject.Find("Flute").transform.Find("Image (3)").GetComponent<Image>();
+                shieldBar1 = GameObject.Find("Shield").transform.Find("Image (4)").GetComponent<Image>();
+                shieldBar2 = GameObject.Find("Shield").transform.Find("Image (5)").GetComponent<Image>();
+                shieldBar3 = GameObject.Find("Shield").transform.Find("Image (6)").GetComponent<Image>();
+                shieldBar4 = GameObject.Find("Shield").transform.Find("Image (7)").GetComponent<Image>();
 
-    damageText = GameObject.Find("Player Damage Received");
+                damageText = GameObject.Find("Player Damage Received");
                 pause = GameObject.Find("Pause Object").transform.Find("Pause").gameObject;
                 cantPauseObject = GameObject.Find("Pause Object").transform.Find("Can't Pause").gameObject;
             }
@@ -301,11 +316,11 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Z))
         {
-            TransparentUI();
+            //TransparentUI();
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
-            UndoTransparentUI();
+            //UndoTransparentUI();
         }
         //I had titleNonStatic here before
         if (gameScript.levelSelectNonStatic == false)
@@ -1286,43 +1301,87 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(2);
         uninterruptibleSound = false;
     }
-    public void TransparentUI()
+    public void TransparentUI(float time)
     {
         //4 + weapon images (use bool) + shield + weapons + potions
         //No text atm
         //GameObject.Find("HP Bar Background").GetComponent<RawImage>().color = new Color(this.GetComponent<RawImage>().color.r, this.GetComponent<RawImage>().color.g, this.GetComponent<RawImage>().color.b, 0.5f);
         HPBackgroundT.color = new Color(HPBackgroundT.color.r, HPBackgroundT.color.b, HPBackgroundT.color.g, 0.5f);
         //StartCoroutine(TransparentUITime(time));
-        harpGauge.color = new Color(harpGauge.color.r, harpGauge.color.b, harpGauge.color.g, 0.5f);
-        //HPBarT.color = new Color(HPBarT.color.r, HPBarT.color.b, HPBarT.color.g, 0.5f);
+        //harpGauge.color = new Color(harpGauge.color.r, harpGauge.color.b, harpGauge.color.g, 0.5f);
+        //trumpetGauge.color = new Color(harpGauge.color.r, harpGauge.color.b, harpGauge.color.g, 0.5f);
+        //fluteGauge.color = new Color(harpGauge.color.r, harpGauge.color.b, harpGauge.color.g, 0.5f);
+        //shieldGauge.color = new Color(harpGauge.color.r, harpGauge.color.b, harpGauge.color.g, 0.5f);
+        //HPBarT.color = new Color(0.3607843f, 1, 0, 0.5f);
         //damageBarT = GameObject.Find("HP Bar Background").transform.Find("Damage Done").GetComponent<Image>();
         mugShotT.color = new Color(mugShotT.color.r, mugShotT.color.b, mugShotT.color.g, 0.5f);
         potionT.color = new Color(potionT.color.r, potionT.color.b, potionT.color.g, 0.5f);
         allAttackBackgroundT.color = new Color(allAttackBackgroundT.color.r, allAttackBackgroundT.color.b, allAttackBackgroundT.color.g, 0.5f);
         if (gameScript.boss==true) {
-            bossHPBackgroundT = GameObject.Find("Boss HP Object").transform.Find("Boss HP Bar Background").GetComponent<RawImage>();
+            bossHPBackgroundT.color = new Color(bossHPBackgroundT.color.r, bossHPBackgroundT.color.b, bossHPBackgroundT.color.g, 0.5f);
+            bossHPBarT.color = new Color(1, 0, 0.1378136f, 0.5f);
             //bossHPBarT = bossHPBackgroundT.transform.Find("HP Bar").GetComponent<Image>();
             //bossdamageBarT = bossHPBackgroundT.transform.Find("Damage Done").GetComponent<Image>();
         }
         harpBar1.color = new Color(harpBar1.color.r, harpBar1.color.b, harpBar1.color.g, 0.5f);
+        harpBar2.color = new Color(harpBar2.color.r, harpBar2.color.b, harpBar2.color.g, 0.5f);
+        harpBar3.color = new Color(harpBar3.color.r, harpBar3.color.b, harpBar3.color.g, 0.5f);
+        harpBar4.color = new Color(harpBar4.color.r, harpBar4.color.b, harpBar4.color.g, 0.5f);
+        trumpetBar1.color = new Color(trumpetBar1.color.r, trumpetBar1.color.b, trumpetBar1.color.g, 0.5f);
+        trumpetBar2.color = new Color(harpBar2.color.r, harpBar2.color.b, harpBar2.color.g, 0.5f);
+        trumpetBar3.color = new Color(harpBar3.color.r, harpBar3.color.b, harpBar3.color.g, 0.5f);
+        trumpetBar4.color = new Color(harpBar4.color.r, harpBar4.color.b, harpBar4.color.g, 0.5f);
+        fluteBar1.color = new Color(trumpetBar1.color.r, trumpetBar1.color.b, trumpetBar1.color.g, 0.5f);
+        fluteBar2.color = new Color(harpBar2.color.r, harpBar2.color.b, harpBar2.color.g, 0.5f);
+        fluteBar3.color = new Color(harpBar3.color.r, harpBar3.color.b, harpBar3.color.g, 0.5f);
+        fluteBar4.color = new Color(harpBar4.color.r, harpBar4.color.b, harpBar4.color.g, 0.5f);
+        shieldBar1.color = new Color(trumpetBar1.color.r, trumpetBar1.color.b, trumpetBar1.color.g, 0.5f);
+        shieldBar2.color = new Color(harpBar2.color.r, harpBar2.color.b, harpBar2.color.g, 0.5f);
+        shieldBar3.color = new Color(harpBar3.color.r, harpBar3.color.b, harpBar3.color.g, 0.5f);
+        shieldBar4.color = new Color(harpBar4.color.r, harpBar4.color.b, harpBar4.color.g, 0.5f);
+        StartCoroutine(TransparentUITime(time));
     }
     public void UndoTransparentUI()
     {
-
         HPBackgroundT.color = new Color(HPBackgroundT.color.r, HPBackgroundT.color.b, HPBackgroundT.color.g, 1);
+        //StartCoroutine(TransparentUITime(time));
+        //harpGauge.color = new Color(harpGauge.color.r, harpGauge.color.b, harpGauge.color.g, 0.5f);
+        //trumpetGauge.color = new Color(harpGauge.color.r, harpGauge.color.b, harpGauge.color.g, 0.5f);
+        //fluteGauge.color = new Color(harpGauge.color.r, harpGauge.color.b, harpGauge.color.g, 0.5f);
+        //shieldGauge.color = new Color(harpGauge.color.r, harpGauge.color.b, harpGauge.color.g, 0.5f);
+        //HPBarT.color = new Color(HPBarT.color.r, HPBarT.color.b, HPBarT.color.g, 0.5f);
+        //damageBarT = GameObject.Find("HP Bar Background").transform.Find("Damage Done").GetComponent<Image>();
         mugShotT.color = new Color(mugShotT.color.r, mugShotT.color.b, mugShotT.color.g, 1);
         potionT.color = new Color(potionT.color.r, potionT.color.b, potionT.color.g, 1);
         allAttackBackgroundT.color = new Color(allAttackBackgroundT.color.r, allAttackBackgroundT.color.b, allAttackBackgroundT.color.g, 1);
         if (gameScript.boss == true)
         {
-            bossHPBackgroundT = GameObject.Find("Boss HP Object").transform.Find("Boss HP Bar Background").GetComponent<RawImage>();
-            //bossHPBarT = bossHPBackgroundT.transform.Find("HP Bar").GetComponent<Image>();
+            bossHPBackgroundT.color = new Color(bossHPBackgroundT.color.r, bossHPBackgroundT.color.b, bossHPBackgroundT.color.g, 1);
+            bossHPBarT.color = new Color(1, 0, 0.1378136f, 1);
             //bossdamageBarT = bossHPBackgroundT.transform.Find("Damage Done").GetComponent<Image>();
         }
+        harpBar1.color = new Color(harpBar1.color.r, harpBar1.color.b, harpBar1.color.g, 1);
+        harpBar2.color = new Color(harpBar2.color.r, harpBar2.color.b, harpBar2.color.g, 1);
+        harpBar3.color = new Color(harpBar3.color.r, harpBar3.color.b, harpBar3.color.g, 1);
+        harpBar4.color = new Color(harpBar4.color.r, harpBar4.color.b, harpBar4.color.g, 1);
+        trumpetBar1.color = new Color(trumpetBar1.color.r, trumpetBar1.color.b, trumpetBar1.color.g, 1);
+        trumpetBar2.color = new Color(harpBar2.color.r, harpBar2.color.b, harpBar2.color.g, 1);
+        trumpetBar3.color = new Color(harpBar3.color.r, harpBar3.color.b, harpBar3.color.g, 1);
+        trumpetBar4.color = new Color(harpBar4.color.r, harpBar4.color.b, harpBar4.color.g, 1);
+        fluteBar1.color = new Color(trumpetBar1.color.r, trumpetBar1.color.b, trumpetBar1.color.g, 1);
+        fluteBar2.color = new Color(harpBar2.color.r, harpBar2.color.b, harpBar2.color.g, 1);
+        fluteBar3.color = new Color(harpBar3.color.r, harpBar3.color.b, harpBar3.color.g, 1);
+        fluteBar4.color = new Color(harpBar4.color.r, harpBar4.color.b, harpBar4.color.g, 1);
+        shieldBar1.color = new Color(trumpetBar1.color.r, trumpetBar1.color.b, trumpetBar1.color.g, 1);
+        shieldBar2.color = new Color(harpBar2.color.r, harpBar2.color.b, harpBar2.color.g, 1);
+        shieldBar3.color = new Color(harpBar3.color.r, harpBar3.color.b, harpBar3.color.g, 1);
+        shieldBar4.color = new Color(harpBar4.color.r, harpBar4.color.b, harpBar4.color.g, 1);
     }
     IEnumerator TransparentUITime(float time)
     {
+        //TransparentUI();
         yield return new WaitForSeconds(time);
+        UndoTransparentUI();
     }
     public void FullRestore()
     {

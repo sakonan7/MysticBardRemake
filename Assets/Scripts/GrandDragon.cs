@@ -753,6 +753,8 @@ IEnumerator Flashing()
         {
             enemyScript.SetIdleTime(6);
         }
+        enemyScript.PlayerCantPause(18);
+        enemyScript.PlayerTransparentUI(18);
     }
     public void RegularBombRing2()
     {
@@ -852,8 +854,8 @@ IEnumerator Flashing()
                 fifthPhaseRegular = false;
             }
         }
-        Debug.Log("Fifth Phase " + fifthPhase);
-        Debug.Log("Fifth Phase Regular" + fifthPhaseRegular);
+        enemyScript.PlayerCantPause(18);
+        enemyScript.PlayerTransparentUI(18);
     }
     public void BombFlare()
     {
