@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     public static int currentLevel = 2;
 
     public bool victory = false;
-    private bool boss = false;
+    public bool boss = false;
 
     //06/05/24
     //This should be okay

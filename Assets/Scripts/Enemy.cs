@@ -253,7 +253,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                if (teamAttackOn==false) {
+                if (teamAttackOn==false &&teamAttack==true) {
                     teamAttackOn = true;
                     TeamAttackPositives();
                 }
@@ -276,7 +276,7 @@ public class Enemy : MonoBehaviour
         damage = newDamage;
         if (teamAttackOn == true)
         {
-            damage++;
+            damage =2;
         }
     }
     public void SetIdleStart()
@@ -339,6 +339,10 @@ public class Enemy : MonoBehaviour
     public void UnsetBombUser()
     {
         bombUser = false;
+    }
+    public void PlayerCantPause(float time)
+    {
+        playerScript.CantPauseMethod(time);
     }
     public void SetNoAttack()
     {
@@ -1057,12 +1061,12 @@ public class Enemy : MonoBehaviour
     public void TeamAttackPositives()
     {
         teamAttackAura.SetActive(true);
-        damage++;
+        damage = 2;
     }
     public void TeamAttackOff()
     {
         teamAttackAura.SetActive(false);
-        damage--;
+        damage =1;
     }
     public void CollisionCountDown()
     {
@@ -1193,12 +1197,6 @@ public class Enemy : MonoBehaviour
                     WindCaptureEnd();
                 //}
                     playerScript.WindHitEffect(collision.GetContact(0).point);
-                    if (teamAttack == true && teamAttackOn == false)
-                    {
-                    teamAttackOn = true;
-                    TeamAttackPositives();
-                    //Debug.Log("Team Attack On");
-                    }
                 //Debug.Log("Crash!");
                     playerScript.HitCountUp();
                 }

@@ -48,7 +48,7 @@ MonoBehaviour:
   background: {fileID: 0}
   regularBattle: {fileID: 8300000, guid: 9d624f4cdf5259946afcea7f5651472b, type: 3}
   regularBattle2: {fileID: 8300000, guid: 63616ff7ac3d87f44bc9a3af6e921bce, type: 3}
-  bossMusic: {fileID: 8300000, guid: 1790afd66de01e04fa427b75e3ff18f5, type: 3}
+  bossMusic: {fileID: 8300000, guid: 2629d55bec5a3974fa1ec2e713b9c396, type: 3}
   debris:
   - {fileID: 1762299993224416091, guid: cef0e78a80b066648a7dd39d7e173470, type: 3}
   - {fileID: 8934065819855448562, guid: c07434cf9263bc542beaed0fdc78823a, type: 3}
@@ -57,5 +57,6 @@ MonoBehaviour:
   gameOver: 0
   levelUp: 0
   victory: 0
+  boss: 0
   nonGameNonStatic: 0
   levelSelectNonStatic: 0

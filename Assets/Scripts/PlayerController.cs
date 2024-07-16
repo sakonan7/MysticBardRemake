@@ -85,6 +85,7 @@ public class PlayerController : MonoBehaviour
     private RawImage HPBackgroundT;
     private Image HPBarT;
     private Image damageBarT;
+    private RawImage allAttackBackgroundT;
     private TextMeshProUGUI numericT;
     private RawImage mugShotT;
     private TextMeshProUGUI levelT;
@@ -93,6 +94,23 @@ public class PlayerController : MonoBehaviour
     private Image bossdamageBarT;
     //Weapon Images, Just Make Them All Transparent
     //I just have the weapon barsleft
+    private Image harpBar1;
+    private Image harpBar2;
+    private Image harpBar3;
+    private Image harpBar4;
+    private Image trumpetBar1;
+    private Image trumpetBar2;
+    private Image trumpetBar3;
+    private Image trumpetBar4;
+    private Image fluteBar1;
+    private Image fluteBar2;
+    private Image fluteBar3;
+    private Image fluteBar4;
+    private Image shieldBar1;
+    private Image shieldBar2;
+    private Image shieldBar3;
+    private Image shieldBar4;
+    private RawImage potionT;
 
     //Private Numerics
     //It's very hard to be organized. Either you put all the HP stuff together and the private and statics are mixed up,
@@ -173,6 +191,7 @@ public class PlayerController : MonoBehaviour
     private bool potionUsed = false;
     private bool paused = false;
     private bool cantPause = false;
+    private bool cantRepeat = false;
     private int numOfSoundEffects = 0;
     private bool uninterruptibleSound = false;
 
@@ -232,9 +251,22 @@ public class PlayerController : MonoBehaviour
                 potionUsedIcon = GameObject.Find("Potions").transform.Find("Use Potion").gameObject;
                 weaponImages.transform.Find("Harp Image").gameObject.SetActive(true);
                 //TransparentUI(5);
-                damageText = GameObject.Find("Player Damage Received");
+                HPBackgroundT = GameObject.Find("HP Bar Background").GetComponent<RawImage>();
+                HPBarT = GameObject.Find("HP Bar Background").transform.Find("HP Bar").GetComponent<Image>();
+                damageBarT = GameObject.Find("HP Bar Background").transform.Find("Damage Done").GetComponent<Image>();
+                allAttackBackgroundT = GameObject.Find("All Attack Background").GetComponent<RawImage>();
+                mugShotT = GameObject.Find("Mugshot").GetComponent<RawImage>();
+                potionT = GameObject.Find("Potion Icon").GetComponent<RawImage>();
+                if (gameScript.boss==true) {
+                    bossHPBackgroundT = GameObject.Find("Boss HP Object").transform.Find("Boss HP Bar Background").GetComponent<RawImage>();
+                    bossHPBarT = bossHPBackgroundT.transform.Find("HP Bar").GetComponent<Image>();
+                    bossdamageBarT = bossHPBackgroundT.transform.Find("Damage Taken").GetComponent<Image>();
+                }
+                harpBar1 =GameObject.Find("Harp").transform.Find("Image").GetComponent<Image>();
+
+    damageText = GameObject.Find("Player Damage Received");
                 pause = GameObject.Find("Pause Object").transform.Find("Pause").gameObject;
-                cantPause = GameObject.Find("Pause Object").transform.Find("Can't Pause").gameObject;
+                cantPauseObject = GameObject.Find("Pause Object").transform.Find("Can't Pause").gameObject;
             }
         }
         audio = GetComponent<AudioSource>();
@@ -267,6 +299,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            TransparentUI();
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            UndoTransparentUI();
+        }
         //I had titleNonStatic here before
         if (gameScript.levelSelectNonStatic == false)
         {
@@ -275,18 +315,26 @@ public class PlayerController : MonoBehaviour
                 {
                     if (Input.GetKeyDown(KeyCode.F))
                     {
-                        if (paused == false)
-                        {
-                            paused = true;
-                            Time.timeScale = 0;
-                            pause.SetActive(true);
+                        if (cantPause==false) {
+                            if (paused == false)
+                            {
+                                paused = true;
+                                Time.timeScale = 0;
+                                pause.SetActive(true);
+                            }
+                            else
+                            {
+                                paused = false;
+                                Time.timeScale = 1;
+                                //Debug.Log("Pause Undone");
+                                pause.SetActive(false);
+                            }
                         }
                         else
                         {
-                            paused = false;
-                            Time.timeScale = 1;
-                            //Debug.Log("Pause Undone");
-                            pause.SetActive(false);
+                            if (cantRepeat==false) {
+                                StartCoroutine(CantPauseDisplay());
+                            }
                         }
                     }
                     if (paused == false)
@@ -1079,12 +1127,13 @@ public class PlayerController : MonoBehaviour
             cancelDamageShake = StartCoroutine(CameraShake(shakeAmount));
             cancelDamageText = StartCoroutine(DamageText(damage));
             cancelDamageFlash = StartCoroutine(DamageFlash());
-            if (currentHP <= 0)
-            {
-                gameScript.GameOver();
-            }
         }
-        if(gettingDamaged ==false)
+        //Created a zombie situation
+        if (currentHP <= 0)
+        {
+            gameScript.GameOver();
+        }
+        if (gettingDamaged ==false)
         {
             StartCoroutine(DamageBar());
         }
@@ -1237,12 +1286,39 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(2);
         uninterruptibleSound = false;
     }
-    public void TransparentUI(float time)
+    public void TransparentUI()
     {
         //4 + weapon images (use bool) + shield + weapons + potions
         //No text atm
-        GameObject.Find("HP Bar Background").GetComponent<RawImage>().color = new Color(this.GetComponent<RawImage>().color.r, this.GetComponent<RawImage>().color.g, this.GetComponent<RawImage>().color.b, 0.5f);
-        StartCoroutine(TransparentUITime(time));
+        //GameObject.Find("HP Bar Background").GetComponent<RawImage>().color = new Color(this.GetComponent<RawImage>().color.r, this.GetComponent<RawImage>().color.g, this.GetComponent<RawImage>().color.b, 0.5f);
+        HPBackgroundT.color = new Color(HPBackgroundT.color.r, HPBackgroundT.color.b, HPBackgroundT.color.g, 0.5f);
+        //StartCoroutine(TransparentUITime(time));
+        harpGauge.color = new Color(harpGauge.color.r, harpGauge.color.b, harpGauge.color.g, 0.5f);
+        //HPBarT.color = new Color(HPBarT.color.r, HPBarT.color.b, HPBarT.color.g, 0.5f);
+        //damageBarT = GameObject.Find("HP Bar Background").transform.Find("Damage Done").GetComponent<Image>();
+        mugShotT.color = new Color(mugShotT.color.r, mugShotT.color.b, mugShotT.color.g, 0.5f);
+        potionT.color = new Color(potionT.color.r, potionT.color.b, potionT.color.g, 0.5f);
+        allAttackBackgroundT.color = new Color(allAttackBackgroundT.color.r, allAttackBackgroundT.color.b, allAttackBackgroundT.color.g, 0.5f);
+        if (gameScript.boss==true) {
+            bossHPBackgroundT = GameObject.Find("Boss HP Object").transform.Find("Boss HP Bar Background").GetComponent<RawImage>();
+            //bossHPBarT = bossHPBackgroundT.transform.Find("HP Bar").GetComponent<Image>();
+            //bossdamageBarT = bossHPBackgroundT.transform.Find("Damage Done").GetComponent<Image>();
+        }
+        harpBar1.color = new Color(harpBar1.color.r, harpBar1.color.b, harpBar1.color.g, 0.5f);
+    }
+    public void UndoTransparentUI()
+    {
+
+        HPBackgroundT.color = new Color(HPBackgroundT.color.r, HPBackgroundT.color.b, HPBackgroundT.color.g, 1);
+        mugShotT.color = new Color(mugShotT.color.r, mugShotT.color.b, mugShotT.color.g, 1);
+        potionT.color = new Color(potionT.color.r, potionT.color.b, potionT.color.g, 1);
+        allAttackBackgroundT.color = new Color(allAttackBackgroundT.color.r, allAttackBackgroundT.color.b, allAttackBackgroundT.color.g, 1);
+        if (gameScript.boss == true)
+        {
+            bossHPBackgroundT = GameObject.Find("Boss HP Object").transform.Find("Boss HP Bar Background").GetComponent<RawImage>();
+            //bossHPBarT = bossHPBackgroundT.transform.Find("HP Bar").GetComponent<Image>();
+            //bossdamageBarT = bossHPBackgroundT.transform.Find("Damage Done").GetComponent<Image>();
+        }
     }
     IEnumerator TransparentUITime(float time)
     {
@@ -1510,6 +1586,24 @@ public class PlayerController : MonoBehaviour
             GameObject.Find("Potion Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
             GameObject.Find("Potion Button").gameObject.SetActive(false);
         }
+    }
+    public void CantPauseMethod(float time)
+    {
+        StartCoroutine(CantPause(time));
+    }
+    IEnumerator CantPause(float time)
+    {
+        cantPause = true;
+        yield return new WaitForSeconds(time);
+        cantPause = false;
+    }
+    IEnumerator CantPauseDisplay()
+    {
+        cantRepeat = true;
+        cantPauseObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        cantRepeat = false;
+        cantPauseObject.SetActive(false);
     }
     public void OnMouseUp()
     {

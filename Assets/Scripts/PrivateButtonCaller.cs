@@ -96,7 +96,7 @@ public class PrivateButtonCaller : MonoBehaviour
         }
         if (quit == true)
         {
-            //gameScript.ReturnToTitle();
+            gameScript.LevelSelect();
         }
         if (statIncrease == true)
         {

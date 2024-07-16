@@ -1223,12 +1223,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &762877892742757819
 GameObject:
   m_ObjectHideFlags: 0
@@ -2941,12 +2945,16 @@ MonoBehaviour:
   increaseFlute: 1
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &1480312796575172270
 GameObject:
   m_ObjectHideFlags: 0
@@ -4872,8 +4880,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 37.5, y: -12}
-  m_SizeDelta: {x: 120, y: 30}
+  m_AnchoredPosition: {x: 43.7, y: -12}
+  m_SizeDelta: {x: 136.1377, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5969418772626009072
 CanvasRenderer:
@@ -4992,12 +5000,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &2161744671831268497
 GameObject:
   m_ObjectHideFlags: 0
@@ -5693,12 +5705,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 1
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &2422823866479184848
 GameObject:
   m_ObjectHideFlags: 0
@@ -6091,9 +6107,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Quit
-
-'
+  m_text: Level Select
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9807,12 +9821,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &4113068453145260289
 GameObject:
   m_ObjectHideFlags: 0
@@ -9977,7 +9995,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5064582203889106156
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13564,12 +13582,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &5660889620591681735
 GameObject:
   m_ObjectHideFlags: 0
@@ -14184,7 +14206,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -37.5, y: -12}
+  m_AnchoredPosition: {x: -39.8, y: -12}
   m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8543452987326981902
@@ -14304,12 +14326,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &5973166092526899196
 GameObject:
   m_ObjectHideFlags: 0
@@ -15389,12 +15415,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &6435613135226299931
 GameObject:
   m_ObjectHideFlags: 0
@@ -18960,12 +18990,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &8047584973847857945
 GameObject:
   m_ObjectHideFlags: 0
@@ -19428,12 +19462,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &8158307125912441179
 GameObject:
   m_ObjectHideFlags: 0
@@ -19670,12 +19708,12 @@ RectTransform:
   - {fileID: 4702854380840819869}
   - {fileID: 2302868455537873246}
   - {fileID: 5093574721245730797}
-  - {fileID: 5602700859936187560}
   - {fileID: 3530844991723374394}
   - {fileID: 6964963410714082348}
   - {fileID: 5211613565021392315}
   - {fileID: 3259358420887921670}
   - {fileID: 1777702459401220336}
+  - {fileID: 5602700859936187560}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -22235,12 +22273,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 1
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &9088497968868878833
 GameObject:
   m_ObjectHideFlags: 0
@@ -22473,12 +22515,16 @@ MonoBehaviour:
   increaseFlute: 0
   increaseShield: 0
   increasePotion: 0
+  levelSelectSound: 0
   level1: 0
   level2: 0
   level3: 0
   level4: 0
   level5: 0
   level6: 0
+  level7: 0
+  level8: 0
+  level9: 0
 --- !u!1 &9125099376814525339
 GameObject:
   m_ObjectHideFlags: 0

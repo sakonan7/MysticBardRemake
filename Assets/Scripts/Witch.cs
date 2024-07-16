@@ -123,6 +123,7 @@ public class Witch : MonoBehaviour
         enemyScript.AttackReadyOff();
         BombFlare();
         enemyScript.PlayBombLensFlareSound();
+        enemyScript.PlayerCantPause(6);
     }
     public void BombFlare()
     {
