@@ -758,7 +758,7 @@ public class PlayerController : MonoBehaviour
             hitCountReached = true;
             StartCoroutine(AllAttackBarFlash());
             //audio.Stop();
-            if (uninterruptibleSound == true)
+            if (uninterruptibleSound == false)
             {
                 StartCoroutine(UninterruptibleSound());
             }
@@ -804,7 +804,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(AllAttackDisappear1());
         }
         hitCountReached = false;
-        if (uninterruptibleSound == true)
+        if (uninterruptibleSound == false)
         {
             StartCoroutine(UninterruptibleSound());
         }
@@ -849,7 +849,7 @@ public class PlayerController : MonoBehaviour
             numPotions.text = "";
         }
         damageBar.fillAmount = HPBar.fillAmount;
-        if (uninterruptibleSound == true)
+        if (uninterruptibleSound == false)
         {
             StartCoroutine(UninterruptibleSound());
         }
@@ -926,7 +926,7 @@ public class PlayerController : MonoBehaviour
         if (gameScript.playEffects== true) {
             Instantiate(interruptEffect, position, interruptEffect.transform.rotation);
         }
-        if (uninterruptibleSound == true)
+        if (uninterruptibleSound == false)
         {
             StartCoroutine(UninterruptibleSound());
         }
@@ -1060,7 +1060,7 @@ public class PlayerController : MonoBehaviour
         bool shieldBroken = false;
         if (damage > currentShield)
         {
-            if (uninterruptibleSound == true)
+            if (uninterruptibleSound == false)
             {
                 StartCoroutine(UninterruptibleSound());
             }
@@ -1093,7 +1093,7 @@ public class PlayerController : MonoBehaviour
         }
         if (damage >=3)
         {
-            if (uninterruptibleSound == true)
+            if (uninterruptibleSound == false)
             {
                 StartCoroutine(UninterruptibleSound());
             }

@@ -682,6 +682,7 @@ IEnumerator Flashing()
         if (secondPhase ==true ||fourthPhase ==true||fifthPhase==true) {
             if (regularBombRing1Used == false && regularBombRing2Used == false)
             {
+                BombFlare();
                 int random = Random.Range(0, 1);
                 if (random == 0)
                 {
@@ -737,6 +738,7 @@ IEnumerator Flashing()
         //}
         //enemyScript.AttackReadyOff();
         BombFlare();
+        enemyScript.PlayBombLensFlareSound();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(1));
         //SetIdleTime during Bombrings
@@ -775,6 +777,7 @@ IEnumerator Flashing()
         //}
         //enemyScript.AttackReadyOff();
         BombFlare();
+        enemyScript.PlayBombLensFlareSound();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(2));
         if (secondPhase == true)
@@ -799,6 +802,7 @@ IEnumerator Flashing()
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
         BombFlare();
+        enemyScript.PlayBombLensFlareSound();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(3));
         enemyScript.SetIdleTime(20);
@@ -812,6 +816,7 @@ IEnumerator Flashing()
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
         BombFlare();
+        enemyScript.PlayBombLensFlareSound();
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(4));
         enemyScript.SetIdleTime(20);
