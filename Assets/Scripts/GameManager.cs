@@ -132,8 +132,17 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         //SceneManager.LoadScene(level1);
+        GameObject.Find("Cover").gameObject.SetActive(false);
         GameObject.Find("Story").transform.Find("Page 1").gameObject.SetActive(true);
         background.SetActive(true);
+    }
+    public void Instructions()
+    {
+        SceneManager.LoadScene("Instructions");
+    }
+    public void Credits()
+    {
+        SceneManager.LoadScene("Credits");
     }
     public void StoryPage1()
     {
@@ -150,6 +159,59 @@ public class GameManager : MonoBehaviour
     {
         GameObject.Find("Story").transform.Find("Page 2").gameObject.SetActive(false);
         GameObject.Find("Story").transform.Find("Page 3").gameObject.SetActive(true);
+    }
+    public void Page1()
+    {
+        GameObject.Find("Story").transform.Find("Page 1").gameObject.SetActive(true);
+        GameObject.Find("Story").transform.Find("Page 2").gameObject.SetActive(false);
+    }
+    public void Page2()
+    {
+        GameObject.Find("Story").transform.Find("Page 1").gameObject.SetActive(false);
+        GameObject.Find("Story").transform.Find("Page 2").gameObject.SetActive(true);
+        GameObject.Find("Story").transform.Find("Page 3").gameObject.SetActive(false);
+    }
+    public void Page3()
+    {
+        GameObject.Find("Story").transform.Find("Page 2").gameObject.SetActive(false);
+        GameObject.Find("Story").transform.Find("Page 3").gameObject.SetActive(true);
+        GameObject.Find("Story").transform.Find("Harp Page").gameObject.SetActive(false);
+    }
+    public void HarpPage()
+    {
+        GameObject.Find("Story").transform.Find("Page 3").gameObject.SetActive(false);
+        GameObject.Find("Story").transform.Find("Harp Page").gameObject.SetActive(true);
+        GameObject.Find("Story").transform.Find("Trumpet Page").gameObject.SetActive(false);
+    }
+    public void TrumpetPage()
+    {
+        GameObject.Find("Story").transform.Find("Harp Page").gameObject.SetActive(false);
+        GameObject.Find("Story").transform.Find("Trumpet Page").gameObject.SetActive(true);
+        GameObject.Find("Story").transform.Find("Flute Page").gameObject.SetActive(false);
+    }
+    public void FlutePage()
+    {
+        GameObject.Find("Story").transform.Find("Trumpet Page").gameObject.SetActive(false);
+        GameObject.Find("Story").transform.Find("Flute Page").gameObject.SetActive(true);
+        GameObject.Find("Story").transform.Find("Shield Page").gameObject.SetActive(false);
+    }
+    public void ShieldPage()
+    {
+        GameObject.Find("Story").transform.Find("Flute Page").gameObject.SetActive(false);
+        GameObject.Find("Story").transform.Find("Shield Page").gameObject.SetActive(true);
+        GameObject.Find("Story").transform.Find("Special Page").gameObject.SetActive(false);
+    }
+    public void SpecialPage()
+    {
+        GameObject.Find("Story").transform.Find("Shield Page").gameObject.SetActive(false);
+        GameObject.Find("Story").transform.Find("Special Page").gameObject.SetActive(true);
+        GameObject.Find("Story").transform.Find("Flinching Foes").gameObject.SetActive(false);
+    }
+    public void FlinchingPage()
+    {
+        GameObject.Find("Story").transform.Find("Special Page").gameObject.SetActive(false);
+        GameObject.Find("Story").transform.Find("Flinching Foes").gameObject.SetActive(true);
+        //GameObject.Find("Story").transform.Find("Flinching Page").gameObject.SetActive(false);
     }
     public void LevelSelect()
     {

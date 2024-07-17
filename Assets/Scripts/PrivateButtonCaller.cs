@@ -14,6 +14,8 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool title = false;
     public bool startGame = false;
     public bool levelSelect = false;
+    public bool instructions = false;
+    public bool credits = false;
     public bool retry = false;
     public bool quit = false;
     public bool statIncrease = false;
@@ -32,6 +34,12 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool page1 = false;
     public bool page2 = false;
     public bool page3 = false;
+    public bool harpPage = false;
+    public bool trumpetPage = false;
+    public bool flutePage = false;
+    public bool shieldPage = false;
+    public bool specialPage = false;
+    public bool interruptingPage = false;
 
     [Header("Increase")]
     public bool increaseHP = false;
@@ -85,6 +93,14 @@ public class PrivateButtonCaller : MonoBehaviour
         {
             gameScript.StartGame();
         }
+        if (instructions == true)
+        {
+            gameScript.Instructions();
+        }
+        if (credits == true)
+        {
+            gameScript.Credits();
+        }
         if (storyPage1 == true)
         {
             gameScript.StoryPage1();
@@ -96,6 +112,43 @@ public class PrivateButtonCaller : MonoBehaviour
         if (storyPage3 == true)
         {
             gameScript.StoryPage3();
+        }
+        //Instructions
+        if (page1 == true)
+        {
+            gameScript.Page1();
+        }
+        if (page2 == true)
+        {
+            gameScript.Page2();
+        }
+        if (page3 == true)
+        {
+            gameScript.Page3();
+        }
+        if (harpPage == true)
+        {
+            gameScript.HarpPage();
+        }
+        if (trumpetPage == true)
+        {
+            gameScript.TrumpetPage();
+        }
+        if (flutePage == true)
+        {
+            gameScript.FlutePage();
+        }
+        if (shieldPage == true)
+        {
+            gameScript.ShieldPage();
+        }
+        if (specialPage == true)
+        {
+            gameScript.SpecialPage();
+        }
+        if (interruptingPage == true)
+        {
+            gameScript.FlinchingPage();
         }
 
         if (levelSelect == true)
