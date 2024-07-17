@@ -85,6 +85,19 @@ public class PrivateButtonCaller : MonoBehaviour
         {
             gameScript.StartGame();
         }
+        if (storyPage1 == true)
+        {
+            gameScript.StoryPage1();
+        }
+        if (storyPage2 == true)
+        {
+            gameScript.StoryPage2();
+        }
+        if (storyPage3 == true)
+        {
+            gameScript.StoryPage3();
+        }
+
         if (levelSelect == true)
         {
             gameScript.LevelSelect();

@@ -316,7 +316,7 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Z))
         {
-            //TransparentUI();
+            TransparentUI(5);
         }
         if (Input.GetKeyDown(KeyCode.X))
         {

@@ -135,6 +135,22 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Story").transform.Find("Page 1").gameObject.SetActive(true);
         background.SetActive(true);
     }
+    public void StoryPage1()
+    {
+        GameObject.Find("Story").transform.Find("Page 1").gameObject.SetActive(true);
+        GameObject.Find("Story").transform.Find("Page 2").gameObject.SetActive(false);
+    }
+    public void StoryPage2()
+    {
+        GameObject.Find("Story").transform.Find("Page 1").gameObject.SetActive(false);
+        GameObject.Find("Story").transform.Find("Page 2").gameObject.SetActive(true);
+        GameObject.Find("Story").transform.Find("Page 3").gameObject.SetActive(false);
+    }
+    public void StoryPage3()
+    {
+        GameObject.Find("Story").transform.Find("Page 2").gameObject.SetActive(false);
+        GameObject.Find("Story").transform.Find("Page 3").gameObject.SetActive(true);
+    }
     public void LevelSelect()
     {
         SceneManager.LoadScene("Level Select");

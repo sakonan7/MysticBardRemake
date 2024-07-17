@@ -2403,6 +2403,7 @@ GameObject:
   - component: {fileID: 6727028990411730980}
   - component: {fileID: 6234592589786633245}
   - component: {fileID: 8408272667586272370}
+  - component: {fileID: 1330057040105447367}
   m_Layer: 6
   m_Name: Dragon Bomb
   m_TagString: Bomb
@@ -2593,6 +2594,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1330057040105447367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8215724300071600138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66d5c4064d899ae4dbad2fa45cc3a4d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8852878693740725191
 GameObject:
   m_ObjectHideFlags: 0
