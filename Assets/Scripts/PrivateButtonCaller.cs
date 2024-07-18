@@ -40,6 +40,10 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool shieldPage = false;
     public bool specialPage = false;
     public bool interruptingPage = false;
+    [Header("Instructions")]
+    public bool creditsPage1 = false;
+    public bool creditsPage2 = false;
+    public bool creditsPage3 = false;
 
     [Header("Increase")]
     public bool increaseHP = false;
@@ -149,6 +153,15 @@ public class PrivateButtonCaller : MonoBehaviour
         if (interruptingPage == true)
         {
             gameScript.FlinchingPage();
+        }
+
+        if (creditsPage1 == true)
+        {
+            gameScript.CreditsPage1();
+        }
+        if (creditsPage2 == true)
+        {
+            gameScript.CreditsPage2();
         }
 
         if (levelSelect == true)

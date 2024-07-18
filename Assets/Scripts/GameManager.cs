@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     private AudioSource audio;
     public bool playEffects = false;
     public GameObject background;
+    public AudioClip prelude;
+    public AudioClip story;
     public AudioClip regularBattle;
     public AudioClip regularBattle2;
     public AudioClip bossMusic;
@@ -119,6 +121,26 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        if (SceneManager.GetActiveScene().name =="Instructions")
+        {
+                int random = 0;
+                random = Random.Range(0, 2);
+                if (random == 0)
+                {
+                    audio.clip = regularBattle;
+                    audio.Play();
+                }
+                else
+                {
+                    audio.clip = regularBattle2;
+                    audio.Play();
+                }
+        }
+        if (SceneManager.GetActiveScene().name == "Cover")
+        {
+                audio.clip = regularBattle;
+                audio.Play();
+        }
     }
 
     // Update is called once per frame
@@ -134,7 +156,10 @@ public class GameManager : MonoBehaviour
         //SceneManager.LoadScene(level1);
         GameObject.Find("Cover").gameObject.SetActive(false);
         GameObject.Find("Story").transform.Find("Page 1").gameObject.SetActive(true);
-        background.SetActive(true);
+        GameObject.Find("Orange Background").gameObject.SetActive(false);
+        GameObject.Find("Start Menu Canvas").transform.Find("Forest Background").gameObject.SetActive(true);
+        audio.clip = story;
+        audio.Play();
     }
     public void Instructions()
     {
@@ -212,6 +237,16 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Story").transform.Find("Special Page").gameObject.SetActive(false);
         GameObject.Find("Story").transform.Find("Flinching Foes").gameObject.SetActive(true);
         //GameObject.Find("Story").transform.Find("Flinching Page").gameObject.SetActive(false);
+    }
+    public void CreditsPage1()
+    {
+        GameObject.Find("Story").transform.Find("Page 1").gameObject.SetActive(true);
+        GameObject.Find("Story").transform.Find("Page 2").gameObject.SetActive(false);
+    }
+    public void CreditsPage2()
+    {
+        GameObject.Find("Story").transform.Find("Page 1").gameObject.SetActive(false);
+        GameObject.Find("Story").transform.Find("Page 2").gameObject.SetActive(true);
     }
     public void LevelSelect()
     {
