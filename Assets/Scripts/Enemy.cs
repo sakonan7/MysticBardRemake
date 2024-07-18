@@ -356,6 +356,10 @@ public class Enemy : MonoBehaviour
     {
         noAttack = false;
     }
+    public void SetArmorAmount(int newAmount)
+    {
+        fullArmorGauge = newAmount;
+    }
     //This is less of an enemy type and more of a mode
     public void SetArmor()
     {
@@ -657,7 +661,7 @@ public class Enemy : MonoBehaviour
     {
         unblockable = true;
     }
-    public void UnsetBlockable()
+    public void UnsetUnblockable()
     {
         unblockable = false;
     }
@@ -854,6 +858,10 @@ public class Enemy : MonoBehaviour
             {
                 animator.ResetTrigger("Attack");
                 animator.ResetTrigger("Attack2");
+            }
+            else if (unblockable == true)
+            {
+                animator.ResetTrigger("UnblockableAttack");
             }
             else
             {

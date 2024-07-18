@@ -20,6 +20,7 @@ public class Bomb : MonoBehaviour
     public AudioClip fuse;
     public bool timedBomb = false;
     public float time = 0;
+    private bool exploded = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -85,6 +86,7 @@ public class Bomb : MonoBehaviour
         //audio.PlayOneShot(attackImpact, 1);
         audio.PlayOneShot(explosionSound, 1.5f);
         aboutToExplode.Stop();
+        exploded = true;
     }
     IEnumerator ActualDamage()
     {
@@ -132,6 +134,7 @@ public class Bomb : MonoBehaviour
         StartCoroutine(ActualDamage());
         audio.PlayOneShot(explosionSound, 1.5f);
         aboutToExplode.Stop();
+        exploded = true;
     }
     IEnumerator SpecificAboutToExplode()
     {
@@ -170,14 +173,16 @@ public class Bomb : MonoBehaviour
             {
                 if (playerScript.fluteDrained == false)
                 {
-                    if (Input.GetMouseButtonDown(0))
-                    {
+                    if (exploded==false) {
+                        if (Input.GetMouseButtonDown(0))
+                        {
                             playerScript.FluteAttack();
                             playerScript.WindOn();
-                        StopCoroutine(explodeCancel);
-                        StopCoroutine(explodeEffectCancel);
-                        aboutToExplode.Stop();
-                        //Debug.Log("Grabbed.");
+                            StopCoroutine(explodeCancel);
+                            StopCoroutine(explodeEffectCancel);
+                            aboutToExplode.Stop();
+                            //Debug.Log("Grabbed.");
+                        }
                     }
                 }
             }

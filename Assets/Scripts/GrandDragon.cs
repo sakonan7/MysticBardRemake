@@ -78,6 +78,7 @@ public class GrandDragon : MonoBehaviour
         enemyScript.SetIdleTime(5);
         enemyScript.SetRed();
         enemyScript.SetBoss();
+        enemyScript.SetArmorAmount(35);
     }
 
     // Update is called once per frame

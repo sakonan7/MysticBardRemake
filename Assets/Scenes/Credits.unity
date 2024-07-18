@@ -7815,10 +7815,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Carol of The Bells - Cast In Bronze\nReflection - Cast In Bronze\nMay
-    The Force Be With You - John Williams\nFanfare - Kjetil Bjerkestrand \nRiding
-    Theme (Day) - Manaka Kataoka\nTreachery (Performed By iTSO) - Shiro Sagisu\n\"Cometh
-    the hour\" Pt. B_Opus1 - Shiro Sagisu\nForze Del Male - Yoko Shimimura"
+  m_text: "Great Fairy Fountain Theme - Toru Minegishi\nCarol of The Bells - Cast
+    In Bronze\nReflection - Cast In Bronze\nMay The Force Be With You - John Williams\nFanfare
+    - Kjetil Bjerkestrand \nRiding Theme (Day) - Manaka Kataoka\nTreachery (Performed
+    By iTSO) - Shiro Sagisu\n\"Cometh the hour\" Pt. B_Opus1 - Shiro Sagisu\nForze
+    Del Male - Yoko Shimimura"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
