@@ -1,31 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-//ATM, Goblin attacks every few seconds
+//Need to cancel IdleAnimation, then use a counterattack that then follows up with the regular attack
+//Guard code makes no sense. I'm gonna need like to hit like atm
+//It makes moresense to use unlike and unlike, rather than like and like
+//But I'll do this for now
+
 public class Guard
     : MonoBehaviour
 {
     private bool idle = true;
     private Animator animator;
     private Enemy enemyScript;
+    private PlayerController player;
+    private SkinnedMeshRenderer skin;
+    public Material originalSkin;
+    public Material flashSkin;
+    public GameObject flashing;
+    public Material harpGuard;
+    
+    public Material trumpetGuard;
+    
+    private bool repeat = false;
     private void Awake()
     {
         enemyScript = GetComponent<Enemy>();
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        skin = transform.Find("DragonSoulEater").GetComponent<SkinnedMeshRenderer>();
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         animator = GetComponent<Animator>();
         //StartCoroutine(IdleAnimation());
 
-        enemyScript.SetHP(60);
-        enemyScript.SetEXP(60);
+        enemyScript.SetHP(100);
+        enemyScript.SetEXP(100);
 
         enemyScript.SetIdleTime(5);
-        enemyScript.SetUnblockable();
+        enemyScript.SetGuard();
+        enemyScript.SetNormal();
+        enemyScript.SetRevengeValue();
+        enemyScript.SetRevengeValueNumber(10);
     }
     // Start is called before the first frame update
     void Start()
     {
-
+        //Start by Evoking a Guard
+        //StartCoroutine(EvokeGuard());
     }
 
     // Update is called once per frame
@@ -39,24 +60,102 @@ public class Guard
                 //Debug.Log("Attack");
             }
         }
+        if (enemyScript.unflinchingFollow == true && repeat == false)
+        {
+            StartCoroutine(Flashing());
+        }
+        if(enemyScript.harpGuard ==true)
+        {
+            skin.material = harpGuard;
+        }
+        if (enemyScript.trumpetGuard == true)
+        {
+            skin.material = trumpetGuard;
+        }
     }
-    IEnumerator IdleAnimation()
+    private void LateUpdate()
     {
-        animator.SetBool("Idle", true);
-        yield return new WaitForSeconds(2);
-        //idle = false;
-        //Attack();
+        if (enemyScript.counterAttackTriggered == true)
+        {
+            GuardCounterAttack();
+            //Debug.Log("Attack");
+        }
+        if (enemyScript.revengeValueMove == true)
+        {
+            StartCoroutine(EvokeGuard());
+        }
+    }
+    IEnumerator Flashing()
+    {
+        skin.material = flashSkin;
+        flashing.SetActive(true);
+        repeat = true;
+        yield return new WaitForSeconds(0.5f);
+        skin.material = originalSkin;
+
+
+        //numFlash++;
+        flashing.SetActive(false);
+        //Debug.Log(numFlash);
+        repeat = false;
+        //}
+    }
+    IEnumerator EvokeGuard()
+    {
+        enemyScript.RevengeValueMoveOff();
+        StartCoroutine(Flashing());
+        if (enemyScript.windCaptured == false) {
+            enemyScript.SetCantFlinch();
+        }
+        else
+        {
+            enemyScript.UnsetCantFlinch();
+        }
+        yield return new WaitForSeconds(1);
+        int random = Random.Range(0, 2);
+        if(random==0)
+        {
+            enemyScript.SetHarpGuard();
+        }
+        else
+        {
+            enemyScript.SetTrumpetGuard();
+        }
+        enemyScript.UnsetCantFlinch();
     }
     public void Attack()
     {
+        if(enemyScript.unflinchingFollow ==false)
+        {
+            //Drop guard and attack
+            enemyScript.UnsetHarpGuard();
+            enemyScript.UnsetTrumpetGuard();
+            skin.material = originalSkin;
+        }
+
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Attack");
-        enemyScript.SetDamage(1);
+        enemyScript.SetDamage(2);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
         enemyScript.PlayAttackEffect(0);
         enemyScript.AttackReadyOff();
+    }
+    public void GuardCounterAttack()
+    {
+        enemyScript.IdleAnimationCancel();
+        enemyScript.AttackReadyOff();
+
+
+
+        //animator.SetBool("Idle",false);
+        animator.SetTrigger("Counterattack");
+        enemyScript.SetDamage(4);
+        enemyScript.SetAttackLength(1.5f);
+        enemyScript.StartCounterAttackLength();
+        enemyScript.PlayAttackEffect(1);
+        enemyScript.CounterAttackReadyOff();
     }
 
 }
