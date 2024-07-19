@@ -296,9 +296,12 @@ public class GameManager : MonoBehaviour
     IEnumerator DefeatBoss()
     {
         yield return new WaitForSeconds(6);
-        if (player.levelNonStatic < 11)
+        if (player.noEXPNonStatic == false)
         {
-            EXP();
+            if (player.levelNonStatic < 11)
+            {
+                EXP();
+            }
         }
         else
         {
@@ -340,7 +343,7 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Level Done Object").transform.Find("Increase Stat").gameObject.SetActive(false);
         GameObject.Find("Level Done Object").transform.Find("Blank Page").gameObject.SetActive(true);
         yield return new WaitForSeconds(0.2f);
-        GameObject.Find("Level Done Object").transform.Find("Increase Stat").gameObject.SetActive(true);
+        StatIncrease();
         GameObject.Find("Level Done Object").transform.Find("Blank Page").gameObject.SetActive(false);
     }
     public void Continue()

@@ -7167,6 +7167,7 @@ MonoBehaviour:
   unflinchingFollow: 0
   attackEffects: []
   teamAttackAura: {fileID: 0}
+  teamAttackSizzle: {fileID: 0}
   attackImpact: {fileID: 0}
   grunt: {fileID: 0}
   attackEffectObject: {fileID: 0}
@@ -9258,7 +9259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2168631824770729869, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10278,7 +10279,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2789669595854285029, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: playEffects
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2994056704253568011, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: m_Name
@@ -11582,12 +11583,12 @@ SceneRoots:
   - {fileID: 17645791}
   - {fileID: 612763030}
   - {fileID: 303569511}
-  - {fileID: 6534347684417569248}
-  - {fileID: 1354039285}
-  - {fileID: 2029193054}
   - {fileID: 1591250257}
   - {fileID: 5903260411966377768}
   - {fileID: 633818864}
+  - {fileID: 6534347684417569248}
+  - {fileID: 1354039285}
+  - {fileID: 2029193054}
   - {fileID: 3070088143507982095}
   - {fileID: 5314909491804558929}
   - {fileID: 1507060081}

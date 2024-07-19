@@ -246,20 +246,6 @@ public class Enemy : MonoBehaviour
         {
             armorObj.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0));
         }
-        if(teamAttack==true)
-        {
-            if (collisionCount<=0)
-            {
-                TeamAttackOff();
-            }
-            else
-            {
-                if (teamAttackOn==false &&teamAttack==true) {
-                    teamAttackOn = true;
-                    TeamAttackPositives();
-                }
-            }
-        }
     }
     //Setters
     public void SetHP(int newHP)
@@ -424,7 +410,7 @@ public class Enemy : MonoBehaviour
             UnsetCantFlinch();
         }
         BarrierOff();
-        audio.PlayOneShot(barrierBreak,1.5f);
+        audio.PlayOneShot(barrierBreak,1.5f*0.75f);
     }
     //Fun fact, triggerExit doesn't count if the object is destroyed
     public void BarrierOff()
@@ -494,88 +480,90 @@ public class Enemy : MonoBehaviour
     public void Flinch()
     {
         //Putting this here instead of using cantFlinch code everywhere
-        if (cantFlinch == false) {
-            //Debug.Log("Flinched!");
-            attackReady = false;
-            if (flinchInterrupt == true)
-            {
-                attack = false;
-                flinchInterrupt = false;
-
-                //I don't know why I don't think to put this allhere
-                //I think I'm just thinking in the moment
-                //Also, I have to cancel different Coroutines for different mo
-                StopCoroutine(flinchOpportunityCancel);
-                StopCoroutine(attackLengthCancel);
-                playerScript.InterruptEffect(effectPosition.transform.position);
-                StopAttackEffect();
-                audio.PlayOneShot(grunt, 2);
-            }
-            else
-            {
-                if (playGrunt==true)
+        if (HP>0) {
+            if (cantFlinch == false) {
+                //Debug.Log("Flinched!");
+                attackReady = false;
+                if (flinchInterrupt == true)
                 {
+                    attack = false;
+                    flinchInterrupt = false;
+
+                    //I don't know why I don't think to put this allhere
+                    //I think I'm just thinking in the moment
+                    //Also, I have to cancel different Coroutines for different mo
+                    StopCoroutine(flinchOpportunityCancel);
+                    StopCoroutine(attackLengthCancel);
+                    playerScript.InterruptEffect(effectPosition.transform.position);
+                    StopAttackEffect();
                     audio.PlayOneShot(grunt, 2);
-                    playGrunt = false;
                 }
                 else
                 {
-                    playGrunt = true;
+                    if (playGrunt == true)
+                    {
+                        audio.PlayOneShot(grunt, 2);
+                        playGrunt = false;
+                    }
+                    else
+                    {
+                        playGrunt = true;
+                    }
                 }
-            }
 
-            if (animatorTrue == true)
-            {
-                animator.SetBool("Idle", true);
-                animator.SetTrigger("Flinch");
-                //I can see this being a problem for the Red Dragon's last phase
-                //I will make an if case where green == true and red==true
-                if (red == true && green == true)
+                if (animatorTrue == true)
                 {
-                    animator.ResetTrigger("Attack");
-                    animator.ResetTrigger("Attack2");
+                    animator.SetBool("Idle", true);
+                    animator.SetTrigger("Flinch");
+                    //I can see this being a problem for the Red Dragon's last phase
+                    //I will make an if case where green == true and red==true
+                    if (red == true && green == true)
+                    {
+                        animator.ResetTrigger("Attack");
+                        animator.ResetTrigger("Attack2");
+                    }
+                    else if (red == true)
+                    {
+                        animator.ResetTrigger("StrongAttack");
+                    }
+                    else if (green == true) {
+                        animator.ResetTrigger("Attack");
+                        animator.ResetTrigger("Attack2");
+                    }
+                    else if (bomb == true)
+                    {
+                        animator.ResetTrigger("Bomb");
+                        UnsetBomb();
+                    }
+                    else
+                    {
+                        animator.ResetTrigger("Attack");
+                    }
                 }
-                else if (red == true)
+                else if (animationTrue == true)
                 {
-                    animator.ResetTrigger("StrongAttack");
+                    //animator.SetTrigger("Flinch");
                 }
-                else if (green == true) {
-                    animator.ResetTrigger("Attack");
-                    animator.ResetTrigger("Attack2");
-                }
-                else if (bomb == true)
+
+                //Moved this from mouseOver 
+                if (idleCancel != null)
                 {
-                    animator.ResetTrigger("Bomb");
-                    UnsetBomb();
+                    StopCoroutine(idleCancel);
                 }
-                else
+
+                if (flinchCancel != null)
                 {
-                    animator.ResetTrigger("Attack");
+                    StopCoroutine(flinchCancel);
                 }
-            }
-            else if (animationTrue == true)
-            {
-                //animator.SetTrigger("Flinch");
-            }
 
-            //Moved this from mouseOver 
-            if (idleCancel != null)
-            {
-                StopCoroutine(idleCancel);
-            }
+                //Don't know why I didn't put this here right away, because I successful flinch will always start a flinchdur
+                flinchCancel = StartCoroutine(FlinchDuration());
 
-            if (flinchCancel != null)
-            {
-                StopCoroutine(flinchCancel);
-            }
-
-            //Don't know why I didn't put this here right away, because I successful flinch will always start a flinchdur
-            flinchCancel = StartCoroutine(FlinchDuration());
-
-            if (green == true)
-            {
-                SetCantFlinch();
-                //Debug.Log("Green ThiefFlinched " + cantFlinch);
+                if (green == true)
+                {
+                    SetCantFlinch();
+                    //Debug.Log("Green ThiefFlinched " + cantFlinch);
+                }
             }
         }
     }
@@ -1080,7 +1068,7 @@ public class Enemy : MonoBehaviour
     {
         teamAttackAura.SetActive(true);
         damage = 2;
-        audio.PlayOneShot(teamAttackSizzle,0.5f);
+        audio.PlayOneShot(teamAttackSizzle,0.25f);
     }
     public void TeamAttackOff()
     {
@@ -1263,14 +1251,27 @@ public class Enemy : MonoBehaviour
                 collision.gameObject.GetComponent<Bomb>().EnemyExplode();
             }
         }
-
+        if (teamAttackOn == false && teamAttack == true)
+        {
+            teamAttackOn = true;
+            TeamAttackPositives();
+        }
     }
     private void OnCollisionStay(Collision collision)
     {
+        if (teamAttackOn == false && teamAttack == true)
+        {
+            teamAttackOn = true;
+            TeamAttackPositives();
+        }
     }
     private void OnCollisionExit(Collision collision)
     {
-
+        if (teamAttackOn == true && teamAttack == true)
+        {
+            teamAttackOn = false;
+            TeamAttackOff();
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -1322,12 +1323,6 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-        if (other.CompareTag("Enemy"))
-        {
-            collidingEnemies.Add(other);
-            collisionCount++;
-            Debug.Log("Touched");
-        }
     }
     private void OnTriggerStay(Collider other)
     {
@@ -1341,16 +1336,6 @@ public class Enemy : MonoBehaviour
         if (other.CompareTag("Barrier") &&armor==false)
         {
             barrier = false;
-        }
-        if (other.CompareTag("Enemy"))
-        {
-            //if (teamAttack == true)
-            //{
-            //TeamAttackOff();
-            //}
-            collidingEnemies.Remove(other);
-            collisionCount--;
-            Debug.Log("Lost");
         }
     }
 }

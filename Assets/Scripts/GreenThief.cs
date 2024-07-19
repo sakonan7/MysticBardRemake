@@ -49,17 +49,9 @@ public class GreenThief : MonoBehaviour
     {
         if (enemyScript.cantMove == false)
         {
-            if (enemyScript.counterAttackTriggered == true)
-            {
-                StartCoroutine(Flashing());
-                CounterAttack();
-            }
+
             if (enemyScript.attackReady == true)
             {
-                if (enemyScript.unflinchingFollow == true)
-                {
-                    StartCoroutine(Flashing());
-                }
                 RegularAttack();
                 Debug.Log("Attack");
             }
@@ -70,6 +62,13 @@ public class GreenThief : MonoBehaviour
         if(enemyScript.unflinchingFollow ==true&&repeat==false)
         {
             StartCoroutine(Flashing());
+        }
+    }
+    private void LateUpdate()
+    {
+        if (enemyScript.counterAttackTriggered == true)
+        {
+            CounterAttack();
         }
     }
     IEnumerator Flashing()

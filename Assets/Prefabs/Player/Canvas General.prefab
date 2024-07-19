@@ -1210,6 +1210,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -2016,7 +2017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.27469483, b: 0.7075472, a: 1}
+  m_Color: {r: 0, g: 0.22745098, b: 0.58431375, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2944,6 +2945,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -5011,6 +5013,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -5728,6 +5731,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -8414,7 +8418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.27469483, b: 0.7075472, a: 1}
+  m_Color: {r: 0, g: 0.22745098, b: 0.58431375, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9856,6 +9860,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -13629,6 +13634,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 1
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -14385,6 +14391,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -15486,6 +15493,7 @@ MonoBehaviour:
   statIncrease: 1
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -19073,6 +19081,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -19557,6 +19566,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 1
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -21019,7 +21029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.27469483, b: 0.7075472, a: 1}
+  m_Color: {r: 0, g: 0.22745098, b: 0.58431375, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -22380,6 +22390,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -22634,6 +22645,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0

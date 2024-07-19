@@ -319,17 +319,8 @@ public class GrandDragon : MonoBehaviour
             }
             else if (thirdPhase == true)
             {
-                if (enemyScript.counterAttackTriggered == true)
-                {
-                    StartCoroutine(Flashing());
-                    CounterAttack();
-                }
                 if (enemyScript.attackReady == true)
                 {
-                    if (enemyScript.unflinchingFollow == true)
-                    {
-                        StartCoroutine(Flashing());
-                    }
                     GreenAttack();
                     //Debug.Log("Attack");
                 }
@@ -381,23 +372,10 @@ public class GrandDragon : MonoBehaviour
             }
             else if (fifthPhase == true)
             {
-                if (enemyScript.counterAttackTriggered == true)
-                {
-                    StartCoroutine(Flashing());
-                    CounterAttack();
-                    Debug.Log("Counterattack?");
-                }
                 if (enemyScript.attackReady == true)
                 {
                     if (fifthPhaseRegular == false)
                     {
-
-                        //if (enemyScript.attackReady == true)
-                        //{
-                        if (enemyScript.unflinchingFollow == true)
-                        {
-                            StartCoroutine(Flashing());
-                        }
                         GreenAttack();
                         //Debug.Log("Attack");
                         fifthPhaseRegular = true;
@@ -479,17 +457,8 @@ public class GrandDragon : MonoBehaviour
             }
             else if (seventhPhase == true)
             {
-                if (enemyScript.counterAttackTriggered == true)
-                {
-                    StartCoroutine(Flashing());
-                    SeventhCounterAttack();
-                }
                 if (enemyScript.attackReady == true)
                 {
-                    if (enemyScript.unflinchingFollow == true)
-                    {
-                        StartCoroutine(Flashing());
-                    }
                     SeventhGreenAttack();
                     //Debug.Log("Attack");
                 }
@@ -502,6 +471,29 @@ public class GrandDragon : MonoBehaviour
         if (enemyScript.unflinchingFollow == true && repeat == false)
         {
             StartCoroutine(Flashing());
+        }
+    }
+    private void LateUpdate()
+    {
+        if (thirdPhase ==true) {
+            if (enemyScript.counterAttackTriggered == true)
+            {
+                CounterAttack();
+            }
+        }
+        else if (fifthPhase == true)
+        {
+            if (enemyScript.counterAttackTriggered == true)
+            {
+                CounterAttack();
+            }
+        }
+        else if (seventhPhase == true)
+        {
+            if (enemyScript.counterAttackTriggered == true)
+            {
+                SeventhCounterAttack();
+            }
         }
     }
     public void ForcedPhaseChange()
