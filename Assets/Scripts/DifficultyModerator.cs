@@ -38,6 +38,7 @@ public class DifficultyModerator : MonoBehaviour
         if (hard == true)
         {
             player.PlayToggleOn();
+            player.PlayDifficultyOff();
         }
         normal = true;
         hard = false;
@@ -51,6 +52,7 @@ public class DifficultyModerator : MonoBehaviour
         if (normal == true)
         {
             player.PlayToggleOn();
+            player.PlayDifficultyOn();
         }
         normal = false;
         hard = true;

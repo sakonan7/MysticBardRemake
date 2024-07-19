@@ -94,6 +94,7 @@ public class Enemy : MonoBehaviour
 
     //public gameOb
     public GameObject teamAttackAura;
+    public AudioClip teamAttackSizzle;
     public AudioClip attackImpact;
     public AudioClip grunt;
     public GameObject attackEffectObject;
@@ -1023,9 +1024,14 @@ public class Enemy : MonoBehaviour
                 {
                     for(int i=0;i <collidingEnemies.Count;i++)
                     {
-                        collidingEnemies[i].GetComponent<Enemy>().CollisionCountDown();
+                        if (collidingEnemies.Count > 0) {
+                            if (collidingEnemies[i].GetComponent<Enemy>().teamAttack == true) {
+                                collidingEnemies[i].GetComponent<Enemy>().CollisionCountDown();
+                            }
+                        }
                     }
-                    Destroy(gameObject);
+                    gameObject.SetActive(false);
+                    Destroy(gameObject, 2);
 
                 }
                 else
@@ -1074,6 +1080,7 @@ public class Enemy : MonoBehaviour
     {
         teamAttackAura.SetActive(true);
         damage = 2;
+        audio.PlayOneShot(teamAttackSizzle,0.5f);
     }
     public void TeamAttackOff()
     {

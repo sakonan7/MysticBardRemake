@@ -516,6 +516,7 @@ MonoBehaviour:
   - {fileID: 4711685881414956193}
   - {fileID: 2719395586124099335}
   teamAttackAura: {fileID: 5524596731341565533}
+  teamAttackSizzle: {fileID: 8300000, guid: fa2b0f8c3f6978a4991a828f483a9468, type: 3}
   attackImpact: {fileID: 8300000, guid: 32db2a07aed62a84094082f47f4ff1b6, type: 3}
   grunt: {fileID: 8300000, guid: 91fce4c0a55aeac4f8506a52a2f671fe, type: 3}
   attackEffectObject: {fileID: 21917149828886660}

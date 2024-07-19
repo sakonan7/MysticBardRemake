@@ -10,11 +10,13 @@ public class GameManager : MonoBehaviour
     private AudioSource audio;
     public bool playEffects = false;
     public GameObject background;
+    public AudioClip turnPageSound;
     public AudioClip prelude;
     public AudioClip story;
     public AudioClip regularBattle;
     public AudioClip regularBattle2;
     public AudioClip bossMusic;
+    public AudioClip victoryMusic;
     private GameObject gameOverObject;
     private GameObject gameOverText;
     private GameObject gameOverFilter;
@@ -45,6 +47,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        audio = GameObject.Find("Main Camera").GetComponent<AudioSource>();
         if (SceneManager.GetActiveScene().name == "Cover" ||SceneManager.GetActiveScene().name == "Instructions" || SceneManager.GetActiveScene().name == "Credits")
         {
             nonGame = true;
@@ -69,40 +72,6 @@ public class GameManager : MonoBehaviour
         {
             levelUp = true;
         }
-        SetLevel(SceneManager.GetActiveScene().buildIndex);
-    }
-    void Start()
-    {
-        audio = GameObject.Find("Main Camera").GetComponent<AudioSource>();
-        //Use bool nonGame
-        if (nonGame ==false) {
-            player = GameObject.Find("Player").GetComponent<PlayerController>();
-            gameOverObject = GameObject.Find("Game Over Object");
-            gameOverText = gameOverObject.transform.Find("Game Over Text").gameObject;
-            gameOverFilter = gameOverObject.transform.Find("Red Filter").gameObject;
-            gameOverButtons = gameOverObject.transform.Find("Buttons").gameObject;
-            numEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        }
-
-        GameObject[] currentDebris = GameObject.FindGameObjectsWithTag("Debris");
-        //debrisLocation = GameObject.FindGameObjectsWithTag("Debris").transform.position;
-        for(int i =0;i < currentDebris.Length;i++)
-        {
-            debrisLocation[i] = currentDebris[i].transform.position;
-        }
-        if (numEnemies > 0)
-        {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); 
-            for(int i =0; i < numEnemies; i++)
-            {
-                if (enemies[i].GetComponent<Enemy>().boss == true)
-                {
-                    boss = true;
-                    audio.clip =bossMusic;
-                    audio.Play();
-                }
-            }
-        }
         if (nonGame == false)
         {
             if (currentLevel >= 3 && boss == false)
@@ -121,26 +90,55 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        if (SceneManager.GetActiveScene().name =="Instructions")
+        if (SceneManager.GetActiveScene().name == "Instructions")
         {
-                int random = 0;
-                random = Random.Range(0, 2);
-                if (random == 0)
-                {
-                    audio.clip = regularBattle;
-                    audio.Play();
-                }
-                else
-                {
-                    audio.clip = regularBattle2;
-                    audio.Play();
-                }
+            int random = 0;
+            random = Random.Range(0, 2);
+            if (random == 0)
+            {
+                audio.clip = regularBattle;
+                audio.Play();
+            }
+            else
+            {
+                audio.clip = regularBattle2;
+                audio.Play();
+            }
         }
         if (SceneManager.GetActiveScene().name == "Cover")
         {
-                audio.clip = regularBattle;
-                audio.Play();
+            audio.clip = prelude;
+            audio.Play();
         }
+        if (SceneManager.GetActiveScene().name=="Dragon")
+        {
+            boss = true;
+            audio.clip = bossMusic;
+            audio.Play();
+        }
+        SetLevel(SceneManager.GetActiveScene().buildIndex);
+    }
+    void Start()
+    {
+        
+        //Use bool nonGame
+        if (nonGame ==false) {
+            player = GameObject.Find("Player").GetComponent<PlayerController>();
+            gameOverObject = GameObject.Find("Game Over Object");
+            gameOverText = gameOverObject.transform.Find("Game Over Text").gameObject;
+            gameOverFilter = gameOverObject.transform.Find("Red Filter").gameObject;
+            gameOverButtons = gameOverObject.transform.Find("Buttons").gameObject;
+            numEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        }
+
+        GameObject[] currentDebris = GameObject.FindGameObjectsWithTag("Debris");
+        //debrisLocation = GameObject.FindGameObjectsWithTag("Debris").transform.position;
+        for(int i =0;i < currentDebris.Length;i++)
+        {
+            debrisLocation[i] = currentDebris[i].transform.position;
+        }
+
+
     }
 
     // Update is called once per frame
@@ -255,7 +253,7 @@ public class GameManager : MonoBehaviour
     public void ReduceNumEnemies()
     {
         numEnemies--;
-        if (numEnemies <= 0)
+        if (numEnemies <=0)
         {
             if (boss ==false) {
                 if (player.noEXPNonStatic ==false)
@@ -270,6 +268,7 @@ public class GameManager : MonoBehaviour
                     GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
                 }
                 player.WeaponReset();
+                PlayVictoryMusic();
             }
             else
             {
@@ -277,6 +276,15 @@ public class GameManager : MonoBehaviour
             }
             victory = true;
         }
+    }
+    public void PlayVictoryMusic()
+    {
+        audio.clip = victoryMusic;
+        audio.Play();
+    }
+    public void PlayTurnPage()
+    {
+        audio.PlayOneShot(turnPageSound,1);
     }
     public void GameOver()
     {
@@ -288,7 +296,7 @@ public class GameManager : MonoBehaviour
     IEnumerator DefeatBoss()
     {
         yield return new WaitForSeconds(6);
-        if (player.levelUpStock >= 14)
+        if (player.levelNonStatic < 11)
         {
             EXP();
         }
@@ -297,6 +305,7 @@ public class GameManager : MonoBehaviour
             GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
         }
         player.WeaponReset();
+        PlayVictoryMusic();
     }
     public void EXP()
     {

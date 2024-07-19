@@ -537,6 +537,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -555,6 +556,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -1724,6 +1726,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -1742,6 +1745,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -2414,6 +2418,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -2432,6 +2437,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -2679,6 +2685,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -2697,6 +2704,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -3719,6 +3727,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 1
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -3737,6 +3746,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -6086,6 +6096,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -6104,6 +6115,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 1
   increaseTrumpet: 0
@@ -9793,6 +9805,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -9811,6 +9824,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -10730,6 +10744,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -10748,6 +10763,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -11324,6 +11340,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -11342,6 +11359,7 @@ MonoBehaviour:
   creditsPage1: 1
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -12430,6 +12448,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -12448,6 +12467,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 1
@@ -16050,6 +16070,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -16068,6 +16089,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -17228,6 +17250,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -17246,6 +17269,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -17865,6 +17889,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -17883,6 +17908,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -20397,6 +20423,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -20415,6 +20442,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 1
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -21157,6 +21185,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -21175,6 +21204,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 1
   increaseViolin: 0
   increaseTrumpet: 0
@@ -21347,6 +21377,7 @@ MonoBehaviour:
   statIncrease: 0
   nextLevel: 0
   continueQuit: 0
+  turnPageSound: 0
   normal: 0
   hard: 0
   noEXP: 0
@@ -21365,6 +21396,7 @@ MonoBehaviour:
   creditsPage1: 0
   creditsPage2: 0
   creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0

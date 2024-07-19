@@ -41,6 +41,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip bell2;
     public AudioClip toggleOff;
     public AudioClip toggleOn;
+    public AudioClip statUp;
+    public AudioClip difficultyOn;
+    public AudioClip difficultyOff;
     private GameObject camera;
     private CinemachineBasicMultiChannelPerlin camShake;
     private GameManager gameScript;
@@ -159,9 +162,9 @@ public class PlayerController : MonoBehaviour
     //I can do this now that I have title and level select
     //Now I can rewrite based on this
     //I only have to worry about this if there is a save function
-    private static float EXPToLevelLimit = 200;
-    private static float EXPToLevel = EXPToLevelLimit;
-    private static float EXPGained = 0;
+    private static int EXPToLevelLimit = 200;
+    private static int EXPToLevel = EXPToLevelLimit;
+    private static int EXPGained = 0;
     public int levelUpStock = 0;
 
     public bool shieldOn = false;
@@ -789,7 +792,9 @@ public class PlayerController : MonoBehaviour
         GameObject[] bombs = GameObject.FindGameObjectsWithTag("Bomb");
         for (int i = 0; i < bombs.Length; i++)
         {
-            bombs[i].GetComponent<Bomb>().EnemyExplode();
+            if (bombs[i].GetComponent<Bomb>().exploded ==false) {
+                bombs[i].GetComponent<Bomb>().EnemyExplode();
+            }
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             //ViolinHitEffect(enemies[i].transform.position);
         }
@@ -1394,7 +1399,7 @@ public class PlayerController : MonoBehaviour
     public void GainEXP(float newEXP)
     {
         if (noEXP ==false) {
-            EXPGained += newEXP;
+            EXPGained += (int)newEXP;
         }
         //Debug.Log(EXPGained + " equals to");
     }
@@ -1499,7 +1504,7 @@ public class PlayerController : MonoBehaviour
         //currentHP = originalHP;
         //currentHP += 3;
         level += 1;
-        EXPToLevelLimit *= 1.75f;
+        EXPToLevelLimit *= (int)1.75f;
         EXPToLevel = EXPToLevelLimit;
         //Debug.Log(EXPToLevel);
         levelUpStock++;
@@ -1515,11 +1520,13 @@ public class PlayerController : MonoBehaviour
         if (noEXP ==false)
         {
             PlayToggleOff();
+            PlayDifficultyOff();
             GameObject.Find("Difficulty Buttons").transform.Find("No EXP").gameObject.SetActive(false);
         }
         else
         {
             PlayToggleOn();
+            PlayDifficultyOn();
             GameObject.Find("Difficulty Buttons").transform.Find("No EXP").gameObject.SetActive(true);
         }
     }
@@ -1536,6 +1543,14 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         audio.Stop();
+    }
+    public void PlayDifficultyOn()
+    {
+        audio.PlayOneShot(difficultyOn, 1);
+    }
+    public void PlayDifficultyOff()
+    {
+        audio.PlayOneShot(difficultyOff, 1);
     }
     public void LevelSelectSound()
     {
@@ -1557,7 +1572,11 @@ public class PlayerController : MonoBehaviour
             audio.PlayOneShot(trumpet2, 0.75f);
         }
     }
-    public void HPUp()
+    public void StatUpSound()
+    {
+        audio.PlayOneShot(statUp,1);
+    }
+        public void HPUp()
     {
         //currentHP = originalHP;
         //currentHP += 3;

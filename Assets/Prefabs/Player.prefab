@@ -9969,6 +9969,9 @@ MonoBehaviour:
   bell2: {fileID: 8300000, guid: 73bb1c31095ff104ab29e721491b2c6c, type: 3}
   toggleOff: {fileID: 8300000, guid: 99d889ce8b6f080429af1aa687f0ff9c, type: 3}
   toggleOn: {fileID: 8300000, guid: 23ab4643a754f5d47a7570132323371d, type: 3}
+  statUp: {fileID: 8300000, guid: 75b637e33dd3dc643a02d392ec8cfa84, type: 3}
+  difficultyOn: {fileID: 8300000, guid: 68e09518f6f27b5499994ca5b3a422af, type: 3}
+  difficultyOff: {fileID: 8300000, guid: 1fdfbecff7abab74aa692e9bfeef42b9, type: 3}
   interruptEffect: {fileID: 3974351313356374250, guid: 97e8a325e349fd348be4658e1f4201bd, type: 3}
   hurt: {fileID: 1612960297063342916, guid: c85ccdb892e5b1144adcde82e92f4c72, type: 3}
   hurtEffect: {fileID: 8578284643070386047}

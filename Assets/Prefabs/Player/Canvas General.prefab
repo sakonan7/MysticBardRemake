@@ -1203,6 +1203,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 0
+  instructions: 0
+  credits: 0
   retry: 0
   quit: 0
   statIncrease: 0
@@ -1217,6 +1219,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 1
   increaseHP: 1
   increaseViolin: 0
   increaseTrumpet: 0
@@ -2925,6 +2937,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 0
+  instructions: 0
+  credits: 0
   retry: 0
   quit: 0
   statIncrease: 0
@@ -2939,6 +2953,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 1
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -4980,6 +5004,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 0
+  instructions: 0
+  credits: 0
   retry: 0
   quit: 1
   statIncrease: 0
@@ -4994,6 +5020,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -5685,6 +5721,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 0
+  instructions: 0
+  credits: 0
   retry: 0
   quit: 0
   statIncrease: 0
@@ -5699,6 +5737,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 1
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -9801,6 +9849,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 0
+  instructions: 0
+  credits: 0
   retry: 0
   quit: 0
   statIncrease: 0
@@ -9815,6 +9865,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 1
   increaseHP: 0
   increaseViolin: 1
   increaseTrumpet: 0
@@ -13562,6 +13622,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 0
+  instructions: 0
+  credits: 0
   retry: 0
   quit: 0
   statIncrease: 0
@@ -13576,6 +13638,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -14306,6 +14378,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 0
+  instructions: 0
+  credits: 0
   retry: 1
   quit: 0
   statIncrease: 0
@@ -14320,6 +14394,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -15395,6 +15479,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 0
+  instructions: 0
+  credits: 0
   retry: 0
   quit: 0
   statIncrease: 1
@@ -15409,6 +15495,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -18970,6 +19066,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 0
+  instructions: 0
+  credits: 0
   retry: 0
   quit: 0
   statIncrease: 0
@@ -18984,6 +19082,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 1
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 1
@@ -19442,6 +19550,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 0
+  instructions: 0
+  credits: 0
   retry: 0
   quit: 0
   statIncrease: 0
@@ -19456,6 +19566,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -22253,6 +22373,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 0
+  instructions: 0
+  credits: 0
   retry: 0
   quit: 0
   statIncrease: 0
@@ -22267,6 +22389,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 1
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0
@@ -22495,6 +22627,8 @@ MonoBehaviour:
   title: 0
   startGame: 0
   levelSelect: 1
+  instructions: 0
+  credits: 0
   retry: 0
   quit: 1
   statIncrease: 0
@@ -22509,6 +22643,16 @@ MonoBehaviour:
   page1: 0
   page2: 0
   page3: 0
+  harpPage: 0
+  trumpetPage: 0
+  flutePage: 0
+  shieldPage: 0
+  specialPage: 0
+  interruptingPage: 0
+  creditsPage1: 0
+  creditsPage2: 0
+  creditsPage3: 0
+  statUpSound: 0
   increaseHP: 0
   increaseViolin: 0
   increaseTrumpet: 0

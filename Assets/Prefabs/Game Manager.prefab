@@ -46,9 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playEffects: 1
   background: {fileID: 0}
+  turnPageSound: {fileID: 8300000, guid: fda0ebca8921b9640ae2aa0e2559e5e2, type: 3}
+  prelude: {fileID: 8300000, guid: d361d60b3f12e174ba2656722bad8dfe, type: 3}
+  story: {fileID: 8300000, guid: 3637f90668096d54aaea0097c053dd58, type: 3}
   regularBattle: {fileID: 8300000, guid: 9d624f4cdf5259946afcea7f5651472b, type: 3}
   regularBattle2: {fileID: 8300000, guid: 63616ff7ac3d87f44bc9a3af6e921bce, type: 3}
   bossMusic: {fileID: 8300000, guid: 2629d55bec5a3974fa1ec2e713b9c396, type: 3}
+  victoryMusic: {fileID: 8300000, guid: a83497dcc204e5341ac4993b0ca6c83e, type: 3}
   debris:
   - {fileID: 1762299993224416091, guid: cef0e78a80b066648a7dd39d7e173470, type: 3}
   - {fileID: 8934065819855448562, guid: c07434cf9263bc542beaed0fdc78823a, type: 3}

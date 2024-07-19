@@ -20,7 +20,7 @@ public class Bomb : MonoBehaviour
     public AudioClip fuse;
     public bool timedBomb = false;
     public float time = 0;
-    private bool exploded = false;
+    public bool exploded = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -155,7 +155,7 @@ public class Bomb : MonoBehaviour
         GetComponent<SphereCollider>().enabled = false;
         transform.Find("Appearance").gameObject.SetActive(false);
         transform.Find("Hitbox").gameObject.SetActive(true);
-        Destroy(transform.Find("Hitbox").gameObject);
+        Destroy(transform.Find("Hitbox").gameObject, 2);
         if (gameScript.playEffects == true)
         {
             Instantiate(explosion, transform.position, transform.rotation);
@@ -212,15 +212,17 @@ public class Bomb : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Trumpet"))
-        {
-            EnemyExplode();
-            //StopCoroutine(explodeEffectCancel);
-        }
-        if (other.CompareTag("Harp"))
-        {
-            EnemyExplode();
-            //StopCoroutine(explodeEffectCancel);
+        if (exploded==false) {
+            if (other.CompareTag("Trumpet"))
+            {
+                EnemyExplode();
+                //StopCoroutine(explodeEffectCancel);
+            }
+            if (other.CompareTag("Harp"))
+            {
+                EnemyExplode();
+                //StopCoroutine(explodeEffectCancel);
+            }
         }
     }
 }

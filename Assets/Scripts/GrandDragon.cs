@@ -26,6 +26,11 @@ public class GrandDragon : MonoBehaviour
     public Material flashing;
     public GameObject flashingLight;
     public Material dying;
+    public AudioClip flamethrower;
+
+
+    public AudioClip counterattack;
+    public AudioClip finalPhaseAttacks;
     public ParticleSystem []redAura;
     public ParticleSystem []greenAura;
     public ParticleSystem[] purpleAura;
@@ -45,6 +50,7 @@ public class GrandDragon : MonoBehaviour
     private bool idle = true;
     private Animator animator;
     private Enemy enemyScript;
+    private AudioSource audio;
     private SkinnedMeshRenderer skin;
     private bool forcedPhaseChange = false;
     private bool firstPhase = true;
@@ -69,11 +75,13 @@ public class GrandDragon : MonoBehaviour
         animator = GetComponent<Animator>();
         //StartCoroutine(IdleAnimation());
         enemyScript = GetComponent<Enemy>();
+        audio = GetComponent<AudioSource>();
         skin = transform.Find("Dragon").GetComponent<SkinnedMeshRenderer>();
         skin.material = red;
         bombFlare = transform.Find("Bomb Light").transform.Find("Lens Flare").gameObject.GetComponent<ParticleSystem>();
         barrierAnimation = transform.Find("Root").transform.Find("Personal Barrier Object").transform.Find("Barrier Animation").gameObject;
         enemyScript.SetHP(maxHP);
+        enemyScript.SetEXP(1000);
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(5);
         enemyScript.SetRed();
@@ -659,7 +667,7 @@ IEnumerator Flashing()
         enemyScript.StartFlinchWindow();
             enemyScript.PlayAttackEffect(0);
         enemyScript.AttackReadyOff();
-        
+        audio.PlayOneShot(flamethrower, 1);
     }
     IEnumerator BarrierAnimation(int time)
     {
@@ -889,7 +897,7 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(0);
         //}
         enemyScript.CounterAttackReadyOff();
-        
+        audio.PlayOneShot(counterattack,0.5f);
     }
     public void GreenAttack()
     {
@@ -932,6 +940,8 @@ IEnumerator Flashing()
         //}
         enemyScript.CounterAttackReadyOff();
         CounterattackAuraOn();
+        audio.PlayOneShot(finalPhaseAttacks, 2);
+        audio.PlayOneShot(counterattack, 0.5f);
     }
     public void SeventhGreenAttack()
     {
@@ -943,6 +953,7 @@ IEnumerator Flashing()
         enemyScript.StartAttackLength();
         if (enemyScript.unflinchingFollow == false)
         {
+            audio.PlayOneShot(finalPhaseAttacks,2);
             enemyScript.StartFlinchWindow();
         }
         //if (enemyScript.teamAttackOn == true)

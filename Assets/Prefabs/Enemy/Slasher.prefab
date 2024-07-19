@@ -6517,7 +6517,7 @@ MonoBehaviour:
   - {fileID: 5556977692589668805}
   - {fileID: 3183622128263561762}
   teamAttackAura: {fileID: 0}
-  attackImpact: {fileID: 0}
+  attackImpact: {fileID: 8300000, guid: 32db2a07aed62a84094082f47f4ff1b6, type: 3}
   grunt: {fileID: 0}
   attackEffectObject: {fileID: 0}
   barrierSound: {fileID: 0}

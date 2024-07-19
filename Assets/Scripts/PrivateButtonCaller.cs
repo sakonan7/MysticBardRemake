@@ -21,6 +21,7 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool statIncrease = false;
     public bool nextLevel = false;
     public bool continueQuit = false;
+    public bool turnPageSound = false;
 
     [Header("Difficulty")]
     public bool normal = false;
@@ -46,6 +47,7 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool creditsPage3 = false;
 
     [Header("Increase")]
+    public bool statUpSound = false;
     public bool increaseHP = false;
     public bool increaseViolin = false;
     public bool increaseTrumpet = false;
@@ -116,6 +118,11 @@ public class PrivateButtonCaller : MonoBehaviour
         if (storyPage3 == true)
         {
             gameScript.StoryPage3();
+        }
+        if (turnPageSound == true)
+        {
+            gameScript.PlayTurnPage();
+            //Debug.Log("PlaySound");
         }
         //Instructions
         if (page1 == true)
@@ -253,6 +260,11 @@ public class PrivateButtonCaller : MonoBehaviour
             SceneManager.LoadScene(10);
         }
 
+        if (statUpSound == true)
+        {
+            player.StatUpSound();
+            //Debug.Log("PlaySound");
+        }
         if (increaseHP == true)
         {
             player.HPUp();

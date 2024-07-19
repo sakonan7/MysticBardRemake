@@ -6993,6 +6993,7 @@ MonoBehaviour:
   unflinchingFollow: 0
   attackEffects: []
   teamAttackAura: {fileID: 0}
+  teamAttackSizzle: {fileID: 0}
   attackImpact: {fileID: 0}
   grunt: {fileID: 0}
   attackEffectObject: {fileID: 0}
