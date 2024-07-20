@@ -139,8 +139,12 @@ public class Enemy : MonoBehaviour
     private Image specialFill;
     private bool rage = false;
     private int rageValueLimit = 12;
-    private int currentRageValue = 0;
+    public int currentRageValue = 0;
     public bool rageValueMove = false;
+    public bool rageLevel1 = false;
+    public bool rageLevel2 = false;
+    public bool rageLevel3 = false;
+    public bool rageStart = false;
 
     //Individual Attacks
     private bool unblockable = false;
@@ -700,6 +704,7 @@ public class Enemy : MonoBehaviour
             {
                 currentRevengeValue = 0;
                 revengeValueMove = true;
+                IdleAnimationCancel();
             }
         }
     }
@@ -730,16 +735,23 @@ public class Enemy : MonoBehaviour
     {
         if (rage == true)
         {
+            rageStart = true;
             currentRageValue++;
-            if (currentRevengeValue >= 4 && currentRevengeValue < 8)
+            if (currentRageValue ==3)
             {
-
+                rageLevel1 = true;
             }
-            if (currentRevengeValue >= 8 && currentRevengeValue < 12)
+            if (currentRageValue == 6)
             {
-
+                rageLevel1 = false;
+                rageLevel2 = true;
             }
-            if (currentRageValue >= rageValueLimit)
+            if (currentRageValue == 9)
+            {
+                rageLevel2 = false;
+                rageLevel3 = true;
+            }
+            if (currentRageValue > 9)
             {
 
                 currentRageValue = 0;
@@ -910,14 +922,16 @@ public class Enemy : MonoBehaviour
     {
         effectNumber = attackEffect;
         if (gameScript.playEffects== true) {
-            
-            attackEffects[effectNumber].Play();
+            if (attackEffects.Length>0) {
+                attackEffects[effectNumber].Play();
+            }
         }
     }
     public void StopAttackEffect()
     {
         if (gameScript.playEffects ==true) {
-            attackEffects[effectNumber].Stop();
+            if (attackEffects.Length > 0)
+                attackEffects[effectNumber].Stop();
         }
     }
     public void DealDamage(float newDamage)
@@ -1050,7 +1064,13 @@ public class Enemy : MonoBehaviour
                     counterAttackWholeCancel =StartCoroutine(CounterattackCloud());
                     //Debug.Log("CounterattackCloud");
             }
-
+            if(rage ==true)
+            {
+                rageStart = false;
+                rageLevel1 = false;
+                rageLevel2 = false;
+                rageLevel3 = false;
+            }
         }
     }
     //Used more for forcing the boss back into its attack pattern
@@ -1267,6 +1287,9 @@ public class Enemy : MonoBehaviour
             counterAttackOn.Stop();
             counterAttackCloud.SetActive(false);
             //Debug.Log("Counterattack triggered " + counterAttackTriggered);
+        }
+        if (rageValueMove ==false) {
+            RageValueUp();
         }
     }
     IEnumerator DamageBar()

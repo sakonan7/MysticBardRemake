@@ -872,6 +872,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0945d1311d7059142b59c21367f443c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skin1Original: {fileID: 2100000, guid: 5dd30f7250d12b3489bb44e354b95cd9, type: 2}
+  skin2Original: {fileID: 2100000, guid: 5dd30f7250d12b3489bb44e354b95cd9, type: 2}
+  skin3Original: {fileID: 2100000, guid: 5dd30f7250d12b3489bb44e354b95cd9, type: 2}
+  skin1Rage1: {fileID: 2100000, guid: 5a9e8b400ca401c429bb6f5397d9febd, type: 2}
+  skin2Rage1: {fileID: 2100000, guid: 5a9e8b400ca401c429bb6f5397d9febd, type: 2}
+  skin3Rage1: {fileID: 2100000, guid: 5a9e8b400ca401c429bb6f5397d9febd, type: 2}
+  skin1Rage2: {fileID: 2100000, guid: 61db48eba8536fc42b742b199de9300d, type: 2}
+  skin2Rage2: {fileID: 2100000, guid: 61db48eba8536fc42b742b199de9300d, type: 2}
+  skin3Rage2: {fileID: 2100000, guid: 61db48eba8536fc42b742b199de9300d, type: 2}
+  skin1Rage3: {fileID: 2100000, guid: 6fbc4d2f82ef23a42955a1e06b56d9d8, type: 2}
+  skin2Rage3: {fileID: 2100000, guid: 6fbc4d2f82ef23a42955a1e06b56d9d8, type: 2}
+  skin3Rage3: {fileID: 2100000, guid: 6fbc4d2f82ef23a42955a1e06b56d9d8, type: 2}
 --- !u!114 &8430254003305042146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,7 +918,11 @@ MonoBehaviour:
   bombUser: 0
   boss: 0
   revengeValueMove: 0
+  currentRageValue: 0
   rageValueMove: 0
+  rageLevel1: 0
+  rageLevel2: 0
+  rageLevel3: 0
   harpGuard: 0
   trumpetGuard: 0
   guardCounterattackTriggered: 0
@@ -969,7 +985,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.5399553, y: -0.4757917, z: 0.52092826, w: 0.45902532}
   m_LocalPosition: {x: -0, y: 0.335125, z: 2.7755576e-17}
-  m_LocalScale: {x: 1.0000001, y: 0.99999994, z: 0.99999994}
+  m_LocalScale: {x: 1.0000001, y: 1.0794998, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3087030459283401125}
@@ -1480,7 +1496,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.5399553, y: 0.4757917, z: -0.52092826, w: 0.45902532}
   m_LocalPosition: {x: -0, y: 0.335125, z: 2.7755576e-17}
-  m_LocalScale: {x: 1.0000001, y: 0.99999994, z: 0.99999994}
+  m_LocalScale: {x: 1.0000001, y: 1.0795, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1244570072722965297}
@@ -2354,7 +2370,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.000001, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.190839, z: 0.000000381678}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2179784, y: 1.1, z: 1.2179784}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6625460712514763873}
