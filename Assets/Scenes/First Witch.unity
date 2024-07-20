@@ -7490,22 +7490,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5889750860761341027, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 5889750860761341027, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.43
-      objectReference: {fileID: 0}
-    - target: {fileID: 5889750860761341027, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.99902004
-      objectReference: {fileID: 0}
-    - target: {fileID: 5889750860761341027, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.04426115
-      objectReference: {fileID: 0}
     - target: {fileID: 7560448512029490805, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
       propertyPath: m_Name
       value: Witch

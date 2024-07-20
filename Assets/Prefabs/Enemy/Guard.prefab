@@ -5206,7 +5206,6 @@ GameObject:
   - component: {fileID: 7861958349015630295}
   - component: {fileID: 8443100611493492709}
   - component: {fileID: 2956880440479451939}
-  - component: {fileID: 8645469029852881607}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Enemy
@@ -5465,27 +5464,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 1
---- !u!135 &8645469029852881607
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1232144811388331418}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 4
-  m_Center: {x: 0, y: 1.81, z: 0}
 --- !u!1 &1467780119434747205
 GameObject:
   m_ObjectHideFlags: 0

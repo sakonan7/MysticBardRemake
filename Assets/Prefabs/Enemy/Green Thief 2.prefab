@@ -7150,7 +7150,6 @@ GameObject:
   - component: {fileID: 8760742796181254250}
   - component: {fileID: 6686135423040712033}
   - component: {fileID: 2912156055901012716}
-  - component: {fileID: 2399882064574126990}
   m_Layer: 0
   m_Name: Green Thief 2
   m_TagString: Enemy
@@ -7248,6 +7247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  windCaptured: 0
   flinching: 0
   counterAttackTriggered: 0
   unflinchingFollow: 0
@@ -7255,17 +7255,24 @@ MonoBehaviour:
   - {fileID: 8419506691360090295}
   - {fileID: 4886582554914541619}
   teamAttackAura: {fileID: 0}
+  teamAttackSizzle: {fileID: 0}
   attackImpact: {fileID: 8300000, guid: 32db2a07aed62a84094082f47f4ff1b6, type: 3}
   grunt: {fileID: 8300000, guid: 91fce4c0a55aeac4f8506a52a2f671fe, type: 3}
   attackEffectObject: {fileID: 0}
   barrierSound: {fileID: 0}
   barrierBreak: {fileID: 0}
   bombLensFlare: {fileID: 0}
+  harpShield: {fileID: 0}
+  trumpetShield: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
   bombUser: 0
   boss: 0
+  revengeValueMove: 0
+  harpGuard: 0
+  trumpetGuard: 0
+  guardCounterattackTriggered: 0
   cantMove: 0
 --- !u!136 &8760742796181254250
 CapsuleCollider:
@@ -7413,27 +7420,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!135 &2399882064574126990
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2680235863865211223}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.9
-  m_Center: {x: 0.06, y: 0.88, z: 0}
 --- !u!1 &2698289924619825290
 GameObject:
   m_ObjectHideFlags: 0

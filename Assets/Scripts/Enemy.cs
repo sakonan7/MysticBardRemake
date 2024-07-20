@@ -137,6 +137,10 @@ public class Enemy : MonoBehaviour
     private float fullSpecialGauge = 29;
     private GameObject specialObj;
     private Image specialFill;
+    private bool rage = false;
+    private int rageValueLimit = 12;
+    private int currentRageValue = 0;
+    public bool rageValueMove = false;
 
     //Individual Attacks
     private bool unblockable = false;
@@ -714,6 +718,39 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(time);
         StartIdle();
     }
+    public void SetRage()
+    {
+        rage = true;
+    }
+    public void SetRageValueNumber(int newValue)
+    {
+        rageValueLimit = newValue;
+    }
+    public void RageValueUp()
+    {
+        if (rage == true)
+        {
+            currentRageValue++;
+            if (currentRevengeValue >= 4 && currentRevengeValue < 8)
+            {
+
+            }
+            if (currentRevengeValue >= 8 && currentRevengeValue < 12)
+            {
+
+            }
+            if (currentRageValue >= rageValueLimit)
+            {
+
+                currentRageValue = 0;
+                rageValueMove = true;
+            }
+        }
+    }
+    public void RageValueMoveOff()
+    {
+        rageValueMove = false;
+    }
     public void SetFusileer()
     {
         fusileer = true;
@@ -774,14 +811,6 @@ public class Enemy : MonoBehaviour
     public void UnsetSpecial()
     {
         special = false;
-        //if (idleCancel ==null)
-        //{
-        //StartIdle();
-        //Debug.Log("StartIdle");
-        //}
-        if (fusileer==true) {
-            PauseBeforeSpecialStart(20);
-        }
     }
     public void SpecialActivate()
     {
@@ -963,6 +992,7 @@ public class Enemy : MonoBehaviour
     //This makes sense because not all foes have the same idletime
     IEnumerator IdleAnimation(float idleTime)
     {
+        Debug.Log("Idle Start");
         idle = true;
         attack = false;
         attackReady = false;
@@ -1002,7 +1032,11 @@ public class Enemy : MonoBehaviour
         if (cantMove == false)
         {
             idle = false;
-            if (green == false)
+            if (fusileer == true)
+            {
+                PauseBeforeSpecialStart(20);
+            }
+            if (green == false &&fusileer==false)
             {
                 attack = true;
                 attackReady = true;
@@ -1011,15 +1045,12 @@ public class Enemy : MonoBehaviour
                     animator.SetBool("Idle", false);
                 }
             }
-            else
+            else if(green ==true)
             {
                     counterAttackWholeCancel =StartCoroutine(CounterattackCloud());
                     //Debug.Log("CounterattackCloud");
             }
-            if (fusileer == true)
-            {
-                PauseBeforeSpecialStart(20);
-            }
+
         }
     }
     //Used more for forcing the boss back into its attack pattern

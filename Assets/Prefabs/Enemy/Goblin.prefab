@@ -422,7 +422,6 @@ GameObject:
   - component: {fileID: 6673402854292913878}
   - component: {fileID: 2035385531408804401}
   - component: {fileID: 2909709407164189227}
-  - component: {fileID: 2458995789645007802}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Enemy
@@ -509,6 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  windCaptured: 0
   flinching: 0
   counterAttackTriggered: 0
   unflinchingFollow: 0
@@ -523,11 +523,17 @@ MonoBehaviour:
   barrierSound: {fileID: 0}
   barrierBreak: {fileID: 0}
   bombLensFlare: {fileID: 0}
+  harpShield: {fileID: 0}
+  trumpetShield: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
   bombUser: 0
   boss: 0
+  revengeValueMove: 0
+  harpGuard: 0
+  trumpetGuard: 0
+  guardCounterattackTriggered: 0
   cantMove: 0
 --- !u!54 &1317767034055439913
 Rigidbody:
@@ -696,27 +702,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!135 &2458995789645007802
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2168631824770729869}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0.67, z: 0}
 --- !u!1 &2436918414043809176
 GameObject:
   m_ObjectHideFlags: 0
