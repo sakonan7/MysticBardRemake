@@ -13,21 +13,21 @@ public class Fusileer : MonoBehaviour
     private void Awake()
     {
         enemyScript = GetComponent<Enemy>();
-        enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         animator = GetComponent<Animator>();
         audio = GetComponent<AudioSource>();
         //StartCoroutine(IdleAnimation());
 
-        enemyScript.SetHP(60);
+        enemyScript.SetHP(100);
         enemyScript.SetEXP(60);
 
-        enemyScript.SetIdleTime(15);
+        
         enemyScript.SetCantFlinch();
+        enemyScript.SetFusileer();
     }
     // Start is called before the first frame update
     void Start()
     {
-
+        enemyScript.PauseBeforeSpecialStart(20);
     }
 
     // Update is called once per frame
@@ -42,13 +42,6 @@ public class Fusileer : MonoBehaviour
             }
         }
     }
-    IEnumerator IdleAnimation()
-    {
-        animator.SetBool("Idle", true);
-        yield return new WaitForSeconds(2);
-        //idle = false;
-        //Attack();
-    }
     public void Attack()
     {
         //animator.SetBool("Idle",false);
@@ -59,8 +52,8 @@ public class Fusileer : MonoBehaviour
         //enemyScript.StartFlinchWindow();
         enemyScript.AttackReadyOff();
         StartCoroutine(Special());
-        enemyScript.SetSpecial();
         audio.PlayOneShot(gun, 1);
+        enemyScript.PlayAttackEffect(0);
     }
     IEnumerator Special()
     {
@@ -78,18 +71,15 @@ public class Fusileer : MonoBehaviour
             }
             enemyScript.SetDamage(1);
             enemyScript.SetAttackLength(time);
-            enemyScript.StartAttackLength();
+            enemyScript.StartAttackLengthAlternate();
             yield return new WaitForSeconds(time);
             hitCount++;
-            if(hitCount >= 12)
-            {
-                enemyScript.UnsetSpecial();
-                
-            }
         }
         //This works because the whole loop is over
         hitCount = 0;
         audio.Stop();
+        enemyScript.StopAttackEffect();
+        enemyScript.RestartIdleMethod(5);
     }
 
 }

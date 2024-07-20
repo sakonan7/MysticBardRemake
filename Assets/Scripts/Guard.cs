@@ -46,7 +46,7 @@ public class Guard
     void Start()
     {
         //Start by Evoking a Guard
-        //StartCoroutine(EvokeGuard());
+        StartCoroutine(EvokeGuard());
     }
 
     // Update is called once per frame
@@ -83,6 +83,7 @@ public class Guard
         if (enemyScript.revengeValueMove == true)
         {
             StartCoroutine(EvokeGuard());
+            enemyScript.RestartIdleMethod(1);
         }
     }
     IEnumerator Flashing()

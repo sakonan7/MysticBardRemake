@@ -785,7 +785,7 @@ public class PlayerController : MonoBehaviour
         {
             //Nerf, destroying armor will not cause foe to flinch
             enemies[i].GetComponent<Enemy>().Flinch();
-            enemies[i].GetComponent<Enemy>().TakeDamage(20, true);
+            enemies[i].GetComponent<Enemy>().TakeDamage(20, true, true);
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             //ViolinHitEffect(enemies[i].transform.position);
         }
