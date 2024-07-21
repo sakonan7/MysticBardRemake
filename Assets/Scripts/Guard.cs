@@ -16,13 +16,16 @@ public class Guard
     private Enemy enemyScript;
     private PlayerController player;
     private SkinnedMeshRenderer skin;
+    private AudioSource audio;
     public Material originalSkin;
     public Material flashSkin;
     public GameObject flashing;
     public Material harpGuard;
     
     public Material trumpetGuard;
-    
+    public AudioClip explosive;
+    public AudioClip flame;
+
     private bool repeat = false;
     private void Awake()
     {
@@ -31,6 +34,7 @@ public class Guard
         skin = transform.Find("DragonSoulEater").GetComponent<SkinnedMeshRenderer>();
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         animator = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
         //StartCoroutine(IdleAnimation());
 
         enemyScript.SetHP(100);
@@ -157,6 +161,8 @@ public class Guard
         enemyScript.StartCounterAttackLength();
         enemyScript.PlayAttackEffect(1);
         enemyScript.CounterAttackReadyOff();
+        audio.PlayOneShot(explosive,1);
+        audio.PlayOneShot(flame, 1);
     }
 
 }

@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
             debrisLocation[i] = currentDebris[i].transform.position;
         }
 
-        HPZero();
+        //HPZero();
     }
 
     // Update is called once per frame

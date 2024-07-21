@@ -5374,6 +5374,8 @@ MonoBehaviour:
   flashing: {fileID: 4346904044866073519}
   harpGuard: {fileID: 2100000, guid: 5fcde950c31077243850f23d14ba9a5a, type: 2}
   trumpetGuard: {fileID: 2100000, guid: cce2d6ab7a267434f9f3d647a2a5b9e6, type: 2}
+  explosive: {fileID: 8300000, guid: bef36d227b54a0345a314a4306b3a1f0, type: 3}
+  flame: {fileID: 8300000, guid: d51b9fe6ae76f114e8966c3d93a69e93, type: 3}
 --- !u!114 &7861958349015630295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5389,6 +5391,7 @@ MonoBehaviour:
   attackReady: 0
   windCaptured: 0
   flinching: 0
+  counterAttackActive: 0
   counterAttackTriggered: 0
   unflinchingFollow: 0
   attackEffects:
@@ -5396,7 +5399,7 @@ MonoBehaviour:
   - {fileID: 4179383335557870095}
   teamAttackAura: {fileID: 0}
   teamAttackSizzle: {fileID: 0}
-  attackImpact: {fileID: 0}
+  attackImpact: {fileID: 8300000, guid: 32db2a07aed62a84094082f47f4ff1b6, type: 3}
   grunt: {fileID: 0}
   attackEffectObject: {fileID: 0}
   barrierSound: {fileID: 0}
@@ -5404,12 +5407,22 @@ MonoBehaviour:
   bombLensFlare: {fileID: 0}
   harpShield: {fileID: 4523278402525512969}
   trumpetShield: {fileID: 3819585706174971393}
+  guardOn: {fileID: 8300000, guid: 96ac1bb393c1a0f41b557c6c8ec600d2, type: 3}
+  specialSound: {fileID: 0}
+  specialCancelled: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
   bombUser: 0
   boss: 0
   revengeValueMove: 0
+  currentRageValue: 0
+  rageValueMove: 0
+  rageValueMoveActive: 0
+  rageLevel1: 0
+  rageLevel2: 0
+  rageLevel3: 0
+  rageStart: 0
   harpGuard: 0
   trumpetGuard: 0
   guardCounterattackTriggered: 0
@@ -5433,10 +5446,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.73
+  m_Radius: 3.33
   m_Height: 2.97
   m_Direction: 1
-  m_Center: {x: 0, y: 1.96, z: 2.07}
+  m_Center: {x: 0, y: 1.96, z: -0.07}
 --- !u!54 &2956880440479451939
 Rigidbody:
   m_ObjectHideFlags: 0

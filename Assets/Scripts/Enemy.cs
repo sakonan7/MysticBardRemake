@@ -105,6 +105,9 @@ public class Enemy : MonoBehaviour
     public AudioClip bombLensFlare;
     public GameObject harpShield;
     public GameObject trumpetShield;
+    public AudioClip guardOn;
+    public AudioClip specialSound;
+    public AudioClip specialCancelled;
 
     public float HP = 10;
     private float originalHP;
@@ -277,6 +280,10 @@ public class Enemy : MonoBehaviour
         if (special == true)
         {
             specialObj.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2, 0));
+            if(audio.isPlaying==false)
+            {
+                audio.PlayOneShot(specialSound, 0.75f / 2 * 1.75f);
+            }
         }
     }
     //Setters
@@ -582,6 +589,7 @@ public class Enemy : MonoBehaviour
                 //Moved this from mouseOver 
                 if (idleCancel != null)
                 {
+                    Debug.Log("Flinch from Idle");
                     StopCoroutine(idleCancel);
                 }
 
@@ -829,6 +837,7 @@ public class Enemy : MonoBehaviour
         guardNumber = 0;
         StartCoroutine(GuardAnimation());
         harpShield.SetActive(true);
+        audio.PlayOneShot(guardOn, 0.85f);
     }
     public void UnsetHarpGuard()
     {
@@ -841,6 +850,7 @@ public class Enemy : MonoBehaviour
         guardNumber = 1;
         StartCoroutine(GuardAnimation());
         trumpetShield.SetActive(true);
+        audio.PlayOneShot(guardOn, 0.85f);
     }
     public void UnsetTrumpetGuard()
     {
@@ -881,7 +891,7 @@ public void RestartGuard()
     public void SpecialActivate()
     {
         special = false;
-        specialObj.SetActive(false);
+        //specialObj.SetActive(false);
     }
     public void SpecialCancel()
     {
@@ -891,6 +901,9 @@ public void RestartGuard()
         Flinch();
         specialObj.SetActive(false);
         playerScript.InterruptEffect(effectPosition.transform.position);
+        audio.Stop();
+        audio.PlayOneShot(specialCancelled,1);
+        audio.PlayOneShot(grunt, 1);
     }
 
     public void StartAttackLength()
@@ -1155,13 +1168,16 @@ public void RestartGuard()
     {
         //Special Effect
         StartCoroutine(PauseOver1(time));
-        Debug.Log("Special Start");
+        //Debug.Log("Special Start");
+        StartCoroutine(PlaySpecialSound(0.75f*1.5f));
     }
     IEnumerator PauseOver1(float time)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         specialCancel = StartCoroutine(SetSpecialTime(time));
         SetSpecial();
+        audio.Stop();
+        audio.PlayOneShot(specialSound, 0.75f/2 * 1.75f);
     }
     IEnumerator SetSpecialTime(float time)
     {
@@ -1172,12 +1188,21 @@ public void RestartGuard()
     {
         //Special Effect
         StartCoroutine(PauseOver2());
+        audio.Stop();
+        StartCoroutine(PlaySpecialSound(0.75f*1/2*3 * 1.5f));
+        specialObj.SetActive(false);
     }
     IEnumerator PauseOver2()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
+        audio.Stop();
         SpecialActivate();
         attackReady = true;
+    }
+    IEnumerator PlaySpecialSound(float volume)
+    {
+        audio.PlayOneShot(specialSound,volume);
+        yield return new WaitForSeconds(3);
     }
 
     IEnumerator CounterattackCloud()

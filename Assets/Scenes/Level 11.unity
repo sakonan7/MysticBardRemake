@@ -342,6 +342,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slasher
       objectReference: {fileID: 0}
+    - target: {fileID: 3824457061457931550, guid: 3bb1e2926b3efa5499712b8c9d90b21f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -398,6 +402,10 @@ PrefabInstance:
     - target: {fileID: 2680235863865211223, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
       propertyPath: m_Name
       value: Green Thief 2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2680235863865211223, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -542,6 +550,10 @@ PrefabInstance:
     - target: {fileID: 7560448512029490805, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
       propertyPath: m_Name
       value: Witch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7560448512029490805, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7835690311734015852, guid: 2f5fada39c23b38458f1061a71d45093, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1832,11 +1844,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3824457061457506622, guid: 3bb1e2926b3efa5499712b8c9d90b21f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.501
+      value: -1.6719
       objectReference: {fileID: 0}
     - target: {fileID: 3824457061457506622, guid: 3bb1e2926b3efa5499712b8c9d90b21f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.59
+      value: -7.563
       objectReference: {fileID: 0}
     - target: {fileID: 3824457061457506622, guid: 3bb1e2926b3efa5499712b8c9d90b21f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1870,6 +1882,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slasher (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3824457061457931550, guid: 3bb1e2926b3efa5499712b8c9d90b21f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7381952122416656146, guid: 3bb1e2926b3efa5499712b8c9d90b21f, type: 3}
+      propertyPath: grunt
+      value: 
+      objectReference: {fileID: 8300000, guid: 2fe567ba4a0369d44ab44f2e8a677909, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2393,6 +2413,9 @@ MonoBehaviour:
   bombLensFlare: {fileID: 0}
   harpShield: {fileID: 0}
   trumpetShield: {fileID: 0}
+  guardOn: {fileID: 0}
+  specialSound: {fileID: 0}
+  specialCancelled: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -2522,26 +2545,6 @@ PrefabInstance:
     - target: {fileID: 4247262225631085290, guid: ed29a5a5eaedce84ca511ae2842120e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4523278402525512969, guid: ed29a5a5eaedce84ca511ae2842120e9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7861958349015630295, guid: ed29a5a5eaedce84ca511ae2842120e9, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8443100611493492709, guid: ed29a5a5eaedce84ca511ae2842120e9, type: 3}
-      propertyPath: m_Height
-      value: 2.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 8443100611493492709, guid: ed29a5a5eaedce84ca511ae2842120e9, type: 3}
-      propertyPath: m_Center.y
-      value: 1.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 8579861310355847284, guid: ed29a5a5eaedce84ca511ae2842120e9, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2716,6 +2719,10 @@ PrefabInstance:
     - target: {fileID: 4625541724328400951, guid: 501de24cadddf894196440bb39da64d4, type: 3}
       propertyPath: m_Name
       value: Red Giant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4625541724328400951, guid: 501de24cadddf894196440bb39da64d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6267280541170021918, guid: 501de24cadddf894196440bb39da64d4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3243,6 +3250,10 @@ PrefabInstance:
     - target: {fileID: 1972517185275377836, guid: 11ba593cc53aa8b46aaeeb212c450a9e, type: 3}
       propertyPath: m_Name
       value: Rager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972517185275377836, guid: 11ba593cc53aa8b46aaeeb212c450a9e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7406502404899153109, guid: 11ba593cc53aa8b46aaeeb212c450a9e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5450,6 +5461,8 @@ SceneRoots:
   - {fileID: 298476643}
   - {fileID: 7158192102319162517}
   - {fileID: 1484596631446962040}
+  - {fileID: 495412149}
+  - {fileID: 399162682}
   - {fileID: 1603947265}
   - {fileID: 1236717990}
   - {fileID: 716003241557977449}
@@ -5457,9 +5470,7 @@ SceneRoots:
   - {fileID: 1564296892}
   - {fileID: 968985051}
   - {fileID: 527222293}
-  - {fileID: 495412149}
   - {fileID: 970893578}
-  - {fileID: 399162682}
   - {fileID: 263300413}
   - {fileID: 1373143888}
   - {fileID: 217412805}
