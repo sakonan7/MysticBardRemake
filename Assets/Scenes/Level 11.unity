@@ -1882,14 +1882,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slasher (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 3824457061457931550, guid: 3bb1e2926b3efa5499712b8c9d90b21f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7381952122416656146, guid: 3bb1e2926b3efa5499712b8c9d90b21f, type: 3}
-      propertyPath: grunt
-      value: 
-      objectReference: {fileID: 8300000, guid: 2fe567ba4a0369d44ab44f2e8a677909, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4812,7 +4804,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2789669595854285029, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: playEffects
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2994056704253568011, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: m_Name

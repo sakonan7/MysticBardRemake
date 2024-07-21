@@ -57,6 +57,12 @@ public class Enemy : MonoBehaviour
     private Image HPBarActual;
     private TextMeshProUGUI HPText;
     private Image damageBar;
+    private GameObject specialAuraObject;
+    private ParticleSystem specialAuraStart;
+    private ParticleSystem specialAura1;
+    private ParticleSystem specialAura2;
+    private ParticleSystem specialAura3;
+    private ParticleSystem specialAuraFinish;
 
     private Coroutine cancelDamageDisplay;
     private Coroutine flinchCancel; //or flinchReset
@@ -875,6 +881,15 @@ public void RestartGuard()
             SetTrumpetGuard();
         }
     }
+    public void SpecialObjects()
+    {
+        specialAuraObject = transform.Find("Special Object").gameObject;
+        specialAuraStart = specialAuraObject.transform.Find("Start").gameObject.GetComponent<ParticleSystem>();
+        specialAura1 = specialAuraObject.transform.Find("Middle").gameObject.GetComponent<ParticleSystem>();
+        specialAura2 = specialAuraObject.transform.Find("Middle 2").gameObject.GetComponent<ParticleSystem>();
+        specialAura3 = specialAuraObject.transform.Find("Middle 3").gameObject.GetComponent<ParticleSystem>();
+        specialAuraFinish = specialAuraObject.transform.Find("End").gameObject.GetComponent<ParticleSystem>();
+    }
     public void SetSpecial()
     {
         special = true;
@@ -883,6 +898,7 @@ public void RestartGuard()
         specialFill = specialObj.transform.Find("Actual").GetComponent<Image>();
         specialFill.fillAmount = 1;
         specialGauge = fullSpecialGauge;
+
     }
     public void UnsetSpecial()
     {
@@ -904,6 +920,10 @@ public void RestartGuard()
         audio.Stop();
         audio.PlayOneShot(specialCancelled,1);
         audio.PlayOneShot(grunt, 1);
+        specialAura1.Stop();
+        specialAura2.Stop();
+        specialAura3.Stop();
+        //specialAuraFinish.Stop();
     }
 
     public void StartAttackLength()
@@ -1170,6 +1190,8 @@ public void RestartGuard()
         StartCoroutine(PauseOver1(time));
         //Debug.Log("Special Start");
         StartCoroutine(PlaySpecialSound(0.75f*1.5f));
+        SpecialObjects();
+        specialAuraStart.Play();
     }
     IEnumerator PauseOver1(float time)
     {
@@ -1178,6 +1200,9 @@ public void RestartGuard()
         SetSpecial();
         audio.Stop();
         audio.PlayOneShot(specialSound, 0.75f/2 * 1.75f);
+        specialAuraStart.Stop();
+        specialAura1.Play();
+        StartCoroutine(SpecialAuras2());
     }
     IEnumerator SetSpecialTime(float time)
     {
@@ -1191,6 +1216,10 @@ public void RestartGuard()
         audio.Stop();
         StartCoroutine(PlaySpecialSound(0.75f*1/2*3 * 1.5f));
         specialObj.SetActive(false);
+        specialAura1.Stop();
+        specialAura2.Stop();
+        specialAura3.Stop();
+        specialAuraFinish.Play();
     }
     IEnumerator PauseOver2()
     {
@@ -1198,11 +1227,23 @@ public void RestartGuard()
         audio.Stop();
         SpecialActivate();
         attackReady = true;
+        specialAuraFinish.Stop();
     }
     IEnumerator PlaySpecialSound(float volume)
     {
         audio.PlayOneShot(specialSound,volume);
         yield return new WaitForSeconds(3);
+    }
+    IEnumerator SpecialAuras2()
+    {
+        yield return new WaitForSeconds(6.5f);
+        specialAura2.Play();
+        StartCoroutine(SpecialAuras3());
+    }
+    IEnumerator SpecialAuras3()
+    {
+        yield return new WaitForSeconds(6.5f);
+        specialAura3.Play();
     }
 
     IEnumerator CounterattackCloud()
@@ -1268,7 +1309,7 @@ public void RestartGuard()
     public void TakeDamage(float damage, bool armorBreak, bool playerSpecial)
     {
         //Bomb user will not get double protection for ease, but it will have cantFlinch()
-        
+        //damage *= 5;
             if ((barrier == true && bombUser ==false))
             {
                 //Debug.Log("Reduced Damage");

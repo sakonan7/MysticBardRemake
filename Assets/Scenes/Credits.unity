@@ -573,6 +573,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!1 &37613139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,6 +1765,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &147694046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2454,6 +2460,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &197023202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2721,6 +2730,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &215017834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3836,6 +3848,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &446769878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6206,6 +6221,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &725798156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7905,7 +7923,7 @@ MonoBehaviour:
     In Bronze\nReflection - Cast In Bronze\nMay The Force Be With You - John Williams\nFanfare
     - Kjetil Bjerkestrand \nRiding Theme (Day) - Manaka Kataoka\nTreachery (Performed
     By iTSO) - Shiro Sagisu\n\"Cometh the hour\" Pt. B_Opus1 - Shiro Sagisu\nBattle
-    - Kenta Nagata\nForze Del Male - Yoko Shimimura"
+    - Kenta Nagata\nChocobo Theme - Nobuo Uematsu\nForze Del Male - Yoko Shimimura"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9915,6 +9933,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!1 &1100634221
 GameObject:
   m_ObjectHideFlags: 0
@@ -10854,6 +10875,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &1181671179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11450,6 +11474,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &1210218708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12558,6 +12585,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &1264188288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16180,6 +16210,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &1627440435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17360,6 +17393,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &1691809908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17999,6 +18035,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!1 &1723389730
 GameObject:
   m_ObjectHideFlags: 0
@@ -20667,6 +20706,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &2028008462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21429,6 +21471,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &2077187381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21621,6 +21666,9 @@ MonoBehaviour:
   level7: 0
   level8: 0
   level9: 0
+  level10: 0
+  level11: 0
+  level12: 0
 --- !u!114 &2084310374
 MonoBehaviour:
   m_ObjectHideFlags: 0

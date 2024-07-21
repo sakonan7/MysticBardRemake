@@ -2254,6 +2254,9 @@ MonoBehaviour:
   bombLensFlare: {fileID: 0}
   harpShield: {fileID: 0}
   trumpetShield: {fileID: 0}
+  guardOn: {fileID: 0}
+  specialSound: {fileID: 0}
+  specialCancelled: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -3795,6 +3798,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fusileer (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2279919816002453006, guid: 67455d89a0364e94285881afa70d0257, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2279919816002544174, guid: 67455d89a0364e94285881afa70d0257, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.84
@@ -3953,15 +3960,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2168631824770729869, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.59
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.58
+      value: -2.28
       objectReference: {fileID: 0}
     - target: {fileID: 2992685994999888536, guid: 27c1157f96659874096ae2b2a6f9603c, type: 3}
       propertyPath: m_LocalPosition.z

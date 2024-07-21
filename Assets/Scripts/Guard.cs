@@ -81,13 +81,13 @@ public class Guard
     {
         if (enemyScript.counterAttackTriggered == true)
         {
-            GuardCounterAttack();
+            StartCoroutine(GuardCounterAttack());
             //Debug.Log("Attack");
         }
         if (enemyScript.revengeValueMove == true)
         {
             StartCoroutine(EvokeGuard());
-            enemyScript.RestartIdleMethod(1);
+            enemyScript.RestartIdleMethod(2.5f);
         }
     }
     IEnumerator Flashing()
@@ -147,11 +147,12 @@ public class Guard
         enemyScript.PlayAttackEffect(0);
         enemyScript.AttackReadyOff();
     }
-    public void GuardCounterAttack()
+    IEnumerator GuardCounterAttack()
     {
         enemyScript.IdleAnimationCancel();
         enemyScript.AttackReadyOff();
-
+        enemyScript.CounterAttackReadyOff();
+        yield return new WaitForSeconds(0.25f);
 
 
         //animator.SetBool("Idle",false);
@@ -160,8 +161,13 @@ public class Guard
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartCounterAttackLength();
         enemyScript.PlayAttackEffect(1);
-        enemyScript.CounterAttackReadyOff();
-        audio.PlayOneShot(explosive,1);
+        
+        StartCoroutine(CounterAttackSoundDelay());
+    }
+    IEnumerator CounterAttackSoundDelay()
+    {
+        yield return new WaitForSeconds(0.35f);
+        audio.PlayOneShot(explosive, 1);
         audio.PlayOneShot(flame, 1);
     }
 

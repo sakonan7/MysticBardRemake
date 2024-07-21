@@ -357,7 +357,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 0.65
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -5565,7 +5565,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 0.65
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -10521,7 +10521,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 0.65
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -15425,7 +15425,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 0.65
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -20252,7 +20252,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 0.65
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -25564,7 +25564,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 0.65
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -30706,7 +30706,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 0.65
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -41420,6 +41420,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 12.35
       objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -41464,21 +41468,41 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 19800002, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 19800004, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 19800006, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 19800008, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

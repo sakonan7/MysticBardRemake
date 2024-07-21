@@ -27,8 +27,9 @@ public class GrandDragon : MonoBehaviour
     public GameObject flashingLight;
     public Material dying;
     public AudioClip flamethrower;
-
-
+    public AudioClip shortRoar;
+    public AudioClip longRoar;
+    public AudioClip aura;
     public AudioClip counterattack;
     public AudioClip finalPhaseAttacks;
     public ParticleSystem []redAura;
@@ -135,6 +136,7 @@ public class GrandDragon : MonoBehaviour
                 }
                 StartCoroutine(BarrierAnimation(1));
                 enemyScript.SetIdleTime(20);
+                //audio.PlayOneShot(shortRoar,1);
             }
             if (enemyScript.HP < maxHP - 150 && secondPhase == true)
             {
@@ -258,6 +260,7 @@ public class GrandDragon : MonoBehaviour
                 FinalAuraOn();
                 skin.material = final;
                 enemyScript.SetIdleTime(3);
+                audio.PlayOneShot(aura, 2);
             }
             if (enemyScript.HP <= 0)
             {
@@ -554,6 +557,8 @@ IEnumerator Flashing()
     {
         animator.SetTrigger("Bomb");
         animator.SetBool("Idle", false);
+        audio.PlayOneShot(longRoar, 0.9f);
+        audio.PlayOneShot(aura, 2);
     }
     IEnumerator RoarDuration()
     {
@@ -758,6 +763,7 @@ IEnumerator Flashing()
         }
         enemyScript.PlayerCantPause(18);
         enemyScript.PlayerTransparentUI(18);
+        audio.PlayOneShot(shortRoar, 0.9f);
     }
     public void RegularBombRing2()
     {
@@ -793,6 +799,7 @@ IEnumerator Flashing()
         {
             enemyScript.SetIdleTime(6);
         }
+        audio.PlayOneShot(shortRoar, 0.9f);
     }
     public void BombRing3()
     {
@@ -807,6 +814,7 @@ IEnumerator Flashing()
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(3));
         enemyScript.SetIdleTime(20);
+        audio.PlayOneShot(longRoar, 0.9f);
     }
     public void BombRing4()
     {
@@ -821,6 +829,7 @@ IEnumerator Flashing()
         enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(4));
         enemyScript.SetIdleTime(20);
+        audio.PlayOneShot(longRoar, 0.9f);
     }
     IEnumerator BombRingAppear(int number)
     {
@@ -889,7 +898,7 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(0);
         //}
         enemyScript.CounterAttackReadyOff();
-        audio.PlayOneShot(counterattack,0.5f);
+        audio.PlayOneShot(counterattack,1);
     }
     public void GreenAttack()
     {
@@ -933,7 +942,7 @@ IEnumerator Flashing()
         enemyScript.CounterAttackReadyOff();
         CounterattackAuraOn();
         audio.PlayOneShot(finalPhaseAttacks, 2);
-        audio.PlayOneShot(counterattack, 0.5f);
+        audio.PlayOneShot(counterattack, 1f);
     }
     public void SeventhGreenAttack()
     {

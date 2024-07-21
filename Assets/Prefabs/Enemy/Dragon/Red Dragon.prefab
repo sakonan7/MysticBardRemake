@@ -18161,6 +18161,9 @@ MonoBehaviour:
   bombLensFlare: {fileID: 8300000, guid: 624df48c4ff3ad245a6bfa346e6bd43b, type: 3}
   harpShield: {fileID: 0}
   trumpetShield: {fileID: 0}
+  guardOn: {fileID: 0}
+  specialSound: {fileID: 0}
+  specialCancelled: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -18198,7 +18201,10 @@ MonoBehaviour:
   flashingLight: {fileID: 6058743343304110789}
   dying: {fileID: 2100000, guid: d86ce2c33541da34fbdbfbe568727a32, type: 2}
   flamethrower: {fileID: 8300000, guid: dd9b11ebda22acf4ea5a0f70c4c6605d, type: 3}
-  counterattack: {fileID: 8300000, guid: 2d99e00b9f6a752449d0414b2a4cdc82, type: 3}
+  shortRoar: {fileID: 8300000, guid: 6e44cf78b36675849b7d9df92b71ca8a, type: 3}
+  longRoar: {fileID: 8300000, guid: 5d0060614ee0461428cf50cb733f6786, type: 3}
+  aura: {fileID: 8300000, guid: eeb3d482f45c1744d91c35c433a0d959, type: 3}
+  counterattack: {fileID: 8300000, guid: 4e38965299d1d744fa1961f3f55b1701, type: 3}
   finalPhaseAttacks: {fileID: 8300000, guid: bd1cc64f9aea81f4f9dcd10873b47470, type: 3}
   redAura:
   - {fileID: 6729256439116489095}
