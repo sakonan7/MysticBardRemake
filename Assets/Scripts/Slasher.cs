@@ -27,7 +27,7 @@ public class Slasher : MonoBehaviour
         enemyScript.SetEXP(90);
 
         enemyScript.SetIdleTime(5);
-        
+        enemyScript.SetNormal();
     }
     // Start is called before the first frame update
     void Start()

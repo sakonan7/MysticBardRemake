@@ -44,8 +44,8 @@ public class Fusileer : MonoBehaviour
     }
     public void Attack()
     {
-        //animator.SetBool("Idle",false);
-        //animator.SetTrigger("Attack");
+        animator.SetBool("Idle",false);
+        animator.SetBool("SpecialLoop", true);
         //enemyScript.SetDamage(12);
         //enemyScript.SetAttackLength(1.5f);
         //enemyScript.StartAttackLength();
@@ -80,6 +80,8 @@ public class Fusileer : MonoBehaviour
         audio.Stop();
         enemyScript.StopAttackEffect();
         enemyScript.RestartIdleMethod(5);
+        animator.SetBool("SpecialLoop",false);
+        animator.SetBool("Idle", true);
     }
 
 }

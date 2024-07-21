@@ -39,7 +39,7 @@ public class Rager
         enemyScript.SetHP(100);
         enemyScript.SetEXP(100);
 
-        enemyScript.SetIdleTime(5);
+        enemyScript.SetIdleTime(10);
         enemyScript.SetRage();
         enemyScript.SetRageValueNumber(9);
     }
@@ -71,15 +71,28 @@ public class Rager
             skin2.material = skin2Rage1;
             skin3.material = skin3Rage1;
         }
+        if (enemyScript.rageLevel2 == true)
+        {
+            skin1.material = skin1Rage2;
+            skin2.material = skin2Rage2;
+            skin3.material = skin3Rage2;
+        }
+        if (enemyScript.rageLevel3 == true)
+        {
+            skin1.material = skin1Rage3;
+            skin2.material = skin2Rage3;
+            skin3.material = skin3Rage3;
+        }
         if (enemyScript.rageStart == false)
         {
             skin1.material = skin1Original;
             skin2.material = skin2Original;
             skin3.material = skin3Original;
         }
-        if (enemyScript.revengeValueMove == true)
+        if (enemyScript.rageValueMove == true)
         {
-            enemyScript.RestartIdleMethod(5);
+            
+            RageAttack1();
         }
     }
     public void Attack()
@@ -91,13 +104,50 @@ public class Rager
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
         enemyScript.StartFlinchWindow();
-        enemyScript.PlayAttackEffect(0);
         enemyScript.AttackReadyOff();
 
         enemyScript.UnsetCantFlinch();
+        enemyScript.RageOff();
     }
+    //I could instead use switches and lags
+    //But this game is more of a puzzle 
     public void RageAttack1()
     {
         rageEffect.Play();
+        enemyScript.RageValueMoveOff();
+        
+        animator.SetTrigger("RageAttack1");
+        enemyScript.SetDamage(3);
+        enemyScript.SetAttackLength(1f);
+        enemyScript.StartAttackLengthAlternate();
+        StartCoroutine(RageAttack2());
+    }
+    IEnumerator RageAttack2()
+    {
+        yield return new WaitForSeconds(1.5f);
+        animator.ResetTrigger("RageAttack1");
+        animator.SetTrigger("RageAttack2");
+        enemyScript.SetDamage(3);
+        enemyScript.SetAttackLength(1f);
+        enemyScript.StartAttackLengthAlternate();
+        StartCoroutine(RageAttack3());
+    }
+    IEnumerator RageAttack3()
+    {
+        yield return new WaitForSeconds(1.25f);
+        animator.ResetTrigger("RageAttack2");
+        animator.SetTrigger("RageAttack3");
+        enemyScript.SetDamage(3);
+        enemyScript.SetAttackLength(1f);
+        enemyScript.StartAttackLength();
+        enemyScript.RestartIdleMethod(2);
+        enemyScript.CooldownStart();
+        StartCoroutine(RageOff());
+    }
+    IEnumerator RageOff()
+    {
+        yield return new WaitForSeconds(1);
+        rageEffect.Stop();
+        animator.SetTrigger("RageAttack3");
     }
 }

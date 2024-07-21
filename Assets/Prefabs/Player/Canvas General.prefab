@@ -3975,7 +3975,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Start Screen
+  m_text: 'Level Select
 
 '
   m_isRightToLeft: 0
@@ -19827,6 +19827,8 @@ RectTransform:
   - {fileID: 2160557629489650619}
   - {fileID: 3997988178059149385}
   - {fileID: 3418831710506985224}
+  - {fileID: 3530844991723374394}
+  - {fileID: 6964963410714082348}
   - {fileID: 112314480992575325}
   - {fileID: 5753036155665025004}
   - {fileID: 1999672840173016256}
@@ -19838,8 +19840,6 @@ RectTransform:
   - {fileID: 4702854380840819869}
   - {fileID: 2302868455537873246}
   - {fileID: 5093574721245730797}
-  - {fileID: 3530844991723374394}
-  - {fileID: 6964963410714082348}
   - {fileID: 5211613565021392315}
   - {fileID: 3259358420887921670}
   - {fileID: 1777702459401220336}
@@ -21549,7 +21549,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Would you like to go to the next Level or go \nback to the Start Screen?"
+  m_text: "Would you like to go to the next Level or go \nback to Level Select?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -22538,8 +22538,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 34.9, y: 26}
-  m_SizeDelta: {x: 120, y: 30}
+  m_AnchoredPosition: {x: 36.204933, y: 26}
+  m_SizeDelta: {x: 125.2197, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5351302007280545015
 CanvasRenderer:

@@ -51,6 +51,7 @@ MonoBehaviour:
   story: {fileID: 8300000, guid: 3637f90668096d54aaea0097c053dd58, type: 3}
   regularBattle: {fileID: 8300000, guid: 9d624f4cdf5259946afcea7f5651472b, type: 3}
   regularBattle2: {fileID: 8300000, guid: 63616ff7ac3d87f44bc9a3af6e921bce, type: 3}
+  regularBattle3: {fileID: 8300000, guid: c8524d8877d0c1f42b644781b0bf8459, type: 3}
   bossMusic: {fileID: 8300000, guid: 2629d55bec5a3974fa1ec2e713b9c396, type: 3}
   victoryMusic: {fileID: 8300000, guid: a83497dcc204e5341ac4993b0ca6c83e, type: 3}
   debris:

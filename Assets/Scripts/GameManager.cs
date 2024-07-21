@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public AudioClip story;
     public AudioClip regularBattle;
     public AudioClip regularBattle2;
+    public AudioClip regularBattle3;
     public AudioClip bossMusic;
     public AudioClip victoryMusic;
     private GameObject gameOverObject;
@@ -72,6 +73,8 @@ public class GameManager : MonoBehaviour
         {
             levelUp = true;
         }
+
+        SetLevel(SceneManager.GetActiveScene().buildIndex);
         if (nonGame == false)
         {
             if (currentLevel >= 3 && boss == false)
@@ -86,6 +89,31 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     audio.clip = regularBattle2;
+                    audio.Play();
+                }
+            }
+            if (SceneManager.GetActiveScene().name == "Level 9")
+            {
+                    audio.clip = regularBattle3;
+                    audio.Play();
+            }
+            if (SceneManager.GetActiveScene().name == "Level 10" || SceneManager.GetActiveScene().name == "Level 11")
+            {
+                int random = 0;
+                random = Random.Range(0, 3);
+                if (random == 0)
+                {
+                    audio.clip = regularBattle;
+                    audio.Play();
+                }
+                else if (random == 1)
+                {
+                    audio.clip = regularBattle2;
+                    audio.Play();
+                }
+                else
+                {
+                    audio.clip = regularBattle3;
                     audio.Play();
                 }
             }
@@ -116,7 +144,6 @@ public class GameManager : MonoBehaviour
             audio.clip = bossMusic;
             audio.Play();
         }
-        SetLevel(SceneManager.GetActiveScene().buildIndex);
     }
     void Start()
     {

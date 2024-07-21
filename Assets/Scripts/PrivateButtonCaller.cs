@@ -66,6 +66,9 @@ public class PrivateButtonCaller : MonoBehaviour
     public bool level7 = false;
     public bool level8 = false;
     public bool level9 = false;
+    public bool level10 = false;
+    public bool level11 = false;
+    public bool level12 = false;
 
     // Start is called before the first frame update
     void Start()
@@ -258,6 +261,18 @@ public class PrivateButtonCaller : MonoBehaviour
         if (level9 == true)
         {
             SceneManager.LoadScene(10);
+        }
+        if (level10 == true)
+        {
+            SceneManager.LoadScene(11);
+        }
+        if (level11 == true)
+        {
+            SceneManager.LoadScene(12);
+        }
+        if (level12 == true)
+        {
+            SceneManager.LoadScene(13);
         }
 
         if (statUpSound == true)

@@ -784,8 +784,10 @@ public class PlayerController : MonoBehaviour
         for (int i= 0; i < enemies.Length; i++)
         {
             //Nerf, destroying armor will not cause foe to flinch
-            enemies[i].GetComponent<Enemy>().Flinch();
-            enemies[i].GetComponent<Enemy>().TakeDamage(20, true, true);
+            if (enemies[i].GetComponent<Enemy>().counterAttackActive == false) {
+                enemies[i].GetComponent<Enemy>().Flinch();
+                enemies[i].GetComponent<Enemy>().TakeDamage(20, true, true);
+            }
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             //ViolinHitEffect(enemies[i].transform.position);
         }
@@ -859,13 +861,15 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(UninterruptibleSound());
         }
         int random = Random.Range(0, 2);
-        if (random == 0)
-        {
-            audio.PlayOneShot(bell1, 0.25f);
-        }
-        else
-        {
-            audio.PlayOneShot(bell2, 0.25f);
+        if (potionUsed ==false) {
+            if (random == 0)
+            {
+                audio.PlayOneShot(bell1, 0.25f);
+            }
+            else
+            {
+                audio.PlayOneShot(bell2, 0.25f);
+            }
         }
         StartCoroutine(Gulp());
     }

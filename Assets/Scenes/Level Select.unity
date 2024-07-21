@@ -7251,6 +7251,7 @@ MonoBehaviour:
   attackReady: 0
   windCaptured: 0
   flinching: 0
+  counterAttackActive: 0
   counterAttackTriggered: 0
   unflinchingFollow: 0
   attackEffects: []
@@ -7270,7 +7271,13 @@ MonoBehaviour:
   bombUser: 0
   boss: 0
   revengeValueMove: 0
+  currentRageValue: 0
   rageValueMove: 0
+  rageValueMoveActive: 0
+  rageLevel1: 0
+  rageLevel2: 0
+  rageLevel3: 0
+  rageStart: 0
   harpGuard: 0
   trumpetGuard: 0
   guardCounterattackTriggered: 0
@@ -10944,6 +10951,14 @@ PrefabInstance:
       propertyPath: m_Interactable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3886738933505591758, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: level1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3886738933505591758, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: level10
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4002407287790864923, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.9
@@ -10975,6 +10990,14 @@ PrefabInstance:
     - target: {fileID: 5400373262928147655, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5628411122293980421, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: level12
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5925692292996307172, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_text
+      value: Ex - 2 - Fusileer, Rager, Others
       objectReference: {fileID: 0}
     - target: {fileID: 5925692292996307172, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_fontColor.b
@@ -11083,6 +11106,10 @@ PrefabInstance:
     - target: {fileID: 6567868494349146991, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 39.800003
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773916377418580965, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: level11
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6892397647599760266, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_AnchorMax.y

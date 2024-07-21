@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
     private bool repeat = true;
     public bool flinching = false;
     private bool barrier = false;
-    private bool counterAttackActive = false;
+    public bool counterAttackActive = false;
     public bool counterAttackTriggered = false;
     public bool unflinchingFollow = false;
 
@@ -141,6 +141,7 @@ public class Enemy : MonoBehaviour
     private int rageValueLimit = 12;
     public int currentRageValue = 0;
     public bool rageValueMove = false;
+    public bool rageValueMoveActive = false;
     public bool rageLevel1 = false;
     public bool rageLevel2 = false;
     public bool rageLevel3 = false;
@@ -182,12 +183,16 @@ public class Enemy : MonoBehaviour
         gameScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
         if (idleStart == true)
         {
-            if (green == false) {
+            if (green == false && rage==false) {
                 idleCancel = StartCoroutine(IdleAnimation(Random.Range(4, 10)));
             }
-            else
+            else if(green==true)
             {
                 idleCancel = StartCoroutine(IdleAnimation(Random.Range(1, 7)));
+            }
+            else if (rage == true)
+            {
+                idleCancel = StartCoroutine(IdleAnimation(10));
             }
             //Debug.Log("Id");
         }
@@ -597,6 +602,10 @@ public class Enemy : MonoBehaviour
                 {
                     SetCantFlinch();
                 }
+                if (rage == true)
+                {
+                    SetCantFlinch();
+                }
             }
         }
     }
@@ -614,7 +623,14 @@ public class Enemy : MonoBehaviour
         //06/25/24 atm, I am doing this because I don't want Dragon to be not doing something for so long
         //I can do something like recoveryIdleTime
         //if (useRecoveryIdleTime), IdleAnimation(recoveryIdleTime)
-        idleCancel = StartCoroutine(IdleAnimation(5));
+        if (rage ==false)
+        {
+            idleCancel = StartCoroutine(IdleAnimation(5));
+        }
+        else
+        {
+            idleCancel = StartCoroutine(IdleAnimation(10));
+        }
         //Debug.Log("IdleAnimation");
 
         currentRevengeValue = 0;
@@ -726,6 +742,7 @@ public class Enemy : MonoBehaviour
     public void SetRage()
     {
         rage = true;
+        SetCantFlinch();
     }
     public void SetRageValueNumber(int newValue)
     {
@@ -756,12 +773,36 @@ public class Enemy : MonoBehaviour
 
                 currentRageValue = 0;
                 rageValueMove = true;
+                rageValueMoveActive = true;
+                IdleAnimationCancel();
             }
         }
     }
     public void RageValueMoveOff()
     {
         rageValueMove = false;
+    }
+    public void RageValueMoveActiveOff()
+    {
+        rageValueMoveActive = false;
+    }
+    public void CooldownStart()
+    {
+        StartCoroutine(Cooldown());
+    }
+    IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(1);
+        RageOff();
+        RageValueMoveActiveOff();
+    }
+    public void RageOff()
+    {
+        rageStart = false;
+        rageLevel1 = false;
+        rageLevel2 = false;
+        rageLevel3 = false;
+        currentRageValue = 0;
     }
     public void SetFusileer()
     {
@@ -900,6 +941,19 @@ public class Enemy : MonoBehaviour
         StartCoroutine(FollowUpAttack(1));
         DealDamage(damage);
     }
+    public void CounterAttackTriggered()
+    {
+        counterAttackActive = false;
+        StopCoroutine(counterAttackCancel);
+        counterAttackTriggered = true;
+        unflinchingFollow = true;
+
+        //StartCoroutine(FollowUpAttack(4));
+        animator.SetBool("Idle", true);
+        counterAttackOn.Stop();
+        counterAttackCloud.SetActive(false);
+        //Debug.Log("Counterattack triggered " + counterAttackTriggered);
+    }
     public void StartGuardAttackLength()
     {
         attackLengthCancel = StartCoroutine(GuardAttackLength());
@@ -1006,7 +1060,6 @@ public class Enemy : MonoBehaviour
     //This makes sense because not all foes have the same idletime
     IEnumerator IdleAnimation(float idleTime)
     {
-        Debug.Log("Idle Start");
         idle = true;
         attack = false;
         attackReady = false;
@@ -1066,10 +1119,7 @@ public class Enemy : MonoBehaviour
             }
             if(rage ==true)
             {
-                rageStart = false;
-                rageLevel1 = false;
-                rageLevel2 = false;
-                rageLevel3 = false;
+
             }
         }
     }
@@ -1085,6 +1135,8 @@ public class Enemy : MonoBehaviour
             StopCoroutine(idleCancel);
         }
         animator.SetBool("Idle",true);
+        attack = false;
+        attackReady = false;
     }
     public void PauseBeforeSpecialStart(float time)
     {
@@ -1178,7 +1230,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage, bool armorBreak, bool playerSpecial)
     {
         //Bomb user will not get double protection for ease, but it will have cantFlinch()
-        if (counterAttackActive==false) {
+        
             if ((barrier == true && bombUser ==false))
             {
                 //Debug.Log("Reduced Damage");
@@ -1207,7 +1259,22 @@ public class Enemy : MonoBehaviour
                     ArmorOff();
                 }
             }
-            if (special == true)
+
+            else
+            {
+                HP -= damage;
+                if (boss == true)
+                {
+                    HPBarActual.fillAmount -= (float)damage / originalHP;
+                    HPText.text = HP + "/" + originalHP;
+                    if (gettingDamaged == false)
+                    {
+                        StartCoroutine(DamageBar());
+                    }
+                }
+
+            }
+                        if (special == true)
             {
                 //Debug.Log("Armor damaged ");
                 int specialDamage = 0;
@@ -1226,20 +1293,6 @@ public class Enemy : MonoBehaviour
                     SpecialCancel();
                 }
             }
-            else
-            {
-                HP -= damage;
-                if (boss == true)
-                {
-                    HPBarActual.fillAmount -= (float)damage / originalHP;
-                    HPText.text = HP + "/" + originalHP;
-                    if (gettingDamaged == false)
-                    {
-                        StartCoroutine(DamageBar());
-                    }
-                }
-
-            }
             //DamageText(damage);
             if (cancelDamageDisplay != null)
             {
@@ -1250,6 +1303,10 @@ public class Enemy : MonoBehaviour
             if (HP <= 0)
             {
                 WindCaptureEnd();
+            if(special ==true)
+            {
+                specialObj.SetActive(false);
+            }
                 if (boss == false)
                 {
                     for(int i=0;i <collidingEnemies.Count;i++)
@@ -1274,21 +1331,7 @@ public class Enemy : MonoBehaviour
                 gameScript.ReduceNumEnemies();
 
             }
-        }
-        else
-        {
-            counterAttackActive = false;
-            StopCoroutine(counterAttackCancel);
-            counterAttackTriggered = true;
-            unflinchingFollow = true;
-            
-            //StartCoroutine(FollowUpAttack(4));
-            animator.SetBool("Idle", true);
-            counterAttackOn.Stop();
-            counterAttackCloud.SetActive(false);
-            //Debug.Log("Counterattack triggered " + counterAttackTriggered);
-        }
-        if (rageValueMove ==false) {
+        if (rageValueMoveActive ==false) {
             RageValueUp();
         }
     }
@@ -1350,7 +1393,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnMouseExit()
     {
-        if (normal == false || cantFlinch == false)
+        if (normal == false)
         {
             if (playerScript.flute == true)
             {
@@ -1432,6 +1475,7 @@ public class Enemy : MonoBehaviour
             if (collision.gameObject.CompareTag("Enemy"))
             {
                 bool damaged = false;
+                if (counterAttackActive ==false) { 
                 if (damaged == false)
                 {
                     damaged = true;
@@ -1446,12 +1490,18 @@ public class Enemy : MonoBehaviour
                     }
                     else
                     {
-                        if (attack ==false) {
+                        if (attack == false)
+                        {
                             counterAttackTriggered = true;
                             unflinchingFollow = true;
                             attack = true;
                         }
                     }
+                }
+                else
+                {
+                    CounterAttackTriggered();
+                }
                 }
                 //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 //collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -1470,6 +1520,7 @@ public class Enemy : MonoBehaviour
                 if (damaged == false)
                 {
                     damaged = true;
+                    if(counterAttackActive ==false) { 
                     if (harpGuard == false && trumpetGuard == false)
                     {
                         TakeDamage(2, false, false);
@@ -1499,6 +1550,11 @@ public class Enemy : MonoBehaviour
                             }
                         }
                     }
+                }
+                else
+                {
+                    CounterAttackTriggered();
+                }
                 }
 
 
@@ -1555,27 +1611,35 @@ public class Enemy : MonoBehaviour
             if (damaged ==false)
             {
                 damaged = true;
-                if (harpGuard ==false) {
-                    if (armor == false)
+                if (counterAttackActive == false)
+                {
+                    if (harpGuard == false)
                     {
-                        Flinch();
+                        if (armor == false)
+                        {
+                            Flinch();
+                        }
+                        TakeDamage(2, true, false);
+                        RevengeValueUp();
                     }
-                    TakeDamage(2, true, false);
-                    RevengeValueUp();
+                    else
+                    {
+                        if (attack == false)
+                        {
+                            counterAttackTriggered = true;
+                            unflinchingFollow = true;
+                            attack = true;
+                        }
+                    }
+                    //Destroy(other.gameObject);
+                    if (trumpetGuard == true)
+                    {
+                        UnsetTrumpetGuard();
+                    }
                 }
                 else
                 {
-                    if (attack == false)
-                    {
-                        counterAttackTriggered = true;
-                        unflinchingFollow = true;
-                        attack = true;
-                    }
-                }
-                //Destroy(other.gameObject);
-                if (trumpetGuard == true)
-                {
-                    UnsetTrumpetGuard();
+                    CounterAttackTriggered();
                 }
                 playerScript.HitCountUp();
                 playerScript.TrumpetHitEffect(effectPosition.transform.position);
@@ -1588,28 +1652,37 @@ public class Enemy : MonoBehaviour
             if (damaged == false)
             {
                 damaged = true;
-                if (trumpetGuard ==false) {
+                if (counterAttackActive == false)
+                {
+                    if (trumpetGuard == false)
+                    {
 
-                    TakeDamage(1, false,false);
-                    //Damage(1);
-                    //Destroy(other.gameObject);
-                    if (red == false && armor == false) {
-                        Flinch();
+                        TakeDamage(1, false, false);
+                        //Damage(1);
+                        //Destroy(other.gameObject);
+                        if (red == false && armor == false)
+                        {
+                            Flinch();
+                        }
+                        RevengeValueUp();
                     }
-                    RevengeValueUp();
+                    else
+                    {
+                        if (attack == false)
+                        {
+                            counterAttackTriggered = true;
+                            unflinchingFollow = true;
+                            attack = true;
+                        }
+                    }
+                    if (harpGuard == true)
+                    {
+                        UnsetHarpGuard();
+                    }
                 }
                 else
                 {
-                    if (attack == false)
-                    {
-                        counterAttackTriggered = true;
-                        unflinchingFollow = true;
-                        attack = true;
-                    }
-                }
-                if (harpGuard == true)
-                {
-                    UnsetHarpGuard();
+                    CounterAttackTriggered();
                 }
                 playerScript.HitCountUp();
                 //For some reason this causes multiple hits
@@ -1622,32 +1695,38 @@ public class Enemy : MonoBehaviour
             if (damaged == false)
             {
                 damaged = true;
-                if (harpGuard ==false&&trumpetGuard==false) {
-                    TakeDamage(3, true,false);
-                    if (red == false && armor == false) {
-                        Flinch();
-                    }
-                    RevengeValueUp();
-                }
-                else
-                {
-                    if (playerScript.wind == true)
-                    {
-                        TakeDamage(2, false,false);
-                        if (red == false && armor == false)
-                        {
+                if (counterAttackActive ==false) {
+                    if (harpGuard == false && trumpetGuard == false) {
+                        TakeDamage(3, true, false);
+                        if (red == false && armor == false) {
                             Flinch();
                         }
+                        RevengeValueUp();
                     }
                     else
                     {
-                        if (attack == false)
+                        if (playerScript.wind == true)
                         {
-                            counterAttackTriggered = true;
-                            unflinchingFollow = true;
-                            attack = true;
+                            TakeDamage(2, false, false);
+                            if (red == false && armor == false)
+                            {
+                                Flinch();
+                            }
+                        }
+                        else
+                        {
+                            if (attack == false)
+                            {
+                                counterAttackTriggered = true;
+                                unflinchingFollow = true;
+                                attack = true;
+                            }
                         }
                     }
+                }
+                else
+                {
+                    CounterAttackTriggered();
                 }
             }
         }

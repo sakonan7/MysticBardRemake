@@ -7162,7 +7162,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  windCaptured: 0
   flinching: 0
+  counterAttackActive: 0
   counterAttackTriggered: 0
   unflinchingFollow: 0
   attackEffects: []
@@ -7174,11 +7176,24 @@ MonoBehaviour:
   barrierSound: {fileID: 0}
   barrierBreak: {fileID: 0}
   bombLensFlare: {fileID: 0}
+  harpShield: {fileID: 0}
+  trumpetShield: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
   bombUser: 0
   boss: 0
+  revengeValueMove: 0
+  currentRageValue: 0
+  rageValueMove: 0
+  rageValueMoveActive: 0
+  rageLevel1: 0
+  rageLevel2: 0
+  rageLevel3: 0
+  rageStart: 0
+  harpGuard: 0
+  trumpetGuard: 0
+  guardCounterattackTriggered: 0
   cantMove: 0
 --- !u!1001 &1108909565
 PrefabInstance:
@@ -7789,53 +7804,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6394145667879508077, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
       insertIndex: 0
       addedObject: {fileID: 2050532855}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4627606340265200501, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1354039290}
-    - targetCorrespondingSourceObject: {fileID: 169339552675213372, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1354039289}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
 --- !u!4 &1354039286 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6394145667879508077, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
   m_PrefabInstance: {fileID: 1354039285}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1354039287 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 169339552675213372, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
-  m_PrefabInstance: {fileID: 1354039285}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1354039288 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4627606340265200501, guid: a1c790c7b6d239348b5cfd32b0fd7b2d, type: 3}
-  m_PrefabInstance: {fileID: 1354039285}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1354039289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1354039287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66d5c4064d899ae4dbad2fa45cc3a4d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1354039290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1354039288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66d5c4064d899ae4dbad2fa45cc3a4d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1397997383
 GameObject:
   m_ObjectHideFlags: 0
@@ -10279,7 +10254,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2789669595854285029, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: playEffects
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2994056704253568011, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: m_Name
