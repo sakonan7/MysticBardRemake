@@ -154,6 +154,12 @@ public class PlayerController : MonoBehaviour
     public static float potionTotal = 4;
     public static int level = 5;
     public  int levelNonStatic = 5;
+    private bool HPMaxed = false;
+    private bool harpMaxed = false;
+    private bool trumpetMaxed = false;
+    private bool fluteMaxed = false;
+    private bool shieldMaxed = false;
+    private bool potionMaxed = false;
     //EXPCounter will be the number that goes down
     //currentEXP is for holding the amount
     //subtract if you levelled up
@@ -788,6 +794,10 @@ public class PlayerController : MonoBehaviour
                 enemies[i].GetComponent<Enemy>().Flinch();
                 enemies[i].GetComponent<Enemy>().TakeDamage(20, true, true);
             }
+            else
+            {
+                enemies[i].GetComponent<Enemy>().CounterAttackTriggered();
+            }
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             //ViolinHitEffect(enemies[i].transform.position);
         }
@@ -841,6 +851,19 @@ public class PlayerController : MonoBehaviour
     }
     public void Potion()
     {
+        int random = Random.Range(0, 2);
+        if (potionUsed == false)
+        {
+            if (random == 0)
+            {
+                audio.PlayOneShot(bell1, 0.25f);
+            }
+            else
+            {
+                audio.PlayOneShot(bell2, 0.25f);
+            }
+        }
+        StartCoroutine(Gulp());
         if (currentHP < HPTotal) {
             currentHP += 4;
             HPBar.fillAmount += (float)4 / HPTotal;
@@ -860,18 +883,7 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(UninterruptibleSound());
         }
-        int random = Random.Range(0, 2);
-        if (potionUsed ==false) {
-            if (random == 0)
-            {
-                audio.PlayOneShot(bell1, 0.25f);
-            }
-            else
-            {
-                audio.PlayOneShot(bell2, 0.25f);
-            }
-        }
-        StartCoroutine(Gulp());
+
     }
     IEnumerator PotionUse()
     {
@@ -1445,7 +1457,7 @@ public class PlayerController : MonoBehaviour
 
             GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP Gained").GetComponent<TextMeshProUGUI>().text = "EXP Gained: " +EXPGained;
             GameObject.Find("EXP").transform.Find("Level Up Object").transform.Find("EXP To Level").GetComponent<TextMeshProUGUI>().text = "EXP To Level: " + EXPToLevel;
-            yield return new WaitForSeconds(0.025f);
+            yield return new WaitForSeconds(2*Time.deltaTime);
             //if (currentEXP <=0)
             //{
             //level++;
@@ -1507,15 +1519,25 @@ public class PlayerController : MonoBehaviour
         //GameObject.Find("HP Bar Background").transform.localScale += new Vector3(20, 0, 0);
         //currentHP = originalHP;
         //currentHP += 3;
-        level += 1;
-        EXPToLevelLimit *= (int)1.75f;
-        EXPToLevel = EXPToLevelLimit;
-        //Debug.Log(EXPToLevel);
-        levelUpStock++;
-        if (level >=11)
+        if (level < 11) {
+            level += 1;
+            EXPToLevelLimit *= (int)1.75f;
+            EXPToLevel = EXPToLevelLimit;
+            //Debug.Log(EXPToLevel);
+            levelUpStock++;
+
+        }
+        else
         {
-            level = 11;
-            levelUpStock = 1;
+            //if (level >= 11)
+            //{
+                level = 11;
+                //levelUpStock = 1; //This was written with the idea that the player was level 10
+                //I need to either do this stock correctly, or make EXP process each level
+                //The latter might be more appealing to people
+                //I think the former was to make EXP stop calculating after reaching 11. like EXPToLevelLimit becomes 0 or becomes very high
+                //Simply stop doing LevelUp after reaching 11
+            //}
         }
     }
     public void NoEXP()
@@ -1640,33 +1662,56 @@ public class PlayerController : MonoBehaviour
 
         if (HPTotal >= 32)
         {
-            GameObject.Find("HP Bar Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
-            GameObject.Find("HP Button").gameObject.SetActive(false);
+            if (HPMaxed ==false) {
+                GameObject.Find("HP Bar Stat Up").transform.Find("Stat Increase (2)").gameObject.SetActive(false);
+                GameObject.Find("HP Button").gameObject.SetActive(false);
+            }
+            HPMaxed = true;
         }
         if (harpTotal >= 24)
         {
-            GameObject.Find("Harp Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
-            GameObject.Find("Harp Button").gameObject.SetActive(false);
+            if (harpMaxed == false)
+            {
+                GameObject.Find("Harp Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
+                GameObject.Find("Harp Button").gameObject.SetActive(false);
+            }
+            harpMaxed = true;
         }
         if (trumpetTotal >= 14)
         {
-            GameObject.Find("Trumpet Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
-            GameObject.Find("Trumpet Button").gameObject.SetActive(false);
+            if (trumpetMaxed == false)
+            {
+                GameObject.Find("Trumpet Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
+                GameObject.Find("Trumpet Button").gameObject.SetActive(false);
+            }
+            trumpetMaxed = true;
         }
         if (fluteTotal >= 7)
         {
-            GameObject.Find("Flute Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
-            GameObject.Find("Flute Button").gameObject.SetActive(false);
+            if (fluteMaxed == false)
+            {
+                GameObject.Find("Flute Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
+                GameObject.Find("Flute Button").gameObject.SetActive(false);
+            }
+            fluteMaxed = true;
         }
         if (shieldTotal >= 16)
         {
-            GameObject.Find("Shield Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
-            GameObject.Find("Shield Button").gameObject.SetActive(false);
+            if (shieldMaxed == false)
+            {
+                GameObject.Find("Shield Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
+                GameObject.Find("Shield Button").gameObject.SetActive(false);
+            }
+            shieldMaxed = true;
         }
         if (potionTotal >= 8)
         {
-            GameObject.Find("Potion Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
-            GameObject.Find("Potion Button").gameObject.SetActive(false);
+            if (potionMaxed == false)
+            {
+                GameObject.Find("Potion Stat Up").transform.Find("Numeric (1)").gameObject.SetActive(false);
+                GameObject.Find("Potion Button").gameObject.SetActive(false);
+            }
+            potionMaxed = true;
         }
     }
     public void CantPauseMethod(float time)

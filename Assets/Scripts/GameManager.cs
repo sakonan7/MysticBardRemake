@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
             debrisLocation[i] = currentDebris[i].transform.position;
         }
 
-
+        HPZero();
     }
 
     // Update is called once per frame
@@ -293,6 +293,10 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
+                    if(SceneManager.GetActiveScene().name=="Level 11")
+                    {
+                        GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").transform.Find("Level Up Object").transform.Find("Buttons").transform.Find("Next Level Button").gameObject.SetActive(false);
+                    }
                 }
                 player.WeaponReset();
                 PlayVictoryMusic();
@@ -362,6 +366,10 @@ public class GameManager : MonoBehaviour
         {
             GameObject.Find("Level Done Object").transform.Find("Increase Stat").gameObject.SetActive(false);
             GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
+            if (SceneManager.GetActiveScene().name == "Level 11")
+            {
+                GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").transform.Find("Level Up Object").transform.Find("Buttons").transform.Find("Next Level Button").gameObject.SetActive(false);
+            }
         }
 
     }
@@ -429,5 +437,13 @@ public class GameManager : MonoBehaviour
             Instantiate(currentDebris, debrisLocation[i], currentRotation);
         }
         numDebris = 4;
+    }
+    public void HPZero()
+    {
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                    enemies[i].GetComponent<Enemy>().SetHP(1);
+            }
     }
 }

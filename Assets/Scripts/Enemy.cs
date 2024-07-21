@@ -634,6 +634,12 @@ public class Enemy : MonoBehaviour
         //Debug.Log("IdleAnimation");
 
         currentRevengeValue = 0;
+        if (guard ==true)
+        {
+            if (harpGuard==false&&trumpetGuard==false) {
+                RestartGuard();
+            }
+        }
     }
     public void FlinchCancel()
     {
@@ -847,10 +853,17 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         animator.ResetTrigger("GuardShift");
     }
-    public void GuardCounterAttack()
+public void RestartGuard()
     {
-        IdleAnimationCancel();
-
+        int random = Random.Range(0, 2);
+        if (random == 0)
+        {
+            SetHarpGuard();
+        }
+        else
+        {
+            SetTrumpetGuard();
+        }
     }
     public void SetSpecial()
     {
