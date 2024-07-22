@@ -285,7 +285,7 @@ public class Enemy : MonoBehaviour
         }
         if (special == true)
         {
-            specialObj.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2, 0));
+            specialObj.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2.25f, 0));
             if(audio.isPlaying==false)
             {
                 audio.PlayOneShot(specialSound, 0.75f / 2 * 1.75f);
@@ -1214,7 +1214,7 @@ public void RestartGuard()
         //Special Effect
         StartCoroutine(PauseOver2());
         audio.Stop();
-        StartCoroutine(PlaySpecialSound(0.75f*1/2*3 * 1.5f));
+        StartCoroutine(PlaySpecialSound(0.75f*1/2*3 * 2));
         specialObj.SetActive(false);
         specialAura1.Stop();
         specialAura2.Stop();

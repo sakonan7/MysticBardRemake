@@ -825,7 +825,7 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(UninterruptibleSound());
         }
-        audio.PlayOneShot(allAttack,2.5f);
+        audio.PlayOneShot(allAttack,3);
         GameObject.Find("Press S").GetComponent<TextMeshProUGUI>().text = "";
     }
     IEnumerator AllAttackDisappear1()
