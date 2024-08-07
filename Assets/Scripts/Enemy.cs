@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour
     private bool playGrunt = true;
 
     private bool flinchInterrupt = false; //I may want to changethis to flincOpportuni
-    private bool attack = false; //Putting this here for now. I want this code to be assimple as possible //Need this for now, because may not want to use idle (check for it
+    public bool attack = false; //Putting this here for now. I want this code to be assimple as possible //Need this for now, because may not want to use idle (check for it
     //While attacking a foe
     //07/19/24
     //This is necessary because I need it for foes that counter. //I can't repeatedly trigger their counteratt
@@ -1414,6 +1414,91 @@ public void RestartGuard()
             RageValueUp();
         }
     }
+    //This will decide if damage is taken, a flinch happens or a counterattack happens
+    //Harp ==0 and trumpet ==1
+    //playerSpecial will either ignore guard or pick the right guard (code wise)
+    //Or maybe I don't need this
+    //I'm just gonna simplify everything
+    //I will still do some smaller methods
+    //The most important thing is that this method will determine if Flinch() happens
+    public void GeneralDamageCode(float damage, bool armorBreak, int harpOrTrumpet, bool playerSpecial)
+    {
+        //I want to do this, but I gotta make sure that counterattacker isn't damaged
+        //I may have to write a lot of conditionals for TakeDamage, then (for it to happen)
+        //I don't think I can simplify this, because I need to account for the cases that aren't a counterattacker, guard
+        //or barrier user
+        //So fucking annoying
+        //I may need to rewrite this from scratch
+        //For Guard, I will have CantFlinch turn on when guard is triggered, because I'm pretty sure I could still Flinch
+        //Guard while it's performing a follow up attack
+        if(counterAttackActive ==true)
+        {
+            CounterAttackTriggered();
+        }
+        if(guard ==true)
+        {
+
+        }
+        if(armor ==true)
+        {
+            //Create another method for damaging armor
+        }
+        else
+        {
+            //Will also have code for damaging Special
+        }
+
+        if (counterAttackActive == false)
+        {
+            if (trumpetGuard == false)
+            {
+
+                TakeDamage(1, false, false);
+                //Damage(1);
+                //Destroy(other.gameObject);
+                if (red == false && armor == false)
+                {
+                    Flinch();
+                }
+                RevengeValueUp();
+            }
+            else
+            {
+                if (attack == false)
+                {
+                    counterAttackTriggered = true;
+                    unflinchingFollow = true;
+                    attack = true;
+                }
+            }
+            if (harpGuard == true)
+            {
+                UnsetHarpGuard();
+            }
+            if(guard ==true)
+            {
+
+            }
+            else
+            {
+                TakeDamage(1, false, false);
+                //Damage(1);
+                //Destroy(other.gameObject);
+                if (red == false && armor == false)
+                {
+                    Flinch();
+                }
+                RevengeValueUp();
+            }
+        }
+        else
+        {
+            CounterAttackTriggered();
+        }
+
+        Flinch();
+        playerScript.HitCountUp();
+    }
     IEnumerator DamageBar()
     {
         gettingDamaged = true;
@@ -1675,11 +1760,11 @@ public void RestartGuard()
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (teamAttackOn == true && teamAttack == true)
-        {
-            teamAttackOn = false;
-            TeamAttackOff();
-        }
+        //if (teamAttackOn == true && teamAttack == true)
+        //{
+            //teamAttackOn = false;
+            //TeamAttackOff();
+        //}
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -1731,39 +1816,7 @@ public void RestartGuard()
             if (damaged == false)
             {
                 damaged = true;
-                if (counterAttackActive == false)
-                {
-                    if (trumpetGuard == false)
-                    {
-
-                        TakeDamage(1, false, false);
-                        //Damage(1);
-                        //Destroy(other.gameObject);
-                        if (red == false && armor == false)
-                        {
-                            Flinch();
-                        }
-                        RevengeValueUp();
-                    }
-                    else
-                    {
-                        if (attack == false)
-                        {
-                            counterAttackTriggered = true;
-                            unflinchingFollow = true;
-                            attack = true;
-                        }
-                    }
-                    if (harpGuard == true)
-                    {
-                        UnsetHarpGuard();
-                    }
-                }
-                else
-                {
-                    CounterAttackTriggered();
-                }
-                playerScript.HitCountUp();
+                GeneralDamageCode(1,false,0, false);
                 //For some reason this causes multiple hits
                 playerScript.HarpHitEffect(effectPosition.transform.position);
             }

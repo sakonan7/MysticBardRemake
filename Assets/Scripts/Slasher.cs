@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//ATM, Goblin attacks every few seconds
+//There is a flaw in the programming
+//AttackNum doesn't change if foe is staggered. 
+//The coding relies on the foe doing the long combo
+//For an immediate fix, I need to either have attackNum change right away and make the IEnumerator play longer, or
+//I forgot the second. I think it's if the foe is staggered, the attackNum still changes
+//This is going to be tough, because I didn't make this game with multiple moves in mind
+//Will now to need to implement attack
+//I will still have unblockable effect play after a few seconds. This matches with the unblockable effect playing when a second away from idle animation stop
 public class Slasher : MonoBehaviour
 {
     private bool idle = true;
     private Animator animator;
     private Enemy enemyScript;
+    private AudioSource audio;
     private bool turnOnUnblockable = false;
     private int numAttacks = 2;
     private int attackNum = 0;
@@ -16,11 +24,13 @@ public class Slasher : MonoBehaviour
     public Material unblockableAttack;
     public Material regular;
     public ParticleSystem swordGlow;
+    public AudioClip unblockableAttackOnSound;
     private void Awake()
     {
         enemyScript = GetComponent<Enemy>();
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         animator = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
         //StartCoroutine(IdleAnimation());
 
         enemyScript.SetHP(75);
@@ -51,6 +61,19 @@ public class Slasher : MonoBehaviour
                 }
                 //Debug.Log("Attack");
             }
+
+            if (enemyScript.attack == true && enemyScript.flinching == true)
+            {
+                Debug.Log("Attack Change");
+                if (attackNum == 0)
+                {
+                    attackNum = 1;
+                }
+                if (attackNum == 1)
+                {
+                    attackNum = 0;
+                }
+            }
         }
         if(attackNum ==1 && unblockableAttackOn ==false)
         {
@@ -64,6 +87,7 @@ public class Slasher : MonoBehaviour
         swordMaterial.material = unblockableAttack;
         swordGlow.Play();
         enemyScript.SetUnblockable();
+        audio.PlayOneShot(unblockableAttackOnSound,1);
     }
     IEnumerator UnblockableAttackOff()
     {

@@ -16,6 +16,9 @@ using UnityEngine.UIElements;
 //I don't think this will stop bombs from being spawned, though, so thatis not a bad thing
 //I will have to do this case by case. The main concern is enemy attack cycle getting interrupted between phases
 //It looks like that's happening with Green
+//08/04/24
+//What I can do for flamethrower is make a flamethrower bool and if flinch ==true, cancel flamethrower bool and flamethrower
+//Oops, forgot. Interrupting attack cancels flamethrower. I already have a way to cancel attack effects. Forgot what I was actually going to write lol.
 public class GrandDragon : MonoBehaviour
 {
     public Material red;
