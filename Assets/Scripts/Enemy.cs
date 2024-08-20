@@ -270,7 +270,7 @@ public class Enemy : MonoBehaviour
         if (windCaptured == true && playerScript.wind == true)
         {
             if (repeat == true) {
-                Flinch();
+                Flinch(true);
                 repeat = false;
                 StartCoroutine(WindFlinch());
                 StartCoroutine(WindDamage());
@@ -524,11 +524,25 @@ public class Enemy : MonoBehaviour
     }
     //So far so good. The only problem is that I can't do Idle"", false. I need to keep snapping back to Idle
     //This'llonlybe a problem if I want a recover anima
-    public void Flinch()
+    //08/20/24 I will need to check for red here, now. Will also have to check for armorBreak
+    //Or TakeDamage will deal with that
+    //This is annoying because only red doesn't flinch from nonArmorBreak
+    //Maybe if (red == true) if(armorBreak ==true) flinch
+    //Coding is annoying in general like that
+    public void Flinch(bool armorBreak)
     {
+        bool flinchWork = true;
+        if (red == true && armorBreak ==false)
+        {
+            flinchWork = false;
+        }
+        if (cantFlinch ==true)
+        {
+            flinchWork = false;
+        }
         //Putting this here instead of using cantFlinch code everywhere
         if (HP>0) {
-            if (cantFlinch == false) {
+            if (flinchWork == true) {
                 //Debug.Log("Flinched!");
                 attackReady = false;
                 if (flinchInterrupt == true)
@@ -683,11 +697,14 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         repeat = true;
+        playerScript.WindDamage();
     }
     IEnumerator WindDamage()
     {
         yield return new WaitForSeconds(1.25f);
+        //Doesn't need to be changed, becauseonce windCaptured, foes can't do anything
         TakeDamage(1, true, false);
+        
     }
     public void StartFlinchWindow()
     {
@@ -914,7 +931,7 @@ public void RestartGuard()
         special = false;
         StopCoroutine(specialCancel);
         UnsetCantFlinch();
-        Flinch();
+        Flinch(true);
         specialObj.SetActive(false);
         playerScript.InterruptEffect(effectPosition.transform.position);
         audio.Stop();
@@ -1353,25 +1370,7 @@ public void RestartGuard()
                 }
 
             }
-                        if (special == true)
-            {
-                //Debug.Log("Armor damaged ");
-                int specialDamage = 0;
-                if (playerSpecial ==false)
-                {
-                    specialDamage = 1;
-                }
-                else
-                {
-                    specialDamage = 15;
-                }
-                specialGauge -= specialDamage;
-                specialFill.fillAmount -= (float)specialDamage / fullSpecialGauge;
-                if (specialGauge <= 0)
-                {
-                    SpecialCancel();
-                }
-            }
+
             //DamageText(damage);
             if (cancelDamageDisplay != null)
             {
@@ -1410,9 +1409,6 @@ public void RestartGuard()
                 gameScript.ReduceNumEnemies();
 
             }
-        if (rageValueMoveActive ==false) {
-            RageValueUp();
-        }
     }
     //This will decide if damage is taken, a flinch happens or a counterattack happens
     //Harp ==0 and trumpet ==1
@@ -1435,68 +1431,37 @@ public void RestartGuard()
         {
             CounterAttackTriggered();
         }
-        if(guard ==true)
+        else if(guard ==true)
         {
-
+            //I may need to turn off Guard if Guard is flinching
+            //Both guards turn off when successfully flinched
+            //...Except for wind flinch
         }
-        if(armor ==true)
+        else if(armor ==true)
         {
             //Create another method for damaging armor
+            //Need to account for Witch not getting armor and barrier
+            ArmorBarDown(damage, armorBreak);
         }
         else
         {
             //Will also have code for damaging Special
+            TakeDamage(damage, armorBreak, playerSpecial);
         }
 
-        if (counterAttackActive == false)
+        if (special == true)
         {
-            if (trumpetGuard == false)
-            {
-
-                TakeDamage(1, false, false);
-                //Damage(1);
-                //Destroy(other.gameObject);
-                if (red == false && armor == false)
-                {
-                    Flinch();
-                }
-                RevengeValueUp();
-            }
-            else
-            {
-                if (attack == false)
-                {
-                    counterAttackTriggered = true;
-                    unflinchingFollow = true;
-                    attack = true;
-                }
-            }
-            if (harpGuard == true)
-            {
-                UnsetHarpGuard();
-            }
-            if(guard ==true)
-            {
-
-            }
-            else
-            {
-                TakeDamage(1, false, false);
-                //Damage(1);
-                //Destroy(other.gameObject);
-                if (red == false && armor == false)
-                {
-                    Flinch();
-                }
-                RevengeValueUp();
-            }
+            SpecialBarDown(playerSpecial);
         }
-        else
+
+        //Flinch() should behere, because Flinch() decides if flinch even happens
+        Flinch(armorBreak);
+        RevengeValueUp(); //Gonna put this here, because it only matters if revengeValue ==true
+        //I could always rewrite this to be like RevengeValueUp()
+        if (rageValueMoveActive == false)
         {
-            CounterAttackTriggered();
+            RageValueUp();
         }
-
-        Flinch();
         playerScript.HitCountUp();
     }
     IEnumerator DamageBar()
@@ -1506,6 +1471,32 @@ public void RestartGuard()
         gettingDamaged = false;
         damageBar.fillAmount = HPBarActual.fillAmount;
     }
+    public void ArmorBarDown(float damage, bool armorBreak)
+    {
+
+    }
+    public void SpecialBarDown(bool playerSpecial)
+    {
+        //Debug.Log("Armor damaged ");
+        //I don't need specialDamage anymor
+        int specialDamage = 0;
+        if (playerSpecial == false)
+        {
+            specialDamage = 1;
+        }
+        else
+        {
+            specialDamage = 15;
+        }
+        specialGauge -= specialDamage;
+        specialFill.fillAmount -= (float)specialDamage / fullSpecialGauge;
+        if (specialGauge <= 0)
+        {
+            SpecialCancel();
+        }
+    }
+    //08/20/24 I could make WindCaptureEnd() happen if player.wind ==false
+    //I think I'll just have WindEnd search every object and if windCapture is ==true for it,I end windCapture for it
     public void WindCaptureEnd()
     {
         windCaptured = false;
@@ -1648,7 +1639,7 @@ public void RestartGuard()
                         TakeDamage(3, false, false);
                         if (red == false && armor == false)
                         {
-                            Flinch();
+                            Flinch(false);
                         }
                         RevengeValueUp();
                     }
@@ -1690,7 +1681,7 @@ public void RestartGuard()
                         TakeDamage(2, false, false);
                         if (red == false && armor == false)
                         {
-                            Flinch();
+                            Flinch(false);
                         }
                         RevengeValueUp();
                     }
@@ -1701,7 +1692,7 @@ public void RestartGuard()
                             TakeDamage(2, false, false);
                             if (red == false && armor == false)
                             {
-                                Flinch();
+                                Flinch(false);
                             }
                         }
                         else
@@ -1781,7 +1772,7 @@ public void RestartGuard()
                     {
                         if (armor == false)
                         {
-                            Flinch();
+                            Flinch(false);
                         }
                         TakeDamage(2, true, false);
                         RevengeValueUp();
@@ -1821,7 +1812,7 @@ public void RestartGuard()
                 playerScript.HarpHitEffect(effectPosition.transform.position);
             }
         }
-        if (other.CompareTag("Hitbox"))
+        if (other.CompareTag("Bomb Hitbox"))
         {
             bool damaged = false;
             if (damaged == false)
@@ -1831,7 +1822,7 @@ public void RestartGuard()
                     if (harpGuard == false && trumpetGuard == false) {
                         TakeDamage(3, true, false);
                         if (red == false && armor == false) {
-                            Flinch();
+                            Flinch(false);
                         }
                         RevengeValueUp();
                     }
@@ -1842,7 +1833,7 @@ public void RestartGuard()
                             TakeDamage(2, false, false);
                             if (red == false && armor == false)
                             {
-                                Flinch();
+                                Flinch(false);
                             }
                         }
                         else

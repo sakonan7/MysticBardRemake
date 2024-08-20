@@ -134,6 +134,7 @@ public class PlayerController : MonoBehaviour
     public GameObject trumpetSoundwave;
     public GameObject harpSoundwave;
     public GameObject fluteWind;
+    private ParticleSystem windDamage;
 
     public bool harpDrained = false; //I don't think I have to make this public anymore
     private float originalHP = 20;
@@ -726,6 +727,7 @@ public class PlayerController : MonoBehaviour
     {
         wind = true;
         fluteWind.SetActive(true);
+        windDamage = fluteWind.transform.Find("Wind Damage").GetComponent<ParticleSystem>();
         if (flute == true)
         {
             fluteReloadStart = false;
@@ -747,6 +749,10 @@ public class PlayerController : MonoBehaviour
         {
             audio.PlayOneShot(fluteSound2, 1);
         }
+    }
+    public void WindDamage()
+    {
+        windDamage.Play();
     }
     public void WindEnd()
     {

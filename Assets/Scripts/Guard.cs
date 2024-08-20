@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 //Guard code makes no sense. I'm gonna need like to hit like atm
 //It makes moresense to use unlike and unlike, rather than like and like
 //But I'll do this for now
-
+//08/20/24 I need to have CantFlinch be on when a guard is finished being evoked
 public class Guard
     : MonoBehaviour
 {
@@ -126,7 +126,7 @@ public class Guard
         {
             enemyScript.SetTrumpetGuard();
         }
-        enemyScript.UnsetCantFlinch();
+        //enemyScript.UnsetCantFlinch();
     }
     public void Attack()
     {
