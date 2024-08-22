@@ -5389,6 +5389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  attack: 0
   windCaptured: 0
   flinching: 0
   counterAttackActive: 0

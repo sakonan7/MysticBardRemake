@@ -1411,7 +1411,7 @@ public void RestartGuard()
             }
     }
     //This will decide if damage is taken, a flinch happens or a counterattack happens
-    //Harp ==0 and trumpet ==1
+    //Harp ==0 and trumpet ==1 anddebrisandbomb == 2
     //playerSpecial will either ignore guard or pick the right guard (code wise)
     //Or maybe I don't need this
     //I'm just gonna simplify everything
@@ -1436,6 +1436,57 @@ public void RestartGuard()
             //I may need to turn off Guard if Guard is flinching
             //Both guards turn off when successfully flinched
             //...Except for wind flinch
+            //08/22/24 I really am resourceful and good at what I do, because I accounted for counterattack being triggered multiple times
+            //Was gonna write that I'm good at catching mistakes
+            //windCaptured == false, so I don't have to deal with counter attacks while moving Guards into debris and bombs
+            //I'm very dang sure unflinchingFollow doesn't work
+            //I'm thinking of having guard unset when it is staggered, and then its revenge value goes up
+            //I had to do this, because damage wasn't happening properly either
+            if (windCaptured==false) {
+
+                if (harpGuard == true)
+                {
+                    if (harpOrTrumpet != 0)
+                    {
+                        if (attack == false)
+                        {
+                            counterAttackTriggered = true;
+                            unflinchingFollow = true;
+                            attack = true;
+                        }
+                    }
+                    else
+                    {
+                        //Flinch(false);
+                        UnsetCantFlinch();
+                        TakeDamage(1, false, false);
+                        RevengeValueUp();
+                        UnsetHarpGuard();
+                        UnsetGuard();
+                    }
+                }
+                if (trumpetGuard == true)
+                {
+                    if (harpOrTrumpet != 1)
+                    {
+                        if (attack == false)
+                        {
+                            counterAttackTriggered = true;
+                            unflinchingFollow = true;
+                            attack = true;
+                        }
+                    }
+                    else
+                    {
+                        //Flinch(false);
+                        UnsetCantFlinch();
+                        TakeDamage(2, true, false);
+                        RevengeValueUp();
+                        UnsetTrumpetGuard();
+                        UnsetGuard();
+                    }
+                }
+            }
         }
         else if(armor ==true)
         {
@@ -1447,6 +1498,7 @@ public void RestartGuard()
         {
             //Will also have code for damaging Special
             TakeDamage(damage, armorBreak, playerSpecial);
+            RevengeValueUp();
         }
 
         if (special == true)
@@ -1456,7 +1508,9 @@ public void RestartGuard()
 
         //Flinch() should behere, because Flinch() decides if flinch even happens
         Flinch(armorBreak);
-        RevengeValueUp(); //Gonna put this here, because it only matters if revengeValue ==true
+        //08/22/24 I can't put this in TakeDamage, because some stuff like windCapture is not supposed to add Revenge
+        //Also, I can't put this here, because RevengeValue is supposed to go up only when the foetakes damage
+        //RevengeValueUp(); //Gonna put this here, because it only matters if revengeValue ==true
         //I could always rewrite this to be like RevengeValueUp()
         if (rageValueMoveActive == false)
         {
@@ -1766,37 +1820,7 @@ public void RestartGuard()
             if (damaged ==false)
             {
                 damaged = true;
-                if (counterAttackActive == false)
-                {
-                    if (harpGuard == false)
-                    {
-                        if (armor == false)
-                        {
-                            Flinch(false);
-                        }
-                        TakeDamage(2, true, false);
-                        RevengeValueUp();
-                    }
-                    else
-                    {
-                        if (attack == false)
-                        {
-                            counterAttackTriggered = true;
-                            unflinchingFollow = true;
-                            attack = true;
-                        }
-                    }
-                    //Destroy(other.gameObject);
-                    if (trumpetGuard == true)
-                    {
-                        UnsetTrumpetGuard();
-                    }
-                }
-                else
-                {
-                    CounterAttackTriggered();
-                }
-                playerScript.HitCountUp();
+                GeneralDamageCode(2, true, 1, false);
                 playerScript.TrumpetHitEffect(effectPosition.transform.position);
             }
         }
@@ -1809,48 +1833,30 @@ public void RestartGuard()
                 damaged = true;
                 GeneralDamageCode(1,false,0, false);
                 //For some reason this causes multiple hits
+                //08/22/24
+                //I think this was handled
                 playerScript.HarpHitEffect(effectPosition.transform.position);
             }
         }
+        //08/22/24 I can't tell if I want bombs to be armor piercing
+        //To simplify, I could make a hitbox script and use a public inspector to set damage
+        //Or have code call the hitbox script to set the damage
         if (other.CompareTag("Bomb Hitbox"))
         {
             bool damaged = false;
             if (damaged == false)
             {
                 damaged = true;
-                if (counterAttackActive ==false) {
-                    if (harpGuard == false && trumpetGuard == false) {
-                        TakeDamage(3, true, false);
-                        if (red == false && armor == false) {
-                            Flinch(false);
-                        }
-                        RevengeValueUp();
-                    }
-                    else
-                    {
-                        if (playerScript.wind == true)
-                        {
-                            TakeDamage(2, false, false);
-                            if (red == false && armor == false)
-                            {
-                                Flinch(false);
-                            }
-                        }
-                        else
-                        {
-                            if (attack == false)
-                            {
-                                counterAttackTriggered = true;
-                                unflinchingFollow = true;
-                                attack = true;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    CounterAttackTriggered();
-                }
+                GeneralDamageCode(3, false, 2, false);
+            }
+        }
+        if (other.CompareTag("Debris Hitbox"))
+        {
+            bool damaged = false;
+            if (damaged == false)
+            {
+                damaged = true;
+                GeneralDamageCode(2, false, 2, false);
             }
         }
     }

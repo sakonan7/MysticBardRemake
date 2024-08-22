@@ -723,11 +723,16 @@ public class PlayerController : MonoBehaviour
             fluteGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
         }
     }
+    public void DebrisHitBox()
+    {
+
+    }
     public void WindOn()
     {
         wind = true;
         fluteWind.SetActive(true);
         windDamage = fluteWind.transform.Find("Wind Damage").GetComponent<ParticleSystem>();
+        windDamage.Stop();
         if (flute == true)
         {
             fluteReloadStart = false;
@@ -797,7 +802,7 @@ public class PlayerController : MonoBehaviour
         {
             //Nerf, destroying armor will not cause foe to flinch
             if (enemies[i].GetComponent<Enemy>().counterAttackActive == false) {
-                enemies[i].GetComponent<Enemy>().Flinch();
+                enemies[i].GetComponent<Enemy>().Flinch(true);
                 enemies[i].GetComponent<Enemy>().TakeDamage(20, true, true);
             }
             else

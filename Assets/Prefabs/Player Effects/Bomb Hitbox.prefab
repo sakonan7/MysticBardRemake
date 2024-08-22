@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1003140497205472572}
   - component: {fileID: 3375539635197932314}
   - component: {fileID: 2483198276018150035}
+  - component: {fileID: -3110981595353372504}
   m_Layer: 6
   m_Name: Bomb Hitbox
-  m_TagString: Hitbox
+  m_TagString: Bomb Hitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,7 +50,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2656379839563393788}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -105,3 +106,15 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3110981595353372504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656379839563393788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be34af088c1f76645b781e1369d86f98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

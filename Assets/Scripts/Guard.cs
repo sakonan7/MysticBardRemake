@@ -107,6 +107,7 @@ public class Guard
     }
     IEnumerator EvokeGuard()
     {
+        enemyScript.SetGuard();
         enemyScript.RevengeValueMoveOff();
         StartCoroutine(Flashing());
         if (enemyScript.windCaptured == false) {

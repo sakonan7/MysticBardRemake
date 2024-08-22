@@ -933,12 +933,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea47f26231b65147b040e6f0105bedc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitbox: {fileID: 2656379839563393788, guid: 9bc54ee8579bcd14d9f6487bafd960e7, type: 3}
   explosion: {fileID: 3546093861669874074, guid: 03f0448d17a5ef94a94720603f369aba, type: 3}
   attackImpact: {fileID: 8300000, guid: 32db2a07aed62a84094082f47f4ff1b6, type: 3}
   explosionSound: {fileID: 8300000, guid: 655245a378536a142a72fa79c75608c8, type: 3}
   fuse: {fileID: 8300000, guid: 381916e3401955f4aa3adf6bff982d25, type: 3}
   timedBomb: 0
   time: 0
+  exploded: 0
 --- !u!54 &2086466506555721919
 Rigidbody:
   m_ObjectHideFlags: 0

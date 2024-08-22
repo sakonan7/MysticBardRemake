@@ -3561,10 +3561,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Guard (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 1232144811388331418, guid: ed29a5a5eaedce84ca511ae2842120e9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4247262225631085290, guid: ed29a5a5eaedce84ca511ae2842120e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.67

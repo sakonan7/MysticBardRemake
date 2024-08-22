@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 7047406825600754039}
   - component: {fileID: 5466078089704344193}
   - component: {fileID: 7620426961681950372}
+  - component: {fileID: 441532183773391406}
   m_Layer: 6
   m_Name: Debris Hitbox
-  m_TagString: Hitbox
+  m_TagString: Debris Hitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,3 +106,15 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &441532183773391406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2882697720088320476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be34af088c1f76645b781e1369d86f98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

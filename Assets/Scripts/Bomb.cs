@@ -14,6 +14,7 @@ public class Bomb : MonoBehaviour
     private GameObject effectPosition;
     private ParticleSystem aboutToExplode;
     private GameObject timeIndicator;
+    public GameObject hitbox;
     public GameObject explosion;
     public AudioClip attackImpact;
     public AudioClip explosionSound;
@@ -144,6 +145,7 @@ public class Bomb : MonoBehaviour
     }
     public void EnemyExplode()
     {
+        exploded = true;
         if (explodeEffectCancel != null)
         {
             StopCoroutine(explodeEffectCancel);
@@ -154,8 +156,11 @@ public class Bomb : MonoBehaviour
         }
         GetComponent<SphereCollider>().enabled = false;
         transform.Find("Appearance").gameObject.SetActive(false);
-        transform.Find("Hitbox").gameObject.SetActive(true);
-        Destroy(transform.Find("Hitbox").gameObject, 2);
+        //transform.Find("Hitbox").gameObject.SetActive(true);
+        //Destroy(transform.Find("Hitbox").gameObject, 2);
+        //08/22/24 I think I was gonna write that I think the previous code was getting triggered multiple times
+        //I think I want to set exploded here, so that hitboxes can't trigger EnemyExplode twice
+        Instantiate(hitbox, new Vector3(transform.position.x,transform.position.y, -7.59f), hitbox.transform.rotation);
         if (gameScript.playEffects == true)
         {
             Instantiate(explosion, transform.position, transform.rotation);
