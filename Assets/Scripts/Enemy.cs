@@ -72,6 +72,7 @@ public class Enemy : MonoBehaviour
     private Coroutine counterAttackCancel;
     private Coroutine counterAttackWholeCancel;
     private Coroutine specialCancel;
+    private Coroutine stayStillCancel;
 
     private GameObject[] enemies;
     private List<Collider> collidingEnemies;
@@ -82,6 +83,7 @@ public class Enemy : MonoBehaviour
     private float idleTime = 1;
     public bool attackReady = false;
     private bool playGrunt = true;
+    private bool stayStill = false;
 
     private bool flinchInterrupt = false; //I may want to changethis to flincOpportuni
     public bool attack = false; //Putting this here for now. I want this code to be assimple as possible //Need this for now, because may not want to use idle (check for it
@@ -163,6 +165,7 @@ public class Enemy : MonoBehaviour
     public bool trumpetGuard = false;
     public bool guardCounterattackTriggered = false;
     private int guardNumber = 0;
+    private bool invincible = false;
 
     private bool cantFlinch = false;
     private bool gettingDamaged = false;
@@ -290,6 +293,14 @@ public class Enemy : MonoBehaviour
             {
                 audio.PlayOneShot(specialSound, 0.75f / 2 * 1.75f);
             }
+        }
+        if (playerScript.flute == false)
+        {
+            WindCaptureImpossible();
+        }
+        if(stayStill == true)
+        {
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }
     //Setters
@@ -695,13 +706,13 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator WindFlinch()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
         repeat = true;
         playerScript.WindDamage();
     }
     IEnumerator WindDamage()
     {
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(1.75f);
         //Doesn't need to be changed, becauseonce windCaptured, foes can't do anything
         TakeDamage(1, true, false);
         
@@ -1325,39 +1336,8 @@ public void RestartGuard()
     }
     public void TakeDamage(float damage, bool armorBreak, bool playerSpecial)
     {
-        //Bomb user will not get double protection for ease, but it will have cantFlinch()
-        //damage *= 5;
-            if ((barrier == true && bombUser ==false))
-            {
-                //Debug.Log("Reduced Damage");
-                if (armorBreak ==false) {
-                    damage /= 2;
-                    //Debug.Log("Not armorBreak");
-                }
-            }
-            else if(bombUser == true&& armor==true)
-            {
-                if (armorBreak == false)
-                {
-                    damage /= 2;
-                    //Debug.Log("Not armorBreak");
-                }
-            }
 
 
-            if (armor == true)
-            {
-                //Debug.Log("Armor damaged ");
-                armorGauge -= damage;
-                armorFill.fillAmount -= (float)damage / fullArmorGauge;
-                if (armorGauge <= 0)
-                {
-                    ArmorOff();
-                }
-            }
-
-            else
-            {
                 HP -= damage;
                 if (boss == true)
                 {
@@ -1369,22 +1349,13 @@ public void RestartGuard()
                     }
                 }
 
-            }
+        DamageDisplay(damage);
 
-            //DamageText(damage);
-            if (cancelDamageDisplay != null)
-            {
-                StopCoroutine(cancelDamageDisplay);
-            }
-            cancelDamageDisplay = StartCoroutine(DamageDisplayDuration(damage));
 
             if (HP <= 0)
             {
                 WindCaptureEnd();
-            if(special ==true)
-            {
-                specialObj.SetActive(false);
-            }
+
                 if (boss == false)
                 {
                     for(int i=0;i <collidingEnemies.Count;i++)
@@ -1427,96 +1398,111 @@ public void RestartGuard()
         //I may need to rewrite this from scratch
         //For Guard, I will have CantFlinch turn on when guard is triggered, because I'm pretty sure I could still Flinch
         //Guard while it's performing a follow up attack
-        if(counterAttackActive ==true)
-        {
-            CounterAttackTriggered();
-        }
-        else if(guard ==true)
-        {
-            //I may need to turn off Guard if Guard is flinching
-            //Both guards turn off when successfully flinched
-            //...Except for wind flinch
-            //08/22/24 I really am resourceful and good at what I do, because I accounted for counterattack being triggered multiple times
-            //Was gonna write that I'm good at catching mistakes
-            //windCaptured == false, so I don't have to deal with counter attacks while moving Guards into debris and bombs
-            //I'm very dang sure unflinchingFollow doesn't work
-            //I'm thinking of having guard unset when it is staggered, and then its revenge value goes up
-            //I had to do this, because damage wasn't happening properly either
-            if (windCaptured==false) {
+        //08/26/24 I think this is going to need to handle damage display, too, because not all enemies will TakeDam
+        //Maybe use a DisplayDamage Method so I don'thave to keep copy and pasting
+        //I only have to do this for ArmorBarDown and TakeDam
+        //Debug.Log(name + " GeneralDamage Triggered");
+        if (invincible ==false) {
+            if (counterAttackActive == true)
+            {
+                CounterAttackTriggered();
+            }
+            else if (guard == true)
+            {
+                //I may need to turn off Guard if Guard is flinching
+                //Both guards turn off when successfully flinched
+                //...Except for wind flinch
+                //08/22/24 I really am resourceful and good at what I do, because I accounted for counterattack being triggered multiple times
+                //Was gonna write that I'm good at catching mistakes
+                //windCaptured == false, so I don't have to deal with counter attacks while moving Guards into debris and bombs
+                //I'm very dang sure unflinchingFollow doesn't work
+                //I'm thinking of having guard unset when it is staggered, and then its revenge value goes up
+                //I had to do this, because damage wasn't happening properly either
+                if (windCaptured == false) {
 
-                if (harpGuard == true)
-                {
-                    if (harpOrTrumpet != 0)
+                    if (harpGuard == true)
                     {
-                        if (attack == false)
+                        if (harpOrTrumpet != 0)
                         {
-                            counterAttackTriggered = true;
-                            unflinchingFollow = true;
-                            attack = true;
+                            if (attack == false)
+                            {
+                                counterAttackTriggered = true;
+                                unflinchingFollow = true;
+                                attack = true;
+                            }
+                        }
+                        else
+                        {
+                            //Flinch(false);
+                            UnsetCantFlinch();
+                            TakeDamage(1, false, false);
+                            RevengeValueUp();
+                            UnsetHarpGuard();
+                            UnsetGuard();
                         }
                     }
-                    else
+                    if (trumpetGuard == true)
                     {
-                        //Flinch(false);
-                        UnsetCantFlinch();
-                        TakeDamage(1, false, false);
-                        RevengeValueUp();
-                        UnsetHarpGuard();
-                        UnsetGuard();
-                    }
-                }
-                if (trumpetGuard == true)
-                {
-                    if (harpOrTrumpet != 1)
-                    {
-                        if (attack == false)
+                        if (harpOrTrumpet != 1)
                         {
-                            counterAttackTriggered = true;
-                            unflinchingFollow = true;
-                            attack = true;
+                            if (attack == false)
+                            {
+                                counterAttackTriggered = true;
+                                unflinchingFollow = true;
+                                attack = true;
+                            }
                         }
-                    }
-                    else
-                    {
-                        //Flinch(false);
-                        UnsetCantFlinch();
-                        TakeDamage(2, true, false);
-                        RevengeValueUp();
-                        UnsetTrumpetGuard();
-                        UnsetGuard();
+                        else
+                        {
+                            //Flinch(false);
+                            UnsetCantFlinch();
+                            TakeDamage(2, true, false);
+                            RevengeValueUp();
+                            UnsetTrumpetGuard();
+                            UnsetGuard();
+                        }
                     }
                 }
             }
-        }
-        else if(armor ==true)
-        {
-            //Create another method for damaging armor
-            //Need to account for Witch not getting armor and barrier
-            ArmorBarDown(damage, armorBreak);
-        }
-        else
-        {
-            //Will also have code for damaging Special
-            TakeDamage(damage, armorBreak, playerSpecial);
-            RevengeValueUp();
-        }
+            else if (armor == true)
+            {
+                //Create another method for damaging armor
+                //Need to account for Witch not getting armor and barrier
+                ArmorBarDown(damage, armorBreak);
+            }
+            else
+            {
+                //Will also have code for damaging Special
+                //08/26/24 Need bombs to deal usual damage even if they don't flinch Red 
+                if(barrier ==true)
+                {
+                    if (armorBreak ==false)
+                    {
+                        damage /= 2;
+                    }
+                    
+                }
+                TakeDamage(damage, armorBreak, playerSpecial);
+                RevengeValueUp();
+            }
 
-        if (special == true)
-        {
-            SpecialBarDown(playerSpecial);
-        }
+            if (special == true)
+            {
+                SpecialBarDown(playerSpecial);
+            }
 
-        //Flinch() should behere, because Flinch() decides if flinch even happens
-        Flinch(armorBreak);
-        //08/22/24 I can't put this in TakeDamage, because some stuff like windCapture is not supposed to add Revenge
-        //Also, I can't put this here, because RevengeValue is supposed to go up only when the foetakes damage
-        //RevengeValueUp(); //Gonna put this here, because it only matters if revengeValue ==true
-        //I could always rewrite this to be like RevengeValueUp()
-        if (rageValueMoveActive == false)
-        {
-            RageValueUp();
+            //Flinch() should behere, because Flinch() decides if flinch even happens
+            Flinch(armorBreak);
+            //08/22/24 I can't put this in TakeDamage, because some stuff like windCapture is not supposed to add Revenge
+            //Also, I can't put this here, because RevengeValue is supposed to go up only when the foetakes damage
+            //RevengeValueUp(); //Gonna put this here, because it only matters if revengeValue ==true
+            //I could always rewrite this to be like RevengeValueUp()
+            if (rageValueMoveActive == false)
+            {
+                RageValueUp();
+            }
+            playerScript.HitCountUp();
         }
-        playerScript.HitCountUp();
     }
     IEnumerator DamageBar()
     {
@@ -1527,7 +1513,17 @@ public void RestartGuard()
     }
     public void ArmorBarDown(float damage, bool armorBreak)
     {
-
+        if (armorBreak == false)
+        {
+            damage /= 2;
+        }
+        armorGauge -= damage;
+        armorFill.fillAmount -= (float)damage / fullArmorGauge;
+        if (armorGauge <= 0)
+        {
+            ArmorOff();
+        }
+        DamageDisplay(damage);
     }
     public void SpecialBarDown(bool playerSpecial)
     {
@@ -1549,6 +1545,16 @@ public void RestartGuard()
             SpecialCancel();
         }
     }
+    //I could make it better by making the damage for a second become a little bigger and have a light outline and then become small
+    public void DamageDisplay(float amount)
+    {
+        //DamageText(damage);
+        if (cancelDamageDisplay != null)
+        {
+            StopCoroutine(cancelDamageDisplay);
+        }
+        cancelDamageDisplay = StartCoroutine(DamageDisplayDuration(amount));
+    }
     //08/20/24 I could make WindCaptureEnd() happen if player.wind ==false
     //I think I'll just have WindEnd search every object and if windCapture is ==true for it,I end windCapture for it
     public void WindCaptureEnd()
@@ -1561,6 +1567,16 @@ public void RestartGuard()
         if (teamAttack==true) {
             AnalyzeTeamAttackCapability();
         }
+    }
+    public void WindCaptureImpossible()
+    {
+        GameObject.Find("Capture Impossible").transform.Find("Cursor").gameObject.SetActive(false);
+    }
+    IEnumerator Vector3Zero()
+    {
+        stayStill = true;
+        yield return new WaitForSeconds(2);
+        stayStill = false;
     }
     public void TeamAttackPositives()
     {
@@ -1590,7 +1606,7 @@ public void RestartGuard()
 
         if (normal == false)
         {
-            if (playerScript.flute ==true &&playerScript.wind==false)
+            if (playerScript.flute ==true)
             {
                 GameObject.Find("Capture Impossible").transform.Find("Cursor").gameObject.SetActive(true);
             }
@@ -1598,6 +1614,10 @@ public void RestartGuard()
             {
                 GameObject.Find("Capture Impossible").transform.Find("Cursor").gameObject.SetActive(false);
             }
+        }
+        else
+        {
+            GameObject.Find("Capture Impossible").transform.Find("Cursor").gameObject.SetActive(false);
         }
     }
     private void OnMouseExit()
@@ -1625,6 +1645,11 @@ public void RestartGuard()
                             playerScript.FluteAttack();
                             playerScript.WindOn();
                             windCaptured = true;
+                            if (stayStillCancel !=null)
+                            {
+                                StopCoroutine(stayStillCancel);
+                                stayStill = false;
+                            }
                         }
                     }
                 }
@@ -1675,8 +1700,14 @@ public void RestartGuard()
     {
         //Need this for boundary
         if (collision.gameObject.CompareTag("Enemy") ||collision.gameObject.CompareTag("Bomb")|| collision.gameObject.CompareTag("Debris")) {
-            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            
             collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            //08/26/24 Something tells me that this should only be used for wind
+            if(stayStill ==false)
+            {
+                stayStillCancel = StartCoroutine(Vector3Zero());
+                Debug.Log("StayStill");
+            }
         }
         if (playerScript.wind==true)
         {
@@ -1684,33 +1715,10 @@ public void RestartGuard()
             if (collision.gameObject.CompareTag("Enemy"))
             {
                 bool damaged = false;
-                if (counterAttackActive ==false) { 
                 if (damaged == false)
                 {
                     damaged = true;
-                    if (harpGuard == false && trumpetGuard == false)
-                    {
-                        TakeDamage(3, false, false);
-                        if (red == false && armor == false)
-                        {
-                            Flinch(false);
-                        }
-                        RevengeValueUp();
-                    }
-                    else
-                    {
-                        if (attack == false)
-                        {
-                            counterAttackTriggered = true;
-                            unflinchingFollow = true;
-                            attack = true;
-                        }
-                    }
-                }
-                else
-                {
-                    CounterAttackTriggered();
-                }
+                    GeneralDamageCode(3, false, 2, false);
                 }
                 //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 //collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -1719,54 +1727,16 @@ public void RestartGuard()
                 //if (windCaptured==true) {
                     WindCaptureEnd();
                 //}
+
                     playerScript.WindHitEffect(collision.GetContact(0).point);
-                //Debug.Log("Crash!");
-                    playerScript.HitCountUp();
+                if (teamAttackOn == false && teamAttack == true)
+                {
+                    teamAttackOn = true;
+                    TeamAttackPositives();
                 }
+            }
             if (collision.gameObject.CompareTag("Debris"))
             {
-                bool damaged = false;
-                if (damaged == false)
-                {
-                    damaged = true;
-                    if(counterAttackActive ==false) { 
-                    if (harpGuard == false && trumpetGuard == false)
-                    {
-                        TakeDamage(2, false, false);
-                        if (red == false && armor == false)
-                        {
-                            Flinch(false);
-                        }
-                        RevengeValueUp();
-                    }
-                    else
-                    {
-                        if (playerScript.wind == true)
-                        {
-                            TakeDamage(2, false, false);
-                            if (red == false && armor == false)
-                            {
-                                Flinch(false);
-                            }
-                        }
-                        else
-                        {
-                            if (attack == false)
-                            {
-                                counterAttackTriggered = true;
-                                unflinchingFollow = true;
-                                attack = true;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    CounterAttackTriggered();
-                }
-                }
-
-
 
                 //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 //collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -1775,9 +1745,10 @@ public void RestartGuard()
                 //if (windCaptured==true) {
                 WindCaptureEnd();
                 //}
+                //08/26/24 Need to ensure that this doesn't spawn more than one hitbox
+                playerScript.DebrisHitBox(collision.GetContact(0).point);
                 playerScript.DebrisHitEffect(collision.GetContact(0).point);
                 Destroy(collision.gameObject);
-                playerScript.HitCountUp();
                 gameScript.ReduceNumDebris();
             }
             if (collision.gameObject.CompareTag("Bomb"))
@@ -1785,22 +1756,21 @@ public void RestartGuard()
 
                 playerScript.WindEnd();
                 WindCaptureEnd();
-                playerScript.HitCountUp();
+                //playerScript.HitCountUp();
                 collision.gameObject.GetComponent<Bomb>().EnemyExplode();
             }
         }
-        if (teamAttackOn == false && teamAttack == true)
-        {
-            teamAttackOn = true;
-            TeamAttackPositives();
-        }
+
     }
     private void OnCollisionStay(Collision collision)
     {
-        if (teamAttackOn == false && teamAttack == true)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            teamAttackOn = true;
-            TeamAttackPositives();
+            if (teamAttackOn == false && teamAttack == true)
+            {
+                teamAttackOn = true;
+                TeamAttackPositives();
+            }
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -1841,13 +1811,15 @@ public void RestartGuard()
         //08/22/24 I can't tell if I want bombs to be armor piercing
         //To simplify, I could make a hitbox script and use a public inspector to set damage
         //Or have code call the hitbox script to set the damage
+        //08/26/24
+        //For simplicity, I am making it so that Red flinches from bombs
         if (other.CompareTag("Bomb Hitbox"))
         {
             bool damaged = false;
             if (damaged == false)
             {
                 damaged = true;
-                GeneralDamageCode(3, false, 2, false);
+                GeneralDamageCode(3, true, 2, false);
             }
         }
         if (other.CompareTag("Debris Hitbox"))

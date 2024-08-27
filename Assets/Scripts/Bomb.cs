@@ -145,6 +145,7 @@ public class Bomb : MonoBehaviour
     }
     public void EnemyExplode()
     {
+        Debug.Log("EnemyEx");
         exploded = true;
         if (explodeEffectCancel != null)
         {
@@ -165,7 +166,7 @@ public class Bomb : MonoBehaviour
         {
             Instantiate(explosion, transform.position, transform.rotation);
         }
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 1);
         audio.Stop();
         audio.PlayOneShot(explosionSound, 1.5f);
         //Debug.Log("Blow Up");

@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip trumpet2;
     public AudioClip fluteSound;
     public AudioClip fluteSound2;
+    public AudioClip windDamage1;
+    public AudioClip windDamage2;
     public AudioClip shieldTune;
     public AudioClip shieldTune2;
     public AudioClip guard;
@@ -131,6 +133,7 @@ public class PlayerController : MonoBehaviour
     public GameObject trumpetRange;
     public GameObject trumpetHitbox;
     public GameObject harpHitbox;
+    public GameObject debrisHitbox;
     public GameObject trumpetSoundwave;
     public GameObject harpSoundwave;
     public GameObject fluteWind;
@@ -723,9 +726,10 @@ public class PlayerController : MonoBehaviour
             fluteGauge.color = new Color(0.9254902f, 0.3664465f, 0, 1);
         }
     }
-    public void DebrisHitBox()
+    public void DebrisHitBox(Vector3 position)
     {
-
+        //Always the same Z
+        Instantiate(debrisHitbox, new Vector3(position.x,position.y,-7.59f),debrisHitbox.transform.rotation);
     }
     public void WindOn()
     {
@@ -758,6 +762,15 @@ public class PlayerController : MonoBehaviour
     public void WindDamage()
     {
         windDamage.Play();
+        int random = Random.Range(0, 2);
+        if (random == 0)
+        {
+            audio.PlayOneShot(windDamage1, 1);
+        }
+        else
+        {
+            audio.PlayOneShot(windDamage2, 1);
+        }
     }
     public void WindEnd()
     {

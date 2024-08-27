@@ -9954,6 +9954,8 @@ MonoBehaviour:
   trumpet2: {fileID: 8300000, guid: 6f97d998479e35341baecd9e57c6f57a, type: 3}
   fluteSound: {fileID: 8300000, guid: 63dbfe7a15f02974e96aeb74478a20db, type: 3}
   fluteSound2: {fileID: 8300000, guid: 95d62d9cfd913784fa6585b5c64111b1, type: 3}
+  windDamage1: {fileID: 8300000, guid: ca3f956776858c248b84ce4b6646ea0f, type: 3}
+  windDamage2: {fileID: 8300000, guid: d5871d2aa4d73ce47b654453138ba48b, type: 3}
   shieldTune: {fileID: 8300000, guid: 7845393ad1c5af148973a5bbec6f74dc, type: 3}
   shieldTune2: {fileID: 8300000, guid: a4e5b66c2fe53a149bcff54bd687848f, type: 3}
   guard: {fileID: 8300000, guid: b2fda7dca1b31484d8d769afb53020cc, type: 3}
@@ -9989,6 +9991,7 @@ MonoBehaviour:
   trumpetRange: {fileID: 4839453126204381578}
   trumpetHitbox: {fileID: 8551800652245622886, guid: a394cde47e771bd4eb96a63384491a94, type: 3}
   harpHitbox: {fileID: 8551800652245622886, guid: d8746771bb66d2d42be9802ac9b3c9a8, type: 3}
+  debrisHitbox: {fileID: 2882697720088320476, guid: 46c75635f2a005046a92c32cb0d63f51, type: 3}
   trumpetSoundwave: {fileID: 3965839119870658576, guid: d37b3a63bb84433469da39a1c3e2c2ad, type: 3}
   harpSoundwave: {fileID: 485518619082792125, guid: 2083fc50530717a4eb580d21782d1ff6, type: 3}
   fluteWind: {fileID: 8255220899082025878}
@@ -47129,7 +47132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 470718, guid: 2bdc186a2c521f1488fe14cb4a745323, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 470718, guid: 2bdc186a2c521f1488fe14cb4a745323, type: 3}
       propertyPath: m_LocalPosition.z
@@ -47173,15 +47176,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19848378, guid: 2bdc186a2c521f1488fe14cb4a745323, type: 3}
       propertyPath: simulationSpeed
-      value: 2
+      value: 2.25
       objectReference: {fileID: 0}
     - target: {fileID: 19848378, guid: 2bdc186a2c521f1488fe14cb4a745323, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 11.25
+      value: 7.03125
       objectReference: {fileID: 0}
     - target: {fileID: 19848378, guid: 2bdc186a2c521f1488fe14cb4a745323, type: 3}
       propertyPath: InitialModule.startSize.minScalar
-      value: 0.375
+      value: 0.234375
       objectReference: {fileID: 0}
     - target: {fileID: 19848378, guid: 2bdc186a2c521f1488fe14cb4a745323, type: 3}
       propertyPath: InitialModule.startSizeY.minMaxState
@@ -47201,7 +47204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19891332, guid: 2bdc186a2c521f1488fe14cb4a745323, type: 3}
       propertyPath: simulationSpeed
-      value: 2
+      value: 2.25
       objectReference: {fileID: 0}
     - target: {fileID: 19891332, guid: 2bdc186a2c521f1488fe14cb4a745323, type: 3}
       propertyPath: InitialModule.rotation3D
