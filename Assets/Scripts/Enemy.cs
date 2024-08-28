@@ -69,6 +69,7 @@ public class Enemy : MonoBehaviour
     private Coroutine idleCancel;
     private Coroutine flinchOpportunityCancel;
     private Coroutine attackLengthCancel;
+    private Coroutine bombLengthCancel;
     private Coroutine counterAttackCancel;
     private Coroutine counterAttackWholeCancel;
     private Coroutine specialCancel;
@@ -82,6 +83,8 @@ public class Enemy : MonoBehaviour
     private bool idle = false;
     private float idleTime = 1;
     public bool attackReady = false;
+    public bool bombReady = false;
+    public bool summonBombs = false;
     private bool playGrunt = true;
     private bool stayStill = false;
 
@@ -445,7 +448,7 @@ public class Enemy : MonoBehaviour
     {
         Destroy(GameObject.Find("Barrier(Clone)"));
         Destroy(GameObject.Find("Dragon Barrier(Clone)"));
-        armor = false;
+        
 
         armorObj.SetActive(false);
         if (name == "Witch")
@@ -468,6 +471,7 @@ public class Enemy : MonoBehaviour
             UnsetCantFlinch();
         }
         BarrierOff();
+        armor = false;
         audio.PlayOneShot(barrierBreak,1.5f*0.75f);
     }
     //Fun fact, triggerExit doesn't count if the object is destroyed
@@ -542,6 +546,7 @@ public class Enemy : MonoBehaviour
     //Coding is annoying in general like that
     public void Flinch(bool armorBreak)
     {
+        //Code like flinchWork is going to be very useful in the future
         bool flinchWork = true;
         if (red == true && armorBreak ==false)
         {
@@ -556,6 +561,8 @@ public class Enemy : MonoBehaviour
             if (flinchWork == true) {
                 //Debug.Log("Flinched!");
                 attackReady = false;
+                bombReady = false;
+                summonBombs = false;
                 if (flinchInterrupt == true)
                 {
                     attack = false;
@@ -565,7 +572,13 @@ public class Enemy : MonoBehaviour
                     //I think I'm just thinking in the moment
                     //Also, I have to cancel different Coroutines for different mo
                     StopCoroutine(flinchOpportunityCancel);
-                    StopCoroutine(attackLengthCancel);
+                    if (bombUser ==false) {
+                        StopCoroutine(attackLengthCancel);
+                    }
+                    else
+                    {
+                        StopCoroutine(bombLengthCancel);
+                    }
                     playerScript.InterruptEffect(effectPosition.transform.position);
                     StopAttackEffect();
                     audio.PlayOneShot(grunt, 2);
@@ -602,7 +615,7 @@ public class Enemy : MonoBehaviour
                         animator.ResetTrigger("Attack");
                         animator.ResetTrigger("Attack2");
                     }
-                    else if (bomb == true)
+                    else if (bombUser == true)
                     {
                         animator.ResetTrigger("Bomb");
                         UnsetBomb();
@@ -735,6 +748,14 @@ public class Enemy : MonoBehaviour
     public void AttackReadyOff()
     {
         attackReady = false;
+    }
+    public void BombReadyOff()
+    {
+        bombReady = false;
+    }
+    public void SummonBombsOff()
+    {
+        summonBombs = false;
     }
     public void CounterAttackReadyOff()
     {
@@ -958,6 +979,10 @@ public void RestartGuard()
     {
         attackLengthCancel = StartCoroutine(AttackLength());
     }
+    public void StartBombLength()
+    {
+        bombLengthCancel = StartCoroutine(BombLength());
+    }
     //I'm gonna need to put this in Enem
     //I'm going to need to cancelthisif I stagger foe
     IEnumerator AttackLength()
@@ -985,6 +1010,12 @@ public void RestartGuard()
                 SetTrumpetGuard();
             }
         }
+    }
+    IEnumerator BombLength()
+    {
+        yield return new WaitForSeconds(attackLength);
+        summonBombs = true;
+        StartIdle();
     }
     public void StartAttackLengthAlternate()
     {
@@ -1153,6 +1184,10 @@ public void RestartGuard()
             {
                 animator.ResetTrigger("StrongAttack");
             }
+            else if (bombUser == true)
+            {
+                animator.ResetTrigger("Bomb");
+            }
             else if (green == true)
             {
                 animator.ResetTrigger("Attack");
@@ -1177,7 +1212,7 @@ public void RestartGuard()
             {
                 PauseBeforeSpecialStart(20);
             }
-            if (green == false &&fusileer==false)
+            if (green == false &&fusileer==false &&bombUser==false)
             {
                 attack = true;
                 attackReady = true;
@@ -1190,6 +1225,15 @@ public void RestartGuard()
             {
                     counterAttackWholeCancel =StartCoroutine(CounterattackCloud());
                     //Debug.Log("CounterattackCloud");
+            }
+            if (bombUser ==true)
+            {
+                attack = true;
+                bombReady = true;
+                if (animatorTrue == true)
+                {
+                    animator.SetBool("Idle", false);
+                }
             }
             if(rage ==true)
             {
@@ -1419,48 +1463,59 @@ public void RestartGuard()
                 //I'm thinking of having guard unset when it is staggered, and then its revenge value goes up
                 //I had to do this, because damage wasn't happening properly either
                 if (windCaptured == false) {
-
-                    if (harpGuard == true)
-                    {
-                        if (harpOrTrumpet != 0)
+                    //Player Special will cause damage and flinch and will interrupt guards
+                    if (playerSpecial==false) {
+                        if (harpGuard == true)
                         {
-                            if (attack == false)
+                            if (harpOrTrumpet != 0)
                             {
-                                counterAttackTriggered = true;
-                                unflinchingFollow = true;
-                                attack = true;
+                                if (attack == false)
+                                {
+                                    counterAttackTriggered = true;
+                                    unflinchingFollow = true;
+                                    attack = true;
+                                }
+                            }
+                            else
+                            {
+                                //Flinch(false);
+                                UnsetCantFlinch();
+                                TakeDamage(damage, false, false);
+                                RevengeValueUp();
+                                UnsetHarpGuard();
+                                UnsetGuard();
                             }
                         }
-                        else
+                        if (trumpetGuard == true)
                         {
-                            //Flinch(false);
-                            UnsetCantFlinch();
-                            TakeDamage(1, false, false);
-                            RevengeValueUp();
-                            UnsetHarpGuard();
-                            UnsetGuard();
+                            if (harpOrTrumpet != 1)
+                            {
+                                if (attack == false)
+                                {
+                                    counterAttackTriggered = true;
+                                    unflinchingFollow = true;
+                                    attack = true;
+                                }
+                            }
+                            else
+                            {
+                                //Flinch(false);
+                                UnsetCantFlinch();
+                                TakeDamage(damage, true, false);
+                                RevengeValueUp();
+                                UnsetTrumpetGuard();
+                                UnsetGuard();
+                            }
                         }
                     }
-                    if (trumpetGuard == true)
+                    else
                     {
-                        if (harpOrTrumpet != 1)
-                        {
-                            if (attack == false)
-                            {
-                                counterAttackTriggered = true;
-                                unflinchingFollow = true;
-                                attack = true;
-                            }
-                        }
-                        else
-                        {
-                            //Flinch(false);
-                            UnsetCantFlinch();
-                            TakeDamage(2, true, false);
-                            RevengeValueUp();
-                            UnsetTrumpetGuard();
-                            UnsetGuard();
-                        }
+                        UnsetCantFlinch();
+                        TakeDamage(damage, true, true);
+                        //RevengeValueUp();
+                        UnsetHarpGuard();
+                        UnsetTrumpetGuard();
+                        UnsetGuard();
                     }
                 }
             }
@@ -1522,8 +1577,15 @@ public void RestartGuard()
         if (armorGauge <= 0)
         {
             ArmorOff();
+            //Easy way to deal damage after armor is brok
+            if (armorGauge < 0) {
+                DamageDisplay(-armorGauge);
+            }
         }
-        DamageDisplay(damage);
+        else
+        {
+            DamageDisplay(damage);
+        }
     }
     public void SpecialBarDown(bool playerSpecial)
     {

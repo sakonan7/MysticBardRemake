@@ -816,7 +816,7 @@ public class PlayerController : MonoBehaviour
             //Nerf, destroying armor will not cause foe to flinch
             if (enemies[i].GetComponent<Enemy>().counterAttackActive == false) {
                 enemies[i].GetComponent<Enemy>().Flinch(true);
-                enemies[i].GetComponent<Enemy>().TakeDamage(20, true, true);
+                enemies[i].GetComponent<Enemy>().GeneralDamageCode(20, true, 3,true);
             }
             else
             {

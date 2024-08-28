@@ -31,7 +31,7 @@ public class Witch : MonoBehaviour
         bombFlare = transform.Find("Lens Flare").gameObject.GetComponent<ParticleSystem>();
         barrierAnimation= transform.Find("root").transform.Find("Personal Barrier Object").transform.Find("Barrier Animation").gameObject;
 
-        
+        //enemyScript.SetIdleTime(5);
     }
     void Start()
     {
@@ -41,7 +41,11 @@ public class Witch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyScript.attackReady == true)
+        if(enemyScript.bombReady==true)
+        {
+            StartBombSummon();
+        }
+        if (enemyScript.summonBombs == true)
         {
             int random = Random.Range(0, 2);
             if (random == 0)
@@ -55,7 +59,8 @@ public class Witch : MonoBehaviour
             //Debug.Log("Attack");
             //Only doing this because I need to
             //I intend for the foe to not be able to be staggered while using a barrier
-            Attack();
+            //Attack();
+            SummonBombs();
         }
         //if (enemyScript.armor=)
         //{
@@ -67,7 +72,7 @@ public class Witch : MonoBehaviour
         barrierAnimation.SetActive(true);
         animator.SetTrigger("Barrier");
         enemyScript.SetArmor();
-        enemyScript.SetCantFlinch();
+        //enemyScript.SetCantFlinch();
         yield return new WaitForSeconds(1);
         animator.ResetTrigger("Barrier");
         
@@ -77,7 +82,8 @@ public class Witch : MonoBehaviour
         //enemyScript.SetIdleStart();
         enemyScript.NonStandardIdleStart();
         Barrier();
-        enemyScript.UnsetCantFlinch();
+        //08/27/24, Oh my god, a glitch that wasn't triggered until now. Unity does do this. UnsetCantFlinch never happ
+        //enemyScript.UnsetCantFlinch();
     }
     public void Barrier()
     {
@@ -103,14 +109,16 @@ public class Witch : MonoBehaviour
         Instantiate(bomb, new Vector3(bombPosition.x + 1.5f + 1, bombPosition.y - 1.5f - 1, -7.59f), bomb.transform.rotation);
         Instantiate(bomb, new Vector3(bombPosition.x - 1.5f - 1, bombPosition.y - 1.5f - 1, -7.59f), bomb.transform.rotation);
     }
-    public void Attack()
+    public void StartBombSummon()
     {
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Bomb");
         enemyScript.SetBomb();
         //enemyScript.SetDamage(1);
+
+        //Gonna keep SetAttackLength
         enemyScript.SetAttackLength(1.5f);
-        enemyScript.StartAttackLength();
+        enemyScript.StartBombLength();
         enemyScript.StartFlinchWindow();
         //if (enemyScript.teamAttackOn == true)
         //{
@@ -120,9 +128,14 @@ public class Witch : MonoBehaviour
         //{
         //enemyScript.PlayAttackEffect(0);
         //}
-        enemyScript.AttackReadyOff();
+        enemyScript.BombReadyOff();
         BombFlare();
         enemyScript.PlayBombLensFlareSound();
+    }
+    public void SummonBombs()
+    {
+        enemyScript.SummonBombsOff();
+
         enemyScript.PlayerCantPause(6);
         enemyScript.PlayerTransparentUI(6);
     }
