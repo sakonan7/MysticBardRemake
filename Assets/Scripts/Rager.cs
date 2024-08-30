@@ -98,7 +98,7 @@ public class Rager
     public void Attack()
     {
 
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Attack");
         enemyScript.SetDamage(3);
         enemyScript.SetAttackLength(1.5f);
@@ -113,6 +113,7 @@ public class Rager
     //But this game is more of a puzzle 
     public void RageAttack1()
     {
+        enemyScript.IdleBoolAnimatorCancel();
         rageEffect.Play();
         enemyScript.RageValueMoveOff();
         

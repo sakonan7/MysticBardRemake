@@ -62,9 +62,9 @@ public class Bomb : MonoBehaviour
             //playerScript.WindEnd();
             //WindCaptureEnd();
         }
-        if (transform.position.y <= -3f)
+        if (transform.position.y <= -2.5f)
         {
-            transform.position = new Vector3(transform.position.x, -3f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, -2.5f, transform.position.z);
             //playerScript.WindEnd();
             //WindCaptureEnd();
         }
@@ -145,7 +145,7 @@ public class Bomb : MonoBehaviour
     }
     public void EnemyExplode()
     {
-        Debug.Log("EnemyEx");
+        //Debug.Log("EnemyEx");
         exploded = true;
         if (explodeEffectCancel != null)
         {

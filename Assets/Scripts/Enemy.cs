@@ -89,6 +89,7 @@ public class Enemy : MonoBehaviour
     private bool stayStill = false;
 
     private bool flinchInterrupt = false; //I may want to changethis to flincOpportuni
+    private float flinchWindowTime = 1.5f;
     public bool attack = false; //Putting this here for now. I want this code to be assimple as possible //Need this for now, because may not want to use idle (check for it
     //While attacking a foe
     //07/19/24
@@ -160,6 +161,7 @@ public class Enemy : MonoBehaviour
     public bool rageLevel2 = false;
     public bool rageLevel3 = false;
     public bool rageStart = false;
+    public bool buildRage = false;
 
     //Individual Attacks
     private bool unblockable = false;
@@ -260,9 +262,9 @@ public class Enemy : MonoBehaviour
             //playerScript.WindEnd();
             //WindCaptureEnd();
         }
-        if (transform.position.y <= -3f)
+        if (transform.position.y <= -2.5f)
         {
-            transform.position = new Vector3(transform.position.x, -3f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, -2.5f, transform.position.z);
             //playerScript.WindEnd();
             //WindCaptureEnd();
         }
@@ -730,6 +732,10 @@ public class Enemy : MonoBehaviour
         TakeDamage(1, true, false);
         
     }
+    public void SetFlinchWindow(float newTime)
+    {
+        flinchWindowTime = newTime;
+    }
     public void StartFlinchWindow()
     {
         flinchOpportunityCancel = StartCoroutine(FlinchWindow());
@@ -740,7 +746,7 @@ public class Enemy : MonoBehaviour
     IEnumerator FlinchWindow()
     {
         flinchInterrupt = true;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(flinchWindowTime);
         flinchInterrupt = false;
 
     }
@@ -787,9 +793,10 @@ public class Enemy : MonoBehaviour
             currentRevengeValue++;
             if (currentRevengeValue >= revengeValueLimit)
             {
+                IdleAnimationCancel();
                 currentRevengeValue = 0;
                 revengeValueMove = true;
-                IdleAnimationCancel();
+                
             }
         }
     }
@@ -822,28 +829,30 @@ public class Enemy : MonoBehaviour
         if (rage == true)
         {
             rageStart = true;
-            currentRageValue++;
-            if (currentRageValue ==3)
-            {
-                rageLevel1 = true;
-            }
-            if (currentRageValue == 6)
-            {
-                rageLevel1 = false;
-                rageLevel2 = true;
-            }
-            if (currentRageValue == 9)
-            {
-                rageLevel2 = false;
-                rageLevel3 = true;
-            }
-            if (currentRageValue > 9)
-            {
-
-                currentRageValue = 0;
-                rageValueMove = true;
-                rageValueMoveActive = true;
-                IdleAnimationCancel();
+            if (buildRage==true) {
+                currentRageValue++;
+                if (currentRageValue == 3)
+                {
+                    rageLevel1 = true;
+                }
+                if (currentRageValue == 6)
+                {
+                    rageLevel1 = false;
+                    rageLevel2 = true;
+                }
+                if (currentRageValue == 9)
+                {
+                    rageLevel2 = false;
+                    rageLevel3 = true;
+                }
+                if (currentRageValue > 9)
+                {
+                    IdleAnimationCancel();
+                    currentRageValue = 0;
+                    rageValueMove = true;
+                    rageValueMoveActive = true;
+                    buildRage =false;
+                }
             }
         }
     }
@@ -872,6 +881,7 @@ public class Enemy : MonoBehaviour
         rageLevel2 = false;
         rageLevel3 = false;
         currentRageValue = 0;
+        buildRage = false;
     }
     public void SetFusileer()
     {
@@ -929,6 +939,14 @@ public void RestartGuard()
         {
             SetTrumpetGuard();
         }
+    }
+    public void GuardCounterattack()
+    {
+        IdleAnimationCancel();
+        counterAttackTriggered = true;
+        unflinchingFollow = true;
+        attack = true;
+        
     }
     public void SpecialObjects()
     {
@@ -994,7 +1012,7 @@ public void RestartGuard()
         //The problem is that I'm using StartIdle no matter what. For counterattack, I'm not supposed to do that
         if (special==false) {
             StartIdle();
-            Debug.Log("StartIdleNormal");
+            //Debug.Log("StartIdleNormal");
         }
         if (noAttack==false) {
             DealDamage(damage);
@@ -1204,6 +1222,7 @@ public void RestartGuard()
         }
         UnflinchingFollowOff();
 
+        buildRage = true;
         yield return new WaitForSeconds(idleTime);
         if (cantMove == false)
         {
@@ -1216,10 +1235,6 @@ public void RestartGuard()
             {
                 attack = true;
                 attackReady = true;
-                if (animatorTrue == true)
-                {
-                    animator.SetBool("Idle", false);
-                }
             }
             else if(green ==true)
             {
@@ -1230,10 +1245,6 @@ public void RestartGuard()
             {
                 attack = true;
                 bombReady = true;
-                if (animatorTrue == true)
-                {
-                    animator.SetBool("Idle", false);
-                }
             }
             if(rage ==true)
             {
@@ -1246,15 +1257,35 @@ public void RestartGuard()
     //I may need to merge this with FlinchCancel();
     //Maybe make a RevengeValue Method
     //It's annoying, because both IdleAnimation and Flinch cause IdleAnimation
+    //08/29/24 This is in case cancelling attackReady isn't enough. The stuff I added. Sometimes a regular attack still happens
+    //while Guard is follow up attacking or Rager is doing its rage att
+    //I also moved IdleAnimationCancel up for methods that use it, so that idle, true and idle, false don't conflict. This should work, because the
+    //MoveOn lines play after
     public void IdleAnimationCancel()
     {
         if (idleCancel != null)
         {
             StopCoroutine(idleCancel);
         }
+        if (attackLengthCancel != null)
+        {
+            StopCoroutine(attackLengthCancel);
+        }
+        if (flinchOpportunityCancel != null)
+        {
+            StopCoroutine(flinchOpportunityCancel);
+        }
         animator.SetBool("Idle",true);
+        animator.ResetTrigger("Attack");
         attack = false;
         attackReady = false;
+    }
+    public void IdleBoolAnimatorCancel()
+    {
+        if (animatorTrue == true)
+        {
+            animator.SetBool("Idle", false);
+        }
     }
     public void PauseBeforeSpecialStart(float time)
     {
@@ -1361,7 +1392,7 @@ public void RestartGuard()
                 UnsetCantFlinch();
             }
         }
-        Debug.Log("Followup Attack");
+        //Debug.Log("Followup Attack");
     }
     public void CounterAttackWholeCancel()
     {
@@ -1462,6 +1493,7 @@ public void RestartGuard()
                 //I'm very dang sure unflinchingFollow doesn't work
                 //I'm thinking of having guard unset when it is staggered, and then its revenge value goes up
                 //I had to do this, because damage wasn't happening properly either
+                //Originally, Guard would just take damage from Special. No Guard down. No Revenge Val
                 if (windCaptured == false) {
                     //Player Special will cause damage and flinch and will interrupt guards
                     if (playerSpecial==false) {
@@ -1471,9 +1503,7 @@ public void RestartGuard()
                             {
                                 if (attack == false)
                                 {
-                                    counterAttackTriggered = true;
-                                    unflinchingFollow = true;
-                                    attack = true;
+                                    GuardCounterattack();
                                 }
                             }
                             else
@@ -1492,9 +1522,7 @@ public void RestartGuard()
                             {
                                 if (attack == false)
                                 {
-                                    counterAttackTriggered = true;
-                                    unflinchingFollow = true;
-                                    attack = true;
+                                    GuardCounterattack();
                                 }
                             }
                             else
@@ -1896,14 +1924,16 @@ public void RestartGuard()
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Barrier") && armor==false)
+        if (other.CompareTag("Barrier"))
         {
-            barrier = true;
+            if (GameObject.Find("Barrier(Clone)") !=null) {
+                barrier = true;
+            }
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Barrier") &&armor==false)
+        if (other.CompareTag("Barrier"))
         {
             barrier = false;
         }

@@ -111,7 +111,7 @@ public class Witch : MonoBehaviour
     }
     public void StartBombSummon()
     {
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Bomb");
         enemyScript.SetBomb();
         //enemyScript.SetDamage(1);

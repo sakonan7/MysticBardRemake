@@ -139,7 +139,7 @@ public class Guard
             skin.material = originalSkin;
         }
 
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Attack");
         enemyScript.SetDamage(2);
         enemyScript.SetAttackLength(1.5f);
@@ -150,7 +150,7 @@ public class Guard
     }
     IEnumerator GuardCounterAttack()
     {
-        enemyScript.IdleAnimationCancel();
+        enemyScript.IdleBoolAnimatorCancel();
         enemyScript.AttackReadyOff();
         enemyScript.CounterAttackReadyOff();
         yield return new WaitForSeconds(0.25f);

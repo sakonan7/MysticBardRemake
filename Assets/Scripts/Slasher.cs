@@ -10,6 +10,9 @@ using UnityEngine;
 //This is going to be tough, because I didn't make this game with multiple moves in mind
 //Will now to need to implement attack
 //I will still have unblockable effect play after a few seconds. This matches with the unblockable effect playing when a second away from idle animation stop
+//08/29/24
+//2 seconds and then sword flash. Around 2-1.5 seconds, and then slash
+//May want a RestartCycle()
 public class Slasher : MonoBehaviour
 {
     private bool idle = true;
@@ -56,57 +59,42 @@ public class Slasher : MonoBehaviour
                 {
                     ComboAttack1();
                 }
-                if (attackNum ==1) {
-                    UnblockableAttack();
+                //For some reason not using else causes a glitch, even thought attackReady isoff
+                else if (attackNum ==1) {
+                    UnblockableAttackOn();
                 }
                 //Debug.Log("Attack");
             }
-
-            if (enemyScript.attack == true && enemyScript.flinching == true)
-            {
-                Debug.Log("Attack Change");
-                if (attackNum == 0)
-                {
-                    attackNum = 1;
-                }
-                if (attackNum == 1)
-                {
-                    attackNum = 0;
-                }
+        }
+        //if(attackNum ==1 && unblockableAttackOn ==false)
+        //{
+            //StartCoroutine(UnblockableAttackOn());
+        //}
+        if(enemyScript.flinching==true)
+        {
+            //For consistency, I may want to dounblockableAttackOn/unblockableAttack in Flinch(
+            if (unblockableAttackOn==true) {
+                StartCoroutine(UnblockableAttackOff());
             }
         }
-        if(attackNum ==1 && unblockableAttackOn ==false)
-        {
-            StartCoroutine(UnblockableAttackOn());
-        }
     }
-    IEnumerator UnblockableAttackOn()
-    {
-        unblockableAttackOn = true;
-        yield return new WaitForSeconds(3);
-        swordMaterial.material = unblockableAttack;
-        swordGlow.Play();
-        enemyScript.SetUnblockable();
-        audio.PlayOneShot(unblockableAttackOnSound,1);
-    }
-    IEnumerator UnblockableAttackOff()
-    {
-        yield return new WaitForSeconds(2f);
-        swordMaterial.material = regular;
-        unblockableAttackOn = false;
-        enemyScript.UnsetUnblockable();
-    }
+
     public void ComboAttack1()
     {
         //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("ComboAttack1");
         enemyScript.SetDamage(1);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLengthAlternate();
+        enemyScript.SetFlinchWindow(1.5f);
         enemyScript.StartFlinchWindow();
         enemyScript.PlayAttackEffect(1);
         enemyScript.AttackReadyOff();
         StartCoroutine(ComboAttack2());
+
+        attackNum = 1;
+        enemyScript.SetIdleTime(2); //This is okay, because if you don't flinch Slasher, he will quickly move onto his next att
     }
     IEnumerator ComboAttack2()
     {
@@ -136,7 +124,6 @@ public class Slasher : MonoBehaviour
             enemyScript.SetDamage(1);
             enemyScript.SetAttackLength(1.5f);
             enemyScript.StartAttackLengthAlternate();
-            enemyScript.StartFlinchWindow();
             enemyScript.PlayAttackEffect(1);
             StartCoroutine(ComboAttack4());
         }
@@ -151,10 +138,9 @@ public class Slasher : MonoBehaviour
             enemyScript.SetDamage(1);
             enemyScript.SetAttackLength(1.5f);
             enemyScript.StartAttackLength();
-            enemyScript.StartFlinchWindow();
             enemyScript.PlayAttackEffect(3);
             StartCoroutine(ResetTrigger());
-            attackNum = 1;
+            //attackNum = 1;
         }
     }
     IEnumerator ResetTrigger()
@@ -165,18 +151,51 @@ public class Slasher : MonoBehaviour
         animator.ResetTrigger("ComboAttack3");
         animator.ResetTrigger("ComboAttack4");
     }
-    public void UnblockableAttack()
+    //Basically switchedfunctionalit
+    //UnblockableAttackOff is more of a command now
+    //2 Issues. I usually play AttackLength and animation at the same time. Also, I never pay attention to how the character goes back to IdleAnimation
+    //After
+    //I need the damage to be dealt around the time and the animation is fin
+    //Because I play the animation at the same time, that means I need at least a 1.5f second difference between attackLength and the anima
+    public void UnblockableAttackOn()
     {
-        //animator.SetBool("Idle",false);
-        animator.SetTrigger("UnblockableAttack");
-        enemyScript.SetDamage(3);
-        enemyScript.SetAttackLength(1.5f);
-        enemyScript.StartAttackLength();
-        enemyScript.StartFlinchWindow();
-            enemyScript.PlayAttackEffect(0);
-        enemyScript.AttackReadyOff();
-        StartCoroutine(UnblockableAttackOff());
-        attackNum = 0;
-    }
+        
 
+        StartCoroutine(UnblockableAttack());
+        enemyScript.SetDamage(3);
+        enemyScript.SetAttackLength(4);
+        enemyScript.StartAttackLength();
+        enemyScript.SetFlinchWindow(4);
+        enemyScript.StartFlinchWindow();
+
+        enemyScript.AttackReadyOff();
+        attackNum = 0;
+        enemyScript.SetIdleTime(5);
+        swordMaterial.material = unblockableAttack;
+        swordGlow.Play();
+        enemyScript.SetUnblockable(); //The issue with this is that I'm gonna need this to preempt the end of IdleAnimation
+        audio.PlayOneShot(unblockableAttackOnSound, 1);
+        unblockableAttackOn = true;
+        
+    }
+    //For the animation
+    //And sword flash off, if flinch doesn't happ
+    IEnumerator UnblockableAttack()
+    {
+        //unblockableAttackOn = true;
+        yield return new WaitForSeconds(2.5f);
+        enemyScript.IdleBoolAnimatorCancel();
+        animator.SetTrigger("UnblockableAttack");
+        enemyScript.PlayAttackEffect(0);
+        StartCoroutine(UnblockableAttackOff());
+        Debug.Log("Play?");
+    }
+    IEnumerator UnblockableAttackOff()
+    {
+        unblockableAttackOn = false;
+        yield return new WaitForSeconds(1f);
+        swordMaterial.material = regular;
+        
+        enemyScript.UnsetUnblockable();
+    }
 }
