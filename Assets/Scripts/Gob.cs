@@ -48,7 +48,7 @@ public class Gob : MonoBehaviour
     }
     public void Attack()
     {
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Attack");
         enemyScript.SetDamage(1);
         enemyScript.SetAttackLength(1.5f);

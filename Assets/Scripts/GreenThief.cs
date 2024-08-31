@@ -102,7 +102,7 @@ public class GreenThief : MonoBehaviour
     //I need a revenge value
     public void CounterAttack()
     {
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Counterattack");
         enemyScript.SetDamage(3);
         //Below isn't the problem because both counterattacklength and attacklength uses attacklength set by
@@ -122,7 +122,7 @@ public class GreenThief : MonoBehaviour
     }
     public void RegularAttack()
     {
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Attack");
         animator.SetTrigger("Attack2");
         enemyScript.SetDamage(2);

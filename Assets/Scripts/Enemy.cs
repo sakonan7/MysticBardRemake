@@ -1804,12 +1804,7 @@ public void RestartGuard()
         //Wind off. Need wind variable for enemy
             if (collision.gameObject.CompareTag("Enemy"))
             {
-                bool damaged = false;
-                if (damaged == false)
-                {
-                    damaged = true;
-                    GeneralDamageCode(3, false, 2, false);
-                }
+                playerScript.HitBox(collision.GetContact(0).point);
                 //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 //collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 playerScript.WindEnd();
@@ -1919,6 +1914,15 @@ public void RestartGuard()
             {
                 damaged = true;
                 GeneralDamageCode(2, false, 2, false);
+            }
+        }
+        if (other.CompareTag("Hitbox"))
+        {
+            bool damaged = false;
+            if (damaged == false)
+            {
+                damaged = true;
+                GeneralDamageCode(other.GetComponent<Hitbox>().damage, other.GetComponent<Hitbox>().armorBreak, 2, false);
             }
         }
     }

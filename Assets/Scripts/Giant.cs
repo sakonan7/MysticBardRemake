@@ -41,7 +41,7 @@ public class Giant : MonoBehaviour
     }
     public void Attack()
     {
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("StrongAttack");
         enemyScript.SetDamage(3);
         enemyScript.SetAttackLength(1.5f);

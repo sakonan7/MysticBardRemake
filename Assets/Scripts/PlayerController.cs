@@ -134,6 +134,7 @@ public class PlayerController : MonoBehaviour
     public GameObject trumpetHitbox;
     public GameObject harpHitbox;
     public GameObject debrisHitbox;
+    public GameObject hitbox;
     public GameObject trumpetSoundwave;
     public GameObject harpSoundwave;
     public GameObject fluteWind;
@@ -730,6 +731,11 @@ public class PlayerController : MonoBehaviour
     {
         //Always the same Z
         Instantiate(debrisHitbox, new Vector3(position.x,position.y,-7.59f),debrisHitbox.transform.rotation);
+    }
+    public void HitBox(Vector3 position)
+    {
+        //Always the same Z
+        Instantiate(hitbox, new Vector3(position.x, position.y, -7.59f), hitbox.transform.rotation);
     }
     public void WindOn()
     {

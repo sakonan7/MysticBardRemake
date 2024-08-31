@@ -9992,6 +9992,7 @@ MonoBehaviour:
   trumpetHitbox: {fileID: 8551800652245622886, guid: a394cde47e771bd4eb96a63384491a94, type: 3}
   harpHitbox: {fileID: 8551800652245622886, guid: d8746771bb66d2d42be9802ac9b3c9a8, type: 3}
   debrisHitbox: {fileID: 2882697720088320476, guid: 46c75635f2a005046a92c32cb0d63f51, type: 3}
+  hitbox: {fileID: 2656379839563393788, guid: ac4a0bf87f0b8204e9f3d89303e67a06, type: 3}
   trumpetSoundwave: {fileID: 3965839119870658576, guid: d37b3a63bb84433469da39a1c3e2c2ad, type: 3}
   harpSoundwave: {fileID: 485518619082792125, guid: 2083fc50530717a4eb580d21782d1ff6, type: 3}
   fluteWind: {fileID: 8255220899082025878}

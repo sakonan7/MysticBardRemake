@@ -1774,7 +1774,6 @@ GameObject:
   - component: {fileID: 1521504820901174310}
   - component: {fileID: 6767120946905801152}
   - component: {fileID: 4524930941711944100}
-  - component: {fileID: 3870383392968399015}
   - component: {fileID: 8222785869091681504}
   - component: {fileID: 6286576798732578529}
   - component: {fileID: 1653135535948098325}
@@ -1848,8 +1847,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  bombReady: 0
+  summonBombs: 0
+  attack: 0
   windCaptured: 0
   flinching: 0
+  counterAttackActive: 0
   counterAttackTriggered: 0
   unflinchingFollow: 0
   attackEffects:
@@ -1864,12 +1867,23 @@ MonoBehaviour:
   bombLensFlare: {fileID: 0}
   harpShield: {fileID: 0}
   trumpetShield: {fileID: 0}
+  guardOn: {fileID: 0}
+  specialSound: {fileID: 0}
+  specialCancelled: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
   bombUser: 0
   boss: 0
   revengeValueMove: 0
+  currentRageValue: 0
+  rageValueMove: 0
+  rageValueMoveActive: 0
+  rageLevel1: 0
+  rageLevel2: 0
+  rageLevel3: 0
+  rageStart: 0
+  buildRage: 0
   harpGuard: 0
   trumpetGuard: 0
   guardCounterattackTriggered: 0
@@ -1886,27 +1900,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6810489432b1dd047b2a3aa7594d94d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &3870383392968399015
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4625541724328400951}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 2.63, y: 4.257175, z: 1}
-  m_Center: {x: -0, y: 1.6285872, z: -0}
 --- !u!54 &8222785869091681504
 Rigidbody:
   m_ObjectHideFlags: 0

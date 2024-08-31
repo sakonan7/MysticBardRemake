@@ -134,8 +134,10 @@ public class Guard
         if(enemyScript.unflinchingFollow ==false)
         {
             //Drop guard and attack
+            enemyScript.UnsetGuard();
             enemyScript.UnsetHarpGuard();
             enemyScript.UnsetTrumpetGuard();
+            enemyScript.UnsetCantFlinch();
             skin.material = originalSkin;
         }
 

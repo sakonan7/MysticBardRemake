@@ -44,7 +44,7 @@ public class Fusileer : MonoBehaviour
     }
     public void Attack()
     {
-        animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetBool("SpecialLoop", true);
         //enemyScript.SetDamage(12);
         //enemyScript.SetAttackLength(1.5f);

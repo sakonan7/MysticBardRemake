@@ -7249,6 +7249,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  bombReady: 0
+  summonBombs: 0
+  attack: 0
   windCaptured: 0
   flinching: 0
   counterAttackActive: 0
@@ -7265,6 +7268,9 @@ MonoBehaviour:
   bombLensFlare: {fileID: 0}
   harpShield: {fileID: 0}
   trumpetShield: {fileID: 0}
+  guardOn: {fileID: 0}
+  specialSound: {fileID: 0}
+  specialCancelled: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
@@ -7278,6 +7284,7 @@ MonoBehaviour:
   rageLevel2: 0
   rageLevel3: 0
   rageStart: 0
+  buildRage: 0
   harpGuard: 0
   trumpetGuard: 0
   guardCounterattackTriggered: 0
@@ -11131,6 +11138,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 7541586926489739541, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_text
+      value: 4 -  Witch, 5 Goblins
+      objectReference: {fileID: 0}
     - target: {fileID: 8046534601997507777, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 79.09999
@@ -11166,6 +11177,10 @@ PrefabInstance:
     - target: {fileID: 8979974018608525617, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
       propertyPath: m_Interactable
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063091107538543123, guid: 4c3b27bd3b88d734b85e60a99f4659df, type: 3}
+      propertyPath: m_text
+      value: 5 -  2 Red Giants, 4 Goblins
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

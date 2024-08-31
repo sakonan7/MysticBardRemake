@@ -19,6 +19,8 @@ using UnityEngine.UIElements;
 //08/04/24
 //What I can do for flamethrower is make a flamethrower bool and if flinch ==true, cancel flamethrower bool and flamethrower
 //Oops, forgot. Interrupting attack cancels flamethrower. I already have a way to cancel attack effects. Forgot what I was actually going to write lol.
+//08/30/24
+//Could use attackNum instead of blank phase reg
 public class GrandDragon : MonoBehaviour
 {
     public Material red;
@@ -558,8 +560,9 @@ IEnumerator Flashing()
     }
     public void Roar()
     {
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Bomb");
-        animator.SetBool("Idle", false);
+        
         audio.PlayOneShot(longRoar, 0.9f);
         audio.PlayOneShot(aura, 2);
     }
@@ -659,7 +662,7 @@ IEnumerator Flashing()
     public void RedAttack()
     {
         enemyScript.UnsetNoAttack();
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("StrongAttack");
         enemyScript.SetDamage(4.5f);
         enemyScript.SetAttackLength(1.5f);
@@ -730,7 +733,7 @@ IEnumerator Flashing()
     }
     public void RegularBombRing1()
     {
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Bomb");
         enemyScript.SetBomb();
         //enemyScript.SetDamage(1);
@@ -770,7 +773,7 @@ IEnumerator Flashing()
     }
     public void RegularBombRing2()
     {
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Bomb");
         enemyScript.SetBomb();
         //enemyScript.SetDamage(1);
@@ -806,7 +809,7 @@ IEnumerator Flashing()
     }
     public void BombRing3()
     {
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Bomb");
         enemyScript.SetBomb();
         enemyScript.SetAttackLength(1.5f);
@@ -821,7 +824,7 @@ IEnumerator Flashing()
     }
     public void BombRing4()
     {
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Bomb");
         enemyScript.SetBomb();
         enemyScript.SetAttackLength(1.5f);
@@ -886,7 +889,7 @@ IEnumerator Flashing()
     public void CounterAttack()
     {
         enemyScript.UnsetNoAttack();
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Counterattack");
         enemyScript.SetDamage(4);
         enemyScript.SetAttackLength(1.5f);
@@ -906,7 +909,7 @@ IEnumerator Flashing()
     public void GreenAttack()
     {
         enemyScript.UnsetNoAttack();
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Attack");
         animator.SetTrigger("Attack2");
         enemyScript.SetDamage(3);
@@ -928,7 +931,7 @@ IEnumerator Flashing()
     }
     public void SeventhCounterAttack()
     {
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Counterattack");
         enemyScript.SetDamage(6);
         enemyScript.SetAttackLength(1.5f);
@@ -949,7 +952,7 @@ IEnumerator Flashing()
     }
     public void SeventhGreenAttack()
     {
-        //animator.SetBool("Idle",false);
+        enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Attack");
         animator.SetTrigger("Attack2");
         enemyScript.SetDamage(4.5f);
