@@ -64,7 +64,7 @@ public class Guard
                 //Debug.Log("Attack");
             }
         }
-        if (enemyScript.unflinchingFollow == true && repeat == false)
+        if (enemyScript.counterattacking == true && repeat == false)
         {
             StartCoroutine(Flashing());
         }
@@ -118,6 +118,7 @@ public class Guard
             enemyScript.UnsetCantFlinch();
         }
         yield return new WaitForSeconds(1);
+        enemyScript.SetGuard(); //09/03/24 Justin case
         int random = Random.Range(0, 2);
         if(random==0)
         {
@@ -131,7 +132,7 @@ public class Guard
     }
     public void Attack()
     {
-        if(enemyScript.unflinchingFollow ==false)
+        if(enemyScript.counterattacking ==false)
         {
             //Drop guard and attack
             enemyScript.UnsetGuard();
@@ -161,6 +162,8 @@ public class Guard
         //animator.SetBool("Idle",false);
         animator.SetTrigger("Counterattack");
         enemyScript.SetDamage(4);
+        enemyScript.SetCounterattackTime(1.5f + 1.5f + 1);
+        enemyScript.StartCounterattackTimeMethod();
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartCounterAttackLength();
         enemyScript.PlayAttackEffect(1);

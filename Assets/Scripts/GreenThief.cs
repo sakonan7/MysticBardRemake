@@ -42,6 +42,7 @@ public class GreenThief : MonoBehaviour
         enemyScript.SetIdleStart(); //This doesn't work. May need an awake
         enemyScript.SetIdleTime(3);
         enemyScript.SetGreen();
+        enemyScript.SetCounterattack();
     }
 
     // Update is called once per frame
@@ -59,7 +60,7 @@ public class GreenThief : MonoBehaviour
 
         //I'm going to need to write this code differently for when other foes flash for attacks that can't be interrupted
         //I think I just have to make two flashes (two coroutines)
-        if(enemyScript.unflinchingFollow ==true&&repeat==false)
+        if(enemyScript.counterattacking ==true&&repeat==false)
         {
             StartCoroutine(Flashing());
         }
@@ -107,6 +108,9 @@ public class GreenThief : MonoBehaviour
         enemyScript.SetDamage(3);
         //Below isn't the problem because both counterattacklength and attacklength uses attacklength set by
         //SetAttackLength()
+        //Attack lengths plus time before follow up
+        enemyScript.SetCounterattackTime(1.5f+1.5f+1);
+        enemyScript.StartCounterattackTimeMethod();
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartCounterAttackLength();
         //enemyScript.StartFlinchWindow();
@@ -128,7 +132,7 @@ public class GreenThief : MonoBehaviour
         enemyScript.SetDamage(2);
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartAttackLength();
-        if (enemyScript.unflinchingFollow == false) {
+        if (enemyScript.counterattacking == false) {
             enemyScript.StartFlinchWindow();
         }
         //if (enemyScript.teamAttackOn == true)

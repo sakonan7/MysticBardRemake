@@ -101,7 +101,12 @@ public class Enemy : MonoBehaviour
     private bool barrier = false;
     public bool counterAttackActive = false;
     public bool counterAttackTriggered = false;
-    public bool unflinchingFollow = false;
+    //public bool unflinchingFollow = false;
+    //09/03/24 This is good for more complex code
+    //Say I don't want my foe to use a counterAttack
+    private bool useCounterattack = false;
+    public bool counterattacking = false;
+    private float counterattackTime = 0;
 
     public ParticleSystem[] attackEffects;
     private int effectNumber = 0;
@@ -133,7 +138,6 @@ public class Enemy : MonoBehaviour
     private bool green = false;
     private bool armor = false;
     private bool noAttack = false;
-    private bool bomb = false;
     public bool bombUser = false;
     public bool boss = false;
     private bool firstSalvo = true;
@@ -372,14 +376,6 @@ public class Enemy : MonoBehaviour
         green = false;
         UnsetCantFlinch();
     }
-    public void SetBomb()
-    {
-        bomb = true;
-    }
-    public void UnsetBomb()
-    {
-        bomb = false;
-    }
     public void SetBombUser()
     {
         bombUser = true;
@@ -558,6 +554,10 @@ public class Enemy : MonoBehaviour
         {
             flinchWork = false;
         }
+        if (counterattacking == true)
+        {
+            flinchWork = false;
+        }
         //Putting this here instead of using cantFlinch code everywhere
         if (HP>0) {
             if (flinchWork == true) {
@@ -620,7 +620,6 @@ public class Enemy : MonoBehaviour
                     else if (bombUser == true)
                     {
                         animator.ResetTrigger("Bomb");
-                        UnsetBomb();
                     }
                     else
                     {
@@ -767,10 +766,10 @@ public class Enemy : MonoBehaviour
     {
         counterAttackTriggered = false;
     }
-    public void UnflinchingFollowOff()
-    {
-        unflinchingFollow = false;
-    }
+    //public void UnflinchingFollowOff()
+    //{
+        //unflinchingFollow = false;
+    //}
     public void SetGuard()
     {
         guard = true;
@@ -944,7 +943,7 @@ public void RestartGuard()
     {
         IdleAnimationCancel();
         counterAttackTriggered = true;
-        unflinchingFollow = true;
+        //unflinchingFollow = true;
         attack = true;
         
     }
@@ -1046,6 +1045,20 @@ public void RestartGuard()
         yield return new WaitForSeconds(attackLength);
             DealDamage(damage);
     }
+    public void SetCounterattackTime(float time)
+    {
+        counterattackTime = time;
+    }
+    public void StartCounterattackTimeMethod()
+    {
+        StartCoroutine(StartCounterattackTime());
+    }
+    IEnumerator StartCounterattackTime()
+    {
+        counterattacking = true;
+        yield return new WaitForSeconds(counterattackTime);
+        counterattacking = false;
+    }
     public void StartCounterAttackLength()
     {
         //Took this out because this can't get cancelled
@@ -1064,12 +1077,20 @@ public void RestartGuard()
         StartCoroutine(FollowUpAttack(1));
         DealDamage(damage);
     }
+    public void SetCounterattack()
+    {
+        useCounterattack = true;
+    }
+    public void UnsetCounterattack()
+    {
+        useCounterattack = false;
+    }
     public void CounterAttackTriggered()
     {
         counterAttackActive = false;
         StopCoroutine(counterAttackCancel);
         counterAttackTriggered = true;
-        unflinchingFollow = true;
+        //unflinchingFollow = true;
 
         //StartCoroutine(FollowUpAttack(4));
         animator.SetBool("Idle", true);
@@ -1117,61 +1138,63 @@ public void RestartGuard()
         {
             newDamage *= 2;
         }
-        if (unblockable ==true)
-        {
-            if (playerScript.specialInvincibility ==true)
+        if (HP >0) {
+            if (unblockable == true)
+            {
+                if (playerScript.specialInvincibility == true)
+                {
+                    playerScript.GenerateShield(effectPosition.transform.position);
+                    playerScript.PlayGuardSound();
+                }
+                else
+                {
+                    if (gameScript.gameOver == false)
+                    {
+                        playerScript.GeneralDamageCode(newDamage, 8, unblockable);
+                    }
+                    audio.PlayOneShot(attackImpact, 1.5f);
+                }
+            }
+            else if (playerScript.shieldOn == false && playerScript.specialInvincibility == false)
+            {
+                //playerScript.GeneralDamageCode(newDamage, newDamage);
+                //playerScript.PlayHurtEffect(effectAppear.transform.position);
+                //playerScript.DamageFlashOn();
+                if (newDamage < 3)
+                {
+                    playerScript.GeneralDamageCode(newDamage, 3, unblockable);
+                    if (gameScript.gameOver == false) {
+                        audio.PlayOneShot(attackImpact, 1);
+                    }
+                }
+                else
+                {
+                    if (gameScript.gameOver == false)
+                    {
+                        playerScript.GeneralDamageCode(newDamage, 8, unblockable);
+                    }
+                    audio.PlayOneShot(attackImpact, 1.5f);
+                }
+            }
+            else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
             {
                 playerScript.GenerateShield(effectPosition.transform.position);
-                playerScript.PlayGuardSound();
-            }
-            else
-            {
-                if (gameScript.gameOver == false)
-                {
-                    playerScript.GeneralDamageCode(newDamage, 8, unblockable);
-                }
-                audio.PlayOneShot(attackImpact, 1.5f);
-            }
-        }
-        else if (playerScript.shieldOn == false && playerScript.specialInvincibility == false)
-        {
-            //playerScript.GeneralDamageCode(newDamage, newDamage);
-            //playerScript.PlayHurtEffect(effectAppear.transform.position);
-            //playerScript.DamageFlashOn();
-            if(newDamage <3)
-            {
-                playerScript.GeneralDamageCode(newDamage, 3, unblockable);
-                if (gameScript.gameOver==false) {
-                    audio.PlayOneShot(attackImpact, 1);
-                }
-            }
-            else
-            {
-                if (gameScript.gameOver == false)
-                {
-                    playerScript.GeneralDamageCode(newDamage, 8, unblockable);
-                }
-                audio.PlayOneShot(attackImpact, 1.5f);
-            }
-        }
-        else if (playerScript.shieldOn == true || playerScript.specialInvincibility == true)
-        {
-            playerScript.GenerateShield(effectPosition.transform.position);
-            if (playerScript.specialInvincibility== false) {
-                if (playerScript.shieldOn == true)
-                {
-                    //if (newDamage <3) {
+                if (playerScript.specialInvincibility == false) {
+                    if (playerScript.shieldOn == true)
+                    {
+                        //if (newDamage <3) {
                         //playerScript.ShieldGaugeDown(newDamage);
-                    //}
-                    //else
-                    //{
+                        //}
+                        //else
+                        //{
                         playerScript.ShieldGaugeDown(newDamage);
-                    //}
+                        //}
+                    }
                 }
-            }
-            else
-            {
-                playerScript.PlayGuardSound();
+                else
+                {
+                    playerScript.PlayGuardSound();
+                }
             }
         }
     }
@@ -1220,32 +1243,39 @@ public void RestartGuard()
                 animator.ResetTrigger("Attack");
             }
         }
-        UnflinchingFollowOff();
+        //UnflinchingFollowOff();
 
         buildRage = true;
         yield return new WaitForSeconds(idleTime);
         if (cantMove == false)
         {
             idle = false;
-            if (fusileer == true)
+            //09/03/24
+            //I need to rearrange 
+            if (bombUser == true)
+            {
+                attack = true;
+                bombReady = true;
+            }
+            else if (fusileer == true)
             {
                 PauseBeforeSpecialStart(20);
             }
-            if (green == false &&fusileer==false &&bombUser==false)
+            //This needs to be simplified
+            //Maybe regularAttack
+            else if (green == false &&fusileer==false &&bombUser==false)
             {
                 attack = true;
                 attackReady = true;
             }
             else if(green ==true)
             {
-                    counterAttackWholeCancel =StartCoroutine(CounterattackCloud());
+                if (useCounterattack== true) {
+                    counterAttackWholeCancel = StartCoroutine(CounterattackCloud());
+                }
                     //Debug.Log("CounterattackCloud");
             }
-            if (bombUser ==true)
-            {
-                attack = true;
-                bombReady = true;
-            }
+
             if(rage ==true)
             {
 
@@ -1385,7 +1415,7 @@ public void RestartGuard()
         {
             animator.SetBool("Idle", false);
         }
-        if(unflinchingFollow == false)
+        if(counterattacking == false)
         {
             //06/19/24forgot to dothis, which may be why Green Dragon isn't getting Unflinched
             if (armor ==false) {
@@ -1494,6 +1524,18 @@ public void RestartGuard()
                 //I'm thinking of having guard unset when it is staggered, and then its revenge value goes up
                 //I had to do this, because damage wasn't happening properly either
                 //Originally, Guard would just take damage from Special. No Guard down. No Revenge Val
+                //09/03/24 Really complicated, but it makes sense, because unlike Kingdom Hearts Guard, this doesn't guard just one type of attack or all
+                //Also, because player hasno flinch
+                //My middle ground is to have Guard quickly reestablish its guard after followup att
+                //But this brings up the possibility of destroying its barrier while it's summoning
+                //Just checked, This won't be a problem,because Guard only gets summoned at the end of the IEnum
+                //The current downcode won't be a proble either, because Guard cancels Guard when it does a nonfollow upattack (regular attack when guardcounterattack isn't triggered)
+                //Final, I need to make sure flinch can't happen when counterattack is happening. Less importantly,follow
+                //I'm thinking of having a counterattack bool that plays as a counterattack and followup attack are play
+                //Afterwards, I need to apply this to green
+                //I think I should set counterAttacking length, like I set attacklength
+                //Because all attack lengths are vari
+                //I need to make sure even specials can't flinch counter
                 if (windCaptured == false) {
                     //Player Special will cause damage and flinch and will interrupt guards
                     if (playerSpecial==false) {
@@ -1509,9 +1551,12 @@ public void RestartGuard()
                             else
                             {
                                 //Flinch(false);
-                                UnsetCantFlinch();
+                                if (counterattacking ==false) {
+                                    UnsetCantFlinch();
+                                    RevengeValueUp();
+                                }
                                 TakeDamage(damage, false, false);
-                                RevengeValueUp();
+                                
                                 UnsetHarpGuard();
                                 UnsetGuard();
                             }
@@ -1528,9 +1573,12 @@ public void RestartGuard()
                             else
                             {
                                 //Flinch(false);
-                                UnsetCantFlinch();
+                                if (counterattacking == false)
+                                {
+                                    UnsetCantFlinch();
+                                    RevengeValueUp();
+                                }
                                 TakeDamage(damage, true, false);
-                                RevengeValueUp();
                                 UnsetTrumpetGuard();
                                 UnsetGuard();
                             }
@@ -1538,7 +1586,10 @@ public void RestartGuard()
                     }
                     else
                     {
-                        UnsetCantFlinch();
+                        if (counterattacking == false)
+                        {
+                            UnsetCantFlinch();
+                        }
                         TakeDamage(damage, true, true);
                         //RevengeValueUp();
                         UnsetHarpGuard();

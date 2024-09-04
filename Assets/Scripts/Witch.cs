@@ -23,7 +23,7 @@ public class Witch : MonoBehaviour
         enemyScript.SetEXP(90);
 
         enemyScript.SetNormal();
-        enemyScript.SetNoAttack();
+        
         enemyScript.SetBombUser();
         //Barrier();
 
@@ -113,7 +113,6 @@ public class Witch : MonoBehaviour
     {
         enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Bomb");
-        enemyScript.SetBomb();
         //enemyScript.SetDamage(1);
 
         //Gonna keep SetAttackLength
