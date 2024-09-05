@@ -296,10 +296,12 @@ public class GrandDragon : MonoBehaviour
             }
             else if (secondPhase == true)
             {
-                if (enemyScript.attackReady == true)
+                if (enemyScript.bombReady == true)
                 {
-                    //RegularBombRing1();
-                    Debug.Log("Bomb Attack Regular");
+                    StartBombSummon();
+                }
+                if (enemyScript.summonBombs == true)
+                {
                     //Randomize
                     //Make first ring appear right away
                     //At least 20 seconds between salvos
@@ -327,7 +329,7 @@ public class GrandDragon : MonoBehaviour
                         RegularBombRing2();
                         regularBombRing2Used = true;
                     }
-
+                    SummonBombs(18);
                 }
             }
             else if (thirdPhase == true)
@@ -342,98 +344,88 @@ public class GrandDragon : MonoBehaviour
             {
                 if (enemyScript.attackReady == true)
                 {
-                    if (attackNum ==1)
-                    {
                         RedAttack();
-                        attackNum = 0;
                         enemyScript.SetBombUser();
-                    }
-                    else
+
+                }
+                if (enemyScript.bombReady == true)
+                {
+                    StartBombSummon();
+                }
+                if (enemyScript.summonBombs == true)
+                {
+                    //Randomize
+                    //Make first ring appear right away
+                    //At least 20 seconds between salvos
+                    if (regularBombRing1Used == false && regularBombRing2Used == false)
                     {
-                        //RegularBombRing1();
-                        Debug.Log("Bomb Attack Regular");
-                        //Randomize
-                        //Make first ring appear right away
-                        //At least 20 seconds between salvos
-                        if (regularBombRing1Used == false && regularBombRing2Used == false)
-                        {
-                            int random = Random.Range(0, 1);
-                            if (random == 0)
-                            {
-                                RegularBombRing1();
-                                regularBombRing1Used = true;
-                            }
-                            else
-                            {
-                                RegularBombRing2();
-                                regularBombRing2Used = true;
-                            }
-                        }
-                        else if (regularBombRing1Used == false && regularBombRing2Used == true)
+                        int random = Random.Range(0, 1);
+                        if (random == 0)
                         {
                             RegularBombRing1();
                             regularBombRing1Used = true;
                         }
-                        else if (regularBombRing1Used == true && regularBombRing2Used == false)
+                        else
                         {
                             RegularBombRing2();
                             regularBombRing2Used = true;
                         }
-                        attackNum = 0;
-                        enemyScript.UnsetBombUser();
                     }
-
+                    else if (regularBombRing1Used == false && regularBombRing2Used == true)
+                    {
+                        RegularBombRing1();
+                        regularBombRing1Used = true;
+                    }
+                    else if (regularBombRing1Used == true && regularBombRing2Used == false)
+                    {
+                        RegularBombRing2();
+                        regularBombRing2Used = true;
+                    }
+                    SummonBombs(18);
                 }
             }
             else if (fifthPhase == true)
             {
                 if (enemyScript.attackReady == true)
                 {
-                    if (attackNum == 1)
-                    {
                         GreenAttack();
-                        //Debug.Log("Attack");
-                        attackNum = 0;
-                        //}
-                        //Debug.Log("Regularatt");
+                        enemyScript.UnsetCounterattack();
                         enemyScript.SetBombUser();
-                    }
-                    else
+                }
+                if (enemyScript.bombReady == true)
+                {
+                    StartBombSummon();
+                }
+                if (enemyScript.summonBombs == true)
+                {
+                    //Randomize
+                    //Make first ring appear right away
+                    //At least 20 seconds between salvos
+                    if (regularBombRing1Used == false && regularBombRing2Used == false)
                     {
-                        //RegularBombRing1();
-                        Debug.Log("Bomb Attack Regular");
-                        //Randomize
-                        //Make first ring appear right away
-                        //At least 20 seconds between salvos
-                        if (regularBombRing1Used == false && regularBombRing2Used == false)
-                        {
-                            int random = Random.Range(0, 1);
-                            if (random == 0)
-                            {
-                                RegularBombRing1();
-                                regularBombRing1Used = true;
-                            }
-                            else
-                            {
-                                RegularBombRing2();
-                                regularBombRing2Used = true;
-                            }
-                        }
-                        else if (regularBombRing1Used == false && regularBombRing2Used == true)
+                        int random = Random.Range(0, 1);
+                        if (random == 0)
                         {
                             RegularBombRing1();
                             regularBombRing1Used = true;
                         }
-                        else if (regularBombRing1Used == true && regularBombRing2Used == false)
+                        else
                         {
                             RegularBombRing2();
                             regularBombRing2Used = true;
                         }
-                        attackNum = 0;
-                        enemyScript.SetCounterattack();
-                        enemyScript.UnsetBombUser();
                     }
-
+                    else if (regularBombRing1Used == false && regularBombRing2Used == true)
+                    {
+                        RegularBombRing1();
+                        regularBombRing1Used = true;
+                    }
+                    else if (regularBombRing1Used == true && regularBombRing2Used == false)
+                    {
+                        RegularBombRing2();
+                        regularBombRing2Used = true;
+                    }
+                    SummonBombs(18);
                 }
             }
             else if (sixthPhase == true)
@@ -470,6 +462,38 @@ public class GrandDragon : MonoBehaviour
                         regularBombRing2Used = true;
                     }
 
+                }
+                if (enemyScript.bombReady == true)
+                {
+                    StartBombSummon();
+                }
+                if (enemyScript.summonBombs == true)
+                {
+                    if (regularBombRing1Used == false && regularBombRing2Used == false)
+                    {
+                        int random = Random.Range(0, 1);
+                        if (random == 0)
+                        {
+                            BombRing3();
+                            regularBombRing1Used = true;
+                        }
+                        else
+                        {
+                            BombRing4();
+                            regularBombRing2Used = true;
+                        }
+                    }
+                    else if (regularBombRing1Used == false && regularBombRing2Used == true)
+                    {
+                        BombRing3();
+                        regularBombRing1Used = true;
+                    }
+                    else if (regularBombRing1Used == true && regularBombRing2Used == false)
+                    {
+                        BombRing4();
+                        regularBombRing2Used = true;
+                    }
+                    SummonBombs(18);
                 }
             }
             else if (seventhPhase == true)
@@ -529,14 +553,20 @@ public class GrandDragon : MonoBehaviour
     public void OpeningBombUser ()
     {
         enemyScript.IdleAnimationCancel();
-        enemyScript.AttackReadyOff();
+        enemyScript.BombReadyOff();
         //enemyScript.Interrupt();
-        attackNum = 1;
         if(fifthPhase ==true)
         {
             enemyScript.SetCounterattack();
         }
-        enemyScript.UnsetBombUser();
+        
+    }
+    IEnumerator ChangeToNonBomb()
+    {
+        yield return new WaitForSeconds(2);
+        if (fourthPhase==true||fifthPhase==true) {
+            enemyScript.UnsetBombUser();
+        }
     }
 IEnumerator Flashing()
     {
@@ -745,14 +775,38 @@ IEnumerator Flashing()
         Instantiate(barrier, new Vector3(transform.position.x, transform.position.y + 1, barrier.transform.position.z), barrier.transform.rotation);
         enemyScript.PlayBarrierSound();
     }
-    public void RegularBombRing1()
+    public void StartBombSummon()
     {
         enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Bomb");
         //enemyScript.SetDamage(1);
+
+        //Gonna keep SetAttackLength
         enemyScript.SetAttackLength(1.5f);
-        enemyScript.StartAttackLength();
+        enemyScript.StartBombLength();
+        enemyScript.BombReadyOff();
         enemyScript.StartFlinchWindow();
+        //if (enemyScript.teamAttackOn == true)
+        //{
+        //enemyScript.PlayAttackEffect(1);
+        //}
+        //else
+        //{
+        //enemyScript.PlayAttackEffect(0);
+        //}
+
+        BombFlare();
+        enemyScript.PlayBombLensFlareSound();
+    }
+    public void SummonBombs(float time)
+    {
+        enemyScript.SummonBombsOff();
+
+        enemyScript.PlayerCantPause(time);
+        enemyScript.PlayerTransparentUI(time);
+    }
+    public void RegularBombRing1()
+    {
         //if (enemyScript.teamAttackOn == true)
         //{
         //enemyScript.PlayAttackEffect(1);
@@ -764,7 +818,6 @@ IEnumerator Flashing()
         //enemyScript.AttackReadyOff();
         BombFlare();
         enemyScript.PlayBombLensFlareSound();
-        enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(1));
         //SetIdleTime during Bombrings
         //SamIAm
@@ -780,18 +833,11 @@ IEnumerator Flashing()
         {
             enemyScript.SetIdleTime(6);
         }
-        enemyScript.PlayerCantPause(18);
-        enemyScript.PlayerTransparentUI(18);
         audio.PlayOneShot(shortRoar, 0.9f);
+        StartCoroutine(ChangeToNonBomb());
     }
     public void RegularBombRing2()
     {
-        enemyScript.IdleBoolAnimatorCancel();
-        animator.SetTrigger("Bomb");
-        //enemyScript.SetDamage(1);
-        enemyScript.SetAttackLength(1.5f);
-        enemyScript.StartAttackLength();
-        enemyScript.StartFlinchWindow();
         //if (enemyScript.teamAttackOn == true)
         //{
         //enemyScript.PlayAttackEffect(1);
@@ -803,7 +849,6 @@ IEnumerator Flashing()
         //enemyScript.AttackReadyOff();
         BombFlare();
         enemyScript.PlayBombLensFlareSound();
-        enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(2));
         if (secondPhase == true)
         {
@@ -818,34 +863,25 @@ IEnumerator Flashing()
             enemyScript.SetIdleTime(6);
         }
         audio.PlayOneShot(shortRoar, 0.9f);
+        StartCoroutine(ChangeToNonBomb());
     }
     public void BombRing3()
     {
-        enemyScript.IdleBoolAnimatorCancel();
-        animator.SetTrigger("Bomb");
-        enemyScript.SetAttackLength(1.5f);
-        enemyScript.StartAttackLength();
-        enemyScript.StartFlinchWindow();
         BombFlare();
         enemyScript.PlayBombLensFlareSound();
-        enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(3));
         enemyScript.SetIdleTime(20);
         audio.PlayOneShot(longRoar, 0.9f);
+        StartCoroutine(ChangeToNonBomb());
     }
     public void BombRing4()
     {
-        enemyScript.IdleBoolAnimatorCancel();
-        animator.SetTrigger("Bomb");
-        enemyScript.SetAttackLength(1.5f);
-        enemyScript.StartAttackLength();
-        enemyScript.StartFlinchWindow();
         BombFlare();
         enemyScript.PlayBombLensFlareSound();
-        enemyScript.AttackReadyOff();
         StartCoroutine(BombRingAppear(4));
         enemyScript.SetIdleTime(20);
         audio.PlayOneShot(longRoar, 0.9f);
+        StartCoroutine(ChangeToNonBomb());
     }
     IEnumerator BombRingAppear(int number)
     {
@@ -885,8 +921,6 @@ IEnumerator Flashing()
                 fifthPhaseRegular = false;
             }
         }
-        enemyScript.PlayerCantPause(18);
-        enemyScript.PlayerTransparentUI(18);
     }
     public void BombFlare()
     {
@@ -901,6 +935,8 @@ IEnumerator Flashing()
         enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Counterattack");
         enemyScript.SetDamage(4);
+        enemyScript.SetCounterattackTime(1.5f + 1.5f + 1);
+        enemyScript.StartCounterattackTimeMethod();
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartCounterAttackLength();
         //enemyScript.StartFlinchWindow();
@@ -942,6 +978,8 @@ IEnumerator Flashing()
         enemyScript.IdleBoolAnimatorCancel();
         animator.SetTrigger("Counterattack");
         enemyScript.SetDamage(6);
+        enemyScript.SetCounterattackTime(1.5f + 1.5f + 1);
+        enemyScript.StartCounterattackTimeMethod();
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartCounterAttackLength();
         //enemyScript.StartFlinchWindow();

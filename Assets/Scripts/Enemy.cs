@@ -634,7 +634,7 @@ public class Enemy : MonoBehaviour
                 //Moved this from mouseOver 
                 if (idleCancel != null)
                 {
-                    Debug.Log("Flinch from Idle");
+                    //Debug.Log("Flinch from Idle");
                     StopCoroutine(idleCancel);
                 }
 
@@ -1495,6 +1495,8 @@ public void RestartGuard()
     //The most important thing is that this method will determine if Flinch() happens
     public void GeneralDamageCode(float damage, bool armorBreak, int harpOrTrumpet, bool playerSpecial)
     {
+
+        damage *= 2;
         //I want to do this, but I gotta make sure that counterattacker isn't damaged
         //I may have to write a lot of conditionals for TakeDamage, then (for it to happen)
         //I don't think I can simplify this, because I need to account for the cases that aren't a counterattacker, guard

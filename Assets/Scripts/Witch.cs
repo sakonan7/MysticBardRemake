@@ -118,6 +118,7 @@ public class Witch : MonoBehaviour
         //Gonna keep SetAttackLength
         enemyScript.SetAttackLength(1.5f);
         enemyScript.StartBombLength();
+        enemyScript.BombReadyOff();
         enemyScript.StartFlinchWindow();
         //if (enemyScript.teamAttackOn == true)
         //{
@@ -127,7 +128,7 @@ public class Witch : MonoBehaviour
         //{
         //enemyScript.PlayAttackEffect(0);
         //}
-        enemyScript.BombReadyOff();
+        
         BombFlare();
         enemyScript.PlayBombLensFlareSound();
     }
