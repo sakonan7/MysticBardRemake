@@ -6988,11 +6988,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  bombReady: 0
+  summonBombs: 0
+  attack: 0
   windCaptured: 0
   flinching: 0
   counterAttackActive: 0
   counterAttackTriggered: 0
-  unflinchingFollow: 0
+  counterattacking: 0
   attackEffects: []
   teamAttackAura: {fileID: 0}
   teamAttackSizzle: {fileID: 0}
@@ -7020,6 +7023,7 @@ MonoBehaviour:
   rageLevel2: 0
   rageLevel3: 0
   rageStart: 0
+  buildRage: 0
   harpGuard: 0
   trumpetGuard: 0
   guardCounterattackTriggered: 0

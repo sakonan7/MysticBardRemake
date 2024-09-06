@@ -18143,11 +18143,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  bombReady: 0
+  summonBombs: 0
+  attack: 0
   windCaptured: 0
   flinching: 0
   counterAttackActive: 0
   counterAttackTriggered: 0
-  unflinchingFollow: 0
+  counterattacking: 0
   attackEffects:
   - {fileID: 4785136369774669916}
   - {fileID: 5297642965788054714}
@@ -18177,6 +18180,7 @@ MonoBehaviour:
   rageLevel2: 0
   rageLevel3: 0
   rageStart: 0
+  buildRage: 0
   harpGuard: 0
   trumpetGuard: 0
   guardCounterattackTriggered: 0
@@ -18202,7 +18206,7 @@ MonoBehaviour:
   dying: {fileID: 2100000, guid: d86ce2c33541da34fbdbfbe568727a32, type: 2}
   flamethrower: {fileID: 8300000, guid: dd9b11ebda22acf4ea5a0f70c4c6605d, type: 3}
   shortRoar: {fileID: 8300000, guid: 6e44cf78b36675849b7d9df92b71ca8a, type: 3}
-  longRoar: {fileID: 8300000, guid: 5d0060614ee0461428cf50cb733f6786, type: 3}
+  longRoar: {fileID: 8300000, guid: 7411c6f7ca42fe8459d7ba72f1e79739, type: 3}
   aura: {fileID: 8300000, guid: eeb3d482f45c1744d91c35c433a0d959, type: 3}
   counterattack: {fileID: 8300000, guid: 4e38965299d1d744fa1961f3f55b1701, type: 3}
   finalPhaseAttacks: {fileID: 8300000, guid: bd1cc64f9aea81f4f9dcd10873b47470, type: 3}

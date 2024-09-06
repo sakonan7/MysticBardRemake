@@ -1496,7 +1496,7 @@ public void RestartGuard()
     public void GeneralDamageCode(float damage, bool armorBreak, int harpOrTrumpet, bool playerSpecial)
     {
 
-        damage *= 2;
+        //damage *= 4;
         //I want to do this, but I gotta make sure that counterattacker isn't damaged
         //I may have to write a lot of conditionals for TakeDamage, then (for it to happen)
         //I don't think I can simplify this, because I need to account for the cases that aren't a counterattacker, guard
@@ -1849,7 +1849,7 @@ public void RestartGuard()
             if(stayStill ==false)
             {
                 stayStillCancel = StartCoroutine(Vector3Zero());
-                Debug.Log("StayStill");
+                //Debug.Log("StayStill");
             }
         }
         if (playerScript.wind==true)

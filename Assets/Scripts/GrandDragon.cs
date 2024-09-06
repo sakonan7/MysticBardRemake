@@ -30,6 +30,7 @@ using UnityEngine.UIElements;
 //Testing
 //I forgot to do UseCounterAttack
 //I forgot to check attackNum
+//09/04/24 Mostof my bomb changes were made based on Witch
 public class GrandDragon : MonoBehaviour
 {
     public Material red;
@@ -102,7 +103,7 @@ public class GrandDragon : MonoBehaviour
         enemyScript.SetIdleTime(5);
         enemyScript.SetRed();
         enemyScript.SetBoss();
-        enemyScript.SetArmorAmount(35);
+        enemyScript.SetArmorAmount(40);
     }
 
     // Update is called once per frame
@@ -161,10 +162,6 @@ public class GrandDragon : MonoBehaviour
                 enemyScript.SetCounterattack();
                 skin.material = green;
                 enemyScript.SetIdleTime(3);
-                //if (enemyScript.flinching == true)
-                //{
-                //forcedPhaseChange = true;
-                //}
             }
             if (enemyScript.HP < maxHP - 225 && thirdPhase == true &&enemyScript.counterattacking==false)
             {
@@ -267,6 +264,7 @@ public class GrandDragon : MonoBehaviour
                 enemyScript.UnsetBombUser();
                 enemyScript.SetGreen();
                 enemyScript.SetRed();
+                enemyScript.SetCounterattack();
                 PurpleAuraOff();
                 FinalAuraOn();
                 skin.material = final;
@@ -543,22 +541,22 @@ public class GrandDragon : MonoBehaviour
         //I could use this for a revenge value att
         enemyScript.IdleAnimationCancel();
         enemyScript.AttackReadyOff();
+        enemyScript.BombReadyOff();
+        enemyScript.SummonBombsOff();
         //The way this code is written, this should make Dragon go into an attack almost immediately
         //if (enemyScript.bombUser ==true) {
             //enemyScript.Interrupt(); //At the moment, he will just go into barrier animation
         //}
         enemyScript.FlinchCancel();
         //StartCoroutine(Flashing());
+        Debug.Log("Forced Phase Change");
     }
     public void OpeningBombUser ()
     {
         enemyScript.IdleAnimationCancel();
         enemyScript.BombReadyOff();
         //enemyScript.Interrupt();
-        if(fifthPhase ==true)
-        {
-            enemyScript.SetCounterattack();
-        }
+
         
     }
     IEnumerator ChangeToNonBomb()
@@ -566,6 +564,10 @@ public class GrandDragon : MonoBehaviour
         yield return new WaitForSeconds(2);
         if (fourthPhase==true||fifthPhase==true) {
             enemyScript.UnsetBombUser();
+        }
+        if (fifthPhase == true)
+        {
+            enemyScript.SetCounterattack();
         }
     }
 IEnumerator Flashing()
@@ -731,44 +733,7 @@ IEnumerator Flashing()
         //enemyScript.SetIdleStart();
         //enemyScript.NonStandardIdleStart();
         Barrier();
-        //06/24/24
-        //I don't think I need this
-        //Not supposed to flinch while armor is 
-        //enemyScript.UnsetCantFlinch();
-        if (secondPhase ==true ||fourthPhase ==true||fifthPhase==true) {
-            if (regularBombRing1Used == false && regularBombRing2Used == false)
-            {
-                BombFlare();
-                int random = Random.Range(0, 1);
-                if (random == 0)
-                {
-                    RegularBombRing1();
-                    regularBombRing1Used = true;
-                }
-                else
-                {
-                    RegularBombRing2();
-                    regularBombRing2Used = true;
-                }
-            }
-        }
-        else if(sixthPhase ==true)
-        {
-            if (regularBombRing1Used == false && regularBombRing2Used == false)
-            {
-                int random = Random.Range(0, 1);
-                if (random == 0)
-                {
-                    BombRing3();
-                    regularBombRing1Used = true;
-                }
-                else
-                {
-                    BombRing4();
-                    regularBombRing2Used = true;
-                }
-            }
-        }
+        StartBombSummon();
     }
     public void Barrier()
     {
@@ -816,7 +781,7 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(0);
         //}
         //enemyScript.AttackReadyOff();
-        BombFlare();
+        //BombFlare();
         enemyScript.PlayBombLensFlareSound();
         StartCoroutine(BombRingAppear(1));
         //SetIdleTime during Bombrings
@@ -834,7 +799,6 @@ IEnumerator Flashing()
             enemyScript.SetIdleTime(6);
         }
         audio.PlayOneShot(shortRoar, 0.9f);
-        StartCoroutine(ChangeToNonBomb());
     }
     public void RegularBombRing2()
     {
@@ -847,7 +811,7 @@ IEnumerator Flashing()
         //enemyScript.PlayAttackEffect(0);
         //}
         //enemyScript.AttackReadyOff();
-        BombFlare();
+        //BombFlare();
         enemyScript.PlayBombLensFlareSound();
         StartCoroutine(BombRingAppear(2));
         if (secondPhase == true)
@@ -863,29 +827,29 @@ IEnumerator Flashing()
             enemyScript.SetIdleTime(6);
         }
         audio.PlayOneShot(shortRoar, 0.9f);
-        StartCoroutine(ChangeToNonBomb());
+        
     }
     public void BombRing3()
     {
-        BombFlare();
+        //BombFlare();
         enemyScript.PlayBombLensFlareSound();
         StartCoroutine(BombRingAppear(3));
         enemyScript.SetIdleTime(20);
         audio.PlayOneShot(longRoar, 0.9f);
-        StartCoroutine(ChangeToNonBomb());
+        //StartCoroutine(ChangeToNonBomb());
     }
     public void BombRing4()
     {
-        BombFlare();
+        //BombFlare();
         enemyScript.PlayBombLensFlareSound();
         StartCoroutine(BombRingAppear(4));
         enemyScript.SetIdleTime(20);
         audio.PlayOneShot(longRoar, 0.9f);
-        StartCoroutine(ChangeToNonBomb());
+        //StartCoroutine(ChangeToNonBomb());
     }
     IEnumerator BombRingAppear(int number)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
         if (number == 1)
         {
             Instantiate(regularBombRing1, regularBombRing1.transform.position, regularBombRing1.transform.rotation);
@@ -907,20 +871,7 @@ IEnumerator Flashing()
             regularBombRing1Used = false;
             regularBombRing2Used = false;
         }
-        if (fourthPhase == true)
-        {
-            if (fourthPhaseRegular == true)
-            {
-                fourthPhaseRegular = false;
-            }
-        }
-        if (fifthPhase ==true)
-        {
-            if (fifthPhaseRegular ==true)
-            {
-                fifthPhaseRegular = false;
-            }
-        }
+            StartCoroutine(ChangeToNonBomb());
     }
     public void BombFlare()
     {

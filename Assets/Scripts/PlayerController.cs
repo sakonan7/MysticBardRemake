@@ -584,7 +584,11 @@ public class PlayerController : MonoBehaviour
                         }
                         if (Input.GetKeyDown(KeyCode.W))
                         {
-                            Potion();
+                            //09/05/24 Don't know why I didn't do this, but I must have been very bus
+                            if (currentHP < HPTotal)
+                            {
+                                Potion();
+                            }
                         }
                         if (Input.GetKeyDown(KeyCode.D))
                         {
@@ -902,6 +906,11 @@ public class PlayerController : MonoBehaviour
             HPText.text = currentHP + "/" + HPTotal;
             if (potionUsed == false) {
                 StartCoroutine(PotionUse());
+            }
+            if(currentHP>HPTotal)
+            {
+                currentHP = HPTotal;
+                HPText.text = currentHP + "/" + HPTotal;
             }
         }
         if (currentPotion <= 0)
