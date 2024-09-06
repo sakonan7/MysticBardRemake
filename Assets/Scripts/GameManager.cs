@@ -289,6 +289,16 @@ public class GameManager : MonoBehaviour
                     {
                         EXP();
                     }
+                    //This code didn't account for what would happen if noEXP ==false, but the player has maxed out their lev
+                    //No, I think the real problem is if level >=11
+                    else
+                    {
+                        GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
+                        if (SceneManager.GetActiveScene().name == "Level 11")
+                        {
+                            GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").transform.Find("Level Up Object").transform.Find("Buttons").transform.Find("Next Level Button").gameObject.SetActive(false);
+                        }
+                    }
                 }
                 else
                 {
@@ -332,6 +342,10 @@ public class GameManager : MonoBehaviour
             if (player.levelNonStatic < 11)
             {
                 EXP();
+            }
+            else
+            {
+                GameObject.Find("Level Done Object").transform.Find("Continue Or Quit").gameObject.SetActive(true);
             }
         }
         else

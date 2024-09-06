@@ -7247,10 +7247,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  bombReady: 0
+  summonBombs: 0
+  attack: 0
   windCaptured: 0
   flinching: 0
+  counterAttackActive: 0
   counterAttackTriggered: 0
-  unflinchingFollow: 0
+  counterattacking: 0
   attackEffects:
   - {fileID: 8419506691360090295}
   - {fileID: 4886582554914541619}
@@ -7264,12 +7268,23 @@ MonoBehaviour:
   bombLensFlare: {fileID: 0}
   harpShield: {fileID: 0}
   trumpetShield: {fileID: 0}
+  guardOn: {fileID: 0}
+  specialSound: {fileID: 0}
+  specialCancelled: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
   bombUser: 0
   boss: 0
   revengeValueMove: 0
+  currentRageValue: 0
+  rageValueMove: 0
+  rageValueMoveActive: 0
+  rageLevel1: 0
+  rageLevel2: 0
+  rageLevel3: 0
+  rageStart: 0
+  buildRage: 0
   harpGuard: 0
   trumpetGuard: 0
   guardCounterattackTriggered: 0
@@ -18971,53 +18986,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 510188583329004743, guid: c1423f524c227ba4186785b32a74d6f3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5119177891231712803}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5219412278151717066, guid: c1423f524c227ba4186785b32a74d6f3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7959756439823514024}
-    - targetCorrespondingSourceObject: {fileID: 724518582849952643, guid: c1423f524c227ba4186785b32a74d6f3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6937059675491704535}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1423f524c227ba4186785b32a74d6f3, type: 3}
---- !u!1 &169339552675213372 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 724518582849952643, guid: c1423f524c227ba4186785b32a74d6f3, type: 3}
-  m_PrefabInstance: {fileID: 601121298907786175}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6937059675491704535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169339552675213372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66d5c4064d899ae4dbad2fa45cc3a4d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1099741918781839224 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 510188583329004743, guid: c1423f524c227ba4186785b32a74d6f3, type: 3}
   m_PrefabInstance: {fileID: 601121298907786175}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4627606340265200501 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5219412278151717066, guid: c1423f524c227ba4186785b32a74d6f3, type: 3}
-  m_PrefabInstance: {fileID: 601121298907786175}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7959756439823514024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4627606340265200501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66d5c4064d899ae4dbad2fa45cc3a4d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1041467445144478612
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19166,7 +19141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3550217306713820875, guid: 02f2e69a6adac474bac28a64d21cfcff, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1.17
       objectReference: {fileID: 0}
     - target: {fileID: 3550217306713820875, guid: 02f2e69a6adac474bac28a64d21cfcff, type: 3}
       propertyPath: m_LocalRotation.w
@@ -21472,6 +21447,10 @@ PrefabInstance:
     - target: {fileID: 6787339402926528828, guid: 9b8da676f5245a84fa1a88524a7d322b, type: 3}
       propertyPath: m_FontSize
       value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787339402926528828, guid: 9b8da676f5245a84fa1a88524a7d322b, type: 3}
+      propertyPath: m_CharacterSize
+      value: 0.21
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -231,8 +231,8 @@ public class PlayerController : MonoBehaviour
             {
                 HPBar = GameObject.Find("HP Bar").GetComponent<Image>();
                 levelText = GameObject.Find("Mugshot").transform.Find("Level Text").GetComponent<TextMeshProUGUI>();
-                EXPText = GameObject.Find("Mugshot").transform.Find("EXP To Level").GetComponent<TextMeshProUGUI>();
-                EXPText.text = "EXP: " + EXPToLevel;
+                //EXPText = GameObject.Find("Mugshot").transform.Find("EXP To Level").GetComponent<TextMeshProUGUI>();
+                //EXPText.text = "EXP: " + EXPToLevel;
                 harpGauge = GameObject.Find("Harp Gauge").GetComponent<Image>();
                 trumpetGauge = GameObject.Find("Trumpet Gauge").GetComponent<Image>();
                 fluteGauge = GameObject.Find("Flute Gauge").GetComponent<Image>();
@@ -302,6 +302,10 @@ public class PlayerController : MonoBehaviour
 
         levelText.text = "Lv. " + level;
         levelNonStatic = level;
+        if(level >=11)
+        {
+            levelText.text = "Lv. MAX";
+        }
 
         //This is necessary in case I didn't increase any of these values
         currentHP = HPTotal;
@@ -312,6 +316,10 @@ public class PlayerController : MonoBehaviour
         currentPotion = potionTotal;
         HPText = GameObject.Find("HP Bar Object").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
         HPText.text = HPTotal + "/" + HPTotal;
+        if(gameScript.levelSelectNonStatic == true)
+        {
+            HPText.text = HPTotal + "/" + HPTotal + "    EXP: " + EXPToLevel;
+        }
         harpText = GameObject.Find("Harp").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();
         harpText.text = harpTotal + "/" + harpTotal;
         trumpetText = GameObject.Find("Trumpet").transform.Find("Numeric").GetComponent<TextMeshProUGUI>();

@@ -7230,7 +7230,7 @@ MonoBehaviour:
   flinching: 0
   counterAttackActive: 0
   counterAttackTriggered: 0
-  unflinchingFollow: 0
+  counterattacking: 0
   attackEffects: []
   teamAttackAura: {fileID: 0}
   teamAttackSizzle: {fileID: 0}
@@ -10322,7 +10322,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2789669595854285029, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: playEffects
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2994056704253568011, guid: 80d520a773d064e4789b505dde2afd23, type: 3}
       propertyPath: m_Name

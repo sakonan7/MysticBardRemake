@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ac83b5737d09942a4c98a7cdc4c499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playEffects: 0
+  playEffects: 1
   background: {fileID: 0}
   turnPageSound: {fileID: 8300000, guid: fda0ebca8921b9640ae2aa0e2559e5e2, type: 3}
   prelude: {fileID: 8300000, guid: d361d60b3f12e174ba2656722bad8dfe, type: 3}

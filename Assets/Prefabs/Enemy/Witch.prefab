@@ -4485,10 +4485,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackReady: 0
+  bombReady: 0
+  summonBombs: 0
+  attack: 0
   windCaptured: 0
   flinching: 0
+  counterAttackActive: 0
   counterAttackTriggered: 0
-  unflinchingFollow: 0
+  counterattacking: 0
   attackEffects: []
   teamAttackAura: {fileID: 0}
   teamAttackSizzle: {fileID: 0}
@@ -4500,13 +4504,23 @@ MonoBehaviour:
   bombLensFlare: {fileID: 8300000, guid: 624df48c4ff3ad245a6bfa346e6bd43b, type: 3}
   harpShield: {fileID: 0}
   trumpetShield: {fileID: 0}
+  guardOn: {fileID: 0}
+  specialSound: {fileID: 0}
+  specialCancelled: {fileID: 0}
   HP: 10
   EXP: 0
   teamAttackOn: 0
   bombUser: 0
   boss: 0
   revengeValueMove: 0
+  currentRageValue: 0
   rageValueMove: 0
+  rageValueMoveActive: 0
+  rageLevel1: 0
+  rageLevel2: 0
+  rageLevel3: 0
+  rageStart: 0
+  buildRage: 0
   harpGuard: 0
   trumpetGuard: 0
   guardCounterattackTriggered: 0
@@ -5944,6 +5958,14 @@ PrefabInstance:
     - target: {fileID: 6298358282908464807, guid: 9b8da676f5245a84fa1a88524a7d322b, type: 3}
       propertyPath: m_Name
       value: Damage Received
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787339402926528828, guid: 9b8da676f5245a84fa1a88524a7d322b, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787339402926528828, guid: 9b8da676f5245a84fa1a88524a7d322b, type: 3}
+      propertyPath: m_CharacterSize
+      value: 0.21
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

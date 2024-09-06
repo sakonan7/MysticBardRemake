@@ -258,7 +258,7 @@ public class Enemy : MonoBehaviour
         {
             transform.position = new Vector3(-5.49f, transform.position.y, transform.position.z);
             //playerScript.WindEnd();
-            //WindCaptureEnd();
+            //F();
         }
         if (transform.position.x >= 5.49f)
         {
@@ -977,19 +977,22 @@ public void RestartGuard()
     }
     public void SpecialCancel()
     {
-        special = false;
-        StopCoroutine(specialCancel);
-        UnsetCantFlinch();
-        Flinch(true);
         specialObj.SetActive(false);
-        playerScript.InterruptEffect(effectPosition.transform.position);
-        audio.Stop();
-        audio.PlayOneShot(specialCancelled,1);
-        audio.PlayOneShot(grunt, 1);
-        specialAura1.Stop();
-        specialAura2.Stop();
-        specialAura3.Stop();
-        //specialAuraFinish.Stop();
+        if (HP >0) {
+            special = false;
+            StopCoroutine(specialCancel);
+            UnsetCantFlinch();
+            Flinch(true);
+
+            playerScript.InterruptEffect(effectPosition.transform.position);
+            audio.Stop();
+            audio.PlayOneShot(specialCancelled, 1);
+            audio.PlayOneShot(grunt, 1);
+            specialAura1.Stop();
+            specialAura2.Stop();
+            specialAura3.Stop();
+            //specialAuraFinish.Stop();
+        }
     }
 
     public void StartAttackLength()
@@ -1461,6 +1464,10 @@ public void RestartGuard()
             {
                 WindCaptureEnd();
 
+            if (special==true)
+            {
+                SpecialCancel();
+            }
                 if (boss == false)
                 {
                     for(int i=0;i <collidingEnemies.Count;i++)
@@ -1709,6 +1716,11 @@ public void RestartGuard()
         //Debug.Log("Wind " + windCaptured);
         if (teamAttack==true) {
             AnalyzeTeamAttackCapability();
+        }
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i].GetComponent<Enemy>().WindCaptureEnd();
         }
     }
     public void WindCaptureImpossible()
