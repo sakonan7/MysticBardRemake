@@ -832,14 +832,14 @@ public class PlayerController : MonoBehaviour
         for (int i= 0; i < enemies.Length; i++)
         {
             //Nerf, destroying armor will not cause foe to flinch
-            if (enemies[i].GetComponent<Enemy>().counterAttackActive == false) {
-                enemies[i].GetComponent<Enemy>().Flinch(true);
+            //if (enemies[i].GetComponent<Enemy>().counterAttackActive == false) {
+                //enemies[i].GetComponent<Enemy>().Flinch(true);
                 enemies[i].GetComponent<Enemy>().GeneralDamageCode(20, true, 3,true);
-            }
-            else
-            {
-                enemies[i].GetComponent<Enemy>().CounterAttackTriggered();
-            }
+            //}
+            //else
+            //{
+                //enemies[i].GetComponent<Enemy>().CounterAttackTriggered();
+            //}
             //Instantiate(hurt, enemies[i].transform.position, hurt.transform.rotation);
             //ViolinHitEffect(enemies[i].transform.position);
         }

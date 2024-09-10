@@ -176,7 +176,7 @@ public class Enemy : MonoBehaviour
     private int guardNumber = 0;
     private bool invincible = false;
 
-    private bool cantFlinch = false;
+    public bool cantFlinch = false;
     private bool gettingDamaged = false;
 
     public bool cantMove = false;
@@ -1462,7 +1462,9 @@ public void RestartGuard()
 
             if (HP <= 0)
             {
+            if (playerScript.wind==true) {
                 WindCaptureEnd();
+            }
 
             if (special==true)
             {
@@ -1503,7 +1505,7 @@ public void RestartGuard()
     public void GeneralDamageCode(float damage, bool armorBreak, int harpOrTrumpet, bool playerSpecial)
     {
 
-        //damage *= 4;
+        damage *= 4;
         //I want to do this, but I gotta make sure that counterattacker isn't damaged
         //I may have to write a lot of conditionals for TakeDamage, then (for it to happen)
         //I don't think I can simplify this, because I need to account for the cases that aren't a counterattacker, guard
@@ -1601,9 +1603,9 @@ public void RestartGuard()
                         }
                         TakeDamage(damage, true, true);
                         //RevengeValueUp();
-                        UnsetHarpGuard();
-                        UnsetTrumpetGuard();
-                        UnsetGuard();
+                        //UnsetHarpGuard();
+                        //UnsetTrumpetGuard();
+                        //UnsetGuard();
                     }
                 }
             }
@@ -1893,7 +1895,7 @@ public void RestartGuard()
                 playerScript.WindEnd();
                 //I need to cancel out a bunch of coroutines
                 //if (windCaptured==true) {
-                WindCaptureEnd();
+                //WindCaptureEnd();
                 //}
                 //08/26/24 Need to ensure that this doesn't spawn more than one hitbox
                 playerScript.DebrisHitBox(collision.GetContact(0).point);
@@ -1905,7 +1907,7 @@ public void RestartGuard()
             {
 
                 playerScript.WindEnd();
-                WindCaptureEnd();
+                //WindCaptureEnd();
                 //playerScript.HitCountUp();
                 collision.gameObject.GetComponent<Bomb>().EnemyExplode();
             }
