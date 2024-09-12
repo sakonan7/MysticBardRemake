@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4714621174532371999}
   - component: {fileID: 7499010334505139923}
   - component: {fileID: 6881491635095159888}
+  - component: {fileID: 8016907938111581652}
   m_Layer: 0
   m_Name: Harp Hitbox
   m_TagString: Harp
@@ -103,7 +104,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.51
   m_Center: {x: 0, y: 0, z: 0.13443898}
@@ -131,3 +132,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be34af088c1f76645b781e1369d86f98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &8016907938111581652
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8551800652245622886}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.0678706
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.5338853}

@@ -62,7 +62,7 @@ public class Bomb : MonoBehaviour
             //playerScript.WindEnd();
             //WindCaptureEnd();
         }
-        if (transform.position.y <= -2.5f)
+        if (transform.position.y <= -2f)
         {
             transform.position = new Vector3(transform.position.x, -2.5f, transform.position.z);
             //playerScript.WindEnd();
