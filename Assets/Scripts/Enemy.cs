@@ -457,10 +457,12 @@ public class Enemy : MonoBehaviour
         {
             transform.Find("Root").Find("Personal Barrier Object").transform.Find("Personal Barrier").gameObject.SetActive(false);
         }
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            enemies[i].GetComponent<Enemy>().BarrierOff();
+        GameObject[] enemiesTemp = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemiesTemp!= null) {
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                enemies[i].GetComponent<Enemy>().BarrierOff();
+            }
         }
         //06/19/24
         //Almost did this without green ==false. I need this for Dragon
@@ -507,24 +509,26 @@ public class Enemy : MonoBehaviour
     //This will only be an issue if enemies can teleport
     public void AnalyzeTeamAttackCapability()
     {
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject []enemiesTemp = GameObject.FindGameObjectsWithTag("Enemy");
         float distance;
         bool enemyNextToAnother = false;
         int i = 0;
         //for (int i =0; i < enemies.Length; i++)
         //{
-        while (i < enemies.Length && enemyNextToAnother == false) {
-            distance = Vector3.Distance(gameObject.transform.position, enemies[i].transform.position);
-            //Debug.Log("Distanceequal to "+distance);
-            i++;
-            if (distance <= 1f)
-            {
-                enemyNextToAnother = true;
-                //if (teamAttack == true && teamAttackOn == false)
-                //{
-                //teamAttackOn = true;
-                //TeamAttackPositives();
-                //}
+        if (enemiesTemp!= null) {
+            while (i < enemiesTemp.Length && enemyNextToAnother == false) {
+                distance = Vector3.Distance(gameObject.transform.position, enemies[i].transform.position);
+                //Debug.Log("Distanceequal to "+distance);
+                i++;
+                if (distance <= 1f)
+                {
+                    enemyNextToAnother = true;
+                    //if (teamAttack == true && teamAttackOn == false)
+                    //{
+                    //teamAttackOn = true;
+                    //TeamAttackPositives();
+                    //}
+                }
             }
         }
         //}
@@ -1122,7 +1126,7 @@ public void RestartGuard()
     public void PlayAttackEffect(int attackEffect)
     {
         effectNumber = attackEffect;
-        if (gameScript.playEffects== true) {
+        if (GameManager.playEffectsStatic == true) {
             if (attackEffects.Length>0) {
                 attackEffects[effectNumber].Play();
             }
@@ -1130,7 +1134,7 @@ public void RestartGuard()
     }
     public void StopAttackEffect()
     {
-        if (gameScript.playEffects ==true) {
+        if (GameManager.playEffectsStatic ==true) {
             if (attackEffects.Length > 0)
                 attackEffects[effectNumber].Stop();
         }
@@ -1464,6 +1468,7 @@ public void RestartGuard()
             {
             if (playerScript.wind==true) {
                 WindCaptureEnd();
+                WindCaptureEndForAll();
             }
 
             if (special==true)
@@ -1716,13 +1721,21 @@ public void RestartGuard()
         //transform.rotation = Quaternion.Slerp(new Quaternion(0, transform.rotation.y, transform.rotation.z, 0), lookRotation, 3);
         //transform.rotation = new Quaternion(0, 180, 0,0);
         //Debug.Log("Wind " + windCaptured);
-        if (teamAttack==true) {
-            AnalyzeTeamAttackCapability();
-        }
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int i = 0; i < enemies.Length; i++)
+        //if (teamAttack==true) {
+        //AnalyzeTeamAttackCapability();
+        //}
+        
+    }
+    public void WindCaptureEndForAll()
+    {
+        GameObject[] enemiesTemp = GameObject.FindGameObjectsWithTag("Enemy");
+        //I really forgot that this could be null. I thought this would check for me, also
+        if (enemiesTemp != null)
         {
-            enemies[i].GetComponent<Enemy>().WindCaptureEnd();
+            for (int i = 0; i < enemiesTemp.Length; i++)
+            {
+                enemies[i].GetComponent<Enemy>().WindCaptureEnd();
+            }
         }
     }
     public void WindCaptureImpossible()
@@ -1734,6 +1747,14 @@ public void RestartGuard()
         stayStill = true;
         yield return new WaitForSeconds(2);
         stayStill = false;
+    }
+    public void CheckTeamAttack()
+    {
+        if (teamAttackOn == false && teamAttack == true)
+        {
+            teamAttackOn = true;
+            TeamAttackPositives();
+        }
     }
     public void TeamAttackPositives()
     {
@@ -1849,7 +1870,7 @@ public void RestartGuard()
         if (playerScript.wind == true)
         {
             playerScript.WindEnd();
-            WindCaptureEnd();
+            WindCaptureEndForAll();
             //Debug.Log("End");
         }
     }
@@ -1879,13 +1900,12 @@ public void RestartGuard()
                 //if (windCaptured==true) {
                     WindCaptureEnd();
                 //}
+                WindCaptureEndForAll();
+                playerScript.WindHitEffect(collision.GetContact(0).point);
 
-                    playerScript.WindHitEffect(collision.GetContact(0).point);
-                if (teamAttackOn == false && teamAttack == true)
-                {
-                    teamAttackOn = true;
-                    TeamAttackPositives();
-                }
+                //Method for checking if enemy has teamAttack and then turning it 
+                CheckTeamAttack();
+                collision.gameObject.GetComponent<Enemy>().CheckTeamAttack();
             }
             if (collision.gameObject.CompareTag("Debris"))
             {

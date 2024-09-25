@@ -666,7 +666,7 @@ public class PlayerController : MonoBehaviour
     {
         //if (violinDrained ==false) {
         Instantiate(harpHitbox, newPosition, harpHitbox.transform.rotation);
-        if (gameScript.playEffects ==true) {
+        if (GameManager.playEffectsStatic ==true) {
             Instantiate(harpSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), harpSoundwave.transform.rotation);
         }
         StartCoroutine(Lag(0.5f));
@@ -700,7 +700,7 @@ public class PlayerController : MonoBehaviour
         //if (violinDrained ==false) {
         //ViolinHitEffect(newPosition);
         Instantiate(trumpetHitbox, newPosition, trumpetHitbox.transform.rotation);
-        if (gameScript.playEffects == true)
+        if (GameManager.playEffectsStatic == true)
         {
             Instantiate(trumpetSoundwave, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z - 8.6f)), trumpetSoundwave.transform.rotation);
         }
@@ -793,11 +793,6 @@ public class PlayerController : MonoBehaviour
     public void WindEnd()
     {
         wind = false;
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); 
-        //for (int i =0; i < enemies.Length; i++)
-        //{
-            //enemies[i].GetComponent<Enemy>().AnalyzeTeamAttackCapability();
-        //}
         fluteWind.SetActive(false);
     }
     public void HitCountUp()
@@ -828,13 +823,13 @@ public class PlayerController : MonoBehaviour
     public void AllAttack()
     {
         //Produce a hurt and a interrupt effect on every enemy
-        GameObject [] enemies =GameObject.FindGameObjectsWithTag("Enemy");
-        for (int i= 0; i < enemies.Length; i++)
+        GameObject [] enemiesTemp =GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i= 0; i < enemiesTemp.Length; i++)
         {
             //Nerf, destroying armor will not cause foe to flinch
             //if (enemies[i].GetComponent<Enemy>().counterAttackActive == false) {
                 //enemies[i].GetComponent<Enemy>().Flinch(true);
-                enemies[i].GetComponent<Enemy>().GeneralDamageCode(20, true, 3,true);
+                enemiesTemp[i].GetComponent<Enemy>().GeneralDamageCode(20, true, 3,true);
             //}
             //else
             //{
@@ -859,7 +854,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(SpecialInvincibility());
         StartCoroutine(CameraShakeSpec(3));
         //allAttackEffect.SetActive(true);
-        if (gameScript.playEffects==true) {
+        if (GameManager.playEffectsStatic           ) {
             StartCoroutine(AllAttackDisappear1());
         }
         hitCountReached = false;
@@ -991,7 +986,7 @@ public class PlayerController : MonoBehaviour
     }
     public void InterruptEffect(Vector3 position)
     {
-        if (gameScript.playEffects== true) {
+        if (GameManager.playEffectsStatic == true) {
             Instantiate(interruptEffect, position, interruptEffect.transform.rotation);
         }
         if (uninterruptibleSound == false)
@@ -1010,7 +1005,7 @@ public class PlayerController : MonoBehaviour
     }
     public void PlayHurtEffect(bool unblockable)
     {
-        if (gameScript.playEffects == true) {
+        if (GameManager.playEffectsStatic == true) {
             if (unblockable == false)
             {
                 hurtEffect.Play();
@@ -1023,12 +1018,12 @@ public class PlayerController : MonoBehaviour
     }
     public void HarpHitEffect(Vector3 position)
     {
-        if (gameScript.playEffects == true)
+        if (GameManager.playEffectsStatic == true)
         Instantiate(harpHitEffect, position, harpHitbox.transform.rotation);
     }
     public void TrumpetHitEffect(Vector3 position)
     {
-        if (gameScript.playEffects == true)
+        if (GameManager.playEffectsStatic == true)
         Instantiate(trumpetHitEffect, position, trumpetHitEffect.transform.rotation);
     }
     public void WindHitEffect(Vector3 position)
@@ -1037,7 +1032,7 @@ public class PlayerController : MonoBehaviour
     }
     public void DebrisHitEffect(Vector3 position)
     {
-        if (gameScript.playEffects == true)
+        if (GameManager.playEffectsStatic == true)
         {
             Instantiate(debrisCrash, new Vector3(position.x, position.y, -7.59f), debrisCrash.transform.rotation);
         }

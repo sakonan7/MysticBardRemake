@@ -79,7 +79,7 @@ public class Bomb : MonoBehaviour
     {
         yield return new WaitForSeconds(6);
         transform.Find("Appearance").gameObject.SetActive(false);
-        if (gameScript.playEffects ==true) {
+        if (GameManager.playEffectsStatic ==true) {
             Instantiate(explosion, transform.position, transform.rotation);
         }
         StartCoroutine(ActualDamage());
@@ -129,7 +129,7 @@ public class Bomb : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         transform.Find("Appearance").gameObject.SetActive(false);
-        if (gameScript.playEffects == true) { 
+        if (GameManager.playEffectsStatic == true) { 
             Instantiate(explosion, transform.position, transform.rotation);
     }
         StartCoroutine(ActualDamage());
@@ -162,7 +162,7 @@ public class Bomb : MonoBehaviour
         //08/22/24 I think I was gonna write that I think the previous code was getting triggered multiple times
         //I think I want to set exploded here, so that hitboxes can't trigger EnemyExplode twice
         Instantiate(hitbox, new Vector3(transform.position.x,transform.position.y, -7.59f), hitbox.transform.rotation);
-        if (gameScript.playEffects == true)
+        if (GameManager.playEffectsStatic == true)
         {
             Instantiate(explosion, transform.position, transform.rotation);
         }

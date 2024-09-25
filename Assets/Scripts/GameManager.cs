@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
 {
     private PlayerController player;
     private AudioSource audio;
-    public bool playEffects = false;
+    public static bool playEffectsStatic = false;
+    private bool playEffects = false;
     public GameObject background;
     public AudioClip turnPageSound;
     public AudioClip prelude;
@@ -454,10 +455,10 @@ public class GameManager : MonoBehaviour
     }
     public void HPZero()
     {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            for (int i = 0; i < enemies.Length; i++)
+            GameObject[] enemiesTemp = GameObject.FindGameObjectsWithTag("Enemy");
+            for (int i = 0; i < enemiesTemp.Length; i++)
             {
-                    enemies[i].GetComponent<Enemy>().SetHP(1);
+                    enemiesTemp[i].GetComponent<Enemy>().SetHP(1);
             }
     }
 }
