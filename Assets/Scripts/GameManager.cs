@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     private PlayerController player;
     private AudioSource audio;
-    public static bool playEffectsStatic = false;
+    public static bool playEffectsStatic = true;
     private bool playEffects = false;
     public GameObject background;
     public AudioClip turnPageSound;

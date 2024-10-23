@@ -36,7 +36,7 @@ public class Rager
         skin3 = transform.Find("SkinnedMeshes").transform.Find("Jaw").GetComponent<SkinnedMeshRenderer>();
         //StartCoroutine(IdleAnimation());
 
-        enemyScript.SetHP(100);
+        enemyScript.SetHP(100 +50);
         enemyScript.SetEXP(100);
 
         enemyScript.SetIdleTime(10);

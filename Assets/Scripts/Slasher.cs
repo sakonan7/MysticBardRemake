@@ -36,7 +36,7 @@ public class Slasher : MonoBehaviour
         audio = GetComponent<AudioSource>();
         //StartCoroutine(IdleAnimation());
 
-        enemyScript.SetHP(75);
+        enemyScript.SetHP(75 + 25);
         enemyScript.SetEXP(90);
 
         enemyScript.SetIdleTime(5);

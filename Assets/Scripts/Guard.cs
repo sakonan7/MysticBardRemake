@@ -37,7 +37,7 @@ public class Guard
         audio = GetComponent<AudioSource>();
         //StartCoroutine(IdleAnimation());
 
-        enemyScript.SetHP(100);
+        enemyScript.SetHP(100 + 25);
         enemyScript.SetEXP(100);
 
         enemyScript.SetIdleTime(5);
